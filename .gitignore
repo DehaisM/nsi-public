@@ -1,0 +1,51 @@
+# -----------------------------
+# Python
+# -----------------------------
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.pkl
+*.egg-info/
+*.egg
+dist/
+build/
+
+# Jupyter / notebooks
+.ipynb_checkpoints/
+
+# VS Code / éditeur
+.vscode/
+*.code-workspace
+
+# -----------------------------
+# LaTeX
+# -----------------------------
+# Garder seulement .tex et .pdf
+*.aux
+*.log
+*.out
+*.toc
+*.synctex.gz
+*.fdb_latexmk
+*.fls
+*.lof
+*.lot
+*.bbl
+*.blg
+*.nav
+*.snm
+*.vrb
+*.xdv
+
+# -----------------------------
+# Divers
+# -----------------------------
+# Systèmes
+.DS_Store
+Thumbs.db
+
+
+_minted*
+minted-*

@@ -1,0 +1,8 @@
+/* Cache les deux sidebars */
+.md-sidebar { display: none; }   /* gauche */
+
+/* Contenu centré (par défaut) et largeur lisible */
+.md-main__inner { margin: 0 auto; max-width: 900px; padding: 2rem; }
+
+/* (optionnel) centre le texte ; enlève si tu préfères aligner à gauche */
+.md-content, .md-typeset { text-align: center; }

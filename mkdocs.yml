@@ -1,0 +1,28 @@
+site_name:  M.Déhais - Jean Prévost
+docs_dir: docs-public
+
+theme:
+  name: material
+  language: fr
+  palette:
+    - scheme: default
+      primary: green
+      accent: lime
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.top
+    - toc.integrate  
+extra_css:
+  - styles/site.css
+
+nav:
+  - Accueil: index.md
+  - SNT: SNT/index.md
+  - 1ère NSI: 1NSI/index.md
+  - TNSI: TNSI/index.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
