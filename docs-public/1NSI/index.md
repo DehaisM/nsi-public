@@ -13,3 +13,7 @@ TP noté vendredi 26 septembre (boucles for et boucles while)
 - TP3 (boucle for) : ef91-7026606
 - TP4 (boucle while) : 520e-7027169
 - [Activité algorithme d'Euclide]
+
+- TP noté 2 :
+
+- TP 5 (fonctions) : e052-7137642
