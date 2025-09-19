@@ -3,7 +3,7 @@
 Veuillez sélectionner votre niveau
 
 
-## [Seconde numérique et technologique](SNT/index.md) 
+## [Seconde GT](SNT/index.md) 
 
 ## [Première NSI](1NSI/index.md)
 
