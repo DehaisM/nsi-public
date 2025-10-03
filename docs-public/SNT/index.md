@@ -7,3 +7,8 @@
 ### Exercices
 
 - [Fiche exercice 1 - Variable et affichage](Exercices/fiche exo1.pdf)
+- [Fiche exercice 2 - Instructions conditionnelles](Exercices/fiche exo1.pdf)
+
+## Activités capytale 
+
+- TP1 - Démarrer avec Python : e14b-6988867
