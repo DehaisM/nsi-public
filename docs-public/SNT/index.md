@@ -7,7 +7,7 @@
 ### Exercices
 
 - [Fiche exercice 1 - Variable et affichage](Exercices/fiche exo1.pdf)
-- [Fiche exercice 2 - Instructions conditionnelles](Exercices/fiche exo1.pdf)
+- [Fiche exercice 2 - Instructions conditionnelles](Exercices/fiche-exo2.pdf)
 
 ## Activités capytale 
 
