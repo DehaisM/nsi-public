@@ -20,9 +20,11 @@ Contrôle papier tout jusqu'aux fonctions : vendredi 17 octobre
 - Correction en classe
 
 - TP 5 (fonctions) : e052-7137642
+
+- TP noté 3 : a0ee-7573237
 - TP 6 (dessins) :  05cb-7362293$
 - TP 7 (listes) : 967d-7441020
-
+- TP 8 (chaine et tuple) : d197-7574447
 
 # Premier Projet 
 
