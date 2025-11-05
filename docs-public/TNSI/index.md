@@ -1,9 +1,13 @@
 # Informations Générales
 
-Contrôle sur table (Récursivité + POO) : jeudi 9 octobre
+Interro arbre : 13 novembre 
 
-TP noté PILE, FILE : jeudi 16 octobre
+Interro BDD : 26 novembre (à valider)
 
+
+# Premier Projet 
+
+Fire emblem : d8a5-7467827
 
 
 # Révision 
@@ -20,28 +24,30 @@ TP noté PILE, FILE : jeudi 16 octobre
   
 # Thématique 1 : Langage et programmation
 
-TP récursivité : a5b0-7108122
+TP récursivité : a5b0-7108122 (**corrigé** : 20b6-7792253)
 
-TP fractacle : 358d-6974561
+TP fractacle : 358d-6974561  (**corrigé** : 10fe-7846636)
 
-TP noté 1 (récursivité) : a5b0-7108122
+TP noté 1 (récursivité) : a5b0-7108122 
 
-TP noté 2 (récursivité) : 
+TP noté 2 (récursivité) : 84ee-7294286 (**corrigé**)
 
 [Interro POO](Devoirs/interroPOO.pdf)
  
 # Thématique 2 : Structure de données
 
- TP POO : 09cd-7108897
+ TP POO : 09cd-7108897 (**corrigé** : 0e9a-7792537)
 
- TP Grille en POO : b59b-7154101
+ TP Grille en POO : b59b-7154101 (**corrigé** : 79ac-7793253)
 
- LISTE,PILE,FILE (cours) : 9aa4-7336707
+ LISTE,PILE,FILE (cours) : 9aa4-7336707 (**corrigé** : 1f3b-7846659)
 
- LISTE, PILE, FILE (exercices) : e88e-7370346
+ LISTE, PILE, FILE (exercices) : e88e-7370346 (**corrigé** : aaa7-7846662)
 
-Arbres (cours et représentation) : d2a7-7604691
-# Premier Projet 
+Arbres (cours et représentation) : d2a7-7604691 (**corrigé** : 78a7-7846665)
+
+
+Arbres (Parcours et ABR) : bd5d-7675615 (**corrigé** : 1fdb-7846950)
 
 
 # Thématique 3 : Base de données

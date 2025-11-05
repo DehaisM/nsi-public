@@ -1,8 +1,7 @@
 # Informations générales 
 
-Contrôle papier tout jusqu'aux fonctions : vendredi 17 octobre
+TP noté : liste, tuple, chaine : 14 novembre
 
-TP noté structures séquentielles (liste, chaine, tuple) :  mardi 11 novembre
 
 ## Thématique 1 : Langage et Programmation
 
