@@ -14,7 +14,7 @@
 >- [Fiche exercice 1 - Variable et affichage](Exercices/fiche-exo1.pdf)
   
 >- [Fiche exercice 2 - Instructions conditionnelles](Exercices/fiche-exo2.pdf)
->- [Fiche exercice 2 - Version corrigée](Exercices/fiche-exo2.pdf)
+>- [Fiche exercice 2 - Version corrigée](Exercices/fiche-exo2-corrige.pdf)
 ## Activités capytale 
 
 - TP1 - Démarrer avec Python : e14b-6988867
