@@ -1,8 +1,6 @@
 # Informations Générales
 
-Interro arbre : 13 novembre 
-
-Interro BDD : 26 novembre (à valider)
+Interro BDD : 26 novembre 
 
 
 # Premier Projet 
@@ -32,12 +30,10 @@ TP noté 1 (récursivité) : a5b0-7108122
 
 TP noté 2 (récursivité) : 84ee-7294286 (**corrigé**)
 
-[Interro POO](Devoirs/interroPOO.pdf)
+TP Diviser pour régner (part 1) : 4c17-8111493 (**corrigé** : c037-8112614) 
 
-TP diviser pour régner (partie 1) : 4c17-8111493 (**corrigé** : c037-8112614)
+TP Diviser pour régner (part 2) : 674d-8140546
 
-TP diviser pour régner (partie 2) : 674d-8140546
- 
 # Thématique 2 : Structure de données
 
 TP POO : 09cd-7108897 (**corrigé** : 0e9a-7792537)
@@ -55,9 +51,10 @@ Arbres (Parcours et ABR) : bd5d-7675615 (**corrigé** : 1fdb-7846950)
 
 # Thématique 3 : Base de données
 
-Base de données (Théorie) : ad54-7865564
+Base de données cours : ad54-7865564
 
-Base de données (SQL) : 0178-7863555
+Base de données SQL : 0178-7863555 (**corrigé** : 8b6d-7927143)
 
+Base de données BONUS (créé par T.Doré) : 2fba-8145260
 
 # Thématique 4 : Architecture et OS 

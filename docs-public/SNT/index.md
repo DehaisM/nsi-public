@@ -19,4 +19,5 @@
 
 - TP1 - Démarrer avec Python : e14b-6988867
 - TP2 - Instruction conditionnelles : 11d0-7096059
-- TP3 - Dessiner avec Python : 6028-7711265 (**corigé** : 7dc5-8343324)
+- TP3 - Dessiner avec Python : 6028-7711265
+- TP4 - Répéter des instructions : 7c83-8017157
