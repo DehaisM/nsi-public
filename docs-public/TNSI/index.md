@@ -32,7 +32,7 @@ TP noté 2 (récursivité) : 84ee-7294286 (**corrigé**)
 
 TP Diviser pour régner (part 1) : 4c17-8111493 (**corrigé** : c037-8112614) 
 
-TP Diviser pour régner (part 2) : 674d-8140546
+TP Diviser pour régner (part 2) : 674d-8140546 (**corrigé** : d73e-8145298)
 
 # Thématique 2 : Structure de données
 
