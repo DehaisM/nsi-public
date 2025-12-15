@@ -1,7 +1,9 @@
 # Informations Générales
 
-Interro BDD : 26 novembre 
+> [Lien vers informations épreuve pratique](https://eduscol.education.fr/2068/programmes-et-ressources-en-numerique-et-sciences-informatiques-voie-g)
 
+
+> Mercredi 7 janvier : Devoir Bilan (Arbres, BDD, DPR, notions de première d'algorithmique)
 
 # Premier Projet 
 
@@ -33,6 +35,12 @@ TP noté 2 (récursivité) : 84ee-7294286 (**corrigé**)
 TP Diviser pour régner (part 1) : 4c17-8111493 (**corrigé** : c037-8112614) 
 
 TP Diviser pour régner (part 2) : 674d-8140546 (**corrigé** : d73e-8145298)
+
+[Cours complexité](Cours/T1C3.pdf)
+
+
+[Cours correction](Cours/T1C4.pdf)
+
 
 # Thématique 2 : Structure de données
 

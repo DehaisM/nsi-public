@@ -15,7 +15,21 @@
 >- [Fiche exercice 1 - Variable et affichage](Exercices/fiche-exo1.pdf)
 >- [Fiche exercice 2 - Instructions conditionnelles](Exercices/fiche-exo2.pdf)
 >- [Fiche exercice 2 - Version corrigée](Exercices/fiche-exo2-corrige.pdf)
+>- [Fiche exercice 3 - Boucle for](Exercices/fiche-exo3.pdf)
+>- [Fiche exercice 3 - Version corrigée](Exercices/fiche-exo3-corrige.pdf)
+
+## Thématique 1 : Internet 
+
+### Cours
+>- [Chap 01 - Internet](Cours/T1C1.pdf) 
+>- [Chap 02 - DNS ](Cours/T1C2.pdf) 
+
+
+
 ## Activités capytale 
+
+
+### Thématique 0 : Langage et Programmation
 
 - TP1 - Démarrer avec Python : e14b-6988867
 - TP2 - Instruction conditionnelles : 11d0-7096059
