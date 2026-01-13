@@ -1,6 +1,5 @@
 # Informations générales 
 
-Rendu du projet entre 19 décembre et 5 janvier minuit.
 
 ## Thématique 1 : Langage et Programmation
 

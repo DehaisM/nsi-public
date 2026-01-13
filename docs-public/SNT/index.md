@@ -24,6 +24,11 @@
 >- [Chap 01 - Internet](Cours/T1C1.pdf) 
 >- [Chap 02 - DNS ](Cours/T1C2.pdf) 
 
+## Thématique 2 : Le Web 
+
+### Cours
+>- [Chap 01 - Découverte du Web](Cours/T2C1.pdf) 
+
 
 
 ## Activités capytale 
@@ -35,3 +40,9 @@
 - TP2 - Instruction conditionnelles : 11d0-7096059
 - TP3 - Dessiner avec Python : 6028-7711265 
 - TP4 - Répéter des instructions : 7c83-8017157 (**corrigé** : 7dc5-8343324)
+
+## Thématique 2 : Le Web 
+
+- TP5 - Découverte HTML : dbcd-9003640
+
+
