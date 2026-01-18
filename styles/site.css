@@ -1,8 +1,26 @@
 /* Cache les deux sidebars */
-.md-sidebar { display: none; }   /* gauche */
+.md-sidebar { 
+  display: none;
+}
 
-/* Contenu centré (par défaut) et largeur lisible */
-.md-main__inner { margin: 0 auto; max-width: 900px; padding: 2rem; }
+/* Contenu centré et largeur lisible */
+.md-main__inner {
+  margin: 0 auto;
+  max-width: 900px;
+  padding: 2rem;
+}
 
-/* (optionnel) centre le texte ; enlève si tu préfères aligner à gauche */
-.md-content, .md-typeset { text-align: center; }
+/* Texte normal aligné à gauche */
+.md-typeset {
+  text-align: left;
+}
+
+/* Titres Markdown centrés */
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4,
+.md-typeset h5,
+.md-typeset h6 {
+  text-align: center;
+}
