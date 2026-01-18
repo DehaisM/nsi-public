@@ -3,8 +3,6 @@
 > [Lien vers informations épreuve pratique](https://eduscol.education.fr/2068/programmes-et-ressources-en-numerique-et-sciences-informatiques-voie-g)
 
 
-> Mercredi 7 janvier : Devoir Bilan (Arbres, BDD, DPR, notions de première d'algorithmique)
-
 # Premier Projet 
 
 Fire emblem : d8a5-7467827

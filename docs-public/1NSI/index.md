@@ -1,5 +1,9 @@
 # Informations générales 
 
+# Premier Projet 
+
+- Dessine moi une ville : 241f-7362949 
+
 
 ## Thématique 1 : Langage et Programmation
 
@@ -22,6 +26,10 @@
 - TP noté 4 (version entrainement : 80e5-8017473)
 - TP noté 4 : 50da-8081139 
 
-# Premier Projet 
 
-- Dessine moi une ville : 241f-7362949 
+## Thématique 2 : Structures de données
+
+### Cours
+>- [Chap 01 - Algèbre booléenne](Cours/T2C1.pdf) 
+>- [Chap 02 - Porte logiques ](Cours/T2C2.pdf) 
+>- [Chap 03 - Représentation des nombres relatifs ](Cours/T2C3.pdf) 
