@@ -5,7 +5,7 @@
 - Dessine moi une ville : 241f-7362949 
 
 
-## Thématique 1 : Langage et Programmation
+# Thématique 1 : Langage et Programmation
 
 - TP1 (variables et affectation) : d745-6960372
 - TP2 (instructions conditionnelles) : c22b-6989199 
@@ -16,20 +16,24 @@
 - TP 6 (dessins) :  05cb-7362293$
 - TP 7 (listes) : 967d-7441020 (**corrigé** : 88db-7903729)
 - TP 8 (chaine de caractère et tuple) : d197-7574447 (**corrigé** : 723c-7959695)
-- TP 9 (liste et grille) : b871-8540542
+- TP 9 (liste et grille) : b871-8540542 (**corrigé** :)
+
+# Thématique 2 : Structures de données
+
+## Cours
+>- [Chap 01 - Algèbre booléenne](Cours/T2C1.pdf) 
+>- [Chap 02 - Porte logiques ](Cours/T2C2.pdf) 
+>- [Chap 03 - Représentation des nombres relatifs](Cours/T2C3.pdf) 
+
+
 
 # TP notés
 
 - TP noté 1 : 8679-7080660 (**corrigé** : 2e9e-7137002)
 - TP noté 2 : 2e2c-7314840 (**corrigé** : 7864-7448376)
 - TP noté 3 : a0ee-7573237 (**corrigé** :  b38d-7641148)
-- TP noté 4 (version entrainement : 80e5-8017473)
+- TP noté 4 (version entrainement) : 80e5-8017473
 - TP noté 4 : 50da-8081139 
+- TP noté 5 : 81d9-9006199
 
-
-## Thématique 2 : Structures de données
-
-### Cours
->- [Chap 01 - Algèbre booléenne](Cours/T2C1.pdf) 
->- [Chap 02 - Porte logiques ](Cours/T2C2.pdf) 
->- [Chap 03 - Représentation des nombres relatifs ](Cours/T2C3.pdf) 
+# Contrôle
