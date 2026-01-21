@@ -40,7 +40,7 @@ TP révision : f390-6974371
 >- TP POO : 09cd-7108897 (**corrigé** : 0e9a-7792537)
 >- TP Grille en POO : b59b-7154101 (**corrigé** : 79ac-7793253)
 
-## Pile,File
+## Pile, File
 >- TP LISTE,PILE,FILE (cours) : 9aa4-7336707 (**corrigé** : 1f3b-7846659)
 >- TP LISTE, PILE, FILE (exercices) : e88e-7370346 (**corrigé** : aaa7-7846662)
 
@@ -69,8 +69,8 @@ TP révision : f390-6974371
 ## Tp notés
 
 
->-TP noté 1 (récursivité) : a5b0-7108122 
->-TP noté 2 (récursivité) : 84ee-7294286 (**corrigé**)
+>- TP noté 1 (récursivité) : a5b0-7108122 
+>- TP noté 2 (récursivité) : 84ee-7294286 (**corrigé**)
 
 ## Contrôles
 
