@@ -30,6 +30,8 @@
 
 ## Cours
 >- [Chap 01 - Internet](Cours/T1C1.pdf) 
+>- [Chap 01 - Version corrigée ](Cours/T1C1C.pdf)
+
 >- [Chap 02 - DNS ](Cours/T1C2.pdf) 
 
 # Thématique 2 : Le Web 
