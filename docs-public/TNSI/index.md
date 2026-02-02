@@ -52,7 +52,7 @@ TP révision : f390-6974371
 >- [Cours Graphe](Cours/T2C3.pdf)
 >- [Cours Algorithmique des graphes](Cours/T2C4.pdf)
 >- TP Graphes (implémentation) : fc06-9033636 (**corrigé** : 0509-9272125)
->- TP Graphes (algos) : 03fb-9070247
+>- TP Graphes (algos) : 03fb-9070247 (**corrigé** : 4c3c-9449172)
 
 # Thématique 3 : Base de données
 
@@ -62,6 +62,9 @@ TP révision : f390-6974371
 >- TP Base de données BONUS (créé par T.Doré) : 2fba-8145260
 
 # Thématique 4 : Architecture et OS 
+
+## Routage
+>- [Cours Routage](Cours/T3C1.pdf)
 
 
 # Devoirs 

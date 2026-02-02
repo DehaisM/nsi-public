@@ -2,29 +2,30 @@
 
 # Premier Projet 
 
-- Dessine moi une ville : 241f-7362949 
+>- Dessine moi une ville : 241f-7362949 
 
 
 # Thématique 1 : Langage et Programmation
 
-- TP1 (variables et affectation) : d745-6960372
-- TP2 (instructions conditionnelles) : c22b-6989199 
-- TP3 (boucle for) : ef91-7026606
-- TP4 (boucle while) : 520e-7027169
-- TP4 bis (Activité algorithme d'Euclide) : e3a6-7443321
-- TP 5 (fonctions) : e052-7137642 (**corrigé** : 3084-7638265)
-- TP 6 (dessins) :  05cb-7362293$
-- TP 7 (listes) : 967d-7441020 (**corrigé** : 88db-7903729)
-- TP 8 (chaine de caractère et tuple) : d197-7574447 (**corrigé** : 723c-7959695)
-- TP 9 (liste et grille) : b871-8540542 (**corrigé** :)
+>- TP1 (variables et affectation) : d745-6960372
+>- TP2 (instructions conditionnelles) : c22b-6989199 
+>- TP3 (boucle for) : ef91-7026606
+>- TP4 (boucle while) : 520e-7027169
+>- TP4 bis (Activité algorithme d'Euclide) : e3a6-7443321
+>- TP 5 (fonctions) : e052-7137642 (**corrigé** : 3084-7638265)
+>- TP 6 (dessins) :  05cb-7362293$
+>- TP 7 (listes) : 967d-7441020 (**corrigé** : 88db-7903729)
+>- TP 8 (chaine de caractère et tuple) : d197-7574447 (**corrigé** : 723c-7959695)
+>- TP 9 (liste et grille) : b871-8540542 (**corrigé** : 4812-9124250)
+>- TP 10 (dictionnaire) : 43c1-9448256
 
 # Thématique 2 : Structures de données
 
 ## Cours
 >- [Chap 01 - Algèbre booléenne](Cours/T2C1.pdf) 
->- [Chap 02 - Porte logiques ](Cours/T2C2.pdf) 
+>- [Chap 02 - Portes logiques ](Cours/T2C2.pdf) 
 >- [Chap 03 - Représentation des nombres relatifs](Cours/T2C3.pdf) 
-
+>- [Chap 04 - Représentation des nombres à virgule](Cours/T2C4.pdf) 
 
 
 # TP notés
