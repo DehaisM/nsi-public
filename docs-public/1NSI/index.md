@@ -28,6 +28,16 @@
 >- [Chap 04 - Représentation des nombres à virgule](Cours/T2C4.pdf) 
 
 
+# Thématique 3 : algorithmique
+
+## Cours
+
+>- [Chap 01 - Complexité](Cours/T3C1.pdf) 
+>- [Chap 02 - Correction et terminaison ](Cours/T3C2.pdf) 
+>- [Chap 03 - Algos classiques](Cours/T3C3.pdf) 
+
+
+
 # TP notés
 
 - TP noté 1 : 8679-7080660 (**corrigé** : 2e9e-7137002)

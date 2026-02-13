@@ -41,6 +41,7 @@
 ## Cours
 >- [Chap 01 - Découverte du Web](Cours/T2C1.pdf) 
 >- [Chap 02 - Ecrire en HTML](Cours/T2C2.pdf)
+
 ## Activités capytale 
 >- TP5 - Découverte HTML : dbcd-9003640
 
