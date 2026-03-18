@@ -6,7 +6,7 @@
 Initiation à Python et premiers programmes.
 
 ### [Thématique 1 : Internet](internet/)
-Fonctionnement d’Internet, réseaux, protocoles.
+Fonctionnement d’Internet, réseaux et protocoles.
 
 ### [Thématique 2 : Web](web/)
-Pages web, HTML, CSS et publication.
+Pages web, HTML et CSS.

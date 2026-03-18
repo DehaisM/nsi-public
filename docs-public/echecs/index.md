@@ -1,0 +1,1 @@
+![Affiche club](images/Affiche_grand.png)

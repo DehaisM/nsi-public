@@ -1,4 +1,4 @@
-site_name:  M.Déhais - Professeur de NSI - Lycée Jean Prévost
+site_name:  Mathias Déhais - Professeur de NSI - Lycée Jean Prévost
 docs_dir: docs-public
 
 theme:
@@ -30,6 +30,8 @@ nav:
 
   - TNSI:
       - Accueil: TNSI/index.md
+
+  - Club d'Echecs : echecs/index.md
 markdown_extensions:
   - admonition
   - pymdownx.details
