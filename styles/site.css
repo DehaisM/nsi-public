@@ -237,3 +237,27 @@ body,
 .md-typeset details a:hover {
     color: #2d98da;
 }
+
+
+.echecs-intro {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.echecs-intro > div {
+    flex: 1;
+}
+
+.echecs-intro img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+}
+
+@media screen and (max-width: 900px) {
+    .echecs-intro {
+        flex-direction: column;
+    }
+}
