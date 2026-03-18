@@ -12,7 +12,7 @@
 >- [TP 3 - Se débrouiller sans capytale](cours/T2TP3.pdf) 
 >- [TP 4 - Rajouter du style](cours/T2TP4.pdf) 
 
-??? success "Version corrigée"
+??? success "Cliquez pour voir les corrigés"
     - [Chap 01 - Découverte du Web](cours/T2C1C.pdf) 
     - [Dossier de correction des TP2, 3 et 4 ](cours/SNT_WEB_TP4.zip)
 

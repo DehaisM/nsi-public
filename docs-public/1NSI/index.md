@@ -1,50 +1,15 @@
-# Informations générales 
+# 1ère NSI
 
-# Premier Projet 
+## Thématiques disponibles
 
->- Dessine moi une ville : 241f-7362949 
+### [Thématique 1 : Langage et Programmation](python/)
 
+### [Thématique 2 : Structures de données](donnees/)
 
-# Thématique 1 : Langage et Programmation
+### [Thématique 3 : algorithmique](algo/)
 
->- TP1 (variables et affectation) : d745-6960372
->- TP2 (instructions conditionnelles) : c22b-6989199 
->- TP3 (boucle for) : ef91-7026606
->- TP4 (boucle while) : 520e-7027169
->- TP4 bis (Activité algorithme d'Euclide) : e3a6-7443321
->- TP 5 (fonctions) : e052-7137642 (**corrigé** : 3084-7638265)
->- TP 6 (dessins) :  05cb-7362293$
->- TP 7 (listes) : 967d-7441020 (**corrigé** : 88db-7903729)
->- TP 8 (chaine de caractère et tuple) : d197-7574447 (**corrigé** : 723c-7959695)
->- TP 9 (liste et grille) : b871-8540542 (**corrigé** : 4812-9124250)
->- TP 10 (dictionnaire) : 43c1-9448256
+## Autres 
 
-# Thématique 2 : Structures de données
+### [TP notés](tp/)
 
-## Cours
->- [Chap 01 - Algèbre booléenne](Cours/T2C1.pdf) 
->- [Chap 02 - Portes logiques ](Cours/T2C2.pdf) 
->- [Chap 03 - Représentation des nombres relatifs](Cours/T2C3.pdf) 
->- [Chap 04 - Représentation des nombres à virgule](Cours/T2C4.pdf) 
-
-
-# Thématique 3 : algorithmique
-
-## Cours
-
->- [Chap 01 - Complexité](Cours/T3C1.pdf) 
->- [Chap 02 - Correction et terminaison ](Cours/T3C2.pdf) 
->- [Chap 03 - Algos classiques](Cours/T3C3.pdf) 
-
-
-
-# TP notés
-
-- TP noté 1 : 8679-7080660 (**corrigé** : 2e9e-7137002)
-- TP noté 2 : 2e2c-7314840 (**corrigé** : 7864-7448376)
-- TP noté 3 : a0ee-7573237 (**corrigé** :  b38d-7641148)
-- TP noté 4 (version entrainement) : 80e5-8017473
-- TP noté 4 : 50da-8081139 
-- TP noté 5 : 81d9-9006199 (**corrigé** : f759-9169998)
-
-# Contrôle
+### [Projets](projet/)

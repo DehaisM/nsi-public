@@ -21,12 +21,21 @@ nav:
 
   - SNT:
       - Accueil: SNT/index.md
-      - Thématique 0 - Python: SNT/python/index.md
-      - Thématique 1 - Internet: SNT/internet/index.md
-      - Thématique 2 - Web: SNT/web/index.md
+      - Thématiques : 
+        - Thématique 0 - Python: SNT/python/index.md
+        - Thématique 1 - Internet: SNT/internet/index.md
+        - Thématique 2 - Web: SNT/web/index.md
 
   - 1ère NSI:
       - Accueil: 1NSI/index.md
+      - Thématiques :
+        - Thématique 1 - Langage et Programmation: 1NSI/python/index.md
+        - Thématique 2 - Structures de données: 1NSI/donnees/index.md
+        - Thématique 3 - Algorithmique: 1NSI/algo/index.md
+      - Autres :
+        - TP notés: 1NSI/tp/index.md
+        - Projets: 1NSI/projet/index.md
+
 
   - TNSI:
       - Accueil: TNSI/index.md
@@ -36,3 +45,7 @@ markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
+
+
+
+  
