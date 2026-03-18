@@ -4,13 +4,13 @@ Retrouvez ici les cours, activités et ressources de NSI et SNT.
 
 ## Enseignements
 
-### [Seconde GT](SNT/)
+### [Seconde GT](SNT/index.md)
 
-### [Première NSI](1NSI/)
+### [Première NSI](1NSI/index.md)
 
-### [Terminale NSI](TNSI/)
+### [Terminale NSI](TNSI/index.md)
 
 ## Autres
 
-### [Club D'échecs](echecs/)
+### [Club D'échecs](echecs/index.md)
 

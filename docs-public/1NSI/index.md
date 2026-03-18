@@ -2,14 +2,14 @@
 
 ## Thématiques disponibles
 
-### [Thématique 1 : Langage et Programmation](python/)
+### [Thématique 1 : Langage et Programmation](python/index.md)
 
-### [Thématique 2 : Structures de données](donnees/)
+### [Thématique 2 : Structures de données](donnees/index.md)
 
-### [Thématique 3 : algorithmique](algo/)
+### [Thématique 3 : algorithmique](algo/index.md)
 
 ## Autres 
 
-### [TP notés](tp/)
+### [TP notés](tp/index.md)
 
-### [Projets](projet/)
+### [Projets](projet/index.md)
