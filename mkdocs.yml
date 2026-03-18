@@ -18,10 +18,18 @@ extra_css:
 
 nav:
   - Accueil: index.md
-  - SNT: SNT/index.md
-  - 1ère NSI: 1NSI/index.md
-  - TNSI: TNSI/index.md
 
+  - SNT:
+      - Accueil: SNT/index.md
+      - Thématique 0 - Python: SNT/python/index.md
+      - Thématique 1 - Internet: SNT/internet/index.md
+      - Thématique 2 - Web: SNT/web/index.md
+
+  - 1ère NSI:
+      - Accueil: 1NSI/index.md
+
+  - TNSI:
+      - Accueil: TNSI/index.md
 markdown_extensions:
   - admonition
   - pymdownx.details

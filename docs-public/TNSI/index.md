@@ -33,6 +33,9 @@ TP révision : f390-6974371
 >- [Terminaison - Correction](Cours/T1C4.pdf)
 >- [Algorithmes de 1ère à savoir](Cours/algo-classique.pdf)
 
+## Calculabilité et décidabilité
+>- [Calculabilité, décidabilité](Cours/T1C5.pdf)
+>- [Fiche exercice décidabilité](exercises/T1C5E.pdf)
 
 # Thématique 2 : Structure de données
 

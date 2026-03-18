@@ -1,10 +1,14 @@
 # Bienvenue sur le site de M.Déhais
 
-Veuillez sélectionner votre niveau
+Retrouvez ici les cours, activités et ressources de NSI et SNT.
 
+## Niveaux
 
-## [Seconde GT](SNT/index.md) 
+### [Seconde GT](SNT/)
+Cours et activités de SNT.
 
-## [Première NSI](1NSI/index.md)
+### [Première NSI](1NSI/)
+Cours, TP et exercices de Première NSI.
 
-## [Terminale NSI](TNSI/index.md)
+### [Terminale NSI](TNSI/)
+Cours, TP et exercices de Terminale NSI.

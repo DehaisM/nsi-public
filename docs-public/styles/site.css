@@ -1,26 +1,239 @@
-/* Cache les deux sidebars */
-.md-sidebar { 
-  display: none;
+/* =========================
+   PALETTE SOMBRE PASTEL
+   Inspirée horizon / bluegrey
+   ========================= */
+
+:root {
+
+    /* fond principal du site */
+    --site-bg: #a3c2e03b;          /* gris bleu très doux */
+
+    /* zone contenu */
+    --site-card-bg: #ffffff;
+
+    /* gris typographie */
+    --site-text: #4b6584;        /* horizon */
+    --site-muted: #778ca3;       /* bluegrey */
+
+    /* bordures */
+    --site-border: #d1d8e0;      /* twinkle */
+    --site-border-soft: #e3e8ee;
+
+    /* couleurs pédagogiques atténuées */
+    --site-primary: #3aa76d;     /* algal assombri */
+    --site-primary-soft: #6fcf97;
+    --site-accent: #4a90c2;      /* blueboyzon adouci */
+
+    /* ombres */
+    --site-shadow: 0 6px 18px rgba(75, 101, 132, 0.08);
+    --site-shadow-hover: 0 10px 24px rgba(75, 101, 132, 0.14);
 }
 
-/* Contenu centré et largeur lisible */
-.md-main__inner {
-  margin: 0 auto;
-  max-width: 900px;
-  padding: 2rem;
+/* =========================
+   FOND GLOBAL
+   ========================= */
+
+body,
+.md-main {
+    background: var(--site-bg);
 }
 
-/* Texte normal aligné à gauche */
-.md-typeset {
-  text-align: left;
+/* =========================
+   HEADER PLUS SOBRE
+   ========================= */
+
+.md-header,
+.md-tabs {
+    background: linear-gradient(135deg, #3aa76d, #4a90c2) !important;
 }
 
-/* Titres Markdown centrés */
-.md-typeset h1,
-.md-typeset h2,
-.md-typeset h3,
-.md-typeset h4,
-.md-typeset h5,
-.md-typeset h6 {
-  text-align: center;
+/* =========================
+   CONTENU
+   ========================= */
+
+.md-content__inner {
+    max-width: 980px;
+    margin: 0 auto;
+    padding-top: 1.2rem;
+}
+
+/* =========================
+   TITRES
+   ========================= */
+
+.md-typeset h1 {
+    text-align: center;
+    font-size: 2.3rem;
+    font-weight: 600;
+    color: var(--site-text);
+}
+
+.md-typeset h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-top: 2rem;
+    color: var(--site-text);
+}
+
+.md-typeset h3 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--site-accent);
+}
+
+/* =========================
+   TEXTE
+   ========================= */
+
+.md-typeset p,
+.md-typeset li {
+    font-size: 1.03rem;
+    line-height: 1.65;
+    color: var(--site-text);
+}
+
+/* =========================
+   CARTES DE COURS
+   ========================= */
+
+.md-typeset h2 + ul,
+.md-typeset h2 + ol,
+.md-typeset details,
+.md-typeset .admonition {
+    background: var(--site-card-bg);
+    border: 1px solid var(--site-border-soft);
+    border-left: 5px solid var(--site-primary);
+    border-radius: 14px;
+    padding: 1.2rem 1.4rem 1.2rem 2rem;
+    margin-top: 0.8rem;
+    box-shadow: var(--site-shadow);
+}
+
+/* =========================
+   BOUTONS DE NAVIGATION
+   ========================= */
+
+.md-typeset h2 a,
+.md-typeset h3 a {
+    display: block;
+    padding: 18px;
+    margin: 14px 0;
+    border-radius: 14px;
+    background: linear-gradient(135deg, #5fae88, #6ea8c9);
+    color: white !important;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 1.1em;
+    box-shadow: var(--site-shadow);
+    transition: all 0.18s ease;
+}
+
+.md-typeset h2 a:hover,
+.md-typeset h3 a:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--site-shadow-hover);
+    background: linear-gradient(135deg, #4d9c78, #5e97b8);
+}
+
+/* =========================
+   LIENS RESSOURCES
+   ========================= */
+
+.md-typeset ul li a,
+.md-typeset ol li a {
+    display: inline-block;
+    padding: 0.45rem 0.8rem;
+    border-radius: 10px;
+    background: #f3f6fa;
+    border: 1px solid var(--site-border);
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.18s ease;
+}
+
+.md-typeset ul li a:hover {
+    background: #e9f0f6;
+    border-color: var(--site-accent);
+    transform: translateX(3px);
+}
+
+/* =========================
+   TABLEAUX
+   ========================= */
+
+.md-typeset table {
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.md-typeset table thead {
+    background: linear-gradient(135deg, #5fae88, #6ea8c9);
+    color: white;
+}
+
+/* =========================
+   CODE
+   ========================= */
+
+.md-typeset code {
+    color: #8854d0; /* gloomy */
+}
+
+
+/* =========================
+   BLOCS REPLIABLES / CORRIGÉS
+   ========================= */
+
+.md-typeset details {
+    background: #eef3f8;
+    border: 1px solid #cfd9e3;
+    border-left: 4px solid #5c8fb8;
+    border-radius: 10px;
+    padding: 0;
+    margin-top: 1rem;
+    box-shadow: none;
+    overflow: hidden;
+}
+
+.md-typeset details summary {
+    display: block;
+    cursor: pointer;
+    padding: 0.85rem 1rem;
+    font-weight: 600;
+    color: #2f3e4f;
+    background: #e8eff6;
+    transition: background 0.2s ease;
+}
+
+.md-typeset details summary:hover {
+    background: #dde8f2;
+}
+
+/* contenu intérieur du bloc replié */
+.md-typeset details > div,
+.md-typeset details > .tabbed-set,
+.md-typeset details > .highlight,
+.md-typeset details > p,
+.md-typeset details > ul,
+.md-typeset details > ol {
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 1rem;
+}
+
+/* si le contenu est une liste */
+.md-typeset details ul,
+.md-typeset details ol {
+    margin-top: 0.5rem;
+}
+
+/* liens à l'intérieur des corrigés */
+.md-typeset details a {
+    color: #3867d6;
+    font-weight: 500;
+}
+
+.md-typeset details a:hover {
+    color: #2d98da;
 }
