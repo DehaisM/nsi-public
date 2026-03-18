@@ -1,6 +1,6 @@
 # Bienvenue sur le site de Mathias Déhais
 
-Retrouvez ici les cours, activités et ressources de NSI et SNT.
+Tous mes cours sont utilisables par toutes et tous.
 
 ## Enseignements
 
