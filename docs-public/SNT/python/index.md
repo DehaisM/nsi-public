@@ -20,7 +20,7 @@
 >- [Fiche exercice 3 - Boucle for](exercices/fiche-exo3.pdf)
 >- [Fiche exercice 3 - Version corrigée](exercices/fiche-exo3-corrige.pdf)
 
-??? success "Cliquez pour voir les exercises corrigés"
+??? success "Cliquez pour voir les exercices corrigés"
     - [Fiche exercice 2 - Instructions conditionnelles](exercices/fiche-exo2-corrige.pdf)
     - [Fiche exercice 3 - Boucle for ](exercices/fiche-exo3-corrige.pdf)
 

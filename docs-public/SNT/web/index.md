@@ -16,3 +16,6 @@
     - [Chap 01 - Découverte du Web](cours/T2C1C.pdf) 
     - [Dossier de correction des TP2, 3 et 4 ](cours/SNT_WEB_TP4.zip)
 
+## Projet final
+
+>- [Projet](cours/bilan.pdf)

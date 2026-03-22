@@ -15,7 +15,10 @@ theme:
     - navigation.tabs.sticky
     - navigation.top
     - navigation.indexes
+    - navigation.path
     - toc.integrate
+    - header.autohide
+    - navigation.instant
 extra_css:
   - styles/site.css
 
@@ -47,7 +50,7 @@ nav:
       - Thématique 1 - Langage et Programmation: TNSI/python/index.md
       - Thématique 2 - Structures de données: TNSI/donnees/index.md
       - Thématique 3 - Base de données: TNSI/bdd/index.md
-      - Thématique 3 - Architecture et OS: TNSI/architecture/index.md
+      - Thématique 4 - Architecture et OS: TNSI/architecture/index.md
       
       - TP notés: TNSI/tp/index.md
       - Projets: TNSI/projet/index.md
