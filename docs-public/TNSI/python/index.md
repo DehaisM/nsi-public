@@ -24,4 +24,7 @@ TP révision : f390-6974371
 >- [Terminaison - Correction](../Cours/T1C4.pdf)
 >- [Algorithmes de 1ère à savoir](../Cours/algo-classique.pdf)
 
+## Programmation Dynamique
 
+>- TP introduction programmation Dynamique : e954-10380113
+>- TP algorithme glouton et programmation Dynamique : 8cda-10381579
