@@ -6,7 +6,9 @@
 
 ### [Thématique 2 : Structures de données](donnees/index.md)
 
-### [Thématique 3 : algorithmique](algo/index.md)
+### [Thématique 3 : Algorithmique](algo/index.md)
+
+### [Thématique 4 : Architecture et OS](os/index.md)
 
 ## Autres 
 
