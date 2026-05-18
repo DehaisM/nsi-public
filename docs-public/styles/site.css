@@ -1,65 +1,46 @@
-/* =========================
-   PALETTE SOMBRE PASTEL
-   Inspirée horizon / bluegrey
-   ========================= */
 
 :root {
 
-    /* fond principal du site */
-    --site-bg: #a3c2e03b;          /* gris bleu très doux */
+  
+    --site-bg: #a3c2e03b;       
 
-    /* zone contenu */
+
     --site-card-bg: #ffffff;
 
-    /* gris typographie */
-    --site-text: #4b6584;        /* horizon */
-    --site-muted: #778ca3;       /* bluegrey */
 
-    /* bordures */
-    --site-border: #d1d8e0;      /* twinkle */
+    --site-text: #4b6584;    
+    --site-muted: #778ca3;      
+
+ 
+    --site-border: #d1d8e0;   
     --site-border-soft: #e3e8ee;
 
-    /* couleurs pédagogiques atténuées */
-    --site-primary: #3aa76d;     /* algal assombri */
+  
+    --site-primary: #3aa76d;    
     --site-primary-soft: #6fcf97;
-    --site-accent: #4a90c2;      /* blueboyzon adouci */
+    --site-accent: #4a90c2;   
 
-    /* ombres */
+
     --site-shadow: 0 6px 18px rgba(75, 101, 132, 0.08);
     --site-shadow-hover: 0 10px 24px rgba(75, 101, 132, 0.14);
 }
-
-/* =========================
-   FOND GLOBAL
-   ========================= */
 
 body,
 .md-main {
     background: var(--site-bg);
 }
 
-/* =========================
-   HEADER PLUS SOBRE
-   ========================= */
 
 .md-header,
 .md-tabs {
     background: linear-gradient(135deg, #3aa76d, #4a90c2) !important;
 }
 
-/* =========================
-   CONTENU
-   ========================= */
-
 .md-content__inner {
     max-width: 980px;
     margin: 0 auto;
     padding-top: 1.2rem;
 }
-
-/* =========================
-   TITRES
-   ========================= */
 
 .md-typeset h1 {
     text-align: center;
@@ -81,9 +62,6 @@ body,
     color: var(--site-accent);
 }
 
-/* =========================
-   TEXTE
-   ========================= */
 
 .md-typeset p,
 .md-typeset li {
@@ -92,9 +70,6 @@ body,
     color: var(--site-text);
 }
 
-/* =========================
-   CARTES DE COURS
-   ========================= */
 
 .md-typeset h2 + ul,
 .md-typeset h2 + ol,
@@ -109,9 +84,6 @@ body,
     box-shadow: var(--site-shadow);
 }
 
-/* =========================
-   BOUTONS DE NAVIGATION
-   ========================= */
 
 .md-typeset h2 a,
 .md-typeset h3 a {
@@ -135,9 +107,6 @@ body,
     background: linear-gradient(135deg, #4d9c78, #5e97b8);
 }
 
-/* =========================
-   LIENS RESSOURCES
-   ========================= */
 
 .md-typeset ul li a,
 .md-typeset ol li a {
@@ -157,9 +126,6 @@ body,
     transform: translateX(3px);
 }
 
-/* =========================
-   TABLEAUX
-   ========================= */
 
 .md-typeset table {
     background: white;
@@ -172,18 +138,12 @@ body,
     color: white;
 }
 
-/* =========================
-   CODE
-   ========================= */
 
 .md-typeset code {
     color: #8854d0; /* gloomy */
 }
 
 
-/* =========================
-   BLOCS REPLIABLES / CORRIGÉS
-   ========================= */
 
 .md-typeset details {
     background: #eef3f8;
@@ -210,7 +170,7 @@ body,
     background: #dde8f2;
 }
 
-/* contenu intérieur du bloc replié */
+
 .md-typeset details > div,
 .md-typeset details > .tabbed-set,
 .md-typeset details > .highlight,
@@ -222,13 +182,13 @@ body,
     padding-bottom: 1rem;
 }
 
-/* si le contenu est une liste */
+
 .md-typeset details ul,
 .md-typeset details ol {
     margin-top: 0.5rem;
 }
 
-/* liens à l'intérieur des corrigés */
+
 .md-typeset details a {
     color: #3867d6;
     font-weight: 500;

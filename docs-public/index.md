@@ -1,6 +1,6 @@
 # Bienvenue sur le site de Mathias Déhais
 
-Tous mes cours sont utilisables par toutes et tous.
+Tous mes cours sont utilisables par toutes et tous. Contactez-moi à mathias-romain.dehais@ac-normandie.fr pour demande de fichier/informations.
 
 ## Enseignements
 

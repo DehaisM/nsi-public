@@ -10,3 +10,9 @@ Fonctionnement d’Internet, réseaux et protocoles.
 
 ### [Thématique 2 : Web](web/index.md)
 Pages web, HTML et CSS.
+
+### [Thématique 3 : Réseaux sociaux ](reseaux/index.md)
+Réseaux sociaux et graphes
+
+### [Thématique 4 : Données structurées ](donnees/index.md)
+Fichier CSV et LibreOffice Calc
