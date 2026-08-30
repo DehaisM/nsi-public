@@ -65,15 +65,22 @@ dans la page** au lieu d'être un simple lien de téléchargement.
 
 ## Codes Capytale
 
+Un code Capytale ouvre une activité via l'URL de partage
+`https://capytale2.ac-paris.fr/web/c/<code>` (l'élève choisit ensuite sa
+connexion). On écrit donc les codes en **liens cliquables**, le texte du lien
+restant le code (l'élève peut cliquer *ou* le recopier dans Capytale).
+
 Toujours dans un bloc admonition, format unique :
 
 ```markdown
 ## Activités Capytale
 
 !!! note "Activités Capytale"
-    - **TP 1** — Variables et affectation : `d745-6960372`
-    - **TP 5** — Fonctions : `e052-7137642` — corrigé : `3084-7638265`
+    - **TP 1** — Variables et affectation : [b871-8540542](https://capytale2.ac-paris.fr/web/c/b871-8540542)
+    - **TP 5** — Fonctions : [e052-7137642](https://capytale2.ac-paris.fr/web/c/e052-7137642) · corrigé [3084-7638265](https://capytale2.ac-paris.fr/web/c/3084-7638265)
 ```
+
+Modèle prêt à copier : `modele/bloc-capytale.md`.
 
 ## Navigation
 
