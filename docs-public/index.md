@@ -10,7 +10,4 @@ Tous mes cours sont utilisables par toutes et tous. Contactez-moi à mathias-rom
 
 ### [Terminale NSI](TNSI/index.md)
 
-## Autres
-
-### [Club D'échecs](echecs/index.md)
 
