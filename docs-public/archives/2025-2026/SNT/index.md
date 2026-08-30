@@ -1,4 +1,4 @@
-# Seconde GT — SNT
+# Seconde GT 
 
 ## Thématiques disponibles
 

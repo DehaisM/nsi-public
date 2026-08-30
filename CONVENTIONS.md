@@ -39,6 +39,23 @@ Structure recommandée sous `SNT/`, `1NSI/`, `TNSI/` :
   tp/  projet/  pratique/     # rubriques transverses (si besoin)
 ```
 
+## Visionneuse PDF (cours)
+
+Les cours restent des PDF (générés depuis LaTeX pour l'impression) mais s'**affichent
+dans la page** au lieu d'être un simple lien de téléchargement.
+
+- Le PDF va dans le sous-dossier `cours/` de la thématique.
+- Dans l'`index.md` de la thématique, coller le bloc de `modele/bloc-cours-pdf.md`
+  (un `<details>` par chapitre), en adaptant le nom de fichier et le titre.
+- Le style vient de `.pdf-embed` / `.pdf-actions` / `details.pdf-chapter` dans
+  `docs-public/styles/site.css`.
+- Chemins **relatifs à l'`index.md` de la thématique** : toujours `cours/NN-titre.pdf`
+  (l'`index.md` est servi à la racine du dossier, donc ça résout correctement).
+- Le bloc contient un lien de repli : sur mobile l'aperçu inline ne s'affiche pas
+  toujours, le bouton « Ouvrir » / « Télécharger » prend le relais.
+- C'est du HTML brut : ne pas l'indenter sous une admonition `???`, le laisser en
+  colonne 0 (sinon Markdown l'emballe mal).
+
 ## Nommage
 
 - **Dossiers sous un niveau** : minuscules, sans accents, courts (`cours`, `tp`, `donnees`).

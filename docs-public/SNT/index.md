@@ -1,5 +1,6 @@
-# Seconde GT — SNT
+# Seconde GT 
 
-_Les cours seront ajoutés au fil de l'année._
+## Thématiques disponibles
 
-Pour l'année 2025-2026, voir l'onglet **Années précédentes**.
+### [Introduction](introduction/index.md)
+Présentation de l'année et premier cours
