@@ -1,21 +1,5 @@
-# 1ère NSI
+# Première NSI
 
-## Thématiques disponibles
+_Les cours seront ajoutés au fil de l'année._
 
-### [Thématique 1 : Langage et Programmation](python/index.md)
-
-### [Thématique 2 : Représentation des données](donnees/index.md)
-
-### [Thématique 3 : Algorithmique](algo/index.md)
-
-### [Thématique 4 : Architecture et OS](os/index.md)
-
-### [Thématique 5 : Traitement de données en tables](table/index.md)
-
-## Autres 
-
-### [TP notés](tp/index.md)
-
-### [Projets](projet/index.md)
-
-### [Epreuve pratique](pratique/index.md)
+Pour l'année 2025-2026, voir l'onglet **Années précédentes**.

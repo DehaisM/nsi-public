@@ -22,48 +22,28 @@ theme:
 extra_css:
   - styles/site.css
 
+validation:
+  nav:
+    omitted_files: ignore
+not_in_nav: |
+  /archives/**
+  /echecs/**
+
 nav:
 
-  - Accueil: 
-      - index.md
-  - SNT: 
-      - SNT : SNT/index.md
-      
-      - Thématique 0 - Python: SNT/python/index.md
-      - Thématique 1 - Internet: SNT/internet/index.md
-      - Thématique 2 - Web: SNT/web/index.md
-      - Thématique 3 - Réseaux sociaux: SNT/reseaux/index.md
-      - Thématique 4 - Données en tables: SNT/donnees/index.md
+  - Accueil: index.md
 
-  - 1ère NSI:
-      -  1ère NSI : 1NSI/index.md
-      
-      - Thématique 1 - Langage et Programmation: 1NSI/python/index.md
-      - Thématique 2 - Représentations des données: 1NSI/donnees/index.md
-      - Thématique 3 - Algorithmique: 1NSI/algo/index.md
-      - Thématique 4 - Architecture et OS: 1NSI/os/index.md
-      - Thématique 5 - Traitement de données en tables: 1NSI/table/index.md
-      
-      - TP notés: 1NSI/tp/index.md
-      - Projets: 1NSI/projet/index.md
-      - Epreuve pratique: 1NSI/pratique/index.md
-  - TNSI:
-      -  TNSI : TNSI/index.md
-      
-      - Thématique 1 - Langage et Programmation: TNSI/python/index.md
-      - Thématique 2 - Structures de données: TNSI/donnees/index.md
-      - Thématique 3 - Base de données: TNSI/bdd/index.md
-      - Thématique 4 - Architecture et OS: TNSI/architecture/index.md
-      
-      - TP notés: TNSI/tp/index.md
-      - Projets: TNSI/projet/index.md
+  - Seconde GT: SNT/index.md
 
-  - Club d'Echecs : echecs/index.md
+  - Première NSI: 1NSI/index.md
+
+  - Terminale NSI: TNSI/index.md
+
+  - Années précédentes:
+      - archives/index.md
+      - 2025-2026: archives/2025-2026/index.md
+
 markdown_extensions:
   - admonition
   - pymdownx.details
   - pymdownx.superfences
-
-
-
-  
