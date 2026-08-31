@@ -1,10 +1,27 @@
 <!--
-  Bloc « chapitre de cours en PDF » à coller dans l'index.md d'une thématique.
-  - Placer le PDF dans le sous-dossier cours/ de la thématique.
-  - Remplacer 01-titre-du-chapitre (2 fois) et le titre affiché.
-  - Le chemin est relatif à l'index.md de la thématique (donc "cours/…").
-  Voir CONVENTIONS.md § Visionneuse PDF.
+  Deux façons de proposer un PDF sur une page. Chemins relatifs à l'index.md
+  qui contient le bloc (ex. "cours/01-titre.pdf"). Voir CONVENTIONS.md § Documents PDF.
 -->
+
+
+<!-- ========================================================================
+     1) PAR DÉFAUT — liens « Voir / télécharger »
+     Simple, léger, parfait quand la page regroupe plusieurs documents.
+     ======================================================================== -->
+
+## Titre du document
+
+_Courte description._
+
+[Voir le document](cours/01-titre-du-chapitre.pdf){ .md-button .md-button--primary target=_blank }
+[télécharger](cours/01-titre-du-chapitre.pdf){ download }
+
+
+<!-- ========================================================================
+     2) OPTIONNEL — visionneuse intégrée dans un bloc dépliable
+     Pour UN document mis en avant qu'on veut lire sans quitter la page.
+     HTML brut : à laisser en colonne 0 (pas indenté sous une admonition).
+     ======================================================================== -->
 
 <details class="pdf-chapter">
 <summary>Chapitre 01 — Titre du chapitre</summary>

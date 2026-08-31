@@ -39,22 +39,33 @@ Structure recommandée sous `SNT/`, `1NSI/`, `TNSI/` :
   tp/  projet/  pratique/     # rubriques transverses (si besoin)
 ```
 
-## Visionneuse PDF (cours)
+## Documents PDF
 
-Les cours restent des PDF (générés depuis LaTeX pour l'impression) mais s'**affichent
-dans la page** au lieu d'être un simple lien de téléchargement.
+Les cours restent des PDF (générés depuis LaTeX pour l'impression). Deux façons
+de les proposer — modèle prêt à copier : `modele/bloc-cours-pdf.md`.
 
-- Le PDF va dans le sous-dossier `cours/` de la thématique.
-- Dans l'`index.md` de la thématique, coller le bloc de `modele/bloc-cours-pdf.md`
-  (un `<details>` par chapitre), en adaptant le nom de fichier et le titre.
-- Le style vient de `.pdf-embed` / `.pdf-actions` / `details.pdf-chapter` dans
-  `docs-public/styles/site.css`.
-- Chemins **relatifs à l'`index.md` de la thématique** : toujours `cours/NN-titre.pdf`
-  (l'`index.md` est servi à la racine du dossier, donc ça résout correctement).
-- Le bloc contient un lien de repli : sur mobile l'aperçu inline ne s'affiche pas
-  toujours, le bouton « Ouvrir » / « Télécharger » prend le relais.
-- C'est du HTML brut : ne pas l'indenter sous une admonition `???`, le laisser en
-  colonne 0 (sinon Markdown l'emballe mal).
+**Par défaut : liens « Voir / télécharger ».** Simple, léger, mobile-friendly,
+idéal quand une page regroupe plusieurs documents.
+
+```markdown
+## Titre du document
+
+_Courte description._
+
+[Voir le document](cours/01-titre.pdf){ .md-button .md-button--primary target=_blank }
+[télécharger](cours/01-titre.pdf){ download }
+```
+
+**Optionnel : visionneuse intégrée** (bloc `<details>` + `<object>`), pour UN
+document mis en avant qu'on veut lire sans quitter la page. Style dans
+`.pdf-embed` / `.pdf-actions` / `details.pdf-chapter` (`docs-public/styles/site.css`).
+C'est du HTML brut : le laisser en colonne 0 (pas indenté sous une admonition).
+
+Dans les deux cas :
+
+- PDF dans le sous-dossier `cours/` (ou à côté de l'`index.md` de la page).
+- Chemins **relatifs à l'`index.md` qui contient le bloc** — l'`index.md` est servi
+  à la racine de son dossier, donc `cours/NN-titre.pdf` ou `fichier.pdf` résout bien.
 
 ## Nommage
 

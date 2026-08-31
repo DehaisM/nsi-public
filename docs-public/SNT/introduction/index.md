@@ -1,9 +1,21 @@
 # Introduction
 
-<object class="pdf-embed" data="introduction.pdf#view=FitH" type="application/pdf">
-<p>L’aperçu ne s’affiche pas sur cet appareil. <a href="introduction.pdf">Ouvrir le PDF</a></p>
-</object>
-<p class="pdf-actions">
-<a class="md-button" href="introduction.pdf" target="_blank">Ouvrir en plein écran</a>
-<a class="md-button" href="introduction.pdf" download>Télécharger</a>
-</p>
+
+## Diaporama de présentation
+
+Organisation de l'année
+
+[Voir le diaporama](diapo_presentation.pdf){ .md-button .md-button--primary target=_blank }
+[télécharger](diapo_presentation.pdf){ download }
+
+## Thématique 0
+
+Première activité et cours
+
+[Voir le document](thematique0.pdf){ .md-button .md-button--primary target=_blank }
+[télécharger](thematique0.pdf){ download }
+
+## L'énigme du parachute
+
+
+![Schéma du parachute](parachute.png)
