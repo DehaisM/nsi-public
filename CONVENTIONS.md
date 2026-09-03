@@ -87,8 +87,8 @@ Toujours dans un bloc admonition, format unique :
 ## Activités Capytale
 
 !!! note "Activités Capytale"
-    - **TP 1** — Variables et affectation : [b871-8540542](https://capytale2.ac-paris.fr/web/c/b871-8540542)
-    - **TP 5** — Fonctions : [e052-7137642](https://capytale2.ac-paris.fr/web/c/e052-7137642) · corrigé [3084-7638265](https://capytale2.ac-paris.fr/web/c/3084-7638265)
+    - **TP 1** Variables et affectation : [b871-8540542](https://capytale2.ac-paris.fr/web/c/b871-8540542)
+    - **TP 5** Fonctions : [e052-7137642](https://capytale2.ac-paris.fr/web/c/e052-7137642) · corrigé [3084-7638265](https://capytale2.ac-paris.fr/web/c/3084-7638265)
 ```
 
 Modèle prêt à copier : `modele/bloc-capytale.md`.

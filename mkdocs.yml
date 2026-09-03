@@ -52,7 +52,10 @@ nav:
       - SNT/index.md
       - Introduction: SNT/introduction/index.md
 
-  - Première NSI: 1NSI/index.md
+  - Première NSI:
+      - 1NSI/index.md
+      - Introduction: 1NSI/introduction/index.md
+      - Thématique 0 - Bases de Python: 1NSI/python/index.md
 
   - Terminale NSI: TNSI/index.md
 

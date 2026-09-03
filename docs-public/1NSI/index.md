@@ -1,5 +1,10 @@
 # Première NSI
 
-_Les cours seront ajoutés au fil de l'année._
+## Thématiques disponibles
 
-Pour l'année 2025-2026, voir l'onglet **Années précédentes**.
+### [Introduction](introduction/index.md)
+Présentation de l'année.
+
+### [Thématique 0 : Bases de Python](python/index.md)
+Premiers pas en Python
+

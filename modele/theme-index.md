@@ -22,7 +22,7 @@ _À venir._
 
 !!! note "Activités Capytale"
     _À venir._
-    <!-- - **TP 1** — Titre : [xxxx-xxxxxxx](https://capytale2.ac-paris.fr/web/c/xxxx-xxxxxxx) -->
+    <!-- - **TP 1** Titre : [xxxx-xxxxxxx](https://capytale2.ac-paris.fr/web/c/xxxx-xxxxxxx) -->
 
 ## Travaux pratiques
 

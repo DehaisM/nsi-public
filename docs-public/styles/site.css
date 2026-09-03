@@ -1,8 +1,3 @@
-/* ==========================================================================
-   NSI — Lycée Jean Prévost
-   Habillage « cahier de cours », accent vert. Surcouche légère de Material.
-   Modes clair et sombre.
-   ========================================================================== */
 
 :root {
     --nsi-serif: "Bitter", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
@@ -76,7 +71,7 @@
     font-weight: 600;
 }
 
-/* --- Sommaires : un lien seul dans un titre devient une « fiche » -- */
+
 .md-typeset h2 > a:only-child,
 .md-typeset h3 > a:only-child {
     display: block;
@@ -98,7 +93,6 @@
     border-left-color: var(--md-accent-fg-color);
 }
 
-/* --- Club d'échecs (page dédiée) -------------------------------- */
 .echecs-intro {
     display: flex;
     align-items: center;

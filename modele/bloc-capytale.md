@@ -9,5 +9,5 @@
 ## Activités Capytale
 
 !!! note "Activités Capytale"
-    - **TP 1** — Titre du TP : [xxxx-xxxxxxx](https://capytale2.ac-paris.fr/web/c/xxxx-xxxxxxx)
-    - **TP 2** — Titre du TP : [xxxx-xxxxxxx](https://capytale2.ac-paris.fr/web/c/xxxx-xxxxxxx) · corrigé [xxxx-xxxxxxx](https://capytale2.ac-paris.fr/web/c/xxxx-xxxxxxx)
+    - **TP 1** Titre du TP : [xxxx-xxxxxxx](https://capytale2.ac-paris.fr/web/c/xxxx-xxxxxxx)
+    - **TP 2** Titre du TP : [xxxx-xxxxxxx](https://capytale2.ac-paris.fr/web/c/xxxx-xxxxxxx) · corrigé [xxxx-xxxxxxx](https://capytale2.ac-paris.fr/web/c/xxxx-xxxxxxx)
