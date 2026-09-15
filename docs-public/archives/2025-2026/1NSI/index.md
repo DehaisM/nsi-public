@@ -14,8 +14,6 @@
 
 ## Autres 
 
-### [TP notés](tp/index.md)
-
 ### [Projets](projet/index.md)
 
 ### [Epreuve pratique](pratique/index.md)
