@@ -9,5 +9,5 @@ Présentation de l'année.
 Premiers pas en Python
 
 ### [Thématique 1 : Types construits](types-construits/index.md)
-Les listes
+Tuples, Listes et Dictionnaires
 
