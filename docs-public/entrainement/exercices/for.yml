@@ -390,3 +390,500 @@ exercices:
       - { appel: "est_parfait(12)", attendu: "False", cache: true }
       - { appel: "est_parfait(496)", attendu: "True", cache: true }
       - { appel: "est_parfait(2)", attendu: "False", cache: true }
+
+  - id: predire-lettre-comptee
+    numero: 81
+    titre: Les a de banane
+    notion: for
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      compteur = 0
+      for lettre in "banane":
+          if lettre == "a":
+              compteur = compteur + 1
+      print(compteur)
+    choix: ["2", "1", "3", "6"]
+    explication: |
+      La boucle regarde les 6 lettres une par une, et le compteur augmente pour chaque `a` : il y en a 2 dans `banane`.
+
+  - id: somme-impairs
+    numero: 82
+    titre: La somme des impairs
+    notion: for
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `somme_impairs(n)` qui renvoie la somme des entiers impairs compris entre 1 et `n` (inclus). Par exemple, `somme_impairs(5)` renvoie 1 + 3 + 5 = 9.
+    depart: |
+      def somme_impairs(n):
+          ...
+    interdit: [sum]
+    aides:
+      - |
+        def somme_impairs(n):
+            # creer une variable total qui vaut 0
+            # parcourir les entiers impairs de 1 a n avec un pas de 2
+            #     ajouter l'entier a total
+            # renvoyer total
+      - |
+        def somme_impairs(n):
+            total = 0
+            for i in range(1, ___, ___):
+                total = total + i
+            return total
+      - |
+        def somme_impairs(n):
+            total = 0
+            for i in range(1, n + 1, 2):
+                total = ___
+            return total
+    solution: |
+      def somme_impairs(n):
+          total = 0
+          for i in range(1, n + 1, 2):
+              total = total + i
+          return total
+    autres_solutions:
+      - |
+        def somme_impairs(n):
+            total = 0
+            for i in range(n + 1):
+                if i % 2 == 1:
+                    total = total + i
+            return total
+    tests:
+      - { appel: "somme_impairs(5)", attendu: "9" }
+      - { appel: "somme_impairs(6)", attendu: "9", libelle: "somme_impairs(6) : 6 n'est pas impair" }
+      - { appel: "somme_impairs(1)", attendu: "1" }
+      - { appel: "somme_impairs(0)", attendu: "0", cache: true }
+      - { appel: "somme_impairs(10)", attendu: "25", cache: true }
+
+  - id: doubler-lettres
+    numero: 83
+    titre: Doubler les lettres
+    notion: for
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Écrire une fonction `doubler_lettres(mot)` qui renvoie une nouvelle chaîne où chaque lettre de `mot` est écrite deux fois. Par exemple, `doubler_lettres("abc")` renvoie `"aabbcc"`.
+    depart: |
+      def doubler_lettres(mot):
+          ...
+    aides:
+      - |
+        def doubler_lettres(mot):
+            # creer une chaine vide
+            # parcourir les lettres de mot
+            #     ajouter deux fois la lettre a la fin de la chaine
+            # renvoyer la chaine
+      - |
+        def doubler_lettres(mot):
+            resultat = ""
+            for lettre in ___:
+                resultat = resultat + ___
+            return resultat
+      - |
+        def doubler_lettres(mot):
+            resultat = ""
+            for lettre in mot:
+                resultat = resultat + lettre + ___
+            return resultat
+    solution: |
+      def doubler_lettres(mot):
+          resultat = ""
+          for lettre in mot:
+              resultat = resultat + lettre + lettre
+          return resultat
+    autres_solutions:
+      - |
+        def doubler_lettres(mot):
+            resultat = ""
+            for lettre in mot:
+                resultat = resultat + lettre * 2
+            return resultat
+    tests:
+      - { appel: "doubler_lettres('abc')", attendu: "'aabbcc'" }
+      - { appel: "doubler_lettres('')", attendu: "''", libelle: "doubler_lettres('') : un mot vide" }
+      - { appel: "doubler_lettres('z')", attendu: "'zz'", cache: true }
+
+  - id: predire-boucles-imbriquees
+    numero: 84
+    titre: Deux boucles l'une dans l'autre
+    notion: for
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 2
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      total = 0
+      for i in range(3):
+          for j in range(2):
+              total = total + 1
+      print(total)
+    choix: ["6", "5", "3", "9"]
+    explication: |
+      La boucle sur `j` fait 2 tours, et elle est relancée à chacun des 3 tours de la boucle sur `i`. L'instruction est donc exécutée 3 × 2 = 6 fois.
+
+  - id: bug-chaine-envers
+    numero: 85
+    titre: Le mot qui ne se retourne pas
+    notion: for
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    type: code
+    enonce: |
+      Cette fonction doit renvoyer `mot` écrit à l'envers, mais `envers("abc")` renvoie `"abc"`. Trouver l'erreur et la corriger, sans utiliser de tranche `[::-1]`.
+    depart: |
+      def envers(mot):
+          resultat = ""
+          for lettre in mot:
+              resultat = resultat + lettre
+          return resultat
+    interdit: ["[:]"]
+    aides:
+      - |
+        # suivre le code a la main avec "abc"
+        # chaque nouvelle lettre est placee a droite du resultat : ou faudrait-il la placer ?
+      - |
+        def envers(mot):
+            resultat = ""
+            for lettre in mot:
+                resultat = ___ + ___
+            return resultat
+      - |
+        def envers(mot):
+            resultat = ""
+            for lettre in mot:
+                resultat = lettre + ___
+            return resultat
+    solution: |
+      def envers(mot):
+          resultat = ""
+          for lettre in mot:
+              resultat = lettre + resultat
+          return resultat
+    tests:
+      - { appel: "envers('abc')", attendu: "'cba'" }
+      - { appel: "envers('a')", attendu: "'a'" }
+      - { appel: "envers('')", attendu: "''", libelle: "envers('') : un mot vide" }
+      - { appel: "envers('python')", attendu: "'nohtyp'", cache: true }
+
+  - id: somme-chiffres
+    numero: 86
+    titre: La somme des chiffres
+    notion: for
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `somme_chiffres(n)` qui renvoie la somme des chiffres de l'entier positif `n`. Par exemple, `somme_chiffres(274)` renvoie 2 + 7 + 4 = 13.
+
+      Conseil : `str(n)` donne le nombre sous forme de texte, que l'on peut parcourir, et `int` retransforme un caractère en nombre.
+    depart: |
+      def somme_chiffres(n):
+          ...
+    aides:
+      - |
+        def somme_chiffres(n):
+            # creer une variable total qui vaut 0
+            # parcourir les caracteres de str(n)
+            #     ajouter a total le caractere transforme en nombre
+            # renvoyer total
+      - |
+        def somme_chiffres(n):
+            total = 0
+            for chiffre in ___:
+                total = total + ___
+            return total
+      - |
+        def somme_chiffres(n):
+            total = 0
+            for chiffre in str(n):
+                total = total + ___
+            return total
+    solution: |
+      def somme_chiffres(n):
+          total = 0
+          for chiffre in str(n):
+              total = total + int(chiffre)
+          return total
+    tests:
+      - { appel: "somme_chiffres(274)", attendu: "13" }
+      - { appel: "somme_chiffres(5)", attendu: "5" }
+      - { appel: "somme_chiffres(0)", attendu: "0" }
+      - { appel: "somme_chiffres(1001)", attendu: "2", cache: true }
+      - { appel: "somme_chiffres(99999)", attendu: "45", cache: true }
+
+  - id: somme-multiples
+    numero: 87
+    titre: Les multiples de 3 ou de 5
+    notion: for
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `somme_multiples(n)` qui renvoie la somme des entiers strictement inférieurs à `n` qui sont multiples de 3 ou de 5. Par exemple, `somme_multiples(10)` renvoie 3 + 5 + 6 + 9 = 23.
+    depart: |
+      def somme_multiples(n):
+          ...
+    aides:
+      - |
+        def somme_multiples(n):
+            # creer une variable total qui vaut 0
+            # parcourir les entiers de 1 a n - 1
+            #     si l'entier est multiple de 3 ou de 5, l'ajouter a total
+            # renvoyer total
+      - |
+        def somme_multiples(n):
+            total = 0
+            for i in range(1, ___):
+                if i % 3 == ___ or i % 5 == ___:
+                    total = total + i
+            return total
+      - |
+        def somme_multiples(n):
+            total = 0
+            for i in range(1, n):
+                if i % 3 == 0 or i % 5 == 0:
+                    total = ___
+            return total
+    solution: |
+      def somme_multiples(n):
+          total = 0
+          for i in range(1, n):
+              if i % 3 == 0 or i % 5 == 0:
+                  total = total + i
+          return total
+    tests:
+      - { appel: "somme_multiples(10)", attendu: "23" }
+      - { appel: "somme_multiples(1)", attendu: "0" }
+      - { appel: "somme_multiples(16)", attendu: "60", libelle: "somme_multiples(16) : 15 est multiple des deux, à ne compter qu'une fois" }
+      - { appel: "somme_multiples(3)", attendu: "0", libelle: "somme_multiples(3) : 3 n'est pas strictement inférieur à 3" }
+      - { appel: "somme_multiples(100)", attendu: "2318", cache: true }
+      - { appel: "somme_multiples(6)", attendu: "8", cache: true }
+
+  - id: capital-place
+    numero: 88
+    titre: L'argent placé
+    notion: for
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    tags: [maths]
+    type: code
+    enonce: |
+      Une somme `depart` est placée avec un taux de `taux` pour cent par an : chaque année, elle augmente de ce pourcentage.
+
+      Écrire une fonction `capital(depart, taux, annees)` qui renvoie la somme obtenue après `annees` années, avec une boucle `for`. Par exemple, `capital(1000, 5, 2)` renvoie 1102.5.
+    depart: |
+      def capital(depart, taux, annees):
+          ...
+    aides:
+      - |
+        def capital(depart, taux, annees):
+            # creer une variable somme qui vaut depart
+            # repeter autant de fois qu'il y a d'annees :
+            #     ajouter a somme taux pour cent de sa valeur actuelle
+            # renvoyer somme
+      - |
+        def capital(depart, taux, annees):
+            somme = depart
+            for i in range(___):
+                somme = somme + somme * ___ / 100
+            return somme
+      - |
+        def capital(depart, taux, annees):
+            somme = depart
+            for i in range(annees):
+                somme = ___
+            return somme
+    solution: |
+      def capital(depart, taux, annees):
+          somme = depart
+          for i in range(annees):
+              somme = somme + somme * taux / 100
+          return somme
+    tests:
+      - { appel: "capital(1000, 5, 2)", attendu: "1102.5" }
+      - { appel: "capital(200, 10, 0)", attendu: "200", libelle: "capital(200, 10, 0) : aucune année" }
+      - { appel: "capital(100, 50, 3)", attendu: "337.5" }
+      - { appel: "capital(500, 0, 7)", attendu: "500", cache: true }
+
+  - id: sapin-etoiles
+    numero: 89
+    titre: Le sapin
+    notion: for
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    type: code
+    enonce: |
+      Afficher un sapin de `n` lignes, centré à l'aide d'espaces. Pour `n = 4`, le programme affiche :
+
+      ```
+         *
+        ***
+       *****
+      *******
+      ```
+
+      Conseil : `" " * 3 + "*"` donne le texte `"   *"`.
+    depart: |
+      n = 4
+
+    aides:
+      - |
+        # faire une boucle sur les lignes, numerotees de 0 a n - 1
+        #     la ligne numero i contient 2 * i + 1 etoiles
+        #     elle commence par n - 1 - i espaces
+        #     afficher les espaces suivis des etoiles
+      - |
+        for i in range(n):
+            espaces = " " * (n - 1 - ___)
+            etoiles = "*" * (2 * ___ + 1)
+            print(___)
+      - |
+        for i in range(n):
+            espaces = " " * (n - 1 - i)
+            etoiles = "*" * (2 * i + 1)
+            print(___)
+    solution: |
+      n = 4
+      for i in range(n):
+          espaces = " " * (n - 1 - i)
+          etoiles = "*" * (2 * i + 1)
+          print(espaces + etoiles)
+    tests:
+      - { sortie: "   *\n  ***\n *****\n*******" }
+
+  - id: acronyme
+    numero: 90
+    titre: Les initiales d'une phrase
+    notion: for
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 5
+    type: code
+    enonce: |
+      Écrire une fonction `acronyme(phrase)` qui renvoie les premières lettres de tous les mots de `phrase`. Par exemple, `acronyme("le bon chemin")` renvoie `"lbc"`. Il peut y avoir plusieurs espaces entre les mots, ou des espaces au début de la phrase.
+
+      Conseil : une lettre est la première d'un mot si le caractère juste avant est un espace.
+    depart: |
+      def acronyme(phrase):
+          ...
+    aides:
+      - |
+        def acronyme(phrase):
+            # creer une chaine vide et retenir le caractere precedent, au depart un espace
+            # parcourir les caracteres de phrase
+            #     si le caractere n'est pas un espace et que le precedent en est un :
+            #         ajouter le caractere au resultat
+            #     retenir le caractere comme nouveau precedent
+            # renvoyer le resultat
+      - |
+        def acronyme(phrase):
+            resultat = ""
+            precedent = " "
+            for caractere in phrase:
+                if caractere != " " and precedent == ___:
+                    resultat = ___
+                precedent = ___
+            return resultat
+      - |
+        def acronyme(phrase):
+            resultat = ""
+            precedent = " "
+            for caractere in phrase:
+                if caractere != " " and precedent == " ":
+                    resultat = resultat + caractere
+                precedent = ___
+            return resultat
+    solution: |
+      def acronyme(phrase):
+          resultat = ""
+          precedent = " "
+          for caractere in phrase:
+              if caractere != " " and precedent == " ":
+                  resultat = resultat + caractere
+              precedent = caractere
+          return resultat
+    tests:
+      - { appel: "acronyme('le bon chemin')", attendu: "'lbc'" }
+      - { appel: "acronyme('python')", attendu: "'p'" }
+      - { appel: "acronyme('')", attendu: "''", libelle: "acronyme('') : une phrase vide" }
+      - { appel: "acronyme('le  chat')", attendu: "'lc'", libelle: "acronyme('le  chat') : deux espaces de suite" }
+      - { appel: "acronyme('  un mot ')", attendu: "'um'", cache: true }
+
+  - id: binaire-vers-decimal
+    numero: 91
+    titre: Du binaire au décimal
+    notion: for
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `en_decimal(binaire)` qui reçoit un nombre binaire sous forme de texte et qui renvoie sa valeur. Par exemple, `en_decimal("1011")` renvoie 11.
+
+      On peut lire les chiffres de gauche à droite : à chaque chiffre, la valeur est multipliée par 2, puis on lui ajoute le chiffre lu.
+    depart: |
+      def en_decimal(binaire):
+          ...
+    aides:
+      - |
+        def en_decimal(binaire):
+            # creer une variable valeur qui vaut 0
+            # parcourir les caracteres de binaire
+            #     multiplier valeur par 2 et lui ajouter le chiffre lu
+            # renvoyer valeur
+      - |
+        def en_decimal(binaire):
+            valeur = 0
+            for chiffre in binaire:
+                valeur = valeur * ___ + ___
+            return valeur
+      - |
+        def en_decimal(binaire):
+            valeur = 0
+            for chiffre in binaire:
+                valeur = valeur * 2 + int(___)
+            return valeur
+    solution: |
+      def en_decimal(binaire):
+          valeur = 0
+          for chiffre in binaire:
+              valeur = valeur * 2 + int(chiffre)
+          return valeur
+    autres_solutions:
+      - |
+        def en_decimal(binaire):
+            valeur = 0
+            puissance = 1
+            for i in range(len(binaire) - 1, -1, -1):
+                if binaire[i] == "1":
+                    valeur = valeur + puissance
+                puissance = puissance * 2
+            return valeur
+    tests:
+      - { appel: "en_decimal('1011')", attendu: "11" }
+      - { appel: "en_decimal('0')", attendu: "0" }
+      - { appel: "en_decimal('1')", attendu: "1" }
+      - { appel: "en_decimal('101')", attendu: "5" }
+      - { appel: "en_decimal('11111111')", attendu: "255", cache: true }
+      - { appel: "en_decimal('1000')", attendu: "8", cache: true }

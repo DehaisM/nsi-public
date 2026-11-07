@@ -392,3 +392,581 @@ exercices:
       - { appel: "a_l_envers(120)", attendu: "21", libelle: "a_l_envers(120) : le zéro de tête disparaît" }
       - { appel: "a_l_envers(90210)", attendu: "1209", cache: true }
       - { appel: "a_l_envers(1111)", attendu: "1111", cache: true }
+
+  - id: predire-pas-de-trois
+    numero: 92
+    titre: Compter de 3 en 3
+    notion: while
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      i = 10
+      while i > 0:
+          i = i - 3
+      print(i)
+    choix: ["-2", "1", "0", "Le programme ne s'arrête pas"]
+    explication: |
+      `i` prend les valeurs 10, 7, 4, 1 puis -2. Quand `i` vaut 1, la condition est encore vraie : on retire 3 une dernière fois. La boucle s'arrête quand `i` vaut -2.
+
+  - id: predire-jamais-execute
+    numero: 93
+    titre: Une boucle qui ne démarre pas
+    notion: while
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      n = 5
+      while n < 5:
+          n = n + 1
+      print(n)
+    choix: ["5", "6", "4", "Le programme ne s'arrête pas"]
+    explication: |
+      La condition est testée avant le premier tour. Comme `5 < 5` est faux, le corps de la boucle n'est jamais exécuté, et `n` garde sa valeur.
+
+  - id: plus-petit-diviseur
+    numero: 94
+    titre: Le plus petit diviseur
+    notion: while
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `plus_petit_diviseur(n)` qui renvoie le plus petit diviseur de `n` supérieur ou égal à 2, avec une boucle `while`. L'entier `n` est au moins égal à 2. Par exemple, `plus_petit_diviseur(15)` renvoie 3.
+    depart: |
+      def plus_petit_diviseur(n):
+          ...
+    aides:
+      - |
+        def plus_petit_diviseur(n):
+            # commencer par essayer le diviseur 2
+            # tant que ce nombre ne divise pas n, passer au suivant
+            # renvoyer le nombre trouve
+      - |
+        def plus_petit_diviseur(n):
+            d = ___
+            while n % d != ___:
+                d = ___
+            return d
+      - |
+        def plus_petit_diviseur(n):
+            d = 2
+            while n % d != 0:
+                d = ___
+            return d
+    solution: |
+      def plus_petit_diviseur(n):
+          d = 2
+          while n % d != 0:
+              d = d + 1
+          return d
+    tests:
+      - { appel: "plus_petit_diviseur(15)", attendu: "3" }
+      - { appel: "plus_petit_diviseur(8)", attendu: "2" }
+      - { appel: "plus_petit_diviseur(7)", attendu: "7", libelle: "plus_petit_diviseur(7) : un nombre premier" }
+      - { appel: "plus_petit_diviseur(2)", attendu: "2", cache: true }
+      - { appel: "plus_petit_diviseur(49)", attendu: "7", cache: true }
+
+  - id: bacteries
+    numero: 95
+    titre: Les bactéries
+    notion: while
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Une population de bactéries double chaque heure. Écrire une fonction `heures(population, objectif)` qui renvoie le nombre d'heures nécessaires pour atteindre au moins `objectif` bactéries. Par exemple, `heures(100, 700)` renvoie 3 : la population passe à 200, 400, puis 800.
+    depart: |
+      def heures(population, objectif):
+          ...
+    aides:
+      - |
+        def heures(population, objectif):
+            # creer un compteur qui vaut 0
+            # tant que la population n'a pas atteint l'objectif :
+            #     doubler la population
+            #     ajouter 1 au compteur
+            # renvoyer le compteur
+      - |
+        def heures(population, objectif):
+            compteur = 0
+            while population < ___:
+                population = ___
+                compteur = ___
+            return compteur
+      - |
+        def heures(population, objectif):
+            compteur = 0
+            while population < objectif:
+                population = population * 2
+                compteur = ___
+            return compteur
+    solution: |
+      def heures(population, objectif):
+          compteur = 0
+          while population < objectif:
+              population = population * 2
+              compteur = compteur + 1
+          return compteur
+    tests:
+      - { appel: "heures(100, 700)", attendu: "3" }
+      - { appel: "heures(100, 800)", attendu: "3", libelle: "heures(100, 800) : l'objectif est atteint pile" }
+      - { appel: "heures(500, 100)", attendu: "0", libelle: "heures(500, 100) : l'objectif est déjà atteint" }
+      - { appel: "heures(1, 1024)", attendu: "10", cache: true }
+      - { appel: "heures(3, 4)", attendu: "1", cache: true }
+
+  - id: quotient-soustractions
+    numero: 96
+    titre: Diviser en soustrayant
+    notion: while
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `quotient(a, b)` qui renvoie le quotient de la division entière de `a` par `b`, sans utiliser `/`, `//` ni `%` : retirer `b` à `a` tant que c'est possible, et compter le nombre de soustractions. Les deux entiers sont positifs, et `b` n'est pas nul.
+    depart: |
+      def quotient(a, b):
+          ...
+    aides:
+      - |
+        def quotient(a, b):
+            # creer un compteur qui vaut 0
+            # tant que a vaut au moins b :
+            #     retirer b a a
+            #     ajouter 1 au compteur
+            # renvoyer le compteur
+      - |
+        def quotient(a, b):
+            compteur = 0
+            while a >= ___:
+                a = ___
+                compteur = ___
+            return compteur
+      - |
+        def quotient(a, b):
+            compteur = 0
+            while a >= b:
+                a = a - b
+                compteur = ___
+            return compteur
+    solution: |
+      def quotient(a, b):
+          compteur = 0
+          while a >= b:
+              a = a - b
+              compteur = compteur + 1
+          return compteur
+    tests:
+      - { appel: "quotient(17, 5)", attendu: "3" }
+      - { appel: "quotient(20, 5)", attendu: "4", libelle: "quotient(20, 5) : la division tombe juste" }
+      - { appel: "quotient(3, 7)", attendu: "0" }
+      - { appel: "quotient(0, 4)", attendu: "0", cache: true }
+      - { appel: "quotient(100, 1)", attendu: "100", cache: true }
+
+  - id: doubler-son-capital
+    numero: 97
+    titre: Doubler sa somme
+    notion: while
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    tags: [maths]
+    type: code
+    enonce: |
+      Une somme `depart` augmente de `taux` pour cent chaque année. Écrire une fonction `annees(depart, taux)` qui renvoie le nombre d'années nécessaires pour obtenir au moins le double de `depart`. Par exemple, `annees(100, 50)` renvoie 2, car la somme passe à 150, puis 225.
+    depart: |
+      def annees(depart, taux):
+          ...
+    aides:
+      - |
+        def annees(depart, taux):
+            # creer une variable somme qui vaut depart et un compteur qui vaut 0
+            # tant que somme est inferieure au double de depart :
+            #     ajouter a somme taux pour cent de sa valeur
+            #     ajouter 1 au compteur
+            # renvoyer le compteur
+      - |
+        def annees(depart, taux):
+            somme = depart
+            compteur = 0
+            while somme < ___:
+                somme = somme + somme * ___ / 100
+                compteur = compteur + 1
+            return compteur
+      - |
+        def annees(depart, taux):
+            somme = depart
+            compteur = 0
+            while somme < 2 * depart:
+                somme = somme + somme * taux / 100
+                compteur = ___
+            return compteur
+    solution: |
+      def annees(depart, taux):
+          somme = depart
+          compteur = 0
+          while somme < 2 * depart:
+              somme = somme + somme * taux / 100
+              compteur = compteur + 1
+          return compteur
+    tests:
+      - { appel: "annees(100, 50)", attendu: "2" }
+      - { appel: "annees(100, 100)", attendu: "1", libelle: "annees(100, 100) : le double est atteint pile" }
+      - { appel: "annees(100, 10)", attendu: "8" }
+      - { appel: "annees(1000, 5)", attendu: "15", cache: true }
+      - { appel: "annees(100, 1)", attendu: "70", cache: true }
+
+  - id: racine-entiere
+    numero: 98
+    titre: La racine carrée entière
+    notion: while
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `racine_entiere(n)` qui renvoie le plus grand entier `k` tel que `k * k` soit inférieur ou égal à `n`, sans utiliser `math.sqrt` ni `**`. Par exemple, `racine_entiere(17)` renvoie 4.
+    depart: |
+      def racine_entiere(n):
+          ...
+    interdit: [sqrt]
+    aides:
+      - |
+        def racine_entiere(n):
+            # partir de k = 0
+            # tant que le carre de k + 1 ne depasse pas n, augmenter k de 1
+            # renvoyer k
+      - |
+        def racine_entiere(n):
+            k = 0
+            while (k + 1) * (___) <= ___:
+                k = ___
+            return k
+      - |
+        def racine_entiere(n):
+            k = 0
+            while (k + 1) * (k + 1) <= n:
+                k = ___
+            return k
+    solution: |
+      def racine_entiere(n):
+          k = 0
+          while (k + 1) * (k + 1) <= n:
+              k = k + 1
+          return k
+    tests:
+      - { appel: "racine_entiere(17)", attendu: "4" }
+      - { appel: "racine_entiere(16)", attendu: "4", libelle: "racine_entiere(16) : un carré parfait" }
+      - { appel: "racine_entiere(0)", attendu: "0" }
+      - { appel: "racine_entiere(1)", attendu: "1", cache: true }
+      - { appel: "racine_entiere(99)", attendu: "9", cache: true }
+      - { appel: "racine_entiere(100)", attendu: "10", cache: true }
+
+  - id: puissance-de-deux
+    numero: 99
+    titre: Une puissance de 2 ?
+    notion: while
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `est_puissance_de_2(n)` qui renvoie `True` si l'entier `n` (strictement positif) est une puissance de 2, comme 1, 2, 4, 8 ou 16, et `False` sinon.
+
+      Conseil : diviser `n` par 2 tant que c'est possible, puis regarder ce qu'il reste.
+    depart: |
+      def est_puissance_de_2(n):
+          ...
+    aides:
+      - |
+        def est_puissance_de_2(n):
+            # tant que n est pair, le diviser par 2
+            # n est une puissance de 2 s'il ne reste que 1 a la fin
+      - |
+        def est_puissance_de_2(n):
+            while n % ___ == 0:
+                n = n // ___
+            return n == ___
+      - |
+        def est_puissance_de_2(n):
+            while n % 2 == 0:
+                n = n // 2
+            return ___
+    solution: |
+      def est_puissance_de_2(n):
+          while n % 2 == 0:
+              n = n // 2
+          return n == 1
+    autres_solutions:
+      - |
+        def est_puissance_de_2(n):
+            p = 1
+            while p < n:
+                p = p * 2
+            return p == n
+    tests:
+      - { appel: "est_puissance_de_2(8)", attendu: "True" }
+      - { appel: "est_puissance_de_2(12)", attendu: "False" }
+      - { appel: "est_puissance_de_2(1)", attendu: "True", libelle: "est_puissance_de_2(1) : 1 vaut 2 à la puissance 0" }
+      - { appel: "est_puissance_de_2(3)", attendu: "False", cache: true }
+      - { appel: "est_puissance_de_2(1024)", attendu: "True", cache: true }
+
+  - id: premiere-voyelle
+    numero: 100
+    titre: La première voyelle
+    notion: while
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    type: code
+    enonce: |
+      Écrire une fonction `premiere_voyelle(mot)` qui renvoie l'indice de la première voyelle de `mot` (`a`, `e`, `i`, `o`, `u` ou `y`), avec une boucle `while`, ou `-1` si `mot` n'en contient pas. Par exemple, `premiere_voyelle("chat")` renvoie 2.
+    depart: |
+      def premiere_voyelle(mot):
+          ...
+    aides:
+      - |
+        def premiere_voyelle(mot):
+            # partir de l'indice 0
+            # tant que l'indice est valide :
+            #     si la lettre est une voyelle, renvoyer l'indice
+            #     passer a l'indice suivant
+            # apres la boucle, renvoyer -1
+      - |
+        def premiere_voyelle(mot):
+            i = 0
+            while i < ___:
+                if mot[i] in "aeiouy":
+                    return ___
+                i = ___
+            return ___
+      - |
+        def premiere_voyelle(mot):
+            i = 0
+            while i < len(mot):
+                if mot[i] in "aeiouy":
+                    return i
+                i = i + 1
+            return ___
+    solution: |
+      def premiere_voyelle(mot):
+          i = 0
+          while i < len(mot):
+              if mot[i] in "aeiouy":
+                  return i
+              i = i + 1
+          return -1
+    tests:
+      - { appel: "premiere_voyelle('chat')", attendu: "2" }
+      - { appel: "premiere_voyelle('arbre')", attendu: "0" }
+      - { appel: "premiere_voyelle('pfft')", attendu: "-1", libelle: "premiere_voyelle('pfft') : aucune voyelle" }
+      - { appel: "premiere_voyelle('')", attendu: "-1", libelle: "premiere_voyelle('') : un mot vide" }
+      - { appel: "premiere_voyelle('bcdfy')", attendu: "4", cache: true }
+      - { appel: "premiere_voyelle('pa')", attendu: "1", cache: true }
+
+  - id: racine-numerique
+    numero: 101
+    titre: Additionner jusqu'à un seul chiffre
+    notion: while
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `reduire(n)` qui remplace l'entier positif `n` par la somme de ses chiffres, encore et encore, jusqu'à obtenir un seul chiffre. Par exemple, `reduire(9875)` renvoie 2, car 9 + 8 + 7 + 5 = 29, puis 2 + 9 = 11, puis 1 + 1 = 2.
+    depart: |
+      def reduire(n):
+          ...
+    aides:
+      - |
+        def reduire(n):
+            # tant que n a au moins deux chiffres :
+            #     calculer la somme de ses chiffres (avec % 10 et // 10, dans une seconde boucle)
+            #     remplacer n par cette somme
+            # renvoyer n
+      - |
+        def reduire(n):
+            while n >= ___:
+                somme = 0
+                while n > 0:
+                    somme = somme + n % ___
+                    n = n // ___
+                n = ___
+            return n
+      - |
+        def reduire(n):
+            while n >= 10:
+                somme = 0
+                while n > 0:
+                    somme = somme + n % 10
+                    n = n // 10
+                n = ___
+            return n
+    solution: |
+      def reduire(n):
+          while n >= 10:
+              somme = 0
+              while n > 0:
+                  somme = somme + n % 10
+                  n = n // 10
+              n = somme
+          return n
+    autres_solutions:
+      - |
+        def somme_des_chiffres(n):
+            total = 0
+            for chiffre in str(n):
+                total = total + int(chiffre)
+            return total
+
+        def reduire(n):
+            while n >= 10:
+                n = somme_des_chiffres(n)
+            return n
+    tests:
+      - { appel: "reduire(9875)", attendu: "2" }
+      - { appel: "reduire(7)", attendu: "7", libelle: "reduire(7) : déjà un seul chiffre" }
+      - { appel: "reduire(19)", attendu: "1" }
+      - { appel: "reduire(10)", attendu: "1", cache: true }
+      - { appel: "reduire(38)", attendu: "2", cache: true }
+      - { appel: "reduire(99)", attendu: "9", cache: true }
+
+  - id: decimal-vers-binaire
+    numero: 102
+    titre: Du décimal au binaire
+    notion: while
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `en_binaire(n)` qui renvoie l'écriture binaire de l'entier positif `n`, sous forme de texte. Par exemple, `en_binaire(11)` renvoie `"1011"`, et `en_binaire(0)` renvoie `"0"`.
+
+      Méthode : le reste de la division de `n` par 2 donne le chiffre de droite. On recommence ensuite avec le quotient, tant qu'il n'est pas nul.
+    depart: |
+      def en_binaire(n):
+          ...
+    interdit: [bin]
+    aides:
+      - |
+        def en_binaire(n):
+            # traiter d'abord le cas ou n vaut 0
+            # creer une chaine vide
+            # tant que n est strictement positif :
+            #     placer le reste de la division par 2 a gauche de la chaine
+            #     remplacer n par le quotient de la division par 2
+            # renvoyer la chaine
+      - |
+        def en_binaire(n):
+            if n == 0:
+                return ___
+            resultat = ""
+            while n > 0:
+                resultat = str(n % ___) + ___
+                n = n // ___
+            return resultat
+      - |
+        def en_binaire(n):
+            if n == 0:
+                return "0"
+            resultat = ""
+            while n > 0:
+                resultat = str(n % 2) + resultat
+                n = ___
+            return resultat
+    solution: |
+      def en_binaire(n):
+          if n == 0:
+              return "0"
+          resultat = ""
+          while n > 0:
+              resultat = str(n % 2) + resultat
+              n = n // 2
+          return resultat
+    tests:
+      - { appel: "en_binaire(11)", attendu: "'1011'" }
+      - { appel: "en_binaire(0)", attendu: "'0'", libelle: "en_binaire(0) : le cas particulier" }
+      - { appel: "en_binaire(1)", attendu: "'1'" }
+      - { appel: "en_binaire(8)", attendu: "'1000'" }
+      - { appel: "en_binaire(255)", attendu: "'11111111'", cache: true }
+      - { appel: "en_binaire(6)", attendu: "'110'", cache: true }
+
+  - id: racine-approchee
+    numero: 103
+    titre: Une racine par dichotomie
+    notion: while
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `racine(x)` qui renvoie une valeur approchée de la racine carrée de `x` (avec `x` supérieur ou égal à 1), sans utiliser `math.sqrt` ni `**`.
+
+      Méthode : la racine se trouve entre `bas = 0` et `haut = x`. Tant que l'écart entre `bas` et `haut` dépasse 0.001, on regarde le milieu : si son carré est inférieur à `x`, la racine est au-dessus du milieu, sinon elle est en dessous. On renvoie `bas` à la fin.
+    depart: |
+      def racine(x):
+          ...
+    interdit: [sqrt]
+    aides:
+      - |
+        def racine(x):
+            # creer bas qui vaut 0 et haut qui vaut x
+            # tant que haut - bas depasse 0.001 :
+            #     calculer le milieu de bas et haut
+            #     si le carre du milieu est inferieur a x, bas prend la valeur du milieu
+            #     sinon, haut prend la valeur du milieu
+            # renvoyer bas
+      - |
+        def racine(x):
+            bas = 0
+            haut = x
+            while haut - bas > ___:
+                milieu = (bas + haut) / ___
+                if milieu * milieu < x:
+                    bas = ___
+                else:
+                    haut = ___
+            return bas
+      - |
+        def racine(x):
+            bas = 0
+            haut = x
+            while haut - bas > 0.001:
+                milieu = (bas + haut) / 2
+                if milieu * milieu < x:
+                    bas = milieu
+                else:
+                    haut = ___
+            return bas
+    solution: |
+      def racine(x):
+          bas = 0
+          haut = x
+          while haut - bas > 0.001:
+              milieu = (bas + haut) / 2
+              if milieu * milieu < x:
+                  bas = milieu
+              else:
+                  haut = milieu
+          return bas
+    tests:
+      - { appel: "1.41 < racine(2) < 1.42", attendu: "True", libelle: "racine(2) vaut environ 1.414" }
+      - { appel: "2.99 < racine(9) < 3.01", attendu: "True", libelle: "racine(9) vaut environ 3" }
+      - { appel: "0.99 < racine(1) < 1.01", attendu: "True", libelle: "racine(1) vaut environ 1" }
+      - { appel: "99.9 < racine(10000) < 100.1", attendu: "True", cache: true }

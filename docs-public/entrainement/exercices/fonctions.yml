@@ -351,3 +351,572 @@ exercices:
       - { appel: "est_solide('abcdefg1')", attendu: "True", cache: true }
       - { appel: "contient_chiffre('')", attendu: "False", cache: true }
       - { appel: "est_solide('abcdef1')", attendu: "False", cache: true }
+
+  - id: predire-sans-return
+    numero: 104
+    titre: Une fonction sans return
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      def plus_un(x):
+          x + 1
+
+      print(plus_un(2))
+    choix: ["None", "3", "2", "Une erreur"]
+    explication: |
+      La fonction calcule `x + 1` mais ne renvoie rien, car il manque `return`. En Python, une fonction sans `return` renvoie la valeur spéciale `None`.
+
+  - id: bug-print-return
+    numero: 105
+    titre: Afficher n'est pas renvoyer
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Cette fonction doit renvoyer l'aire d'un rectangle, pour pouvoir l'utiliser ensuite dans un calcul. Or `aire(3, 4) + 1` provoque une erreur. Trouver le problème et le corriger.
+    depart: |
+      def aire(longueur, largeur):
+          print(longueur * largeur)
+    aides:
+      - |
+        # que renvoie une fonction qui ne contient pas de return ?
+        # quelle instruction permet de donner le resultat a la suite du programme ?
+      - |
+        def aire(longueur, largeur):
+            ___ longueur * largeur
+      - |
+        def aire(longueur, largeur):
+            return ___
+    solution: |
+      def aire(longueur, largeur):
+          return longueur * largeur
+    tests:
+      - { appel: "aire(3, 4)", attendu: "12" }
+      - { appel: "aire(3, 4) + 1", attendu: "13" }
+      - { appel: "aire(1, 7)", attendu: "7", cache: true }
+
+  - id: vitesse-moyenne
+    numero: 106
+    titre: La vitesse moyenne
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `vitesse(distance, duree)` qui renvoie la vitesse moyenne en km/h, pour une distance en kilomètres et une durée en **minutes**. Par exemple, `vitesse(60, 30)` renvoie 120.0.
+    depart: |
+      def vitesse(distance, duree):
+          ...
+    aides:
+      - |
+        def vitesse(distance, duree):
+            # convertir la duree en heures : une heure dure 60 minutes
+            # diviser la distance par cette duree et renvoyer le resultat
+      - |
+        def vitesse(distance, duree):
+            heures = duree / ___
+            return distance / ___
+      - |
+        def vitesse(distance, duree):
+            heures = duree / 60
+            return ___
+    solution: |
+      def vitesse(distance, duree):
+          heures = duree / 60
+          return distance / heures
+    autres_solutions:
+      - |
+        def vitesse(distance, duree):
+            return distance * 60 / duree
+    tests:
+      - { appel: "vitesse(60, 30)", attendu: "120.0" }
+      - { appel: "vitesse(100, 60)", attendu: "100.0" }
+      - { appel: "vitesse(5, 15)", attendu: "20.0" }
+      - { appel: "vitesse(90, 45)", attendu: "120.0", cache: true }
+
+  - id: est-multiple
+    numero: 107
+    titre: Un multiple ?
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    tags: [maths]
+    type: code
+    enonce: |
+      Compléter la fonction `est_multiple(a, b)` pour qu'elle renvoie `True` si `a` est un multiple de `b`, et `False` sinon. Le nombre `b` n'est pas nul.
+    depart: |
+      def est_multiple(a, b):
+          return a % ___ == ___
+    aides:
+      - |
+        # a est un multiple de b si la division de a par b tombe juste
+        # que vaut alors le reste de cette division ?
+      - |
+        def est_multiple(a, b):
+            return a % b == ___
+      - |
+        def est_multiple(a, b):
+            if a % b == 0:
+                return ___
+            return ___
+    solution: |
+      def est_multiple(a, b):
+          return a % b == 0
+    tests:
+      - { appel: "est_multiple(12, 4)", attendu: "True" }
+      - { appel: "est_multiple(7, 2)", attendu: "False" }
+      - { appel: "est_multiple(0, 5)", attendu: "True", libelle: "est_multiple(0, 5) : 0 est multiple de tout nombre" }
+      - { appel: "est_multiple(5, 10)", attendu: "False", cache: true }
+
+  - id: predire-return-arrete
+    numero: 108
+    titre: Après le return
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      def calcul(n):
+          n = n + 1
+          return n
+          n = n * 10
+
+      print(calcul(1))
+    choix: ["2", "20", "1", "None"]
+    explication: |
+      `return` termine immédiatement la fonction : la dernière ligne n'est jamais exécutée.
+
+  - id: predire-deux-fonctions
+    numero: 109
+    titre: Deux fonctions qui s'appellent
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 2
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      def f(x):
+          return x + 1
+
+      def g(x):
+          return f(x) * 2
+
+      print(g(f(1)))
+    choix: ["6", "5", "4", "3"]
+    explication: |
+      On commence par l'intérieur : `f(1)` renvoie 2. Puis `g(2)` calcule `f(2) * 2`, c'est-à-dire 3 × 2 = 6.
+
+  - id: admis-trois-notes
+    numero: 110
+    titre: Admis ou refusé
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire deux fonctions :
+
+      `moyenne3(a, b, c)` renvoie la moyenne de trois nombres ;
+
+      `resultat(a, b, c)` **utilise** `moyenne3` et renvoie `"admis"` si la moyenne vaut au moins 10, et `"refusé"` sinon.
+    depart: |
+      def moyenne3(a, b, c):
+          ...
+
+      def resultat(a, b, c):
+          ...
+    aides:
+      - |
+        def moyenne3(a, b, c):
+            # renvoyer la somme des trois nombres divisee par 3
+
+        def resultat(a, b, c):
+            # calculer la moyenne en appelant moyenne3
+            # la comparer a 10
+      - |
+        def moyenne3(a, b, c):
+            return (a + b + c) / ___
+
+        def resultat(a, b, c):
+            m = moyenne3(___, ___, ___)
+            if m >= ___:
+                return "admis"
+            return ___
+      - |
+        def moyenne3(a, b, c):
+            return (a + b + c) / 3
+
+        def resultat(a, b, c):
+            m = moyenne3(a, b, c)
+            if m >= 10:
+                return "admis"
+            return ___
+    solution: |
+      def moyenne3(a, b, c):
+          return (a + b + c) / 3
+
+      def resultat(a, b, c):
+          m = moyenne3(a, b, c)
+          if m >= 10:
+              return "admis"
+          return "refusé"
+    tests:
+      - { appel: "moyenne3(9, 12, 15)", attendu: "12.0" }
+      - { appel: "resultat(9, 12, 15)", attendu: "'admis'" }
+      - { appel: "resultat(5, 8, 2)", attendu: "'refusé'" }
+      - { appel: "resultat(10, 10, 10)", attendu: "'admis'", libelle: "resultat(10, 10, 10) : exactement 10 de moyenne" }
+      - { appel: "resultat(10, 10, 9)", attendu: "'refusé'", cache: true }
+
+  - id: points-match
+    numero: 111
+    titre: Les points du championnat
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    type: code
+    enonce: |
+      Dans un championnat, une victoire rapporte 3 points, un match nul 1 point et une défaite 0 point.
+
+      Écrire une fonction `points(pour, contre)` qui renvoie les points gagnés selon les buts marqués et encaissés, puis une fonction `total(p1, c1, p2, c2)` qui **utilise** `points` et renvoie le total de points sur deux matchs.
+    depart: |
+      def points(pour, contre):
+          ...
+
+      def total(p1, c1, p2, c2):
+          ...
+    aides:
+      - |
+        def points(pour, contre):
+            # comparer les buts marques et les buts encaisses
+            # renvoyer 3, 1 ou 0
+
+        def total(p1, c1, p2, c2):
+            # additionner les points du premier match et ceux du second
+      - |
+        def points(pour, contre):
+            if pour > contre:
+                return ___
+            elif pour == contre:
+                return ___
+            return ___
+
+        def total(p1, c1, p2, c2):
+            return points(___, ___) + points(___, ___)
+      - |
+        def points(pour, contre):
+            if pour > contre:
+                return 3
+            elif pour == contre:
+                return 1
+            return 0
+
+        def total(p1, c1, p2, c2):
+            return points(p1, c1) + ___
+    solution: |
+      def points(pour, contre):
+          if pour > contre:
+              return 3
+          elif pour == contre:
+              return 1
+          return 0
+
+      def total(p1, c1, p2, c2):
+          return points(p1, c1) + points(p2, c2)
+    tests:
+      - { appel: "points(2, 0)", attendu: "3" }
+      - { appel: "points(1, 1)", attendu: "1" }
+      - { appel: "points(0, 3)", attendu: "0" }
+      - { appel: "total(2, 0, 1, 1)", attendu: "4" }
+      - { appel: "total(0, 1, 2, 3)", attendu: "0", cache: true }
+      - { appel: "total(1, 1, 5, 2)", attendu: "4", cache: true }
+
+  - id: date-valide
+    numero: 112
+    titre: Une date valide
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    type: code
+    enonce: |
+      La fonction `est_bissextile(annee)` est déjà écrite. L'utiliser pour écrire :
+
+      `nb_jours(mois, annee)`, qui renvoie le nombre de jours du mois (de 1 à 12) : 30 pour les mois 4, 6, 9 et 11, 29 ou 28 pour février selon l'année, et 31 sinon ;
+
+      `date_valide(jour, mois, annee)`, qui **utilise** `nb_jours` et renvoie `True` si la date existe, et `False` sinon. Un mois en dehors de 1 à 12 rend la date invalide.
+    depart: |
+      def est_bissextile(annee):
+          return (annee % 4 == 0 and annee % 100 != 0) or annee % 400 == 0
+
+      def nb_jours(mois, annee):
+          ...
+
+      def date_valide(jour, mois, annee):
+          ...
+    aides:
+      - |
+        def est_bissextile(annee):
+            return (annee % 4 == 0 and annee % 100 != 0) or annee % 400 == 0
+
+        def nb_jours(mois, annee):
+            # traiter fevrier avec est_bissextile
+            # puis les mois de 30 jours
+            # sinon, renvoyer 31
+
+        def date_valide(jour, mois, annee):
+            # verifier d'abord le mois, et renvoyer False s'il n'existe pas
+            # verifier ensuite que le jour est entre 1 et nb_jours(mois, annee)
+      - |
+        def est_bissextile(annee):
+            return (annee % 4 == 0 and annee % 100 != 0) or annee % 400 == 0
+
+        def nb_jours(mois, annee):
+            if mois == 2:
+                if est_bissextile(___):
+                    return ___
+                return ___
+            if mois == 4 or mois == 6 or mois == 9 or mois == 11:
+                return ___
+            return ___
+
+        def date_valide(jour, mois, annee):
+            if mois < ___ or mois > ___:
+                return False
+            return jour >= ___ and jour <= nb_jours(___, ___)
+      - |
+        def est_bissextile(annee):
+            return (annee % 4 == 0 and annee % 100 != 0) or annee % 400 == 0
+
+        def nb_jours(mois, annee):
+            if mois == 2:
+                if est_bissextile(annee):
+                    return 29
+                return 28
+            if mois == 4 or mois == 6 or mois == 9 or mois == 11:
+                return 30
+            return 31
+
+        def date_valide(jour, mois, annee):
+            if mois < 1 or mois > 12:
+                return False
+            return jour >= 1 and jour <= ___
+    solution: |
+      def est_bissextile(annee):
+          return (annee % 4 == 0 and annee % 100 != 0) or annee % 400 == 0
+
+      def nb_jours(mois, annee):
+          if mois == 2:
+              if est_bissextile(annee):
+                  return 29
+              return 28
+          if mois == 4 or mois == 6 or mois == 9 or mois == 11:
+              return 30
+          return 31
+
+      def date_valide(jour, mois, annee):
+          if mois < 1 or mois > 12:
+              return False
+          return jour >= 1 and jour <= nb_jours(mois, annee)
+    tests:
+      - { appel: "nb_jours(2, 2024)", attendu: "29" }
+      - { appel: "nb_jours(2, 2026)", attendu: "28" }
+      - { appel: "nb_jours(4, 2026)", attendu: "30" }
+      - { appel: "date_valide(31, 12, 2026)", attendu: "True" }
+      - { appel: "date_valide(31, 4, 2026)", attendu: "False" }
+      - { appel: "date_valide(29, 2, 2024)", attendu: "True" }
+      - { appel: "date_valide(29, 2, 2026)", attendu: "False" }
+      - { appel: "date_valide(10, 13, 2026)", attendu: "False", libelle: "date_valide(10, 13, 2026) : le mois 13 n'existe pas" }
+      - { appel: "date_valide(0, 5, 2026)", attendu: "False", libelle: "date_valide(0, 5, 2026) : le jour 0 n'existe pas" }
+      - { appel: "date_valide(1, 1, 2000)", attendu: "True", cache: true }
+      - { appel: "date_valide(10, 0, 2026)", attendu: "False", cache: true }
+      - { appel: "nb_jours(7, 2026)", attendu: "31", cache: true }
+      - { appel: "nb_jours(6, 2026)", attendu: "30", cache: true }
+      - { appel: "nb_jours(9, 2026)", attendu: "30", cache: true }
+      - { appel: "nb_jours(11, 2026)", attendu: "30", cache: true }
+
+  - id: anagrammes
+    numero: 113
+    titre: Les anagrammes
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    type: code
+    enonce: |
+      Deux mots sont des anagrammes s'ils contiennent les mêmes lettres, le même nombre de fois, comme `"chien"` et `"niche"`.
+
+      Écrire une fonction `compte(mot, lettre)` qui renvoie le nombre de fois où `lettre` apparaît dans `mot`, puis une fonction `sont_anagrammes(a, b)` qui **utilise** `compte`.
+    depart: |
+      def compte(mot, lettre):
+          ...
+
+      def sont_anagrammes(a, b):
+          ...
+    interdit: [count, sorted, sort]
+    aides:
+      - |
+        def compte(mot, lettre):
+            # compter les lettres de mot egales a lettre
+
+        def sont_anagrammes(a, b):
+            # si les longueurs sont differentes, renvoyer False
+            # pour chaque lettre de a :
+            #     si elle n'apparait pas autant de fois dans a et dans b, renvoyer False
+            # apres la boucle, renvoyer True
+      - |
+        def compte(mot, lettre):
+            total = 0
+            for x in mot:
+                if x == ___:
+                    total = total + 1
+            return total
+
+        def sont_anagrammes(a, b):
+            if len(a) != len(___):
+                return False
+            for lettre in a:
+                if compte(a, lettre) != compte(___, ___):
+                    return ___
+            return ___
+      - |
+        def compte(mot, lettre):
+            total = 0
+            for x in mot:
+                if x == lettre:
+                    total = total + 1
+            return total
+
+        def sont_anagrammes(a, b):
+            if len(a) != len(b):
+                return False
+            for lettre in a:
+                if compte(a, lettre) != compte(b, lettre):
+                    return ___
+            return ___
+    solution: |
+      def compte(mot, lettre):
+          total = 0
+          for x in mot:
+              if x == lettre:
+                  total = total + 1
+          return total
+
+      def sont_anagrammes(a, b):
+          if len(a) != len(b):
+              return False
+          for lettre in a:
+              if compte(a, lettre) != compte(b, lettre):
+                  return False
+          return True
+    tests:
+      - { appel: "compte('banane', 'a')", attendu: "2" }
+      - { appel: "compte('banane', 'z')", attendu: "0" }
+      - { appel: "sont_anagrammes('chien', 'niche')", attendu: "True" }
+      - { appel: "sont_anagrammes('abc', 'abd')", attendu: "False" }
+      - { appel: "sont_anagrammes('aab', 'abb')", attendu: "False", libelle: "sont_anagrammes('aab', 'abb') : mêmes lettres, pas le même nombre de fois" }
+      - { appel: "sont_anagrammes('ab', 'abc')", attendu: "False", libelle: "sont_anagrammes('ab', 'abc') : le second est plus long" }
+      - { appel: "sont_anagrammes('abc', 'ab')", attendu: "False", cache: true }
+      - { appel: "sont_anagrammes('', '')", attendu: "True", cache: true }
+
+  - id: numero-de-carte
+    numero: 114
+    titre: Le numéro de carte bancaire
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    tags: [maths]
+    type: code
+    enonce: |
+      Les numéros de carte bancaire contiennent un contrôle pour détecter les fautes de frappe. En partant de la droite, on double un chiffre sur deux, en commençant par le deuxième. Si un chiffre doublé dépasse 9, on lui retire 9. Le numéro est valide si la somme de tous les chiffres obtenus est un multiple de 10.
+
+      Écrire une fonction `chiffre_double(c)` qui renvoie le double de l'entier `c`, en retirant 9 s'il dépasse 9, puis une fonction `est_valide(numero)`, qui reçoit le numéro sous forme de texte et **utilise** `chiffre_double`.
+    depart: |
+      def chiffre_double(c):
+          ...
+
+      def est_valide(numero):
+          ...
+    aides:
+      - |
+        def chiffre_double(c):
+            # calculer le double de c
+            # retirer 9 s'il depasse 9, puis le renvoyer
+
+        def est_valide(numero):
+            # creer une variable total qui vaut 0
+            # parcourir les positions en partant de la droite : la position 0 est le dernier chiffre
+            #     recuperer le chiffre a cette position, transforme en nombre
+            #     si la position est impaire, le remplacer par chiffre_double
+            #     l'ajouter a total
+            # renvoyer True si total est un multiple de 10
+      - |
+        def chiffre_double(c):
+            d = c * 2
+            if d > ___:
+                return d - ___
+            return d
+
+        def est_valide(numero):
+            total = 0
+            for position in range(len(numero)):
+                chiffre = int(numero[len(numero) - 1 - ___])
+                if position % 2 == ___:
+                    chiffre = chiffre_double(___)
+                total = ___
+            return total % 10 == ___
+      - |
+        def chiffre_double(c):
+            d = c * 2
+            if d > 9:
+                return d - 9
+            return d
+
+        def est_valide(numero):
+            total = 0
+            for position in range(len(numero)):
+                chiffre = int(numero[len(numero) - 1 - position])
+                if position % 2 == 1:
+                    chiffre = chiffre_double(chiffre)
+                total = total + chiffre
+            return ___
+    solution: |
+      def chiffre_double(c):
+          d = c * 2
+          if d > 9:
+              return d - 9
+          return d
+
+      def est_valide(numero):
+          total = 0
+          for position in range(len(numero)):
+              chiffre = int(numero[len(numero) - 1 - position])
+              if position % 2 == 1:
+                  chiffre = chiffre_double(chiffre)
+              total = total + chiffre
+          return total % 10 == 0
+    tests:
+      - { appel: "chiffre_double(3)", attendu: "6" }
+      - { appel: "chiffre_double(8)", attendu: "7" }
+      - { appel: "est_valide('18')", attendu: "True", libelle: "est_valide('18') : 8 + 2 = 10" }
+      - { appel: "est_valide('79927398713')", attendu: "True" }
+      - { appel: "est_valide('79927398710')", attendu: "False" }
+      - { appel: "est_valide('17')", attendu: "False", cache: true }
+      - { appel: "est_valide('4539578763621486')", attendu: "True", cache: true }
+      - { appel: "chiffre_double(5)", attendu: "1", cache: true }
+      - { appel: "chiffre_double(4)", attendu: "8", cache: true }

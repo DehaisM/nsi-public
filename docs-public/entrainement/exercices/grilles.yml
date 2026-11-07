@@ -337,3 +337,661 @@ exercices:
       - { appel: "lignes_egales([[5]])", attendu: "True", libelle: "lignes_egales([[5]]) : une seule ligne" }
       - { appel: "lignes_egales([[1, 1], [2, 0], [1, 2]])", attendu: "False", libelle: "lignes_egales([[1, 1], [2, 0], [1, 2]]) : seule la dernière diffère" }
       - { appel: "lignes_egales([[3, 3], [6, 0], [0, 6]])", attendu: "True", cache: true }
+
+  - id: predire-dimensions
+    numero: 125
+    titre: Les dimensions d'une grille
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      G = [[1, 2, 3], [4, 5, 6]]
+      print(len(G), len(G[0]))
+    choix: ["2 3", "3 2", "2 2", "6 3"]
+    explication: |
+      `len(G)` donne le nombre de lignes, ici 2. `len(G[0])` donne la longueur de la première ligne, c'est-à-dire le nombre de colonnes, ici 3.
+
+  - id: predire-boucle-sur-lignes
+    numero: 126
+    titre: Une colonne parcourue
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      G = [[1, 2], [3, 4]]
+      s = 0
+      for ligne in G:
+          s = s + ligne[1]
+      print(s)
+    choix: ["6", "4", "7", "10"]
+    explication: |
+      La boucle parcourt les lignes, et `ligne[1]` est l'élément de la deuxième colonne de chaque ligne : 2 + 4 = 6.
+
+  - id: somme-colonne
+    numero: 127
+    titre: La somme d'une colonne
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 3
+    type: code
+    enonce: |
+      Écrire une fonction `somme_colonne(grille, j)` qui renvoie la somme des éléments de la colonne d'indice `j` de `grille`, sans utiliser `sum`.
+    depart: |
+      def somme_colonne(grille, j):
+          ...
+    interdit: [sum]
+    aides:
+      - |
+        def somme_colonne(grille, j):
+            # creer une variable total qui vaut 0
+            # parcourir les lignes de la grille
+            #     ajouter a total l'element d'indice j de la ligne
+            # renvoyer total
+      - |
+        def somme_colonne(grille, j):
+            total = 0
+            for ligne in ___:
+                total = total + ligne[___]
+            return total
+      - |
+        def somme_colonne(grille, j):
+            total = 0
+            for ligne in grille:
+                total = total + ligne[j]
+            return ___
+    solution: |
+      def somme_colonne(grille, j):
+          total = 0
+          for ligne in grille:
+              total = total + ligne[j]
+          return total
+    tests:
+      - { appel: "somme_colonne([[1, 2], [3, 4]], 0)", attendu: "4" }
+      - { appel: "somme_colonne([[1, 2], [3, 4]], 1)", attendu: "6" }
+      - { appel: "somme_colonne([[5, 0, 1]], 2)", attendu: "1" }
+      - { appel: "somme_colonne([[1, 9], [2, 9], [3, 9]], 0)", attendu: "6", cache: true }
+
+  - id: aplatir-grille
+    numero: 128
+    titre: Aplatir une grille
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 3
+    type: code
+    enonce: |
+      Écrire une fonction `aplatir(grille)` qui renvoie une liste simple contenant tous les éléments de `grille`, ligne par ligne. Par exemple, `aplatir([[1, 2], [3, 4]])` renvoie `[1, 2, 3, 4]`.
+    depart: |
+      def aplatir(grille):
+          ...
+    aides:
+      - |
+        def aplatir(grille):
+            # creer une liste vide
+            # parcourir les lignes de la grille
+            #     parcourir les elements de la ligne
+            #         ajouter l'element a la liste
+            # renvoyer la liste
+      - |
+        def aplatir(grille):
+            resultat = []
+            for ligne in ___:
+                for valeur in ___:
+                    resultat.append(___)
+            return resultat
+      - |
+        def aplatir(grille):
+            resultat = []
+            for ligne in grille:
+                for valeur in ligne:
+                    resultat.append(___)
+            return resultat
+    solution: |
+      def aplatir(grille):
+          resultat = []
+          for ligne in grille:
+              for valeur in ligne:
+                  resultat.append(valeur)
+          return resultat
+    tests:
+      - { appel: "aplatir([[1, 2], [3, 4]])", attendu: "[1, 2, 3, 4]" }
+      - { appel: "aplatir([[1], [2, 3]])", attendu: "[1, 2, 3]", libelle: "aplatir([[1], [2, 3]]) : des lignes de longueurs différentes" }
+      - { appel: "aplatir([[]])", attendu: "[]" }
+      - { appel: "aplatir([['a', 'b', 'c']])", attendu: "['a', 'b', 'c']", cache: true }
+
+  - id: predire-lignes-liees
+    numero: 129
+    titre: Les lignes liées
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 2
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      ligne = [0, 0]
+      G = [ligne, ligne]
+      G[0][0] = 1
+      print(G)
+    choix: ["[[1, 0], [1, 0]]", "[[1, 0], [0, 0]]", "[[1, 1], [0, 0]]", "[[0, 0], [0, 0]]"]
+    explication: |
+      Les deux lignes de `G` sont la **même** liste. Modifier la première revient donc à modifier la seconde.
+
+  - id: maximum-grille
+    numero: 130
+    titre: Le maximum d'une grille
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    type: code
+    enonce: |
+      Écrire une fonction `maximum(grille)` qui renvoie la plus grande valeur d'une grille non vide, sans utiliser `max`.
+    depart: |
+      def maximum(grille):
+          ...
+    interdit: [max, sort, sorted]
+    aides:
+      - |
+        def maximum(grille):
+            # retenir la premiere case de la grille
+            # parcourir les lignes, puis les valeurs de chaque ligne
+            #     si la valeur est plus grande que la valeur retenue, la retenir
+            # renvoyer la valeur retenue
+      - |
+        def maximum(grille):
+            meilleur = grille[0][___]
+            for ligne in grille:
+                for valeur in ligne:
+                    if valeur > ___:
+                        meilleur = ___
+            return meilleur
+      - |
+        def maximum(grille):
+            meilleur = grille[0][0]
+            for ligne in grille:
+                for valeur in ligne:
+                    if valeur > meilleur:
+                        meilleur = ___
+            return meilleur
+    solution: |
+      def maximum(grille):
+          meilleur = grille[0][0]
+          for ligne in grille:
+              for valeur in ligne:
+                  if valeur > meilleur:
+                      meilleur = valeur
+          return meilleur
+    tests:
+      - { appel: "maximum([[1, 5], [3, 2]])", attendu: "5" }
+      - { appel: "maximum([[-4, -2], [-9, -3]])", attendu: "-2", libelle: "maximum([[-4, -2], [-9, -3]]) : que des négatifs" }
+      - { appel: "maximum([[7]])", attendu: "7" }
+      - { appel: "maximum([[1, 2], [3, 9]])", attendu: "9", cache: true }
+
+  - id: table-en-grille
+    numero: 131
+    titre: La table de Pythagore
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `table(n)` qui renvoie une grille de `n` lignes et `n` colonnes, contenant les tables de multiplication de 1 à `n`. Par exemple, `table(3)` renvoie `[[1, 2, 3], [2, 4, 6], [3, 6, 9]]`.
+    depart: |
+      def table(n):
+          ...
+    aides:
+      - |
+        def table(n):
+            # creer une grille vide
+            # pour chaque ligne i, de 1 a n :
+            #     creer une ligne vide
+            #     pour chaque colonne j, de 1 a n, ajouter le produit de i et j a la ligne
+            #     ajouter la ligne a la grille
+            # renvoyer la grille
+      - |
+        def table(n):
+            grille = []
+            for i in range(1, ___):
+                ligne = []
+                for j in range(1, ___):
+                    ligne.append(___)
+                grille.append(___)
+            return grille
+      - |
+        def table(n):
+            grille = []
+            for i in range(1, n + 1):
+                ligne = []
+                for j in range(1, n + 1):
+                    ligne.append(i * j)
+                grille.append(___)
+            return grille
+    solution: |
+      def table(n):
+          grille = []
+          for i in range(1, n + 1):
+              ligne = []
+              for j in range(1, n + 1):
+                  ligne.append(i * j)
+              grille.append(ligne)
+          return grille
+    autres_solutions:
+      - |
+        def table(n):
+            return [[(i + 1) * (j + 1) for j in range(n)] for i in range(n)]
+    tests:
+      - { appel: "table(1)", attendu: "[[1]]" }
+      - { appel: "table(2)", attendu: "[[1, 2], [2, 4]]" }
+      - { appel: "table(3)", attendu: "[[1, 2, 3], [2, 4, 6], [3, 6, 9]]" }
+      - { appel: "table(4)[3][3]", attendu: "16", cache: true }
+
+  - id: bug-grille-rectangle
+    numero: 132
+    titre: La grille qui n'est pas carrée
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    type: code
+    enonce: |
+      Cette fonction doit renvoyer la somme de toutes les cases d'une grille. Elle marche sur une grille carrée, mais `somme_cases([[1, 2, 3], [4, 5, 6]])` renvoie 12 au lieu de 21. Trouver l'erreur et la corriger.
+    depart: |
+      def somme_cases(grille):
+          total = 0
+          for i in range(len(grille)):
+              for j in range(len(grille)):
+                  total = total + grille[i][j]
+          return total
+    interdit: [sum]
+    aides:
+      - |
+        # que vaut len(grille) : le nombre de lignes ou le nombre de colonnes ?
+        # combien de valeurs j doit-il prendre pour une ligne de 3 cases ?
+      - |
+        def somme_cases(grille):
+            total = 0
+            for i in range(len(grille)):
+                for j in range(len(___)):
+                    total = total + grille[i][j]
+            return total
+      - |
+        def somme_cases(grille):
+            total = 0
+            for i in range(len(grille)):
+                for j in range(len(grille[i])):
+                    total = ___
+            return total
+    solution: |
+      def somme_cases(grille):
+          total = 0
+          for i in range(len(grille)):
+              for j in range(len(grille[i])):
+                  total = total + grille[i][j]
+          return total
+    autres_solutions:
+      - |
+        def somme_cases(grille):
+            total = 0
+            for ligne in grille:
+                for valeur in ligne:
+                    total = total + valeur
+            return total
+    tests:
+      - { appel: "somme_cases([[1, 2, 3], [4, 5, 6]])", attendu: "21" }
+      - { appel: "somme_cases([[1], [2], [3]])", attendu: "6", libelle: "somme_cases([[1], [2], [3]]) : plus de lignes que de colonnes" }
+      - { appel: "somme_cases([[1, 2], [3, 4]])", attendu: "10" }
+      - { appel: "somme_cases([[5]])", attendu: "5", cache: true }
+
+  - id: ligne-complete
+    numero: 133
+    titre: Une ligne complète
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    type: code
+    enonce: |
+      Écrire une fonction `ligne_complete(grille, symbole)` qui renvoie `True` si au moins une ligne de `grille` ne contient que `symbole`, et `False` sinon.
+    depart: |
+      def ligne_complete(grille, symbole):
+          ...
+    aides:
+      - |
+        def ligne_complete(grille, symbole):
+            # parcourir les lignes de la grille
+            #     supposer que la ligne est complete
+            #     parcourir ses cases : si une case differe de symbole, la ligne n'est pas complete
+            #     si la ligne est restee complete, renvoyer True
+            # apres la boucle, renvoyer False
+      - |
+        def ligne_complete(grille, symbole):
+            for ligne in grille:
+                complete = ___
+                for case in ligne:
+                    if case != symbole:
+                        complete = ___
+                if complete:
+                    return ___
+            return ___
+      - |
+        def ligne_complete(grille, symbole):
+            for ligne in grille:
+                complete = True
+                for case in ligne:
+                    if case != symbole:
+                        complete = False
+                if complete:
+                    return ___
+            return ___
+    solution: |
+      def ligne_complete(grille, symbole):
+          for ligne in grille:
+              complete = True
+              for case in ligne:
+                  if case != symbole:
+                      complete = False
+              if complete:
+                  return True
+          return False
+    tests:
+      - { appel: "ligne_complete([['x', 'x'], ['o', 'x']], 'x')", attendu: "True" }
+      - { appel: "ligne_complete([['o', 'x'], ['x', 'o']], 'x')", attendu: "False" }
+      - { appel: "ligne_complete([['x', 'o'], ['o', 'o']], 'o')", attendu: "True", libelle: "ligne_complete([['x', 'o'], ['o', 'o']], 'o') : c'est la dernière ligne" }
+      - { appel: "ligne_complete([['x', 'x', 'o']], 'x')", attendu: "False", libelle: "ligne_complete([['x', 'x', 'o']], 'x') : seule la dernière case diffère" }
+      - { appel: "ligne_complete([['o', 'x', 'x']], 'x')", attendu: "False", cache: true }
+
+  - id: transposee
+    numero: 134
+    titre: La transposée
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 5
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `transposee(grille)` qui renvoie une nouvelle grille dont les lignes sont les colonnes de `grille`. Par exemple, `transposee([[1, 2, 3], [4, 5, 6]])` renvoie `[[1, 4], [2, 5], [3, 6]]`. La grille de départ n'est pas vide, et elle ne doit pas être modifiée.
+    depart: |
+      def transposee(grille):
+          ...
+    aides:
+      - |
+        def transposee(grille):
+            # creer une grille vide
+            # pour chaque indice de colonne j :
+            #     creer une nouvelle ligne
+            #     parcourir les lignes de la grille et ajouter l'element d'indice j
+            #     ajouter la nouvelle ligne a la grille resultat
+            # renvoyer le resultat
+      - |
+        def transposee(grille):
+            resultat = []
+            for j in range(len(grille[___])):
+                nouvelle = []
+                for ligne in grille:
+                    nouvelle.append(ligne[___])
+                resultat.append(___)
+            return resultat
+      - |
+        def transposee(grille):
+            resultat = []
+            for j in range(len(grille[0])):
+                nouvelle = []
+                for ligne in grille:
+                    nouvelle.append(ligne[j])
+                resultat.append(___)
+            return resultat
+    solution: |
+      def transposee(grille):
+          resultat = []
+          for j in range(len(grille[0])):
+              nouvelle = []
+              for ligne in grille:
+                  nouvelle.append(ligne[j])
+              resultat.append(nouvelle)
+          return resultat
+    tests:
+      - { appel: "transposee([[1, 2, 3], [4, 5, 6]])", attendu: "[[1, 4], [2, 5], [3, 6]]" }
+      - { appel: "transposee([[7]])", attendu: "[[7]]" }
+      - { appel: "transposee([[1, 2], [3, 4]])", attendu: "[[1, 3], [2, 4]]" }
+      - { appel: "transposee([[1], [2]])", attendu: "[[1, 2]]", cache: true }
+      - appel: "(lambda g: (transposee(g), g)[1])([[1, 2]])"
+        attendu: "[[1, 2]]"
+        libelle: "La grille de départ n'est pas modifiée"
+        cache: true
+
+  - id: morpion-gagnant
+    numero: 135
+    titre: Le morpion
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    type: code
+    enonce: |
+      Écrire une fonction `a_gagne(grille, s)` qui reçoit une grille de morpion de 3 lignes et 3 colonnes, et qui renvoie `True` si le symbole `s` occupe une ligne, une colonne ou une diagonale entière, et `False` sinon.
+    depart: |
+      def a_gagne(grille, s):
+          ...
+    aides:
+      - |
+        def a_gagne(grille, s):
+            # pour i allant de 0 a 2 :
+            #     tester si les 3 cases de la ligne i contiennent s
+            #     tester si les 3 cases de la colonne i contiennent s
+            # tester la diagonale qui descend, puis celle qui monte
+            # si rien n'a marche, renvoyer False
+      - |
+        def a_gagne(grille, s):
+            for i in range(3):
+                if grille[i][0] == s and grille[i][1] == s and grille[i][2] == s:
+                    return True
+                if grille[0][i] == s and grille[___][i] == s and grille[___][i] == s:
+                    return True
+            if grille[0][0] == s and grille[1][1] == s and grille[___][___] == s:
+                return True
+            if grille[0][2] == s and grille[1][1] == s and grille[___][___] == s:
+                return True
+            return False
+      - |
+        def a_gagne(grille, s):
+            for i in range(3):
+                if grille[i][0] == s and grille[i][1] == s and grille[i][2] == s:
+                    return True
+                if grille[0][i] == s and grille[1][i] == s and grille[2][i] == s:
+                    return True
+            if grille[0][0] == s and grille[1][1] == s and grille[2][2] == s:
+                return True
+            if grille[0][2] == s and grille[1][1] == s and grille[___][___] == s:
+                return True
+            return False
+    solution: |
+      def a_gagne(grille, s):
+          for i in range(3):
+              if grille[i][0] == s and grille[i][1] == s and grille[i][2] == s:
+                  return True
+              if grille[0][i] == s and grille[1][i] == s and grille[2][i] == s:
+                  return True
+          if grille[0][0] == s and grille[1][1] == s and grille[2][2] == s:
+              return True
+          if grille[0][2] == s and grille[1][1] == s and grille[2][0] == s:
+              return True
+          return False
+    tests:
+      - { appel: "a_gagne([['x', 'x', 'x'], ['o', '.', 'o'], ['.', '.', '.']], 'x')", attendu: "True", libelle: "Une ligne de x" }
+      - { appel: "a_gagne([['o', 'x', '.'], ['o', 'x', '.'], ['o', '.', 'x']], 'o')", attendu: "True", libelle: "Une colonne de o" }
+      - { appel: "a_gagne([['x', 'o', '.'], ['o', 'x', '.'], ['.', '.', 'x']], 'x')", attendu: "True", libelle: "La diagonale qui descend" }
+      - { appel: "a_gagne([['.', 'o', 'x'], ['o', 'x', '.'], ['x', '.', '.']], 'x')", attendu: "True", libelle: "La diagonale qui monte" }
+      - { appel: "a_gagne([['x', 'x', 'o'], ['o', 'o', 'x'], ['x', 'o', 'x']], 'x')", attendu: "False", libelle: "Une partie nulle" }
+      - { appel: "a_gagne([['x', 'x', 'x'], ['.', '.', '.'], ['.', '.', '.']], 'o')", attendu: "False", cache: true }
+      - { appel: "a_gagne([['.', '.', '.'], ['.', '.', '.'], ['o', 'o', 'o']], 'o')", attendu: "True", cache: true }
+      - { appel: "a_gagne([['.', '.', 'x'], ['.', '.', 'x'], ['.', '.', 'x']], 'x')", attendu: "True", cache: true }
+      - { appel: "a_gagne([['o', 'x', 'x'], ['.', '.', '.'], ['.', '.', '.']], 'x')", attendu: "False", cache: true }
+      - { appel: "a_gagne([['x', '.', '.'], ['x', '.', '.'], ['o', '.', '.']], 'x')", attendu: "False", cache: true }
+
+  - id: demineur
+    numero: 136
+    titre: Le démineur
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    type: code
+    enonce: |
+      Dans une grille de démineur, la valeur 1 indique une mine et la valeur 0 une case vide. Écrire une fonction `mines_autour(grille, i, j)` qui renvoie le nombre de mines dans les 8 cases voisines de la case `(i, j)`, sans compter la case elle-même. Attention aux bords de la grille.
+    depart: |
+      def mines_autour(grille, i, j):
+          ...
+    aides:
+      - |
+        def mines_autour(grille, i, j):
+            # creer un compteur qui vaut 0
+            # parcourir les lignes de i - 1 a i + 1, et les colonnes de j - 1 a j + 1
+            #     ignorer la case (i, j) elle-meme et les indices en dehors de la grille
+            #     ajouter la valeur de la case au compteur
+            # renvoyer le compteur
+      - |
+        def mines_autour(grille, i, j):
+            compteur = 0
+            for a in range(i - 1, i + ___):
+                for b in range(j - 1, j + ___):
+                    dedans = a >= 0 and a < len(grille) and b >= 0 and b < len(grille[0])
+                    if dedans and (a != i or b != ___):
+                        compteur = compteur + grille[___][___]
+            return compteur
+      - |
+        def mines_autour(grille, i, j):
+            compteur = 0
+            for a in range(i - 1, i + 2):
+                for b in range(j - 1, j + 2):
+                    dedans = a >= 0 and a < len(grille) and b >= 0 and b < len(grille[0])
+                    if dedans and (a != i or b != j):
+                        compteur = compteur + ___
+            return compteur
+    solution: |
+      def mines_autour(grille, i, j):
+          compteur = 0
+          for a in range(i - 1, i + 2):
+              for b in range(j - 1, j + 2):
+                  dedans = a >= 0 and a < len(grille) and b >= 0 and b < len(grille[0])
+                  if dedans and (a != i or b != j):
+                      compteur = compteur + grille[a][b]
+          return compteur
+    tests:
+      - { appel: "mines_autour([[1, 0, 1], [0, 0, 0], [1, 1, 0]], 1, 1)", attendu: "4", libelle: "Une case au centre" }
+      - { appel: "mines_autour([[1, 1], [1, 0]], 1, 1)", attendu: "3", libelle: "Un coin en bas à droite" }
+      - { appel: "mines_autour([[0, 1], [1, 1]], 0, 0)", attendu: "3", libelle: "Un coin en haut à gauche" }
+      - { appel: "mines_autour([[1, 0], [0, 0]], 0, 0)", attendu: "0", libelle: "La mine de la case elle-même ne compte pas" }
+      - { appel: "mines_autour([[1, 1, 1], [1, 1, 1], [1, 1, 1]], 1, 1)", attendu: "8", cache: true }
+      - { appel: "mines_autour([[0, 0, 0, 1], [0, 0, 0, 0]], 1, 2)", attendu: "1", libelle: "Une grille plus large que haute", cache: true }
+      - { appel: "mines_autour([[1], [0], [1]], 1, 0)", attendu: "2", cache: true }
+      - { appel: "mines_autour([[1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [1, 0, 0, 0, 1], [1, 1, 1, 1, 1]], 2, 2)", attendu: "0", cache: true }
+      - { appel: "mines_autour([[1, 0, 1]], 0, 1)", attendu: "2", cache: true }
+
+  - id: carre-magique
+    numero: 137
+    titre: Le carré magique
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 7
+    tags: [maths]
+    type: code
+    enonce: |
+      Une grille carrée est un carré magique si toutes ses lignes, toutes ses colonnes et ses deux diagonales ont la même somme.
+
+      Écrire une fonction `est_magique(grille)` qui renvoie `True` si `grille` est un carré magique, et `False` sinon, sans utiliser `sum`.
+    depart: |
+      def est_magique(grille):
+          ...
+    interdit: [sum]
+    aides:
+      - |
+        def est_magique(grille):
+            # prendre la somme de la premiere ligne comme reference
+            # pour chaque indice i :
+            #     calculer la somme de la ligne i et celle de la colonne i
+            #     si l'une differe de la reference, renvoyer False
+            # calculer la somme de chaque diagonale et la comparer aussi a la reference
+            # si tout est bon, renvoyer True
+      - |
+        def est_magique(grille):
+            n = len(grille)
+            reference = 0
+            for j in range(n):
+                reference = reference + grille[0][j]
+            for i in range(n):
+                ligne = 0
+                colonne = 0
+                for j in range(n):
+                    ligne = ligne + grille[i][___]
+                    colonne = colonne + grille[___][i]
+                if ligne != reference or colonne != reference:
+                    return False
+            diagonale1 = 0
+            diagonale2 = 0
+            for i in range(n):
+                diagonale1 = diagonale1 + grille[i][___]
+                diagonale2 = diagonale2 + grille[i][n - 1 - ___]
+            return diagonale1 == ___ and diagonale2 == ___
+      - |
+        def est_magique(grille):
+            n = len(grille)
+            reference = 0
+            for j in range(n):
+                reference = reference + grille[0][j]
+            for i in range(n):
+                ligne = 0
+                colonne = 0
+                for j in range(n):
+                    ligne = ligne + grille[i][j]
+                    colonne = colonne + grille[j][i]
+                if ligne != reference or colonne != reference:
+                    return False
+            diagonale1 = 0
+            diagonale2 = 0
+            for i in range(n):
+                diagonale1 = diagonale1 + grille[i][i]
+                diagonale2 = diagonale2 + grille[i][n - 1 - i]
+            return ___
+    solution: |
+      def est_magique(grille):
+          n = len(grille)
+          reference = 0
+          for j in range(n):
+              reference = reference + grille[0][j]
+          for i in range(n):
+              ligne = 0
+              colonne = 0
+              for j in range(n):
+                  ligne = ligne + grille[i][j]
+                  colonne = colonne + grille[j][i]
+              if ligne != reference or colonne != reference:
+                  return False
+          diagonale1 = 0
+          diagonale2 = 0
+          for i in range(n):
+              diagonale1 = diagonale1 + grille[i][i]
+              diagonale2 = diagonale2 + grille[i][n - 1 - i]
+          return diagonale1 == reference and diagonale2 == reference
+    tests:
+      - { appel: "est_magique([[2, 7, 6], [9, 5, 1], [4, 3, 8]])", attendu: "True" }
+      - { appel: "est_magique([[1, 1], [1, 1]])", attendu: "True" }
+      - { appel: "est_magique([[1, 2, 3], [1, 2, 3], [1, 2, 3]])", attendu: "False", libelle: "Les lignes sont égales, mais pas les colonnes" }
+      - { appel: "est_magique([[1, 2], [2, 1]])", attendu: "False", libelle: "Lignes et colonnes égales, mais pas les diagonales" }
+      - { appel: "est_magique([[4]])", attendu: "True", cache: true }
+      - { appel: "est_magique([[2, 0], [0, 2]])", attendu: "False", cache: true }
+      - { appel: "est_magique([[0, 2], [2, 0]])", attendu: "False", cache: true }
+      - { appel: "est_magique([[1, 1], [2, 2]])", attendu: "False", cache: true }
+      - { appel: "est_magique([[1, 2, 3], [3, 1, 2], [2, 3, 1]])", attendu: "False", cache: true }
+      - { appel: "est_magique([[3, 2, 1], [2, 1, 3], [1, 3, 2]])", attendu: "False", cache: true }

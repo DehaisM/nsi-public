@@ -462,3 +462,458 @@ exercices:
       - { appel: "est_triee([3, 1, 2])", attendu: "False", cache: true }
       - { appel: "est_triee([1, 2, 3, 0])", attendu: "False", cache: true }
       - { appel: "est_triee([8])", attendu: "True", cache: true }
+
+  - id: predire-append-boucle
+    numero: 115
+    titre: Remplir une liste
+    notion: listes
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      L = []
+      for i in range(3):
+          L.append(i * 2)
+      print(L)
+    choix: ["[0, 2, 4]", "[2, 4, 6]", "[0, 2, 4, 6]", "[0, 1, 2]"]
+    explication: |
+      `i` prend les valeurs 0, 1 et 2. À chaque tour, `append` ajoute le double de `i` à la fin de la liste.
+
+  - id: predire-pop
+    numero: 116
+    titre: Ce que renvoie pop
+    notion: listes
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      L = [1, 2, 3]
+      x = L.pop()
+      print(x, len(L))
+    choix: ["3 2", "3 3", "1 2", "2 2"]
+    explication: |
+      Sans argument, `pop` retire le dernier élément de la liste et le renvoie : `x` vaut 3, et il reste 2 éléments.
+
+  - id: total-panier
+    numero: 117
+    titre: Le total du panier
+    notion: listes
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 3
+    type: code
+    enonce: |
+      Les listes `prix` et `quantites` ont la même longueur : `prix[i]` est le prix d'un article et `quantites[i]` le nombre d'exemplaires achetés.
+
+      Écrire une fonction `total_panier(prix, quantites)` qui renvoie le montant total du panier.
+    depart: |
+      def total_panier(prix, quantites):
+          ...
+    aides:
+      - |
+        def total_panier(prix, quantites):
+            # creer une variable total qui vaut 0
+            # parcourir les indices des listes
+            #     ajouter a total le prix multiplie par la quantite
+            # renvoyer total
+      - |
+        def total_panier(prix, quantites):
+            total = 0
+            for i in range(len(___)):
+                total = total + prix[___] * quantites[___]
+            return total
+      - |
+        def total_panier(prix, quantites):
+            total = 0
+            for i in range(len(prix)):
+                total = total + prix[i] * quantites[i]
+            return ___
+    solution: |
+      def total_panier(prix, quantites):
+          total = 0
+          for i in range(len(prix)):
+              total = total + prix[i] * quantites[i]
+          return total
+    tests:
+      - { appel: "total_panier([2, 5], [3, 1])", attendu: "11" }
+      - { appel: "total_panier([], [])", attendu: "0", libelle: "total_panier([], []) : un panier vide" }
+      - { appel: "total_panier([10], [0])", attendu: "0" }
+      - { appel: "total_panier([1.5, 2, 4], [2, 2, 1])", attendu: "11.0", cache: true }
+
+  - id: positions-valeur
+    numero: 118
+    titre: Toutes les positions
+    notion: listes
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 3
+    type: code
+    enonce: |
+      Écrire une fonction `positions(valeurs, cible)` qui renvoie la liste de tous les indices où `cible` se trouve dans `valeurs`. Par exemple, `positions([4, 7, 4], 4)` renvoie `[0, 2]`.
+    depart: |
+      def positions(valeurs, cible):
+          ...
+    aides:
+      - |
+        def positions(valeurs, cible):
+            # creer une liste vide
+            # parcourir les indices de valeurs
+            #     si l'element vaut cible, ajouter son indice a la liste
+            # renvoyer la liste
+      - |
+        def positions(valeurs, cible):
+            resultat = []
+            for i in range(len(___)):
+                if valeurs[i] == ___:
+                    resultat.append(___)
+            return resultat
+      - |
+        def positions(valeurs, cible):
+            resultat = []
+            for i in range(len(valeurs)):
+                if valeurs[i] == cible:
+                    resultat.append(___)
+            return resultat
+    solution: |
+      def positions(valeurs, cible):
+          resultat = []
+          for i in range(len(valeurs)):
+              if valeurs[i] == cible:
+                  resultat.append(i)
+          return resultat
+    tests:
+      - { appel: "positions([4, 7, 4], 4)", attendu: "[0, 2]" }
+      - { appel: "positions([1, 2], 9)", attendu: "[]", libelle: "positions([1, 2], 9) : la valeur n'y est pas" }
+      - { appel: "positions([], 1)", attendu: "[]" }
+      - { appel: "positions([3, 3, 3], 3)", attendu: "[0, 1, 2]", cache: true }
+      - { appel: "positions([0, 0, 5], 5)", attendu: "[2]", cache: true }
+
+  - id: predire-modifier-dans-fonction
+    numero: 119
+    titre: La liste passée à une fonction
+    notion: listes
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 2
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      def modifier(T):
+          T[0] = 9
+
+      A = [1, 2]
+      modifier(A)
+      print(A)
+    choix: ["[9, 2]", "[1, 2]", "[9]", "None"]
+    explication: |
+      `T` et `A` désignent la **même** liste : la fonction ne reçoit pas une copie. Modifier un élément de `T` modifie donc `A`.
+
+  - id: bug-ecarts
+    numero: 120
+    titre: Les écarts entre mesures
+    notion: listes
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Cette fonction doit renvoyer la liste des écarts entre deux mesures voisines : `ecarts([1, 4, 9])` doit renvoyer `[3, 5]`. Elle provoque une erreur. La lire, puis corriger la fonction.
+    depart: |
+      def ecarts(mesures):
+          resultat = []
+          for i in range(len(mesures)):
+              resultat.append(mesures[i + 1] - mesures[i])
+          return resultat
+    aides:
+      - |
+        # que vaut i au dernier tour de boucle ?
+        # l'element d'indice i + 1 existe-t-il alors ?
+      - |
+        def ecarts(mesures):
+            resultat = []
+            for i in range(len(mesures) - ___):
+                resultat.append(mesures[i + 1] - mesures[i])
+            return resultat
+      - |
+        def ecarts(mesures):
+            resultat = []
+            for i in range(len(mesures) - 1):
+                resultat.append(___)
+            return resultat
+    solution: |
+      def ecarts(mesures):
+          resultat = []
+          for i in range(len(mesures) - 1):
+              resultat.append(mesures[i + 1] - mesures[i])
+          return resultat
+    tests:
+      - { appel: "ecarts([1, 4, 9])", attendu: "[3, 5]" }
+      - { appel: "ecarts([5])", attendu: "[]", libelle: "ecarts([5]) : une seule mesure" }
+      - { appel: "ecarts([3, 1])", attendu: "[-2]" }
+      - { appel: "ecarts([0, 0, 2, 2])", attendu: "[0, 2, 0]", cache: true }
+
+  - id: au-dessus-moyenne
+    numero: 121
+    titre: Au-dessus de la moyenne
+    notion: listes
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `au_dessus(notes)` qui renvoie la liste des notes strictement supérieures à la moyenne de la liste `notes`, dans le même ordre et sans utiliser `sum`. La liste n'est pas vide.
+    depart: |
+      def au_dessus(notes):
+          ...
+    interdit: [sum]
+    aides:
+      - |
+        def au_dessus(notes):
+            # calculer la somme des notes avec une boucle
+            # en deduire la moyenne
+            # parcourir de nouveau les notes
+            #     garder celles qui sont strictement superieures a la moyenne
+      - |
+        def au_dessus(notes):
+            total = 0
+            for n in notes:
+                total = total + ___
+            moyenne = total / len(___)
+            resultat = []
+            for n in notes:
+                if n > ___:
+                    resultat.append(___)
+            return resultat
+      - |
+        def au_dessus(notes):
+            total = 0
+            for n in notes:
+                total = total + n
+            moyenne = total / len(notes)
+            resultat = []
+            for n in notes:
+                if n > moyenne:
+                    resultat.append(___)
+            return resultat
+    solution: |
+      def au_dessus(notes):
+          total = 0
+          for n in notes:
+              total = total + n
+          moyenne = total / len(notes)
+          resultat = []
+          for n in notes:
+              if n > moyenne:
+                  resultat.append(n)
+          return resultat
+    tests:
+      - { appel: "au_dessus([10, 20])", attendu: "[20]" }
+      - { appel: "au_dessus([5, 5])", attendu: "[]", libelle: "au_dessus([5, 5]) : aucune note au-dessus" }
+      - { appel: "au_dessus([8, 12, 16])", attendu: "[16]" }
+      - { appel: "au_dessus([1, 2, 3, 10])", attendu: "[10]", cache: true }
+      - { appel: "au_dessus([14, 2, 12])", attendu: "[14, 12]", cache: true }
+      - { appel: "au_dessus([4, 5])", attendu: "[5]", cache: true }
+
+  - id: entrelacer
+    numero: 122
+    titre: Entrelacer deux listes
+    notion: listes
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    type: code
+    enonce: |
+      Écrire une fonction `entrelacer(A, B)` qui renvoie une nouvelle liste où les éléments de `A` et de `B`, de même longueur, sont pris à tour de rôle. Par exemple, `entrelacer([1, 2], [8, 9])` renvoie `[1, 8, 2, 9]`.
+    depart: |
+      def entrelacer(A, B):
+          ...
+    aides:
+      - |
+        def entrelacer(A, B):
+            # creer une liste vide
+            # parcourir les indices de A
+            #     ajouter l'element de A a cet indice, puis celui de B
+            # renvoyer la liste
+      - |
+        def entrelacer(A, B):
+            resultat = []
+            for i in range(len(___)):
+                resultat.append(A[___])
+                resultat.append(B[___])
+            return resultat
+      - |
+        def entrelacer(A, B):
+            resultat = []
+            for i in range(len(A)):
+                resultat.append(A[i])
+                resultat.append(___)
+            return resultat
+    solution: |
+      def entrelacer(A, B):
+          resultat = []
+          for i in range(len(A)):
+              resultat.append(A[i])
+              resultat.append(B[i])
+          return resultat
+    tests:
+      - { appel: "entrelacer([1, 2], [8, 9])", attendu: "[1, 8, 2, 9]" }
+      - { appel: "entrelacer([], [])", attendu: "[]" }
+      - { appel: "entrelacer(['a'], ['b'])", attendu: "['a', 'b']" }
+      - { appel: "entrelacer([1, 2, 3], [4, 5, 6])", attendu: "[1, 4, 2, 5, 3, 6]", cache: true }
+
+  - id: deuxieme-plus-grand
+    numero: 123
+    titre: Le deuxième plus grand
+    notion: listes
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    type: code
+    enonce: |
+      Écrire une fonction `deuxieme(valeurs)` qui renvoie la deuxième plus grande valeur **différente** de la liste, sans utiliser `max`, `sort` ni `sorted`. La liste contient au moins deux valeurs différentes. Par exemple, `deuxieme([9, 9, 1])` renvoie 1.
+    depart: |
+      def deuxieme(valeurs):
+          ...
+    interdit: [max, sort, sorted]
+    aides:
+      - |
+        def plus_grand(valeurs):
+            # commencer par ecrire une fonction qui renvoie le plus grand element
+
+        def deuxieme(valeurs):
+            # trouver le plus grand element
+            # construire la liste des elements qui lui sont differents
+            # renvoyer le plus grand element de cette nouvelle liste
+      - |
+        def plus_grand(valeurs):
+            meilleur = valeurs[0]
+            for v in valeurs:
+                if v > meilleur:
+                    meilleur = ___
+            return meilleur
+
+        def deuxieme(valeurs):
+            premier = plus_grand(___)
+            reste = []
+            for v in valeurs:
+                if v != ___:
+                    reste.append(v)
+            return plus_grand(___)
+      - |
+        def plus_grand(valeurs):
+            meilleur = valeurs[0]
+            for v in valeurs:
+                if v > meilleur:
+                    meilleur = v
+            return meilleur
+
+        def deuxieme(valeurs):
+            premier = plus_grand(valeurs)
+            reste = []
+            for v in valeurs:
+                if v != premier:
+                    reste.append(v)
+            return ___
+    solution: |
+      def plus_grand(valeurs):
+          meilleur = valeurs[0]
+          for v in valeurs:
+              if v > meilleur:
+                  meilleur = v
+          return meilleur
+
+      def deuxieme(valeurs):
+          premier = plus_grand(valeurs)
+          reste = []
+          for v in valeurs:
+              if v != premier:
+                  reste.append(v)
+          return plus_grand(reste)
+    tests:
+      - { appel: "deuxieme([3, 9, 5])", attendu: "5" }
+      - { appel: "deuxieme([9, 9, 1])", attendu: "1", libelle: "deuxieme([9, 9, 1]) : le plus grand apparaît deux fois" }
+      - { appel: "deuxieme([2, 7])", attendu: "2" }
+      - { appel: "deuxieme([-1, -5, -3])", attendu: "-3", libelle: "deuxieme([-1, -5, -3]) : que des négatifs" }
+      - { appel: "deuxieme([1, 2, 3, 4])", attendu: "3", cache: true }
+      - { appel: "deuxieme([4, 3, 2, 1])", attendu: "3", cache: true }
+      - { appel: "deuxieme([5, 4, 4, 5])", attendu: "4", cache: true }
+
+  - id: plus-longue-serie
+    numero: 124
+    titre: La plus longue série
+    notion: listes
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    type: code
+    enonce: |
+      Écrire une fonction `plus_longue_serie(valeurs)` qui renvoie la longueur de la plus longue suite d'éléments voisins égaux. Par exemple, `plus_longue_serie([1, 1, 2, 2, 2, 3])` renvoie 3. Pour une liste vide, la fonction renvoie 0.
+    depart: |
+      def plus_longue_serie(valeurs):
+          ...
+    aides:
+      - |
+        def plus_longue_serie(valeurs):
+            # traiter d'abord la liste vide
+            # garder deux compteurs : la serie en cours et la meilleure serie, tous les deux a 1
+            # parcourir les indices a partir de 1
+            #     si l'element est egal au precedent, la serie en cours augmente
+            #     sinon, elle repart a 1
+            #     si la serie en cours depasse la meilleure, la retenir
+            # renvoyer la meilleure serie
+      - |
+        def plus_longue_serie(valeurs):
+            if len(valeurs) == 0:
+                return ___
+            en_cours = 1
+            meilleure = 1
+            for i in range(1, len(valeurs)):
+                if valeurs[i] == valeurs[___]:
+                    en_cours = en_cours + 1
+                else:
+                    en_cours = ___
+                if en_cours > meilleure:
+                    meilleure = ___
+            return meilleure
+      - |
+        def plus_longue_serie(valeurs):
+            if len(valeurs) == 0:
+                return 0
+            en_cours = 1
+            meilleure = 1
+            for i in range(1, len(valeurs)):
+                if valeurs[i] == valeurs[i - 1]:
+                    en_cours = en_cours + 1
+                else:
+                    en_cours = 1
+                if en_cours > meilleure:
+                    meilleure = ___
+            return meilleure
+    solution: |
+      def plus_longue_serie(valeurs):
+          if len(valeurs) == 0:
+              return 0
+          en_cours = 1
+          meilleure = 1
+          for i in range(1, len(valeurs)):
+              if valeurs[i] == valeurs[i - 1]:
+                  en_cours = en_cours + 1
+              else:
+                  en_cours = 1
+              if en_cours > meilleure:
+                  meilleure = en_cours
+          return meilleure
+    tests:
+      - { appel: "plus_longue_serie([1, 1, 2, 2, 2, 3])", attendu: "3" }
+      - { appel: "plus_longue_serie([])", attendu: "0", libelle: "plus_longue_serie([]) : une liste vide" }
+      - { appel: "plus_longue_serie([5])", attendu: "1" }
+      - { appel: "plus_longue_serie([1, 2, 3])", attendu: "1" }
+      - { appel: "plus_longue_serie([2, 2, 1, 1, 1, 1])", attendu: "4", libelle: "plus_longue_serie([2, 2, 1, 1, 1, 1]) : la série finit la liste" }
+      - { appel: "plus_longue_serie([7, 7])", attendu: "2", cache: true }
+      - { appel: "plus_longue_serie([3, 3, 3, 1, 3, 3])", attendu: "3", cache: true }
