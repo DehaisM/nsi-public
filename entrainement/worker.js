@@ -1,6 +1,6 @@
 // Fait tourner Python a part de la page : une boucle infinie ne fige rien,
 // la page peut simplement arreter ce worker et en relancer un autre.
-const PYODIDE = "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/";
+const PYODIDE = new URL("vendor/pyodide/", self.location).href;
 
 importScripts(PYODIDE + "pyodide.js");
 
