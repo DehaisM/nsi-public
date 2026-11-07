@@ -1,0 +1,339 @@
+exercices:
+
+  - id: colonne-grille
+    numero: 14
+    titre: Une colonne de la grille
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    type: code
+    enonce: |
+      Écrire une fonction `colonne(grille, j)` qui renvoie la liste des éléments de la colonne `j` de `grille`.
+
+      Par exemple, avec `G = [[1, 2], [3, 4], [5, 6]]`, l'appel `colonne(G, 1)` renvoie `[2, 4, 6]`.
+    depart: |
+      def colonne(grille, j):
+          ...
+    aides:
+      - |
+        def colonne(grille, j):
+            # creer une liste vide
+            # parcourir chaque ligne de la grille
+            #     ajouter a la liste l'element d'indice j de cette ligne
+            # renvoyer la liste
+      - |
+        def colonne(grille, j):
+            resultat = []
+            for ligne in grille:
+                resultat.append(ligne[___])
+            return ___
+      - |
+        def colonne(grille, j):
+            resultat = []
+            for ligne in grille:
+                resultat.append(ligne[j])
+            return ___
+    solution: |
+      def colonne(grille, j):
+          resultat = []
+          for ligne in grille:
+              resultat.append(ligne[j])
+          return resultat
+    tests:
+      - { appel: "colonne([[1, 2], [3, 4], [5, 6]], 1)", attendu: "[2, 4, 6]" }
+      - { appel: "colonne([[1, 2], [3, 4], [5, 6]], 0)", attendu: "[1, 3, 5]" }
+      - { appel: "colonne([[7, 8, 9]], 2)", attendu: "[9]", cache: true }
+
+  - id: compter-bateaux
+    numero: 15
+    titre: Bataille navale
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 5
+    type: code
+    enonce: |
+      Une grille de bataille navale contient `"B"` pour une case de bateau et `"."` pour une case d'eau.
+
+      Écrire une fonction `compter(grille, symbole)` qui renvoie le nombre de cases de `grille` qui contiennent `symbole`, avec deux boucles imbriquées.
+    depart: |
+      def compter(grille, symbole):
+          ...
+    aides:
+      - |
+        def compter(grille, symbole):
+            # creer un compteur qui vaut 0
+            # parcourir chaque ligne de la grille
+            #     parcourir chaque case de cette ligne
+            #         si la case contient symbole, ajouter 1 au compteur
+            # renvoyer le compteur
+      - |
+        def compter(grille, symbole):
+            total = 0
+            for ligne in ___:
+                for case in ___:
+                    if case == ___:
+                        total = total + 1
+            return total
+      - |
+        def compter(grille, symbole):
+            total = 0
+            for ligne in grille:
+                for case in ligne:
+                    if case == ___:
+                        total = total + 1
+            return total
+    solution: |
+      def compter(grille, symbole):
+          total = 0
+          for ligne in grille:
+              for case in ligne:
+                  if case == symbole:
+                      total = total + 1
+          return total
+    interdit: [count]
+    tests:
+      - { appel: "compter([['B', '.'], ['.', 'B']], 'B')", attendu: "2" }
+      - { appel: "compter([['B', '.'], ['.', 'B']], '.')", attendu: "2" }
+      - { appel: "compter([['.', '.']], 'B')", attendu: "0" }
+      - { appel: "compter([['B', 'B', 'B'], ['B', '.', '.']], 'B')", attendu: "4", cache: true }
+
+  - id: predire-case
+    numero: 56
+    titre: Ligne, puis colonne
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      G = [[1, 2, 3], [4, 5, 6]]
+      print(G[1][0])
+    choix: ["4", "2", "1", "5"]
+    explication: |
+      `G[1]` est la deuxième ligne, `[4, 5, 6]`. Dans cette ligne, l'élément d'indice 0 est 4.
+
+  - id: somme-ligne
+    numero: 57
+    titre: La somme d'une ligne
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 3
+    type: code
+    enonce: |
+      Écrire une fonction `somme_ligne(grille, i)` qui renvoie la somme des éléments de la ligne d'indice `i` de `grille`.
+    depart: |
+      def somme_ligne(grille, i):
+          ...
+    interdit: [sum]
+    aides:
+      - |
+        def somme_ligne(grille, i):
+            # creer une variable total qui vaut 0
+            # parcourir les elements de la ligne d'indice i
+            #     ajouter l'element a total
+            # renvoyer total
+      - |
+        def somme_ligne(grille, i):
+            total = 0
+            for valeur in grille[___]:
+                total = ___
+            return total
+      - |
+        def somme_ligne(grille, i):
+            total = 0
+            for valeur in grille[i]:
+                total = ___
+            return total
+    solution: |
+      def somme_ligne(grille, i):
+          total = 0
+          for valeur in grille[i]:
+              total = total + valeur
+          return total
+    tests:
+      - { appel: "somme_ligne([[1, 2], [3, 4]], 0)", attendu: "3" }
+      - { appel: "somme_ligne([[1, 2], [3, 4]], 1)", attendu: "7" }
+      - { appel: "somme_ligne([[5, 5, 5]], 0)", attendu: "15" }
+      - { appel: "somme_ligne([[0], [-2, 2], [9]], 1)", attendu: "0", cache: true }
+
+  - id: creer-grille
+    numero: 58
+    titre: Créer une grille
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    type: code
+    enonce: |
+      Compléter la fonction `creer_grille(n, m, valeur)` pour qu'elle renvoie une grille de `n` lignes et `m` colonnes, remplie de `valeur`. Attention, chaque ligne doit être une liste bien distincte des autres.
+    depart: |
+      def creer_grille(n, m, valeur):
+          grille = []
+          for i in range(___):
+              ligne = []
+              for j in range(___):
+                  ligne.append(___)
+              grille.append(___)
+          return grille
+    aides:
+      - |
+        # la boucle sur i construit les lignes, il y en a n
+        # la boucle sur j remplit une ligne, elle a m cases
+      - |
+        def creer_grille(n, m, valeur):
+            grille = []
+            for i in range(n):
+                ligne = []
+                for j in range(___):
+                    ligne.append(___)
+                grille.append(___)
+            return grille
+      - |
+        def creer_grille(n, m, valeur):
+            grille = []
+            for i in range(n):
+                ligne = []
+                for j in range(m):
+                    ligne.append(valeur)
+                grille.append(___)
+            return grille
+    solution: |
+      def creer_grille(n, m, valeur):
+          grille = []
+          for i in range(n):
+              ligne = []
+              for j in range(m):
+                  ligne.append(valeur)
+              grille.append(ligne)
+          return grille
+    autres_solutions:
+      - |
+        def creer_grille(n, m, valeur):
+            return [[valeur for j in range(m)] for i in range(n)]
+    tests:
+      - { appel: "creer_grille(2, 3, 0)", attendu: "[[0, 0, 0], [0, 0, 0]]" }
+      - { appel: "creer_grille(1, 1, 'x')", attendu: "[['x']]" }
+      - appel: "(lambda g: (g[0].__setitem__(0, 9), g[1][0])[1])(creer_grille(2, 2, 0))"
+        attendu: "0"
+        libelle: "Modifier une ligne ne change pas les autres"
+      - { appel: "creer_grille(3, 1, 7)", attendu: "[[7], [7], [7]]", cache: true }
+
+  - id: bug-diagonale
+    numero: 59
+    titre: La somme de la diagonale
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Cette fonction doit renvoyer la somme de la diagonale d'une grille carrée, c'est-à-dire des cases dont l'indice de ligne est égal à l'indice de colonne. Elle contient une erreur : `somme_diagonale([[1, 2], [3, 4]])` renvoie 4 au lieu de 5. La corriger.
+    depart: |
+      def somme_diagonale(grille):
+          total = 0
+          for i in range(len(grille)):
+              total = total + grille[i][0]
+          return total
+    aides:
+      - |
+        # quelles cases cette boucle additionne-t-elle ?
+        # pour une case de la diagonale, que vaut l'indice de colonne ?
+      - |
+        def somme_diagonale(grille):
+            total = 0
+            for i in range(len(grille)):
+                total = total + grille[i][___]
+            return total
+      - |
+        def somme_diagonale(grille):
+            total = 0
+            for i in range(len(grille)):
+                total = total + grille[i][i]
+            return ___
+    solution: |
+      def somme_diagonale(grille):
+          total = 0
+          for i in range(len(grille)):
+              total = total + grille[i][i]
+          return total
+    tests:
+      - { appel: "somme_diagonale([[1, 2], [3, 4]])", attendu: "5" }
+      - { appel: "somme_diagonale([[7]])", attendu: "7" }
+      - { appel: "somme_diagonale([[1, 0, 0], [0, 2, 0], [0, 0, 3]])", attendu: "6" }
+      - { appel: "somme_diagonale([[2, 9, 9], [9, 2, 9], [9, 9, 2]])", attendu: "6", cache: true }
+
+  - id: lignes-magiques
+    numero: 60
+    titre: Toutes les lignes pareilles
+    notion: grilles
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    tags: [maths]
+    type: code
+    enonce: |
+      Dans un carré magique, toutes les lignes ont la même somme. Écrire une fonction `lignes_egales(grille)` qui renvoie `True` si toutes les lignes de `grille` (non vide) ont la même somme, et `False` sinon, sans utiliser `sum`.
+    depart: |
+      def lignes_egales(grille):
+          ...
+    interdit: [sum]
+    aides:
+      - |
+        def somme_de(ligne):
+            # commencer par ecrire une fonction qui renvoie la somme d'une ligne
+
+        def lignes_egales(grille):
+            # calculer la somme de la premiere ligne, c'est la reference
+            # parcourir les lignes
+            #     si la somme d'une ligne differe de la reference, renvoyer False
+            # apres la boucle, renvoyer True
+      - |
+        def somme_de(ligne):
+            total = 0
+            for valeur in ligne:
+                total = ___
+            return total
+
+        def lignes_egales(grille):
+            reference = somme_de(grille[___])
+            for ligne in grille:
+                if somme_de(___) != reference:
+                    return ___
+            return ___
+      - |
+        def somme_de(ligne):
+            total = 0
+            for valeur in ligne:
+                total = total + valeur
+            return total
+
+        def lignes_egales(grille):
+            reference = somme_de(grille[0])
+            for ligne in grille:
+                if somme_de(ligne) != reference:
+                    return False
+            return ___
+    solution: |
+      def somme_de(ligne):
+          total = 0
+          for valeur in ligne:
+              total = total + valeur
+          return total
+
+      def lignes_egales(grille):
+          reference = somme_de(grille[0])
+          for ligne in grille:
+              if somme_de(ligne) != reference:
+                  return False
+          return True
+    tests:
+      - { appel: "lignes_egales([[2, 7, 6], [9, 5, 1], [4, 3, 8]])", attendu: "True" }
+      - { appel: "lignes_egales([[1, 2], [3, 4]])", attendu: "False" }
+      - { appel: "lignes_egales([[5]])", attendu: "True", libelle: "lignes_egales([[5]]) : une seule ligne" }
+      - { appel: "lignes_egales([[1, 1], [2, 0], [1, 2]])", attendu: "False", libelle: "lignes_egales([[1, 1], [2, 0], [1, 2]]) : seule la dernière diffère" }
+      - { appel: "lignes_egales([[3, 3], [6, 0], [0, 6]])", attendu: "True", cache: true }

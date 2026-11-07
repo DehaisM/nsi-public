@@ -1,0 +1,353 @@
+exercices:
+
+  - id: rendre-la-monnaie
+    numero: 8
+    titre: Rendre la monnaie
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Écrire une fonction `monnaie(prix, paye)` qui renvoie la somme à rendre, ou `0` si la personne n'a pas assez payé.
+    depart: |
+      def monnaie(prix, paye):
+          ...
+    aides:
+      - |
+        def monnaie(prix, paye):
+            # si paye est superieur ou egal a prix, renvoyer la difference
+            # sinon, renvoyer 0
+      - |
+        def monnaie(prix, paye):
+            if paye >= ___:
+                return ___
+            return ___
+      - |
+        def monnaie(prix, paye):
+            if paye >= prix:
+                return paye - prix
+            return ___
+    solution: |
+      def monnaie(prix, paye):
+          if paye >= prix:
+              return paye - prix
+          return 0
+    tests:
+      - { appel: "monnaie(3, 5)", attendu: "2" }
+      - { appel: "monnaie(5, 5)", attendu: "0" }
+      - { appel: "monnaie(5, 2)", attendu: "0", libelle: "monnaie(5, 2) : pas assez payé" }
+      - { appel: "monnaie(1, 10)", attendu: "9", cache: true }
+
+  - id: predire-composition
+    numero: 43
+    titre: Une fonction dans une fonction
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      def plus_un(x):
+          return x + 1
+
+      print(plus_un(plus_un(2)))
+    choix: ["4", "3", "2", "Une erreur"]
+    explication: |
+      On commence par l'appel intérieur : `plus_un(2)` renvoie 3. Puis `plus_un(3)` renvoie 4.
+
+  - id: remise-boutique
+    numero: 44
+    titre: Le prix soldé
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `prix_solde(prix, remise)` qui renvoie le prix après une remise de `remise` pour cent. Par exemple, `prix_solde(50, 20)` renvoie 40.0.
+    depart: |
+      def prix_solde(prix, remise):
+          ...
+    aides:
+      - |
+        def prix_solde(prix, remise):
+            # calculer le montant de la remise : prix fois remise divise par 100
+            # le retirer du prix et renvoyer le resultat
+      - |
+        def prix_solde(prix, remise):
+            montant = prix * ___ / 100
+            return prix - ___
+      - |
+        def prix_solde(prix, remise):
+            montant = prix * remise / 100
+            return ___
+    solution: |
+      def prix_solde(prix, remise):
+          montant = prix * remise / 100
+          return prix - montant
+    autres_solutions:
+      - |
+        def prix_solde(prix, remise):
+            return prix * (1 - remise / 100)
+    tests:
+      - { appel: "prix_solde(50, 20)", attendu: "40.0" }
+      - { appel: "prix_solde(80, 0)", attendu: "80.0", libelle: "prix_solde(80, 0) : aucune remise" }
+      - { appel: "prix_solde(30, 100)", attendu: "0.0", libelle: "prix_solde(30, 100) : gratuit" }
+      - { appel: "prix_solde(19.9, 50)", attendu: "9.95", cache: true }
+
+  - id: celsius-fahrenheit
+    numero: 45
+    titre: Celsius et Fahrenheit
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Pour convertir des degrés Celsius en degrés Fahrenheit, on multiplie par 9, on divise par 5, puis on ajoute 32.
+
+      Compléter la fonction `en_fahrenheit(c)`, puis la fonction `gel(c)`, qui **utilise** `en_fahrenheit` pour renvoyer `True` si la température en Fahrenheit est inférieure ou égale à 32.
+    depart: |
+      def en_fahrenheit(c):
+          return ___
+
+      def gel(c):
+          f = ___
+          return ___
+    aides:
+      - |
+        # en_fahrenheit traduit la formule de l'enonce
+        # gel appelle en_fahrenheit, puis compare le resultat a 32
+      - |
+        def en_fahrenheit(c):
+            return c * 9 / 5 + ___
+
+        def gel(c):
+            f = en_fahrenheit(___)
+            return f <= ___
+      - |
+        def en_fahrenheit(c):
+            return c * 9 / 5 + 32
+
+        def gel(c):
+            f = en_fahrenheit(c)
+            return ___
+    solution: |
+      def en_fahrenheit(c):
+          return c * 9 / 5 + 32
+
+      def gel(c):
+          f = en_fahrenheit(c)
+          return f <= 32
+    tests:
+      - { appel: "en_fahrenheit(0)", attendu: "32.0" }
+      - { appel: "en_fahrenheit(100)", attendu: "212.0" }
+      - { appel: "gel(-5)", attendu: "True" }
+      - { appel: "gel(20)", attendu: "False" }
+      - { appel: "gel(0)", attendu: "True", cache: true }
+      - { appel: "en_fahrenheit(-40)", attendu: "-40.0", cache: true }
+      - { appel: "gel(0.4)", attendu: "False", cache: true }
+
+  - id: predire-variable-locale
+    numero: 46
+    titre: La copie de la fonction
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 2
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      def augmenter(n):
+          n = n + 1
+
+      a = 5
+      augmenter(a)
+      print(a)
+    choix: ["5", "6", "None", "Une erreur"]
+    explication: |
+      Le paramètre `n` est une variable propre à la fonction : le modifier ne change pas `a`. De plus, la fonction ne renvoie rien, et le résultat de l'appel n'est pas utilisé.
+
+  - id: distance-points
+    numero: 47
+    titre: La distance entre deux points
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      La distance entre les points de coordonnées `(xa, ya)` et `(xb, yb)` est la racine carrée de `(xb - xa)² + (yb - ya)²`.
+
+      Écrire une fonction `distance(xa, ya, xb, yb)` qui la renvoie. La ligne `import math` est déjà écrite : `math.sqrt(x)` donne la racine carrée de `x`.
+    depart: |
+      import math
+
+      def distance(xa, ya, xb, yb):
+          ...
+    aides:
+      - |
+        import math
+
+        def distance(xa, ya, xb, yb):
+            # calculer l'ecart horizontal et l'ecart vertical
+            # calculer la somme de leurs carres
+            # renvoyer la racine carree de cette somme
+      - |
+        import math
+
+        def distance(xa, ya, xb, yb):
+            somme = (xb - xa) ** 2 + (___) ** 2
+            return math.sqrt(___)
+      - |
+        import math
+
+        def distance(xa, ya, xb, yb):
+            somme = (xb - xa) ** 2 + (yb - ya) ** 2
+            return ___
+    solution: |
+      import math
+
+      def distance(xa, ya, xb, yb):
+          somme = (xb - xa) ** 2 + (yb - ya) ** 2
+          return math.sqrt(somme)
+    tests:
+      - { appel: "distance(0, 0, 3, 4)", attendu: "5.0" }
+      - { appel: "distance(1, 1, 1, 1)", attendu: "0.0", libelle: "distance(1, 1, 1, 1) : le même point" }
+      - { appel: "distance(-1, 2, 2, -2)", attendu: "5.0" }
+      - { appel: "distance(0, 0, 1, 1)", attendu: "1.4142135623730951", cache: true }
+
+  - id: bug-une-voyelle
+    numero: 48
+    titre: Le return trop pressé
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    type: code
+    enonce: |
+      Cette fonction doit renvoyer `True` si `mot` contient au moins une voyelle, et `False` sinon. Elle contient une erreur : `a_une_voyelle("chat")` renvoie `False`. Trouver l'erreur et la corriger.
+    depart: |
+      def a_une_voyelle(mot):
+          for lettre in mot:
+              if lettre in "aeiouy":
+                  return True
+              else:
+                  return False
+    aides:
+      - |
+        # suivre le code a la main avec "chat"
+        # combien de lettres sont regardees avant le premier return ?
+        # a quel moment peut-on etre sur qu'il n'y a aucune voyelle ?
+      - |
+        def a_une_voyelle(mot):
+            for lettre in mot:
+                if lettre in "aeiouy":
+                    return ___
+            return ___
+      - |
+        def a_une_voyelle(mot):
+            for lettre in mot:
+                if lettre in "aeiouy":
+                    return True
+            return ___
+    solution: |
+      def a_une_voyelle(mot):
+          for lettre in mot:
+              if lettre in "aeiouy":
+                  return True
+          return False
+    tests:
+      - { appel: "a_une_voyelle('chat')", attendu: "True" }
+      - { appel: "a_une_voyelle('abc')", attendu: "True" }
+      - { appel: "a_une_voyelle('pfft')", attendu: "False" }
+      - { appel: "a_une_voyelle('')", attendu: "False", libelle: "a_une_voyelle('') : un mot vide" }
+      - { appel: "a_une_voyelle('bcdo')", attendu: "True", cache: true }
+
+  - id: mot-de-passe
+    numero: 49
+    titre: Le mot de passe solide
+    notion: fonctions
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    type: code
+    enonce: |
+      Écrire deux fonctions :
+
+      `contient_chiffre(texte)` renvoie `True` si `texte` contient au moins un chiffre ;
+
+      `est_solide(mdp)` **utilise** `contient_chiffre` et renvoie `True` si `mdp` contient au moins 8 caractères et au moins un chiffre.
+    depart: |
+      def contient_chiffre(texte):
+          ...
+
+      def est_solide(mdp):
+          ...
+    aides:
+      - |
+        def contient_chiffre(texte):
+            # parcourir les caracteres de texte
+            #     si le caractere est dans "0123456789", renvoyer True
+            # apres la boucle, renvoyer False
+
+        def est_solide(mdp):
+            # renvoyer True si la longueur est suffisante et si contient_chiffre le confirme
+      - |
+        def contient_chiffre(texte):
+            for caractere in texte:
+                if caractere in ___:
+                    return ___
+            return ___
+
+        def est_solide(mdp):
+            return len(mdp) >= ___ and contient_chiffre(___)
+      - |
+        def contient_chiffre(texte):
+            for caractere in texte:
+                if caractere in "0123456789":
+                    return True
+            return False
+
+        def est_solide(mdp):
+            return len(mdp) >= 8 and ___
+    solution: |
+      def contient_chiffre(texte):
+          for caractere in texte:
+              if caractere in "0123456789":
+                  return True
+          return False
+
+      def est_solide(mdp):
+          return len(mdp) >= 8 and contient_chiffre(mdp)
+    autres_solutions:
+      - |
+        def contient_chiffre(texte):
+            i = 0
+            while i < len(texte):
+                if texte[i] in "0123456789":
+                    return True
+                i = i + 1
+            return False
+
+        def est_solide(mdp):
+            if len(mdp) < 8:
+                return False
+            if contient_chiffre(mdp):
+                return True
+            return False
+    tests:
+      - { appel: "contient_chiffre('abc4')", attendu: "True" }
+      - { appel: "contient_chiffre('abcd')", attendu: "False" }
+      - { appel: "est_solide('python2026')", attendu: "True" }
+      - { appel: "est_solide('python')", attendu: "False", libelle: "est_solide('python') : trop court, sans chiffre" }
+      - { appel: "est_solide('abc1')", attendu: "False", libelle: "est_solide('abc1') : un chiffre, mais trop court" }
+      - { appel: "est_solide('motdepasse')", attendu: "False", libelle: "est_solide('motdepasse') : assez long, sans chiffre" }
+      - { appel: "est_solide('abcdefg1')", attendu: "True", cache: true }
+      - { appel: "contient_chiffre('')", attendu: "False", cache: true }
+      - { appel: "est_solide('abcdef1')", attendu: "False", cache: true }

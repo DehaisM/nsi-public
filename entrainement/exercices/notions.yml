@@ -1,0 +1,40 @@
+# Banque d'exercices de la page Entrainement : la liste des notions, puis un fichier par notion
+# (variables.yml, conditions.yml...) qui contient une liste "exercices:".
+#
+# Champs communs :
+#   id         identifiant unique, minuscules et tirets (sert dans l'adresse de la page)
+#   numero     entier unique qui sert au code de sauvegarde des eleves : prendre le prochain
+#              numero libre, ne jamais changer ni reutiliser celui d'un exercice existant
+#   titre      titre court
+#   notion     une des notions listees ci-dessous
+#   niveaux    liste : seconde et/ou premiere
+#   difficulte 1, 2 ou 3
+#   duree      duree indicative en minutes
+#   tags       facultatif, par exemple [maths] : prevu pour de futurs filtres
+#   type       code : l'eleve ecrit du code, verifie par des tests
+#              prediction : l'eleve predit ce qu'affiche un code
+#
+# Pour le type code :
+#   enonce, depart (code de depart), aides (3 niveaux), solution, tests
+#   autres_solutions (facultatif) : d'autres bonnes reponses, pour verifier que les tests les acceptent
+#   interdit (facultatif) : noms interdits, plus "[:]" pour les tranches et "in" pour le test d'appartenance
+#   Un test est l'un de ces trois genres (ajouter cache: true pour ne pas montrer le cas a l'eleve) :
+#     - appel: compter([1, 2], 1)     attendu: "1"
+#     - variable: total               attendu: "27"
+#     - sortie: "Bonjour"
+#
+# Pour le type prediction :
+#   enonce, code, choix (liste de textes), explication
+#   La bonne reponse est toujours le PREMIER choix : la page melange ensuite les choix,
+#   et le verificateur controle que c'est bien ce que le code affiche.
+#
+# Apres chaque modification, lancer : python outils/verifier_exercices.py
+
+notions:
+  - { id: variables, nom: "Variables" }
+  - { id: conditions, nom: "Conditions" }
+  - { id: for, nom: "Boucles for" }
+  - { id: while, nom: "Boucles while" }
+  - { id: fonctions, nom: "Fonctions" }
+  - { id: listes, nom: "Listes" }
+  - { id: grilles, nom: "Grilles" }
