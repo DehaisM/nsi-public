@@ -37,7 +37,7 @@ theme:
     - search.highlight
 
 extra_css:
-  - https://fonts.googleapis.com/css2?family=Overpass:ital,wght@0,400;0,600;0,800;1,400&family=Overpass+Mono:wght@400;600&display=swap
+  - styles/fonts.css
   - styles/site.css
 
 extra:

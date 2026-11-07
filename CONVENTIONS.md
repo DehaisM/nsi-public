@@ -155,6 +155,15 @@ Chaque exercice affiche un lien "Signaler un problème", qui ouvre un mail vers 
 Pour envoyer un élève directement sur un exercice, utiliser le lien
 `https://nsi.mdehais.fr/entrainement/#/exo/<id>`.
 
+## Fichiers tiers et versions
+
+Le site ne charge rien depuis un autre service : les polices sont dans `docs-public/assets/fonts/`
+(déclarées dans `styles/fonts.css`), les bibliothèques de la page Entraînement dans
+`docs-public/entrainement/vendor/`. Leurs licences sont dans `docs-public/assets/licences-tiers.txt`.
+
+`requirements-pages.txt` et les actions de `.github/workflows/deploy.yml` sont figés sur des versions
+précises. Les mettre à jour volontairement, puis vérifier le build et la page Entraînement.
+
 ## Passage à une nouvelle année scolaire
 
 La page Entraînement n'est pas concernée : elle reste en place d'une année sur l'autre.

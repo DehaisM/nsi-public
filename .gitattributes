@@ -1,0 +1,3 @@
+# Fichiers tiers : à garder strictement identiques aux originaux
+docs-public/entrainement/vendor/** -text
+docs-public/assets/fonts/** binary
