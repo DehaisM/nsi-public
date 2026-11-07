@@ -1,3 +1,7 @@
+---
+description: "TP Capytale de NSI en Première pour apprendre les bases de Python : instructions conditionnelles, boucles for et while, fonctions."
+---
+
 # Thématique 0 : Bases de Python
 
 

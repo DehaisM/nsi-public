@@ -1,3 +1,7 @@
+---
+description: "Présentation de l'année de spécialité NSI en classe de Première, à consulter ou à télécharger en PDF."
+---
+
 # Introduction
 
 Présentation de l'année 

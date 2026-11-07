@@ -1,3 +1,7 @@
+---
+description: "Cours et TP de SNT en Seconde GT au lycée Jean Prévost de Montivilliers : Internet, données structurées et fichiers CSV."
+---
+
 # Seconde GT 
 
 ## Thématiques disponibles

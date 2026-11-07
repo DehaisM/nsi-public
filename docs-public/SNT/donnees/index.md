@@ -1,3 +1,7 @@
+---
+description: "TP de SNT en Seconde sur les données structurées : manipuler des fichiers CSV à partir d'un jeu de données sur les Pokémon."
+---
+
 # Thématique 2 : Données structurées
 
 ## TP - Les fichiers CSV

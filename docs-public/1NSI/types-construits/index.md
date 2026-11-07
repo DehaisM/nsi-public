@@ -1,3 +1,7 @@
+---
+description: "TP Capytale de NSI en Première sur les types construits en Python : listes et grilles."
+---
+
 # Thématique 1 : Types construits
 
 ## Cours

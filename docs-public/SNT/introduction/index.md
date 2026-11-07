@@ -1,3 +1,7 @@
+---
+description: "Introduction à la SNT en Seconde : présentation de l'année, prise en main du poste informatique, première activité et premier cours."
+---
+
 # Introduction
 
 

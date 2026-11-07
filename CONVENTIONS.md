@@ -170,4 +170,7 @@ La page Entraînement n'est pas concernée : elle reste en place d'une année su
 - ajouter l'entrée de l'année dans la section `Années précédentes` de `mkdocs.yml` ;
 - créer `docs-public/archives/<année>/index.md` (copier une année existante) ;
 - ajouter la ligne correspondante dans `docs-public/archives/index.md` ;
+- ajouter dans `redirect_maps` (`mkdocs.yml`) chaque page déplacée qui n'existe plus à son ancienne
+  adresse, sinon elle renvoie une erreur 404 et les moteurs de recherche finissent par la retirer.
+  Retirer la redirection d'une adresse quand une nouvelle page la réutilise ;
 - `mkdocs build --strict` puis commit.

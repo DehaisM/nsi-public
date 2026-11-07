@@ -1,3 +1,7 @@
+---
+description: "Cours et activités de NSI en classe de Première : bases de Python et types construits (tuples, listes, dictionnaires)."
+---
+
 # Première NSI
 
 ## Thématiques disponibles

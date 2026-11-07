@@ -1,5 +1,7 @@
 site_name: SNT/NSI - Lycée Jean Prévost
 site_url: https://nsi.mdehais.fr/
+site_description: "Cours, TP et exercices de SNT et de NSI de Mathias Déhais, lycée Jean Prévost de Montivilliers."
+site_author: Mathias Déhais
 docs_dir: docs-public
 
 theme:
@@ -71,6 +73,27 @@ nav:
   - Années précédentes:
       - archives/index.md
       - 2025-2026: archives/2025-2026/index.md
+
+plugins:
+  - search
+  - redirects:
+      # Pages déplacées : leur ancienne adresse reste valable (moteurs de recherche, favoris)
+      redirect_maps:
+        1NSI/algo/index.md: archives/2025-2026/1NSI/algo/index.md
+        1NSI/donnees/index.md: archives/2025-2026/1NSI/donnees/index.md
+        1NSI/os/index.md: archives/2025-2026/1NSI/os/index.md
+        1NSI/pratique/index.md: archives/2025-2026/1NSI/pratique/index.md
+        1NSI/projet/index.md: archives/2025-2026/1NSI/projet/index.md
+        1NSI/table/index.md: archives/2025-2026/1NSI/table/index.md
+        SNT/python/index.md: archives/2025-2026/SNT/python/index.md
+        SNT/reseaux/index.md: archives/2025-2026/SNT/reseaux/index.md
+        SNT/web/index.md: archives/2025-2026/SNT/web/index.md
+        TNSI/architecture/index.md: archives/2025-2026/TNSI/architecture/index.md
+        TNSI/bdd/index.md: archives/2025-2026/TNSI/bdd/index.md
+        TNSI/donnees/index.md: archives/2025-2026/TNSI/donnees/index.md
+        TNSI/projet/index.md: archives/2025-2026/TNSI/projet/index.md
+        TNSI/python/index.md: archives/2025-2026/TNSI/python/index.md
+        TNSI/tp/index.md: archives/2025-2026/TNSI/tp/index.md
 
 markdown_extensions:
   - admonition

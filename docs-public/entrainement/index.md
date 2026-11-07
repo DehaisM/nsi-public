@@ -1,4 +1,5 @@
 ---
+description: "Exercices de Python à faire directement dans le navigateur, avec vérification automatique, sans compte ni installation."
 title: Entraînement
 hide:
   - navigation
