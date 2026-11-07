@@ -432,3 +432,464 @@ exercices:
       - { appel: "jours(6, False)", attendu: "30", cache: true }
       - { appel: "jours(9, False)", attendu: "30", cache: true }
       - { appel: "jours(12, True)", attendu: "31", cache: true }
+
+  - id: valeur-absolue
+    numero: 71
+    titre: La valeur absolue
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `absolue(x)` qui renvoie `x` si `x` est positif ou nul, et `-x` sinon, sans utiliser la fonction `abs`.
+    depart: |
+      def absolue(x):
+          ...
+    interdit: [abs]
+    aides:
+      - |
+        def absolue(x):
+            # si x est positif ou nul, renvoyer x
+            # sinon, renvoyer son oppose
+      - |
+        def absolue(x):
+            if x >= ___:
+                return ___
+            return ___
+      - |
+        def absolue(x):
+            if x >= 0:
+                return x
+            return ___
+    solution: |
+      def absolue(x):
+          if x >= 0:
+              return x
+          return -x
+    tests:
+      - { appel: "absolue(5)", attendu: "5" }
+      - { appel: "absolue(-3)", attendu: "3" }
+      - { appel: "absolue(0)", attendu: "0" }
+      - { appel: "absolue(-0.5)", attendu: "0.5", cache: true }
+
+  - id: heure-valide
+    numero: 72
+    titre: Une heure valide
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Écrire une fonction `heure_valide(h, m)` qui renvoie `True` si `h` est compris entre 0 et 23 et `m` entre 0 et 59 (bornes incluses), et `False` sinon.
+    depart: |
+      def heure_valide(h, m):
+          ...
+    aides:
+      - |
+        def heure_valide(h, m):
+            # les deux conditions doivent etre vraies en meme temps
+            # chacune porte sur une borne basse et une borne haute
+      - |
+        def heure_valide(h, m):
+            if h >= ___ and h <= ___ and m >= ___ and m <= ___:
+                return True
+            return False
+      - |
+        def heure_valide(h, m):
+            if h >= 0 and h <= 23 and m >= 0 and m <= 59:
+                return ___
+            return ___
+    solution: |
+      def heure_valide(h, m):
+          if h >= 0 and h <= 23 and m >= 0 and m <= 59:
+              return True
+          return False
+    autres_solutions:
+      - |
+        def heure_valide(h, m):
+            return 0 <= h <= 23 and 0 <= m <= 59
+    tests:
+      - { appel: "heure_valide(12, 30)", attendu: "True" }
+      - { appel: "heure_valide(24, 0)", attendu: "False" }
+      - { appel: "heure_valide(10, 60)", attendu: "False" }
+      - { appel: "heure_valide(0, 0)", attendu: "True" }
+      - { appel: "heure_valide(23, 59)", attendu: "True", cache: true }
+      - { appel: "heure_valide(-1, 10)", attendu: "False", cache: true }
+      - { appel: "heure_valide(10, -1)", attendu: "False", cache: true }
+
+  - id: bug-tarif-bus
+    numero: 73
+    titre: Le tarif du bus
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Le bus est gratuit pour les moins de 4 ans, coûte 1 euro pour les moins de 18 ans, et 2 euros pour les autres. Cette fonction contient une erreur : `tarif_bus(4)` renvoie 0 au lieu de 1. La corriger.
+    depart: |
+      def tarif_bus(age):
+          if age <= 4:
+              return 0
+          elif age < 18:
+              return 1
+          else:
+              return 2
+    aides:
+      - |
+        # une personne de 4 ans a-t-elle moins de 4 ans ?
+        # quel operateur traduit "moins de 4 ans" ?
+      - |
+        def tarif_bus(age):
+            if age ___ 4:
+                return 0
+            elif age < 18:
+                return 1
+            else:
+                return 2
+      - |
+        def tarif_bus(age):
+            if age < 4:
+                return ___
+            elif age < 18:
+                return 1
+            else:
+                return 2
+    solution: |
+      def tarif_bus(age):
+          if age < 4:
+              return 0
+          elif age < 18:
+              return 1
+          else:
+              return 2
+    tests:
+      - { appel: "tarif_bus(4)", attendu: "1" }
+      - { appel: "tarif_bus(3)", attendu: "0" }
+      - { appel: "tarif_bus(17)", attendu: "1" }
+      - { appel: "tarif_bus(18)", attendu: "2", cache: true }
+      - { appel: "tarif_bus(40)", attendu: "2", cache: true }
+
+  - id: predire-et-ou
+    numero: 74
+    titre: Et, ou
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      a = 5
+      print(a > 3 and a < 4, a > 3 or a < 4)
+    choix: ["False True", "True False", "True True", "False False"]
+    explication: |
+      `a > 3` est vrai et `a < 4` est faux. Avec `and`, les deux doivent être vrais : le résultat est `False`. Avec `or`, il suffit qu'un seul le soit : le résultat est `True`.
+
+  - id: predire-if-successifs
+    numero: 75
+    titre: Deux if à la suite
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 2
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      x = 8
+      if x > 5:
+          x = x - 5
+      if x < 5:
+          x = x + 10
+      print(x)
+    choix: ["13", "3", "8", "18"]
+    explication: |
+      Le premier test est vrai : `x` passe à 3. Comme ce sont deux `if` et non un `elif`, le second test est aussi évalué, avec la nouvelle valeur de `x` : `x` passe donc à 13.
+
+  - id: vainqueur-set
+    numero: 76
+    titre: Le set de tennis
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    type: code
+    enonce: |
+      Au tennis, on gagne un set en atteignant au moins 6 jeux avec au moins 2 jeux d'écart.
+
+      Écrire une fonction `vainqueur(a, b)` qui reçoit les jeux gagnés par les joueurs A et B, et qui renvoie `"A"`, `"B"` ou `"en cours"` si personne n'a encore gagné.
+    depart: |
+      def vainqueur(a, b):
+          ...
+    aides:
+      - |
+        def vainqueur(a, b):
+            # A gagne s'il a au moins 6 jeux et au moins 2 jeux de plus que B
+            # B gagne dans le cas symetrique
+            # sinon, le set continue
+      - |
+        def vainqueur(a, b):
+            if a >= 6 and a - b >= ___:
+                return "A"
+            if b >= ___ and b - a >= ___:
+                return "B"
+            return ___
+      - |
+        def vainqueur(a, b):
+            if a >= 6 and a - b >= 2:
+                return "A"
+            if b >= 6 and b - a >= 2:
+                return "B"
+            return ___
+    solution: |
+      def vainqueur(a, b):
+          if a >= 6 and a - b >= 2:
+              return "A"
+          if b >= 6 and b - a >= 2:
+              return "B"
+          return "en cours"
+    tests:
+      - { appel: "vainqueur(6, 4)", attendu: "'A'" }
+      - { appel: "vainqueur(3, 6)", attendu: "'B'" }
+      - { appel: "vainqueur(6, 5)", attendu: "'en cours'", libelle: "vainqueur(6, 5) : un seul jeu d'écart" }
+      - { appel: "vainqueur(7, 5)", attendu: "'A'", cache: true }
+      - { appel: "vainqueur(5, 3)", attendu: "'en cours'", cache: true }
+      - { appel: "vainqueur(3, 5)", attendu: "'en cours'", cache: true }
+      - { appel: "vainqueur(5, 7)", attendu: "'B'", cache: true }
+      - { appel: "vainqueur(5, 6)", attendu: "'en cours'", cache: true }
+
+  - id: forfait-telephone
+    numero: 77
+    titre: Le forfait de téléphone
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Un forfait coûte 10 euros et comprend 20 Go. Chaque Go supplémentaire coûte 2 euros.
+
+      Écrire une fonction `cout(go)` qui renvoie le prix à payer pour une consommation de `go` Go (un nombre entier).
+    depart: |
+      def cout(go):
+          ...
+    aides:
+      - |
+        def cout(go):
+            # si la consommation ne depasse pas 20 Go, le prix est celui du forfait
+            # sinon, calculer le nombre de Go en trop et ajouter leur prix au forfait
+      - |
+        def cout(go):
+            if go <= ___:
+                return ___
+            return 10 + (go - ___) * ___
+      - |
+        def cout(go):
+            if go <= 20:
+                return 10
+            return 10 + (go - 20) * ___
+    solution: |
+      def cout(go):
+          if go <= 20:
+              return 10
+          return 10 + (go - 20) * 2
+    tests:
+      - { appel: "cout(5)", attendu: "10" }
+      - { appel: "cout(20)", attendu: "10", libelle: "cout(20) : le forfait exactement" }
+      - { appel: "cout(23)", attendu: "16" }
+      - { appel: "cout(21)", attendu: "12", cache: true }
+      - { appel: "cout(0)", attendu: "10", cache: true }
+
+  - id: ticket-parking
+    numero: 78
+    titre: Le ticket de parking
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    type: code
+    enonce: |
+      Un parking est gratuit jusqu'à 30 minutes incluses. Il coûte ensuite 2 euros jusqu'à 60 minutes incluses, 3.5 euros jusqu'à 120 minutes incluses, et 5 euros au-delà.
+
+      Écrire une fonction `prix_parking(minutes)` qui renvoie le prix à payer.
+    depart: |
+      def prix_parking(minutes):
+          ...
+    aides:
+      - |
+        def prix_parking(minutes):
+            # tester les durees de la plus courte a la plus longue
+            # chaque test n'est atteint que si les precedents sont faux
+      - |
+        def prix_parking(minutes):
+            if minutes <= ___:
+                return 0
+            elif minutes <= ___:
+                return 2
+            elif minutes <= ___:
+                return 3.5
+            else:
+                return ___
+      - |
+        def prix_parking(minutes):
+            if minutes <= 30:
+                return 0
+            elif minutes <= 60:
+                return 2
+            elif minutes <= 120:
+                return 3.5
+            else:
+                return ___
+    solution: |
+      def prix_parking(minutes):
+          if minutes <= 30:
+              return 0
+          elif minutes <= 60:
+              return 2
+          elif minutes <= 120:
+              return 3.5
+          else:
+              return 5
+    tests:
+      - { appel: "prix_parking(10)", attendu: "0" }
+      - { appel: "prix_parking(45)", attendu: "2" }
+      - { appel: "prix_parking(90)", attendu: "3.5" }
+      - { appel: "prix_parking(200)", attendu: "5" }
+      - { appel: "prix_parking(30)", attendu: "0", cache: true }
+      - { appel: "prix_parking(31)", attendu: "2", cache: true }
+      - { appel: "prix_parking(60)", attendu: "2", cache: true }
+      - { appel: "prix_parking(61)", attendu: "3.5", cache: true }
+      - { appel: "prix_parking(120)", attendu: "3.5", cache: true }
+      - { appel: "prix_parking(121)", attendu: "5", cache: true }
+
+  - id: mediane-trois
+    numero: 79
+    titre: Le nombre du milieu
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 5
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `milieu(a, b, c)` qui renvoie la médiane des trois nombres, c'est-à-dire celui qui se trouve au milieu quand on les range dans l'ordre. Par exemple, `milieu(3, 1, 2)` renvoie 2.
+    depart: |
+      def milieu(a, b, c):
+          ...
+    interdit: [sorted, sort, min, max]
+    aides:
+      - |
+        def milieu(a, b, c):
+            # b est au milieu s'il est entre a et c, dans un sens ou dans l'autre
+            # a est au milieu s'il est entre b et c, dans un sens ou dans l'autre
+            # sinon, c'est c
+      - |
+        def milieu(a, b, c):
+            if (a <= b and b <= c) or (c <= b and b <= ___):
+                return b
+            if (b <= a and a <= ___) or (c <= a and a <= ___):
+                return a
+            return ___
+      - |
+        def milieu(a, b, c):
+            if (a <= b and b <= c) or (c <= b and b <= a):
+                return b
+            if (b <= a and a <= c) or (c <= a and a <= b):
+                return ___
+            return ___
+    solution: |
+      def milieu(a, b, c):
+          if (a <= b and b <= c) or (c <= b and b <= a):
+              return b
+          if (b <= a and a <= c) or (c <= a and a <= b):
+              return a
+          return c
+    autres_solutions:
+      - |
+        def milieu(a, b, c):
+            if a > b:
+                a, b = b, a
+            if b > c:
+                b, c = c, b
+            if a > b:
+                a, b = b, a
+            return b
+    tests:
+      - { appel: "milieu(1, 2, 3)", attendu: "2" }
+      - { appel: "milieu(3, 1, 2)", attendu: "2" }
+      - { appel: "milieu(2, 3, 1)", attendu: "2" }
+      - { appel: "milieu(5, 5, 1)", attendu: "5", libelle: "milieu(5, 5, 1) : deux nombres égaux" }
+      - { appel: "milieu(1, 3, 2)", attendu: "2", cache: true }
+      - { appel: "milieu(2, 1, 3)", attendu: "2", cache: true }
+      - { appel: "milieu(3, 2, 1)", attendu: "2", cache: true }
+      - { appel: "milieu(4, 4, 4)", attendu: "4", cache: true }
+
+  - id: longueur-commune
+    numero: 80
+    titre: Deux intervalles qui se croisent
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `commun(a, b, c, d)` qui renvoie la longueur de la partie commune aux intervalles `[a, b]` et `[c, d]`, sans utiliser `min` ni `max`. Par exemple, `commun(0, 5, 3, 8)` renvoie 2, car ils ont en commun `[3, 5]`. S'ils ne se croisent pas, la fonction renvoie 0.
+
+      On suppose que `a <= b` et `c <= d`.
+    depart: |
+      def commun(a, b, c, d):
+          ...
+    interdit: [min, max]
+    aides:
+      - |
+        def commun(a, b, c, d):
+            # la partie commune commence au plus grand des deux debuts
+            # elle finit a la plus petite des deux fins
+            # si elle finit avant de commencer, il n'y a rien en commun
+            # sinon, renvoyer sa longueur
+      - |
+        def commun(a, b, c, d):
+            debut = a
+            if c > a:
+                debut = ___
+            fin = b
+            if d < b:
+                fin = ___
+            if fin < debut:
+                return ___
+            return ___
+      - |
+        def commun(a, b, c, d):
+            debut = a
+            if c > a:
+                debut = c
+            fin = b
+            if d < b:
+                fin = d
+            if fin < debut:
+                return 0
+            return ___
+    solution: |
+      def commun(a, b, c, d):
+          debut = a
+          if c > a:
+              debut = c
+          fin = b
+          if d < b:
+              fin = d
+          if fin < debut:
+              return 0
+          return fin - debut
+    tests:
+      - { appel: "commun(0, 5, 3, 8)", attendu: "2" }
+      - { appel: "commun(0, 2, 5, 8)", attendu: "0", libelle: "commun(0, 2, 5, 8) : ils ne se croisent pas" }
+      - { appel: "commun(1, 9, 3, 4)", attendu: "1", libelle: "commun(1, 9, 3, 4) : l'un est dans l'autre" }
+      - { appel: "commun(3, 8, 0, 5)", attendu: "2", cache: true }
+      - { appel: "commun(5, 8, 0, 2)", attendu: "0", cache: true }
+      - { appel: "commun(0, 5, 5, 8)", attendu: "0", cache: true }
+      - { appel: "commun(3, 4, 1, 9)", attendu: "1", cache: true }

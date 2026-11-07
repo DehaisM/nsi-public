@@ -327,14 +327,14 @@
 
     conteneur.append(
       el("p", { class: "entr-intro" }, "Des exercices de Python, à faire quand on veut, en quelques minutes."),
-      el("div", { class: "entr-tableau" },
+      el("div", { class: "entr-jour" },
         el("div", {},
-          el("p", { class: "entr-tableau__surtitre" }, "Exo du jour"),
-          el("button", { class: "entr-tableau__titre", onclick: () => allerA(jour) },
+          el("p", { class: "entr-jour__surtitre" }, "Exo du jour"),
+          el("button", { class: "entr-jour__titre", onclick: () => allerA(jour) },
             jour.titre + (jourFait ? " ✓" : ""))
         ),
         el("button", {
-          class: "entr-bouton entr-bouton--craie",
+          class: "entr-bouton entr-bouton--signal",
           onclick() {
             const exo = tirer();
             if (exo) allerA(exo);

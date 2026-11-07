@@ -9,7 +9,7 @@
     --entr-numero: #b0460f;
     --entr-signal: rgba(255, 212, 0, .55);
     --entr-erreur-fond: rgba(208, 50, 28, .12);
-    --entr-tableau: #12352a;
+    --entr-jour: #12352a;
     --ligne-1: #0a7cc1; --ligne-2: #e2571e; --ligne-3: #12a15b; --ligne-4: #8e3fb0;
     --ligne-5: #c99a00; --ligne-6: #d6247f; --ligne-7: #0f97a0; --ligne-8: #5a6ff0;
     --ligne-9: #7a8c12; --ligne-10: #b5533c; /* au dela de 10 notions, les couleurs reviennent */
@@ -23,7 +23,7 @@
     --entr-numero: #ffb37a;
     --entr-signal: rgba(255, 212, 0, .28);
     --entr-erreur-fond: rgba(255, 143, 125, .14);
-    --entr-tableau: #153a2e;
+    --entr-jour: #153a2e;
 }
 
 .md-typeset h1 { max-width: 44rem; margin: 0 auto .6rem; }
@@ -58,19 +58,19 @@
 .entr-statut[data-etat="echec"] { color: var(--entr-rouge); }
 
 /* Le panneau du jour */
-.entr-tableau {
+.entr-jour {
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .8rem 1.5rem;
-    padding: 1rem 1.3rem; background: var(--entr-tableau); color: #fff; border-radius: var(--nsi-rayon);
+    padding: 1rem 1.3rem; background: var(--entr-jour); color: #fff; border-radius: var(--nsi-rayon);
 }
-.md-typeset .entr-tableau__surtitre { margin: 0; font-size: .66rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
-.entr-tableau__titre {
+.md-typeset .entr-jour__surtitre { margin: 0; font-size: .66rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; opacity: .8; }
+.entr-jour__titre {
     display: block; padding: 0; background: none; border: 0; cursor: pointer; text-align: left;
     font: 800 1.25rem/1.3 var(--nsi-titres); color: #fff;
 }
-.entr-tableau__titre:hover { text-decoration: underline; }
-#entr-app .entr-tableau :focus-visible { outline-color: #fff; }
-.md-typeset .entr-bouton--craie { background: var(--nsi-signal); border-color: var(--nsi-signal); color: #12352a; font-size: .8rem; }
-.md-typeset .entr-bouton--craie:hover:not(:disabled) { background: #ffe24d; color: #12352a; }
+.entr-jour__titre:hover { text-decoration: underline; }
+#entr-app .entr-jour :focus-visible { outline-color: #fff; }
+.md-typeset .entr-bouton--signal { background: var(--nsi-signal); border-color: var(--nsi-signal); color: #12352a; font-size: .8rem; }
+.md-typeset .entr-bouton--signal:hover:not(:disabled) { background: #ffe24d; color: #12352a; }
 
 /* Les filtres du hasard */
 .entr-filtres { margin-top: .9rem; font-size: .72rem; }
@@ -240,5 +240,5 @@
 
 @media (max-width: 34rem) {
     .entr-statut { margin-left: 0; width: 100%; }
-    .entr-tableau { padding: .9rem 1rem; }
+    .entr-jour { padding: .9rem 1rem; }
 }
