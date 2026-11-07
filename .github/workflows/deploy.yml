@@ -26,6 +26,9 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements-pages.txt ]; then pip install -r requirements-pages.txt; else pip install mkdocs; fi
 
+      - name: Verifier les exercices d'entrainement
+        run: python outils/verifier_exercices.py
+
       - name: Build site
         run: mkdocs build --strict
 

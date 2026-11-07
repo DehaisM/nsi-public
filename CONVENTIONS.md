@@ -96,13 +96,55 @@ Modèle prêt à copier : `modele/bloc-capytale.md`.
 ## Navigation
 
 - La nav est déclarée à la main dans `mkdocs.yml` : Accueil, Seconde GT, Première NSI,
-  Terminale NSI, Années précédentes.
+  Terminale NSI, Entraînement, Années précédentes.
 - Les pages sous `archives/**` et `echecs/**` ne sont pas dans la nav (règle `not_in_nav`) ;
   on y accède par les liens des pages d'index (ou l'URL directe pour le club d'échecs).
 - Quand on ajoute des pages à un niveau, les déclarer dans `nav:` sous le niveau concerné.
 - `mkdocs build --strict` doit passer sans warning (c'est ce que vérifie la CI).
 
+## Style du site
+
+Tout le style est dans `docs-public/styles/site.css` : vert sapin, police Overpass, jaune
+réservé aux signaux (onglet actif, bouton principal de l'Entraînement). Pour changer une
+couleur, modifier les variables en haut du fichier (une série pour le mode clair, une pour
+le mode sombre).
+
+**Les sommaires se dessinent tout seuls.** Un titre `##` ou `###` qui ne contient qu'un lien
+devient une station sur une ligne, et le paragraphe juste en dessous sa description :
+
+```markdown
+### [Thématique 1 : Internet](internet/index.md)
+Fonctionnement d'Internet
+```
+
+Un titre normal, ou un lien placé au milieu d'un texte, reste affiché normalement.
+
+## Page Entraînement
+
+Exercices de Python à faire en autonomie, dans `docs-public/entrainement/`. Python tourne dans
+le navigateur de l'élève : il n'y a ni compte ni serveur, et la progression reste dans son
+navigateur. Un code de sauvegarde permet de la reprendre sur un autre appareil.
+
+Comme tout s'exécute chez l'élève, les solutions sont lisibles par un élève curieux : cette
+page sert à s'entraîner, pas à noter.
+
+Pour ajouter un exercice :
+
+1. L'ajouter dans `docs-public/entrainement/exercices.yml` (le format est expliqué en haut du
+   fichier). Une notion ajoutée à la liste `notions` crée une nouvelle ligne.
+2. Lui donner le prochain `numero` libre. **Ne jamais changer ni réutiliser le numéro d'un
+   exercice existant** : les codes de sauvegarde des élèves s'appuient dessus.
+3. Lancer `python outils/verifier_exercices.py`, qui contrôle les champs, que la solution
+   réussit les tests et que le code de départ ne les réussit pas. Il affiche le prochain numéro
+   libre. La CI le lance aussi : une erreur dans la banque bloque le déploiement.
+
+Pour envoyer un élève directement sur un exercice, utiliser le lien
+`https://nsi.mdehais.fr/entrainement/#/exo/<id>`.
+
 ## Passage à une nouvelle année scolaire
+
+La page Entraînement n'est pas concernée : elle reste en place d'une année sur l'autre.
+
 
 `outils/nouvelle-annee.ps1 -AnneeEcoulee 2026-2027` (Windows) ou
 `outils/nouvelle-annee.sh 2026-2027`. Le script :
