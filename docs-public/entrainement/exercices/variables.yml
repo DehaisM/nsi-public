@@ -1,0 +1,248 @@
+exercices:
+
+  - id: solde-cantine
+    numero: 1
+    titre: Le solde de la cantine
+    notion: variables
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Une carte de cantine contient `solde` euros, et un repas coûte `repas` euros.
+
+      Créer une variable `reste` qui contient le solde après **deux** repas, en utilisant les variables `solde` et `repas`. Puis afficher `reste`.
+    depart: |
+      solde = 20
+      repas = 3.5
+
+    aides:
+      - |
+        # calculer ce que coutent deux repas
+        # le retirer du solde et le ranger dans une variable reste
+        # afficher reste
+      - |
+        reste = solde - ___
+        print(___)
+      - |
+        reste = solde - 2 * repas
+        print(___)
+    solution: |
+      solde = 20
+      repas = 3.5
+      reste = solde - 2 * repas
+      print(reste)
+    tests:
+      - { variable: reste, attendu: "13.0" }
+      - { sortie: "13.0" }
+
+  - id: predire-affectation
+    numero: 2
+    titre: Qui vaut quoi ?
+    notion: variables
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      a = 5
+      b = a
+      a = a + 2
+      print(a, b)
+    choix: ["7 5", "7 7", "5 7", "5 5"]
+    explication: |
+      À la ligne 2, `b` reçoit la valeur de `a` à cet instant, c'est-à-dire 5. Modifier `a` ensuite ne change pas `b`.
+
+  - id: initiales
+    numero: 16
+    titre: Les initiales
+    notion: variables
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Créer une variable `initiales` qui contient la première lettre de `prenom` suivie de la première lettre de `nom`, sans écrire ces lettres directement. Puis afficher `initiales`.
+    depart: |
+      prenom = "Ada"
+      nom = "Lovelace"
+
+    aides:
+      - |
+        # recuperer la premiere lettre de prenom
+        # recuperer la premiere lettre de nom
+        # les coller avec + et ranger le resultat dans initiales
+        # afficher initiales
+      - |
+        initiales = prenom[___] + nom[___]
+        print(___)
+      - |
+        initiales = prenom[0] + nom[0]
+        print(___)
+    solution: |
+      prenom = "Ada"
+      nom = "Lovelace"
+      initiales = prenom[0] + nom[0]
+      print(initiales)
+    tests:
+      - { variable: initiales, attendu: "'AL'" }
+      - { sortie: "AL" }
+
+  - id: predire-division
+    numero: 17
+    titre: Quotient et reste
+    notion: variables
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    tags: [maths]
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      a = 17
+      b = 5
+      print(a // b, a % b)
+    choix: ["3 2", "3.4 2", "2 3", "3 0.4"]
+    explication: |
+      `//` donne le quotient de la division entière et `%` donne le reste : 17 = 5 × 3 + 2.
+
+  - id: bug-message-age
+    numero: 18
+    titre: Le message qui plante
+    notion: variables
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Ce programme doit afficher `J'ai 16 ans`, mais il provoque une erreur. La lire, puis corriger le programme sans changer la valeur de `age`.
+    depart: |
+      age = 16
+      message = "J'ai " + age + " ans"
+      print(message)
+    aides:
+      - |
+        # lire le message d'erreur : quels types essaie-t-on d'additionner ?
+        # quelle fonction transforme un nombre en texte ?
+      - |
+        age = 16
+        message = "J'ai " + ___(age) + " ans"
+        print(message)
+      - |
+        age = 16
+        message = "J'ai " + str(___) + " ans"
+        print(message)
+    solution: |
+      age = 16
+      message = "J'ai " + str(age) + " ans"
+      print(message)
+    tests:
+      - variable: message
+        attendu: '"J''ai 16 ans"'
+      - { sortie: "J'ai 16 ans" }
+
+  - id: predire-texte-fois-nombre
+    numero: 19
+    titre: Un texte multiplié
+    notion: variables
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      a = "3"
+      b = 2
+      print(a * b)
+    choix: ["33", "6", "32", "Une erreur"]
+    explication: |
+      `a` est le **texte** `"3"`, pas le nombre 3. Multiplier un texte par 2 le répète deux fois.
+
+  - id: convertir-secondes
+    numero: 20
+    titre: La durée de la vidéo
+    notion: variables
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Une vidéo dure `total` secondes. Créer une variable `minutes` qui contient le nombre de minutes complètes et une variable `secondes` qui contient les secondes restantes, en utilisant `total`. Puis afficher `minutes` et `secondes` avec un seul `print`.
+
+      Pour 200 secondes, le programme affiche `3 20`.
+    depart: |
+      total = 200
+
+    aides:
+      - |
+        # une minute dure 60 secondes
+        # le quotient de la division entiere donne les minutes
+        # le reste de la division donne les secondes
+        # afficher les deux valeurs
+      - |
+        minutes = total // ___
+        secondes = total % ___
+        print(___, ___)
+      - |
+        minutes = total // 60
+        secondes = total % ___
+        print(minutes, secondes)
+    solution: |
+      total = 200
+      minutes = total // 60
+      secondes = total % 60
+      print(minutes, secondes)
+    autres_solutions:
+      - |
+        total = 200
+        minutes = total // 60
+        secondes = total - minutes * 60
+        print(minutes, secondes)
+    tests:
+      - { variable: minutes, attendu: "3" }
+      - { variable: secondes, attendu: "20" }
+      - { sortie: "3 20" }
+
+  - id: moyenne-coefficients
+    numero: 21
+    titre: La moyenne avec coefficients
+    notion: variables
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Une note `note1` a pour coefficient `coef1` et une note `note2` a pour coefficient `coef2`. Créer une variable `moyenne` qui contient la moyenne pondérée de ces deux notes, puis l'afficher.
+
+      Pour rappel, chaque note est multipliée par son coefficient, et la somme obtenue est divisée par la somme des coefficients.
+    depart: |
+      note1 = 14
+      coef1 = 3
+      note2 = 10
+      coef2 = 2
+
+    aides:
+      - |
+        # calculer la somme note * coefficient pour les deux notes
+        # calculer la somme des coefficients
+        # diviser la premiere somme par la seconde
+        # afficher le resultat
+      - |
+        moyenne = (note1 * ___ + note2 * ___) / (___ + ___)
+        print(moyenne)
+      - |
+        moyenne = (note1 * coef1 + note2 * coef2) / (___ + ___)
+        print(moyenne)
+    solution: |
+      note1 = 14
+      coef1 = 3
+      note2 = 10
+      coef2 = 2
+      moyenne = (note1 * coef1 + note2 * coef2) / (coef1 + coef2)
+      print(moyenne)
+    tests:
+      - { variable: moyenne, attendu: "12.4" }
+      - { sortie: "12.4" }

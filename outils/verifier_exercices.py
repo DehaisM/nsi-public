@@ -1,11 +1,15 @@
 """Verifie la banque d'exercices de la page Entrainement.
 
-Pour chaque exercice : les champs sont presents, la solution reussit tous les
-tests, le code de depart ne les reussit pas, et la bonne reponse d'une
-prediction est bien le premier choix.
+Pour chaque exercice :
+- les champs sont presents et le numero est unique ;
+- la solution, et les autres solutions proposees, reussissent tous les tests ;
+- le code de depart ne les reussit pas ;
+- la bonne reponse d'une prediction est bien le premier choix ;
+- le code n'utilise que ce que les eleves ont vu (voir les listes ci-dessous).
 
 Utilisation, depuis la racine du site : python outils/verifier_exercices.py
 """
+import ast
 import contextlib
 import importlib.util
 import io
@@ -25,6 +29,28 @@ CHAMPS = {
     "prediction": {"enonce", "code", "choix", "explication"},
 }
 
+# Ce que les eleves ont vu en Premiere, releve dans les corriges des TP0.1 a TP1.2.
+# A completer au fil de l'annee : ajouter "tuples" ici retire l'interdiction des tuples.
+NOTIONS_VUES = {"variables", "conditions", "for", "while", "fonctions", "listes", "grilles"}
+FONCTIONS_VUES = {"print", "len", "int", "float", "str", "type", "range", "list"}
+METHODES_VUES = {"append", "pop", "insert", "index", "sqrt"}
+MODULES_VUS = {"math"}
+
+# Dans un exercice sur une notion, ce qui n'a pas encore ete introduit.
+AVANT_LA_NOTION = {
+    "variables": (ast.If, ast.For, ast.While, ast.FunctionDef, ast.List, ast.ListComp),
+    "conditions": (ast.For, ast.While, ast.List, ast.ListComp),
+    "for": (ast.While, ast.ListComp),
+    "while": (ast.ListComp,),
+    "fonctions": (ast.ListComp,),
+    "listes": (),
+    "grilles": (),
+}
+NOMS_DES_FORMES = {
+    ast.If: "if", ast.For: "for", ast.While: "while", ast.FunctionDef: "def",
+    ast.List: "une liste", ast.ListComp: "une liste en compréhension",
+}
+
 spec = importlib.util.spec_from_file_location("correcteur", DOSSIER / "correcteur.py")
 correcteur = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(correcteur)
@@ -40,6 +66,52 @@ def textes(valeur):
     elif isinstance(valeur, list):
         for sous_valeur in valeur:
             yield from textes(sous_valeur)
+
+
+def noms_definis(arbre):
+    """Les noms que le code definit lui-meme : ses fonctions, leurs parametres, ses variables."""
+    noms = set()
+    for noeud in ast.walk(arbre):
+        if isinstance(noeud, ast.FunctionDef):
+            noms.add(noeud.name)
+            noms.update(a.arg for a in noeud.args.args)
+        elif isinstance(noeud, ast.Name) and isinstance(noeud.ctx, ast.Store):
+            noms.add(noeud.id)
+    return noms
+
+
+def controler_notions(code, notion):
+    """Renvoie ce que ce code utilise sans que les eleves l'aient vu."""
+    arbre = ast.parse(code)
+    definis = noms_definis(arbre)
+    trouves = set()
+    for noeud in ast.walk(arbre):
+        if isinstance(noeud, AVANT_LA_NOTION.get(notion, ())):
+            trouves.add(NOMS_DES_FORMES[type(noeud)] + " (pas encore vu dans cette notion)")
+        if isinstance(noeud, ast.Call):
+            if isinstance(noeud.func, ast.Name):
+                if noeud.func.id not in FONCTIONS_VUES and noeud.func.id not in definis:
+                    trouves.add(noeud.func.id + "()")
+            elif isinstance(noeud.func, ast.Attribute) and noeud.func.attr not in METHODES_VUES:
+                trouves.add("." + noeud.func.attr + "()")
+        elif isinstance(noeud, ast.Dict) and "dictionnaires" not in NOTIONS_VUES:
+            trouves.add("un dictionnaire")
+        elif isinstance(noeud, ast.Import):
+            trouves.update("import " + n.name for n in noeud.names if n.name not in MODULES_VUS)
+        elif isinstance(noeud, ast.ImportFrom):
+            trouves.add("from ... import")
+        elif isinstance(noeud, (ast.Lambda, ast.Try, ast.ClassDef, ast.With, ast.GeneratorExp, ast.DictComp, ast.SetComp)):
+            trouves.add(type(noeud).__name__)
+    if "tuples" not in NOTIONS_VUES:
+        # Seul l'echange a, b = b, a a ete vu : un tuple ne sert pas de valeur.
+        for noeud in ast.walk(arbre):
+            if isinstance(noeud, ast.Assign) and isinstance(noeud.targets[0], ast.Tuple):
+                noeud.value._echange = True
+                noeud.targets[0]._echange = True
+        for noeud in ast.walk(arbre):
+            if isinstance(noeud, ast.Tuple) and not getattr(noeud, "_echange", False):
+                trouves.add("un tuple")
+    return trouves
 
 
 def verifier(exo, notions):
@@ -66,28 +138,47 @@ def verifier(exo, notions):
             problemes.append("le code affiche " + repr(attendu) + ", pas le premier choix")
         if len(set(exo["choix"])) != len(exo["choix"]):
             problemes.append("deux choix identiques")
+        for trouve in sorted(controler_notions(exo["code"], exo["notion"])):
+            problemes.append("non vu par les élèves : " + trouve)
         return problemes
 
     if len(exo["aides"]) != 3:
         problemes.append("il faut 3 niveaux d'aide")
-    solution = correcteur.executer_programme(exo, exo["solution"])
-    if not solution["reussi"]:
-        echecs = [t["libelle"] for t in solution["tests"] if not t["ok"]]
-        problemes.append(
-            "la solution échoue : " + str(solution["erreur"] or solution["alerte"] or echecs)
-        )
+    solutions = [exo["solution"]] + list(exo.get("autres_solutions") or [])
+    for rang, solution in enumerate(solutions):
+        resultat = correcteur.executer_programme(exo, solution)
+        if not resultat["reussi"]:
+            echecs = [t["libelle"] for t in resultat["tests"] if not t["ok"]]
+            nom = "la solution" if rang == 0 else f"l'autre solution {rang}"
+            problemes.append(nom + " échoue : " + str(resultat["erreur"] or resultat["alerte"] or echecs))
+    # Seule la solution principale doit s'en tenir a ce qui a ete vu : c'est elle que l'eleve lit.
+    for trouve in sorted(controler_notions(exo["solution"], exo["notion"])):
+        problemes.append("non vu par les élèves : " + trouve)
     if correcteur.executer_programme(exo, exo["depart"])["reussi"]:
         problemes.append("le code de départ réussit déjà tous les tests")
     return problemes
 
 
+def charger_banque():
+    index = yaml.safe_load((DOSSIER / "exercices" / "notions.yml").read_text(encoding="utf-8"))
+    exercices = []
+    for notion in index["notions"]:
+        fichier = DOSSIER / "exercices" / (notion["id"] + ".yml")
+        contenu = yaml.safe_load(fichier.read_text(encoding="utf-8"))
+        for exo in contenu["exercices"]:
+            if exo.get("notion") != notion["id"]:
+                raise SystemExit(f"{fichier.name} : l'exercice {exo.get('id')} a pour notion {exo.get('notion')}")
+            exercices.append(exo)
+    return index["notions"], exercices
+
+
 def main():
-    banque = yaml.safe_load((DOSSIER / "exercices.yml").read_text(encoding="utf-8"))
-    notions = {n["id"] for n in banque["notions"]}
+    notions_liste, exercices = charger_banque()
+    notions = {n["id"] for n in notions_liste}
     vus = set()
     numeros = set()
     erreurs = 0
-    for exo in banque["exercices"]:
+    for exo in exercices:
         problemes = verifier(exo, notions)
         if exo["id"] in vus:
             problemes.append("identifiant en double")
@@ -99,11 +190,22 @@ def main():
             problemes.append(f"numero {numero} déjà utilisé")
         else:
             numeros.add(numero)
-        print(("ok      " if not problemes else "ERREUR  ") + exo["id"])
-        for probleme in problemes:
-            print("        " + probleme)
+        if problemes:
+            print("ERREUR  " + exo["id"])
+            for probleme in problemes:
+                print("        " + probleme)
         erreurs += len(problemes)
-    print(f"\n{len(banque['exercices'])} exercices, {erreurs} problème(s)")
+
+    print("\nnotion        exos  facile moyen corsé  à écrire  prédiction  maths")
+    for notion in notions_liste:
+        lot = [e for e in exercices if e["notion"] == notion["id"]]
+        print(
+            f"{notion['id']:<13} {len(lot):>4}"
+            + "".join(f"{sum(e['difficulte'] == d for e in lot):>7}" for d in (1, 2, 3))
+            + f"{sum(e['type'] == 'code' for e in lot):>9}{sum(e['type'] == 'prediction' for e in lot):>11}"
+            + f"{sum('maths' in (e.get('tags') or []) for e in lot):>8}"
+        )
+    print(f"\n{len(exercices)} exercices, {erreurs} problème(s)")
     print(f"Prochain numero libre : {max(numeros, default=0) + 1}")
     sys.exit(1 if erreurs else 0)
 

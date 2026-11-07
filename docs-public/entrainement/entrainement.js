@@ -8,6 +8,7 @@
   const DELAI_MAX_MS = 5000;
   const DIFFICULTES = { 1: "Facile", 2: "Moyen", 3: "Corsé" };
   const NOMS_AIDES = ["Aide 1", "Aide 2", "Aide 3"];
+  const ADRESSE_SIGNALEMENT = "mathias-romain.dehais@ac-normandie.fr";
 
 
   let banque = null;
@@ -67,12 +68,15 @@
 
   // --- Progression ---------------------------------------------------------
 
+  function etatVide() {
+    return { exos: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [], ouvertes: [] };
+  }
+
   function chargerEtat() {
-    const vide = { exos: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [] };
     try {
-      return Object.assign(vide, JSON.parse(localStorage.getItem(CLE)) || {});
+      return Object.assign(etatVide(), JSON.parse(localStorage.getItem(CLE)) || {});
     } catch (erreur) {
-      return vide;
+      return etatVide();
     }
   }
 
@@ -107,88 +111,13 @@
   }
 
   // --- Code de sauvegarde --------------------------------------------------
-  // Pour changer d'appareil sans compte ni serveur : le code contient toute la
-  // progression, en quelques caracteres. Structure, octet par octet :
-  // version, jour de la serie (2 octets), longueur de la serie, puis 2 bits par
-  // exercice (reussi, sans aide) selon son numero, et enfin une somme de controle.
-  // L'alphabet evite I, L, O et U, faciles a confondre quand on recopie a la main.
-
-  const ALPHABET = "0123456789ABCDEFGHJKMNPQRSTVWXYZ";
-  const VERSION_CODE = 1;
-  const JOUR_ZERO = Date.UTC(2020, 0, 1);
-  const MS_PAR_JOUR = 86400000;
-
-  function sommeControle(octets) {
-    return octets.reduce((somme, octet) => (somme * 31 + octet) % 251, 7);
-  }
-
-  function dateVersNombre(date) {
-    if (!date) return 0;
-    const [annee, mois, jour] = date.split("-").map(Number);
-    return Math.round((Date.UTC(annee, mois - 1, jour) - JOUR_ZERO) / MS_PAR_JOUR);
-  }
-
-  function nombreVersDate(nombre) {
-    if (nombre === 0) return null;
-    return new Date(JOUR_ZERO + nombre * MS_PAR_JOUR).toISOString().slice(0, 10);
-  }
+  // Le format est dans code-sauvegarde.js.
 
   function creerCode() {
-    const jour = dateVersNombre(etat.serie.dernier);
-    const exos = [];
-    for (const exo of banque.exercices) {
-      const s = etat.exos[exo.id];
-      if (!s || !s.reussi) continue;
-      const position = 2 * (exo.numero - 1);
-      const indice = position >> 3;
-      while (exos.length <= indice) exos.push(0);
-      exos[indice] |= (s.sansAide ? 3 : 1) << (position % 8);
-    }
-    const octets = [VERSION_CODE, jour >> 8, jour & 255, Math.min(etat.serie.longueur, 255), ...exos];
-    octets.push(sommeControle(octets));
-
-    let tampon = 0;
-    let nbBits = 0;
-    let texte = "";
-    for (const octet of octets) {
-      tampon = (tampon << 8) | octet;
-      nbBits += 8;
-      while (nbBits >= 5) {
-        texte += ALPHABET[(tampon >> (nbBits - 5)) & 31];
-        nbBits -= 5;
-      }
-      tampon &= (1 << nbBits) - 1;
-    }
-    if (nbBits > 0) texte += ALPHABET[(tampon << (5 - nbBits)) & 31];
-    return texte.match(/.{1,4}/g).join("-");
-  }
-
-  // Renvoie le contenu du code, ou null s'il n'est pas valide.
-  function lireCode(saisie) {
-    const texte = saisie.toUpperCase().replace(/[\s-]/g, "").replace(/O/g, "0").replace(/[IL]/g, "1");
-    if (texte === "") return null;
-    const octets = [];
-    let tampon = 0;
-    let nbBits = 0;
-    for (const caractere of texte) {
-      const valeur = ALPHABET.indexOf(caractere);
-      if (valeur < 0) return null;
-      tampon = (tampon << 5) | valeur;
-      nbBits += 5;
-      if (nbBits >= 8) {
-        octets.push((tampon >> (nbBits - 8)) & 255);
-        nbBits -= 8;
-      }
-      tampon &= (1 << nbBits) - 1;
-    }
-    if (octets.length < 5) return null;
-    const controle = octets.pop();
-    if (sommeControle(octets) !== controle || octets[0] !== VERSION_CODE) return null;
-    return {
-      dernier: nombreVersDate((octets[1] << 8) | octets[2]),
-      longueur: octets[3],
-      exos: octets.slice(4),
-    };
+    const reussites = banque.exercices
+      .filter((exo) => etat.exos[exo.id] && etat.exos[exo.id].reussi)
+      .map((exo) => ({ numero: exo.numero, sansAide: etat.exos[exo.id].sansAide }));
+    return CodeSauvegarde.creer(reussites, etat.serie);
   }
 
   // Ajoute le contenu d'un code a la progression, sans jamais rien retirer.
@@ -196,13 +125,11 @@
   function fusionner(contenu) {
     let gagnes = 0;
     for (const exo of banque.exercices) {
-      const position = 2 * (exo.numero - 1);
-      const bits = (contenu.exos[position >> 3] || 0) >> (position % 8);
-      if (!(bits & 1)) continue;
+      if (!contenu.reussites.has(exo.numero)) continue;
       const s = suivi(exo.id);
       if (!s.reussi) gagnes += 1;
       s.reussi = true;
-      if (bits & 2) s.sansAide = true;
+      if (contenu.reussites.get(exo.numero)) s.sansAide = true;
     }
     if (contenu.dernier) {
       const local = etat.serie;
@@ -217,7 +144,7 @@
   }
 
   function appliquerCode(saisie) {
-    const contenu = lireCode(saisie);
+    const contenu = CodeSauvegarde.lire(saisie);
     if (!contenu) {
       messageAccueil = { genre: "erreur", texte: "Ce code n'est pas valide : vérifier qu'il n'y a pas de faute de frappe." };
       return;
@@ -415,6 +342,7 @@
           disabled: exercicesFiltres().length === 0,
         }, "Un exo au hasard")
       ),
+      blocFiltres(),
       el("p", { class: "entr-bilan" },
         reussis + " exo" + (reussis > 1 ? "s" : "") + " réussi" + (reussis > 1 ? "s" : "") + " sur " + banque.exercices.length,
         sansAide > 0 ? ", dont " + sansAide + " sans aide" : "",
@@ -427,23 +355,7 @@
       )
     );
 
-    const difficultes = el("div", { class: "entr-filtres" }, el("span", {}, "Difficulté :"));
-    for (const [valeur, nom] of Object.entries(DIFFICULTES).map(([v, n]) => [Number(v), n])) {
-      const actif = etat.difficultes.includes(valeur);
-      difficultes.append(el("button", {
-        class: "entr-puce" + (actif ? " entr-puce--active" : ""),
-        "aria-pressed": String(actif),
-        onclick() {
-          basculer(etat.difficultes, valeur);
-          sauver();
-          afficher();
-        },
-      }, nom));
-    }
-    conteneur.append(...blocReseau(), difficultes);
-    if (exercicesFiltres().length === 0) {
-      conteneur.append(el("p", { class: "entr-consigne" }, "Aucun exercice ne correspond à ces filtres."));
-    }
+    conteneur.append(...blocReseau());
 
     conteneur.append(blocSauvegarde(reussis));
 
@@ -453,7 +365,7 @@
         class: "entr-lien",
         onclick() {
           if (confirm("Effacer toute la progression sur cet appareil ?")) {
-            etat = { exos: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [] };
+            etat = etatVide();
             sauver();
             afficher();
           }
@@ -470,6 +382,42 @@
     else liste.push(valeur);
   }
 
+  function blocFiltres() {
+    const puce = (classe, nom, liste, valeur, style) => {
+      const actif = liste.includes(valeur);
+      return el("button", {
+        class: classe + (actif ? " " + classe + "--active" : ""),
+        style,
+        "aria-pressed": String(actif),
+        onclick() {
+          basculer(liste, valeur);
+          sauver();
+          afficher();
+        },
+      }, nom);
+    };
+    return el("div", { class: "entr-filtres" },
+      el("p", {}, "Le hasard pioche dans :"),
+      el("div", { class: "entr-puces" }, banque.notions
+        .filter((notion) => banque.exercices.some((e) => e.notion === notion.id))
+        .map((notion) => puce("entr-filtre", notion.nom, etat.notions, notion.id, couleurLigne(notion.id)))),
+      el("div", { class: "entr-puces" }, Object.entries(DIFFICULTES).map(([valeur, nom]) =>
+        puce("entr-filtre entr-filtre--neutre", nom, etat.difficultes, Number(valeur))))
+    );
+  }
+
+  // Une rangee d'arrets : un point par exercice, plein quand il est reussi.
+  function rangee(exos, ici) {
+    const filtres = exercicesFiltres();
+    return el("div", { class: "entr-rangee" }, exos.map((exo) => {
+      const classes = ["entr-arret"];
+      if (suivi(exo.id).reussi) classes.push("entr-arret--fait");
+      if (exo === ici) classes.push("entr-arret--ici");
+      if (!ici && !filtres.includes(exo)) classes.push("entr-arret--hors");
+      return el("a", { href: "#/exo/" + exo.id, class: classes.join(" "), title: exo.titre, "aria-label": exo.titre });
+    }));
+  }
+
   function blocReseau() {
     const filtres = exercicesFiltres();
     const lignes = el("div", { class: "entr-reseau" });
@@ -477,33 +425,36 @@
       const exos = banque.exercices.filter((e) => e.notion === notion.id);
       if (exos.length === 0) return;
       const faits = exos.filter((e) => suivi(e.id).reussi).length;
-      const actif = etat.notions.includes(notion.id);
+      const ouverte = etat.ouvertes.includes(notion.id);
       lignes.append(el("section", { class: "entr-ligne", style: couleurLigne(notion.id) },
         el("button", {
-          class: "entr-ligne__titre" + (actif ? " entr-ligne__titre--active" : ""),
-          "aria-pressed": String(actif),
+          class: "entr-ligne__titre",
+          "aria-expanded": String(ouverte),
           onclick() {
-            basculer(etat.notions, notion.id);
+            basculer(etat.ouvertes, notion.id);
             sauver();
             afficher();
           },
         },
           el("span", { class: "entr-ligne__num" }, String(i + 1)),
           el("span", {}, notion.nom),
-          el("span", { class: "entr-ligne__compte" }, faits + " sur " + exos.length)),
-        el("ol", { class: "entr-stations" }, exos.map((exo) => {
-          const s = suivi(exo.id);
-          return el("li", { class: (s.reussi ? "entr-station--faite " : "") + (filtres.includes(exo) ? "" : "entr-station--hors") },
-            el("a", { href: "#/exo/" + exo.id },
-              el("span", { class: "entr-station__nom" }, exo.titre),
-              s.sansAide ? el("span", { class: "entr-badge" }, "sans aide") : null,
-              el("span", { class: "entr-station__infos" }, DIFFICULTES[exo.difficulte].toLowerCase() + ", " + exo.duree + " min")));
-        }))
+          el("span", { class: "entr-ligne__compte" }, faits + " sur " + exos.length),
+          el("span", { class: "entr-ligne__fleche", "aria-hidden": "true" }, ouverte ? "▲" : "▼")),
+        ouverte
+          ? el("ol", { class: "entr-stations" }, exos.map((exo) => {
+            const s = suivi(exo.id);
+            return el("li", { class: (s.reussi ? "entr-station--faite " : "") + (filtres.includes(exo) ? "" : "entr-station--hors") },
+              el("a", { href: "#/exo/" + exo.id },
+                el("span", { class: "entr-station__nom" }, exo.titre),
+                s.sansAide ? el("span", { class: "entr-badge" }, "sans aide") : null,
+                el("span", { class: "entr-station__infos" }, DIFFICULTES[exo.difficulte].toLowerCase() + ", " + exo.duree + " min")));
+          }))
+          : rangee(exos, null)
       ));
     });
     return [
       el("h2", {}, "Exercices par notion"),
-      el("p", { class: "entr-consigne" }, "Sélectionner une ou plusieurs notions pour que le hasard ne pioche que dedans."),
+      el("p", { class: "entr-consigne" }, "Chaque point est un exercice, plein quand il est réussi. Ouvrir une notion pour voir leurs titres."),
       lignes,
     ];
   }
@@ -512,15 +463,11 @@
     return "--ligne: var(--ligne-" + (banque.notions.findIndex((n) => n.id === idNotion) % 10 + 1) + ")";
   }
 
-  function trajet(exo) {
-    const exos = banque.exercices.filter((e) => e.notion === exo.notion);
-    return el("div", { class: "entr-trajet", style: couleurLigne(exo.notion) }, exos.map((e) =>
-      el("a", {
-        href: "#/exo/" + e.id,
-        title: e.titre,
-        "aria-label": e.titre,
-        class: "entr-trajet__arret" + (suivi(e.id).reussi ? " entr-trajet__arret--faite" : "") + (e === exo ? " entr-trajet__arret--ici" : ""),
-      })));
+  function lienSignalement(exo) {
+    const sujet = "Entraînement, exercice " + exo.numero + " : " + exo.titre;
+    return el("p", { class: "entr-signaler" },
+      el("a", { href: "mailto:" + ADRESSE_SIGNALEMENT + "?subject=" + encodeURIComponent(sujet) },
+        "Signaler un problème sur cet exercice"));
   }
 
   function nomNotion(id) {
@@ -532,7 +479,8 @@
   function enTete(exo) {
     return [
       el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "← Tous les exercices")),
-      trajet(exo),
+      el("div", { class: "entr-trajet", style: couleurLigne(exo.notion) },
+        rangee(banque.exercices.filter((e) => e.notion === exo.notion), exo)),
       el("p", { class: "entr-surtitre" }, "Exercice " + exo.numero),
       el("h1", { class: "entr-titre" }, exo.titre),
       el("p", { class: "entr-infos" },
@@ -589,7 +537,8 @@
       el("div", { class: "entr-enonce", html: enHtml(exo.enonce) }),
       el("pre", { class: "entr-code entr-papier" }, el("code", {}, exo.code.trimEnd())),
       choix,
-      retour
+      retour,
+      lienSignalement(exo)
     );
     racine.replaceChildren(bloc);
   }
@@ -699,7 +648,8 @@
       zoneEditeur,
       el("div", { class: "entr-commandes" }, verifier, boutonAide, recommencer, statut),
       zoneAides,
-      resultat
+      resultat,
+      lienSignalement(exo)
     );
     racine.replaceChildren(bloc);
 
@@ -827,9 +777,14 @@
   async function demarrer() {
     try {
       if (!window.jsyaml || !window.CodeMirror) throw new Error("composants absents");
-      const reponse = await fetch("exercices.yml");
-      if (!reponse.ok) throw new Error("exercices introuvables");
-      banque = jsyaml.load(await reponse.text());
+      const lire = async (nom) => {
+        const reponse = await fetch("exercices/" + nom + ".yml");
+        if (!reponse.ok) throw new Error(nom + " introuvable");
+        return jsyaml.load(await reponse.text());
+      };
+      const { notions } = await lire("notions");
+      const lots = await Promise.all(notions.map((notion) => lire(notion.id)));
+      banque = { notions, exercices: lots.flatMap((lot) => lot.exercices) };
     } catch (erreur) {
       racine.replaceChildren(el("p", { class: "entr-message entr-message--erreur" },
         "La page n'a pas pu se charger. Vérifier la connexion, puis recharger."));

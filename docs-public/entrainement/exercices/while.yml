@@ -1,0 +1,394 @@
+exercices:
+
+  - id: soirs-de-lecture
+    numero: 7
+    titre: Finir son livre
+    notion: while
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    type: code
+    enonce: |
+      Un élève doit lire `pages` pages et en lit `rythme` chaque soir.
+
+      Écrire une fonction `nb_soirs(pages, rythme)` qui renvoie le nombre de soirs nécessaires, en utilisant une boucle `while`. Par exemple, `nb_soirs(100, 30)` renvoie 4, car après trois soirs il reste encore 10 pages.
+    depart: |
+      def nb_soirs(pages, rythme):
+          ...
+    aides:
+      - |
+        def nb_soirs(pages, rythme):
+            # creer un compteur de soirs qui vaut 0
+            # tant qu'il reste des pages a lire :
+            #     retirer rythme aux pages restantes
+            #     ajouter 1 au compteur
+            # renvoyer le compteur
+      - |
+        def nb_soirs(pages, rythme):
+            soirs = 0
+            while pages > ___:
+                pages = ___
+                soirs = ___
+            return soirs
+      - |
+        def nb_soirs(pages, rythme):
+            soirs = 0
+            while pages > 0:
+                pages = pages - rythme
+                soirs = ___
+            return soirs
+    solution: |
+      def nb_soirs(pages, rythme):
+          soirs = 0
+          while pages > 0:
+              pages = pages - rythme
+              soirs = soirs + 1
+          return soirs
+    tests:
+      - { appel: "nb_soirs(100, 30)", attendu: "4" }
+      - { appel: "nb_soirs(90, 30)", attendu: "3", libelle: "nb_soirs(90, 30) : le dernier soir finit pile le livre" }
+      - { appel: "nb_soirs(10, 30)", attendu: "1" }
+      - { appel: "nb_soirs(0, 30)", attendu: "0", cache: true }
+      - { appel: "nb_soirs(1, 30)", attendu: "1", cache: true }
+
+  - id: predire-double
+    numero: 36
+    titre: Le dernier double
+    notion: while
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      n = 1
+      while n < 20:
+          n = n * 2
+      print(n)
+    choix: ["32", "16", "20", "64"]
+    explication: |
+      `n` prend les valeurs 1, 2, 4, 8, 16 puis 32. La condition est testée au début de chaque tour : quand `n` vaut 16, on entre encore dans la boucle, et `n` devient 32.
+
+  - id: bug-tirelire
+    numero: 37
+    titre: La tirelire
+    notion: while
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 3
+    type: code
+    enonce: |
+      Chaque semaine, un élève met `depot` euros dans sa tirelire, et il veut atteindre au moins `objectif` euros.
+
+      Cette fonction doit renvoyer le nombre de semaines nécessaires, mais elle contient une erreur : `semaines(30, 10)` renvoie 4 au lieu de 3. La corriger.
+    depart: |
+      def semaines(objectif, depot):
+          total = 0
+          compteur = 0
+          while total <= objectif:
+              total = total + depot
+              compteur = compteur + 1
+          return compteur
+    aides:
+      - |
+        # suivre le code a la main avec objectif = 30 et depot = 10
+        # quand total vaut 30, l'objectif est-il atteint ?
+        # la boucle doit-elle continuer dans ce cas ?
+      - |
+        def semaines(objectif, depot):
+            total = 0
+            compteur = 0
+            while total ___ objectif:
+                total = total + depot
+                compteur = compteur + 1
+            return compteur
+      - |
+        def semaines(objectif, depot):
+            total = 0
+            compteur = 0
+            while total < ___:
+                total = total + depot
+                compteur = compteur + 1
+            return compteur
+    solution: |
+      def semaines(objectif, depot):
+          total = 0
+          compteur = 0
+          while total < objectif:
+              total = total + depot
+              compteur = compteur + 1
+          return compteur
+    tests:
+      - { appel: "semaines(30, 10)", attendu: "3" }
+      - { appel: "semaines(35, 10)", attendu: "4" }
+      - { appel: "semaines(5, 10)", attendu: "1" }
+      - { appel: "semaines(0, 10)", attendu: "0", cache: true }
+      - { appel: "semaines(100, 25)", attendu: "4", cache: true }
+      - { appel: "semaines(1, 5)", attendu: "1", cache: true }
+
+  - id: nombre-de-chiffres
+    numero: 38
+    titre: Combien de chiffres ?
+    notion: while
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Compléter la fonction `nb_chiffres(n)` pour qu'elle renvoie le nombre de chiffres de l'entier `n` (strictement positif), sans le transformer en texte.
+
+      Conseil : `n // 10` retire le dernier chiffre de `n`.
+    depart: |
+      def nb_chiffres(n):
+          compteur = 0
+          while n > ___:
+              n = n // ___
+              compteur = ___
+          return compteur
+    aides:
+      - |
+        # a chaque tour, on retire un chiffre et on compte 1
+        # quelle valeur prend n quand il n'a plus de chiffres ?
+      - |
+        def nb_chiffres(n):
+            compteur = 0
+            while n > 0:
+                n = n // ___
+                compteur = ___
+            return compteur
+      - |
+        def nb_chiffres(n):
+            compteur = 0
+            while n > 0:
+                n = n // 10
+                compteur = ___
+            return compteur
+    solution: |
+      def nb_chiffres(n):
+          compteur = 0
+          while n > 0:
+              n = n // 10
+              compteur = compteur + 1
+          return compteur
+    tests:
+      - { appel: "nb_chiffres(7)", attendu: "1" }
+      - { appel: "nb_chiffres(482)", attendu: "3" }
+      - { appel: "nb_chiffres(1000)", attendu: "4", libelle: "nb_chiffres(1000) : avec des zéros à la fin" }
+      - { appel: "nb_chiffres(10)", attendu: "2", cache: true }
+      - { appel: "nb_chiffres(123456)", attendu: "6", cache: true }
+      - { appel: "nb_chiffres(9)", attendu: "1", cache: true }
+      - { appel: "nb_chiffres(99)", attendu: "2", cache: true }
+
+  - id: premier-multiple
+    numero: 39
+    titre: Le prochain multiple
+    notion: while
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `prochain_multiple(n, m)` qui renvoie le plus petit multiple de `m` supérieur ou égal à `n`, avec une boucle `while`. Par exemple, `prochain_multiple(10, 4)` renvoie 12.
+    depart: |
+      def prochain_multiple(n, m):
+          ...
+    aides:
+      - |
+        def prochain_multiple(n, m):
+            # tant que n n'est pas un multiple de m :
+            #     ajouter 1 a n
+            # renvoyer n
+      - |
+        def prochain_multiple(n, m):
+            while n % m != ___:
+                n = ___
+            return n
+      - |
+        def prochain_multiple(n, m):
+            while n % m != 0:
+                n = ___
+            return n
+    solution: |
+      def prochain_multiple(n, m):
+          while n % m != 0:
+              n = n + 1
+          return n
+    autres_solutions:
+      - |
+        def prochain_multiple(n, m):
+            multiple = 0
+            while multiple < n:
+                multiple = multiple + m
+            return multiple
+    tests:
+      - { appel: "prochain_multiple(10, 4)", attendu: "12" }
+      - { appel: "prochain_multiple(12, 4)", attendu: "12", libelle: "prochain_multiple(12, 4) : 12 est déjà un multiple" }
+      - { appel: "prochain_multiple(1, 7)", attendu: "7" }
+      - { appel: "prochain_multiple(100, 9)", attendu: "108", cache: true }
+      - { appel: "prochain_multiple(5, 1)", attendu: "5", cache: true }
+      - { appel: "prochain_multiple(9, 4)", attendu: "12", cache: true }
+
+  - id: rebonds-balle
+    numero: 40
+    titre: Les rebonds de la balle
+    notion: while
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    type: code
+    enonce: |
+      Une balle lâchée d'une hauteur `hauteur` remonte à la moitié de cette hauteur à chaque rebond.
+
+      Écrire une fonction `rebonds(hauteur)` qui renvoie le nombre de rebonds nécessaires pour que la balle remonte à moins d'un mètre (strictement). Par exemple, `rebonds(8)` renvoie 4, car la balle remonte à 4, 2, 1, puis 0.5 mètre.
+    depart: |
+      def rebonds(hauteur):
+          ...
+    aides:
+      - |
+        def rebonds(hauteur):
+            # creer un compteur qui vaut 0
+            # tant que la hauteur vaut au moins 1 :
+            #     diviser la hauteur par 2
+            #     ajouter 1 au compteur
+            # renvoyer le compteur
+      - |
+        def rebonds(hauteur):
+            compteur = 0
+            while hauteur >= ___:
+                hauteur = ___
+                compteur = ___
+            return compteur
+      - |
+        def rebonds(hauteur):
+            compteur = 0
+            while hauteur >= 1:
+                hauteur = hauteur / 2
+                compteur = ___
+            return compteur
+    solution: |
+      def rebonds(hauteur):
+          compteur = 0
+          while hauteur >= 1:
+              hauteur = hauteur / 2
+              compteur = compteur + 1
+          return compteur
+    tests:
+      - { appel: "rebonds(8)", attendu: "4" }
+      - { appel: "rebonds(1)", attendu: "1", libelle: "rebonds(1) : elle remonte à 0.5 mètre" }
+      - { appel: "rebonds(0.5)", attendu: "0", libelle: "rebonds(0.5) : déjà sous le mètre" }
+      - { appel: "rebonds(100)", attendu: "7", cache: true }
+
+  - id: pgcd-soustractions
+    numero: 41
+    titre: Le PGCD par soustractions
+    notion: while
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 5
+    tags: [maths]
+    type: code
+    enonce: |
+      Pour calculer le PGCD de deux entiers strictement positifs, on peut répéter cette étape tant qu'ils sont différents : remplacer le plus grand par la différence entre le plus grand et le plus petit. Quand ils sont égaux, leur valeur commune est le PGCD.
+
+      Écrire une fonction `pgcd(a, b)` qui applique cette méthode. Par exemple, `pgcd(12, 18)` renvoie 6.
+    depart: |
+      def pgcd(a, b):
+          ...
+    aides:
+      - |
+        def pgcd(a, b):
+            # tant que a et b sont differents :
+            #     si a est plus grand que b, retirer b a a
+            #     sinon, retirer a a b
+            # renvoyer a
+      - |
+        def pgcd(a, b):
+            while a != ___:
+                if a > b:
+                    a = ___
+                else:
+                    b = ___
+            return ___
+      - |
+        def pgcd(a, b):
+            while a != b:
+                if a > b:
+                    a = a - b
+                else:
+                    b = ___
+            return a
+    solution: |
+      def pgcd(a, b):
+          while a != b:
+              if a > b:
+                  a = a - b
+              else:
+                  b = b - a
+          return a
+    autres_solutions:
+      - |
+        def pgcd(a, b):
+            while b != 0:
+                a, b = b, a % b
+            return a
+    tests:
+      - { appel: "pgcd(12, 18)", attendu: "6" }
+      - { appel: "pgcd(7, 7)", attendu: "7" }
+      - { appel: "pgcd(17, 5)", attendu: "1" }
+      - { appel: "pgcd(100, 75)", attendu: "25", cache: true }
+      - { appel: "pgcd(1, 9)", attendu: "1", cache: true }
+
+  - id: inverser-nombre
+    numero: 42
+    titre: Le nombre à l'envers
+    notion: while
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 5
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `a_l_envers(n)` qui renvoie l'entier `n` (strictement positif) écrit à l'envers, sans le transformer en texte. Par exemple, `a_l_envers(123)` renvoie 321.
+
+      Conseil : `n % 10` donne le dernier chiffre de `n`, et `n // 10` le retire.
+    depart: |
+      def a_l_envers(n):
+          ...
+    aides:
+      - |
+        def a_l_envers(n):
+            # creer une variable resultat qui vaut 0
+            # tant que n est strictement positif :
+            #     decaler resultat d'un rang vers la gauche (multiplier par 10)
+            #     lui ajouter le dernier chiffre de n
+            #     retirer le dernier chiffre de n
+            # renvoyer resultat
+      - |
+        def a_l_envers(n):
+            resultat = 0
+            while n > 0:
+                resultat = resultat * ___ + n % ___
+                n = n // ___
+            return resultat
+      - |
+        def a_l_envers(n):
+            resultat = 0
+            while n > 0:
+                resultat = resultat * 10 + n % 10
+                n = ___
+            return resultat
+    solution: |
+      def a_l_envers(n):
+          resultat = 0
+          while n > 0:
+              resultat = resultat * 10 + n % 10
+              n = n // 10
+          return resultat
+    tests:
+      - { appel: "a_l_envers(123)", attendu: "321" }
+      - { appel: "a_l_envers(7)", attendu: "7" }
+      - { appel: "a_l_envers(120)", attendu: "21", libelle: "a_l_envers(120) : le zéro de tête disparaît" }
+      - { appel: "a_l_envers(90210)", attendu: "1209", cache: true }
+      - { appel: "a_l_envers(1111)", attendu: "1111", cache: true }

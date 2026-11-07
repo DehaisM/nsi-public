@@ -72,20 +72,51 @@
 .md-typeset .entr-bouton--craie { background: var(--nsi-signal); border-color: var(--nsi-signal); color: #12352a; font-size: .8rem; }
 .md-typeset .entr-bouton--craie:hover:not(:disabled) { background: #ffe24d; color: #12352a; }
 
+/* Les filtres du hasard */
+.entr-filtres { margin-top: .9rem; font-size: .72rem; }
+.md-typeset .entr-filtres p { margin: 0 0 .3rem; color: var(--entr-doux); }
+.entr-puces { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .35rem; }
+.entr-filtre {
+    --ligne: var(--entr-encre);
+    display: inline-flex; align-items: center; gap: .3rem; padding: .08rem .45rem; cursor: pointer;
+    font: 600 .7rem var(--nsi-titres); color: inherit; background: none;
+    border: 1.5px solid var(--nsi-filet); border-radius: var(--nsi-rayon);
+}
+.entr-filtre::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--ligne); }
+.entr-filtre--neutre::before { content: none; }
+.entr-filtre:hover { border-color: var(--ligne); }
+.entr-filtre--active { border-color: var(--ligne); background: color-mix(in srgb, var(--ligne) 18%, transparent); font-weight: 800; }
+
 /* Le plan */
-.entr-reseau { columns: 2; column-gap: 2.2rem; }
-.entr-ligne { break-inside: avoid; margin-bottom: 1.3rem; }
+.entr-reseau { display: grid; gap: .45rem; }
 .entr-ligne__titre {
-    display: flex; align-items: center; gap: .5rem; width: 100%; padding: .2rem .4rem .2rem 0; cursor: pointer;
+    display: flex; align-items: center; gap: .5rem; width: 100%; padding: .2rem .5rem .2rem 0; cursor: pointer;
     background: none; border: 0; border-radius: 1rem; color: inherit; font: 800 .86rem var(--nsi-titres); text-align: left;
 }
-.entr-ligne__titre:hover, .entr-ligne__titre--active { background: color-mix(in srgb, var(--ligne) 16%, transparent); }
+.entr-ligne__titre:hover { background: color-mix(in srgb, var(--ligne) 14%, transparent); }
 .entr-ligne__num {
     flex: none; display: grid; place-items: center; width: 1.45rem; height: 1.45rem; border-radius: 50%;
     background: var(--ligne); color: #fff; font-size: .78rem; line-height: 1;
 }
 .entr-ligne__compte { margin-left: auto; font-weight: 600; font-size: .66rem; color: var(--entr-doux); }
-.md-typeset ol.entr-stations { list-style: none; margin: 0 0 0 .57rem; padding: 0; border-left: .32rem solid var(--ligne); }
+.entr-ligne__fleche { font-size: .5rem; color: var(--entr-doux); }
+
+/* Une rangee d'arrets, relies par un trait, qui passe a la ligne au besoin */
+.entr-rangee { display: flex; flex-wrap: wrap; gap: .4rem .55rem; padding: .3rem .1rem .3rem .25rem; margin-left: .3rem; overflow: hidden; }
+.md-typeset .entr-arret {
+    position: relative; flex: none; display: block; width: .84rem; height: .84rem; box-sizing: border-box;
+    border-radius: 50%; border: .2rem solid var(--ligne); background: var(--md-default-bg-color);
+}
+.md-typeset .entr-arret + .entr-arret::before {
+    content: ""; position: absolute; right: 100%; top: 50%; width: .9rem; height: .2rem;
+    transform: translateY(-50%); background: var(--ligne);
+}
+.md-typeset .entr-arret--fait, .md-typeset .entr-arret:hover { background: var(--ligne); }
+.md-typeset .entr-arret--hors { opacity: .3; }
+.md-typeset .entr-arret--ici { outline: .17rem solid var(--entr-encre); outline-offset: 1px; }
+
+/* Les stations d'une ligne ouverte */
+.md-typeset ol.entr-stations { list-style: none; margin: .1rem 0 .3rem .57rem; padding: 0; border-left: .32rem solid var(--ligne); }
 .md-typeset ol.entr-stations > li { position: relative; margin: 0; padding: .32rem 0 .32rem .85rem; }
 .md-typeset ol.entr-stations > li::before {
     content: ""; position: absolute; left: -.58rem; top: .5rem; width: .84rem; height: .84rem; box-sizing: border-box;
@@ -102,12 +133,9 @@
 .md-typeset .entr-stations a:hover .entr-station__nom { text-decoration: underline; text-decoration-color: var(--ligne); text-decoration-thickness: 2px; text-underline-offset: .15em; }
 .entr-station__infos { display: block; font-size: .62rem; color: var(--entr-doux); }
 
-.entr-filtres { display: flex; flex-wrap: wrap; align-items: baseline; gap: .2rem .7rem; margin-top: .4rem; font-size: .74rem; }
-.entr-puce { font: inherit; cursor: pointer; color: inherit; padding: 0 .3rem; border: 0; border-radius: 2px; background: none; text-decoration: underline dotted; text-underline-offset: .2em; }
-.entr-puce:hover { background: var(--entr-signal); }
-.entr-puce--active { background: var(--entr-signal); font-weight: 600; text-decoration: none; }
-
 .md-typeset .entr-badge { display: inline-block; margin-left: .5rem; font-size: .62rem; font-weight: 800; color: var(--entr-vert); white-space: nowrap; }
+.md-typeset .entr-signaler { margin: 2rem 0 0; font-size: .62rem; }
+.md-typeset .entr-signaler a { color: var(--entr-doux); text-decoration: underline; text-underline-offset: .15em; }
 
 /* En-tete d'un exercice */
 .md-typeset .entr-retour { margin: 0 0 1rem; font-size: .68rem; }
@@ -119,14 +147,7 @@
 .md-typeset #entr-app code { background: var(--md-code-bg-color); border-radius: 2px; box-shadow: none; }
 
 /* Le petit trajet en haut d'un exercice */
-.entr-trajet { position: relative; display: flex; justify-content: space-between; max-width: 14rem; margin: 0 0 .6rem; }
-.entr-trajet::before { content: ""; position: absolute; left: 0; right: 0; top: .28rem; height: .2rem; background: var(--ligne); }
-.md-typeset .entr-trajet__arret {
-    position: relative; display: block; width: .76rem; height: .76rem; box-sizing: border-box;
-    border-radius: 50%; border: .17rem solid var(--ligne); background: var(--md-default-bg-color);
-}
-.md-typeset .entr-trajet__arret--faite { background: var(--ligne); }
-.md-typeset .entr-trajet__arret--ici { outline: .17rem solid var(--entr-encre); outline-offset: 1px; }
+.entr-trajet { margin: 0 0 .4rem -.3rem; }
 
 /* L'editeur et les blocs de code */
 .entr-editeur { border: 2px solid var(--nsi-bouton); border-radius: var(--nsi-rayon); overflow: hidden; }
@@ -218,7 +239,6 @@
 .entr-champ::placeholder { font-family: var(--nsi-titres); color: var(--entr-doux); }
 
 @media (max-width: 34rem) {
-    .entr-reseau { columns: 1; }
     .entr-statut { margin-left: 0; width: 100%; }
     .entr-tableau { padding: .9rem 1rem; }
 }

@@ -1,0 +1,434 @@
+exercices:
+
+  - id: tarif-cinema
+    numero: 3
+    titre: Le tarif du cinéma
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 3
+    type: code
+    enonce: |
+      Un cinéma fait payer 5 euros aux moins de 14 ans et 9 euros aux autres.
+
+      Écrire une fonction `tarif(age)` qui renvoie le prix à payer.
+    depart: |
+      def tarif(age):
+          ...
+    aides:
+      - |
+        def tarif(age):
+            # si age est strictement inferieur a 14, renvoyer 5
+            # sinon, renvoyer 9
+      - |
+        def tarif(age):
+            if age < ___:
+                return ___
+            else:
+                return ___
+      - |
+        def tarif(age):
+            if age < 14:
+                return 5
+            else:
+                return ___
+    solution: |
+      def tarif(age):
+          if age < 14:
+              return 5
+          else:
+              return 9
+    tests:
+      - { appel: "tarif(10)", attendu: "5" }
+      - { appel: "tarif(30)", attendu: "9" }
+      - { appel: "tarif(14)", attendu: "9", libelle: "tarif(14), le cas limite" }
+      - { appel: "tarif(13)", attendu: "5", cache: true }
+
+  - id: mention-bug
+    numero: 4
+    titre: La mention qui ne marche pas
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    type: code
+    enonce: |
+      Cette fonction doit renvoyer `"Très bien"` à partir de 16, `"Admis"` à partir de 10, et `"Refusé"` sinon.
+
+      Elle contient une erreur : `mention(18)` renvoie `"Admis"`. Trouver l'erreur et la corriger.
+    depart: |
+      def mention(note):
+          if note >= 10:
+              return "Admis"
+          elif note >= 16:
+              return "Très bien"
+          else:
+              return "Refusé"
+    aides:
+      - |
+        # suivre le code a la main avec note = 18
+        # quel est le premier test vrai ?
+        # dans quel ordre faut-il donc faire les tests ?
+      - |
+        def mention(note):
+            if note >= ___:
+                return "Très bien"
+            elif note >= ___:
+                return "Admis"
+            else:
+                return "Refusé"
+      - |
+        def mention(note):
+            if note >= 16:
+                return "Très bien"
+            elif note >= ___:
+                return "Admis"
+            else:
+                return "Refusé"
+    solution: |
+      def mention(note):
+          if note >= 16:
+              return "Très bien"
+          elif note >= 10:
+              return "Admis"
+          else:
+              return "Refusé"
+    tests:
+      - { appel: "mention(18)", attendu: "'Très bien'" }
+      - { appel: "mention(12)", attendu: "'Admis'" }
+      - { appel: "mention(4)", attendu: "'Refusé'" }
+      - { appel: "mention(16)", attendu: "'Très bien'", cache: true }
+      - { appel: "mention(10)", attendu: "'Admis'", cache: true }
+      - { appel: "mention(15)", attendu: "'Admis'", cache: true }
+      - { appel: "mention(9)", attendu: "'Refusé'", cache: true }
+
+  - id: predire-elif
+    numero: 22
+    titre: Une seule branche
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      x = 15
+      if x > 10:
+          print("A")
+      elif x > 5:
+          print("B")
+      else:
+          print("C")
+    choix: ["A", "B", "C", "Rien"]
+    explication: |
+      `x > 5` est vrai aussi, mais `elif` n'est testé que si les tests précédents sont faux. Dès qu'une branche est exécutée, les suivantes sont ignorées.
+
+  - id: frais-livraison
+    numero: 23
+    titre: Les frais de livraison
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Une boutique en ligne offre la livraison à partir de 50 euros d'achat. Sinon, la livraison coûte 5 euros.
+
+      Écrire une fonction `frais(montant)` qui renvoie le prix de la livraison.
+    depart: |
+      def frais(montant):
+          ...
+    aides:
+      - |
+        def frais(montant):
+            # si montant vaut au moins 50, renvoyer 0
+            # sinon, renvoyer 5
+      - |
+        def frais(montant):
+            if montant >= ___:
+                return ___
+            return ___
+      - |
+        def frais(montant):
+            if montant >= 50:
+                return 0
+            return ___
+    solution: |
+      def frais(montant):
+          if montant >= 50:
+              return 0
+          return 5
+    tests:
+      - { appel: "frais(80)", attendu: "0" }
+      - { appel: "frais(20)", attendu: "5" }
+      - { appel: "frais(50)", attendu: "0", libelle: "frais(50), le cas limite" }
+      - { appel: "frais(49.99)", attendu: "5", cache: true }
+
+  - id: bug-permis
+    numero: 24
+    titre: Qui peut conduire ?
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Pour conduire seul, il faut avoir au moins 18 ans **et** avoir le permis. Cette fonction contient une erreur : `peut_conduire(15, False)` renvoie bien `False`, mais `peut_conduire(16, True)` renvoie `True`. La corriger.
+    depart: |
+      def peut_conduire(age, permis):
+          if age >= 18 or permis:
+              return True
+          return False
+    aides:
+      - |
+        # suivre le code a la main avec age = 16 et permis = True
+        # le mot "et" de l'enonce correspond a quel operateur ?
+      - |
+        def peut_conduire(age, permis):
+            if age >= 18 ___ permis:
+                return True
+            return False
+      - |
+        def peut_conduire(age, permis):
+            if age >= 18 and ___:
+                return True
+            return False
+    solution: |
+      def peut_conduire(age, permis):
+          if age >= 18 and permis:
+              return True
+          return False
+    autres_solutions:
+      - |
+        def peut_conduire(age, permis):
+            return age >= 18 and permis
+    tests:
+      - { appel: "peut_conduire(16, True)", attendu: "False" }
+      - { appel: "peut_conduire(20, True)", attendu: "True" }
+      - { appel: "peut_conduire(20, False)", attendu: "False" }
+      - { appel: "peut_conduire(18, True)", attendu: "True", cache: true }
+      - { appel: "peut_conduire(15, False)", attendu: "False", cache: true }
+      - { appel: "peut_conduire(17, True)", attendu: "False", cache: true }
+
+  - id: meme-signe
+    numero: 25
+    titre: Le même signe
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `meme_signe(a, b)` qui renvoie `True` si les deux nombres sont strictement positifs ou s'ils sont tous les deux strictement négatifs, et `False` sinon. Si l'un des deux vaut 0, la fonction renvoie `False`.
+    depart: |
+      def meme_signe(a, b):
+          ...
+    aides:
+      - |
+        def meme_signe(a, b):
+            # si a et b sont tous les deux strictement positifs, renvoyer True
+            # si a et b sont tous les deux strictement negatifs, renvoyer True
+            # dans tous les autres cas, renvoyer False
+      - |
+        def meme_signe(a, b):
+            if a > 0 and ___:
+                return True
+            if a < 0 and ___:
+                return True
+            return ___
+      - |
+        def meme_signe(a, b):
+            if a > 0 and b > 0:
+                return True
+            if a < 0 and b < 0:
+                return True
+            return ___
+    solution: |
+      def meme_signe(a, b):
+          if a > 0 and b > 0:
+              return True
+          if a < 0 and b < 0:
+              return True
+          return False
+    autres_solutions:
+      - |
+        def meme_signe(a, b):
+            return a * b > 0
+    tests:
+      - { appel: "meme_signe(3, 7)", attendu: "True" }
+      - { appel: "meme_signe(-3, -7)", attendu: "True" }
+      - { appel: "meme_signe(3, -7)", attendu: "False" }
+      - { appel: "meme_signe(0, 5)", attendu: "False", libelle: "meme_signe(0, 5) : 0 n'a pas de signe ici" }
+      - { appel: "meme_signe(-2, 5)", attendu: "False", cache: true }
+      - { appel: "meme_signe(0, 0)", attendu: "False", cache: true }
+      - { appel: "meme_signe(-2, 0)", attendu: "False", cache: true }
+      - { appel: "meme_signe(-2, -1)", attendu: "True", cache: true }
+      - { appel: "meme_signe(1, 1)", attendu: "True", cache: true }
+      - { appel: "meme_signe(1, 0)", attendu: "False", cache: true }
+      - { appel: "meme_signe(0, -1)", attendu: "False", cache: true }
+      - { appel: "meme_signe(-1, -5)", attendu: "True", cache: true }
+
+  - id: triangle-possible
+    numero: 26
+    titre: Le triangle possible
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 3
+    tags: [maths]
+    type: code
+    enonce: |
+      On peut construire un triangle à partir de trois longueurs seulement si chaque longueur est strictement inférieure à la somme des deux autres.
+
+      Compléter la fonction `triangle_possible(a, b, c)` pour qu'elle renvoie `True` si le triangle est possible, et `False` sinon.
+    depart: |
+      def triangle_possible(a, b, c):
+          if a < b + c and ___ and ___:
+              return True
+          return False
+    aides:
+      - |
+        # le premier test verifie la longueur a
+        # il faut faire la meme chose pour b, puis pour c
+      - |
+        def triangle_possible(a, b, c):
+            if a < b + c and b < ___ and c < ___:
+                return True
+            return False
+      - |
+        def triangle_possible(a, b, c):
+            if a < b + c and b < a + c and c < ___:
+                return True
+            return False
+    solution: |
+      def triangle_possible(a, b, c):
+          if a < b + c and b < a + c and c < a + b:
+              return True
+          return False
+    tests:
+      - { appel: "triangle_possible(3, 4, 5)", attendu: "True" }
+      - { appel: "triangle_possible(1, 2, 8)", attendu: "False" }
+      - { appel: "triangle_possible(2, 9, 3)", attendu: "False" }
+      - { appel: "triangle_possible(9, 2, 3)", attendu: "False", cache: true }
+      - { appel: "triangle_possible(1, 2, 3)", attendu: "False", cache: true }
+      - { appel: "triangle_possible(5, 5, 5)", attendu: "True", cache: true }
+      - { appel: "triangle_possible(3, 1, 2)", attendu: "False", cache: true }
+      - { appel: "triangle_possible(1, 3, 2)", attendu: "False", cache: true }
+
+  - id: code-porte
+    numero: 27
+    titre: La porte à code
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    type: code
+    enonce: |
+      Une porte s'ouvre avec le code `1234`, mais elle se bloque à partir de 3 erreurs déjà commises.
+
+      Écrire une fonction `ouvrir(code, erreurs)` qui renvoie :
+
+      `"bloquée"` si `erreurs` vaut 3 ou plus, quel que soit le code ;
+
+      `"ouverte"` si le code est bon ;
+
+      `"refusée"` sinon.
+    depart: |
+      def ouvrir(code, erreurs):
+          ...
+    aides:
+      - |
+        def ouvrir(code, erreurs):
+            # tester d'abord si la porte est bloquee
+            # sinon, tester si le code est bon
+            # sinon, renvoyer "refusée"
+      - |
+        def ouvrir(code, erreurs):
+            if erreurs >= ___:
+                return "bloquée"
+            elif code == ___:
+                return ___
+            else:
+                return ___
+      - |
+        def ouvrir(code, erreurs):
+            if erreurs >= 3:
+                return "bloquée"
+            elif code == 1234:
+                return "ouverte"
+            else:
+                return ___
+    solution: |
+      def ouvrir(code, erreurs):
+          if erreurs >= 3:
+              return "bloquée"
+          elif code == 1234:
+              return "ouverte"
+          else:
+              return "refusée"
+    tests:
+      - { appel: "ouvrir(1234, 0)", attendu: "'ouverte'" }
+      - { appel: "ouvrir(1111, 1)", attendu: "'refusée'" }
+      - { appel: "ouvrir(1234, 3)", attendu: "'bloquée'", libelle: "ouvrir(1234, 3) : le bon code, mais trop d'erreurs" }
+      - { appel: "ouvrir(1111, 5)", attendu: "'bloquée'", cache: true }
+      - { appel: "ouvrir(1234, 2)", attendu: "'ouverte'", cache: true }
+
+  - id: jours-du-mois
+    numero: 28
+    titre: Les jours du mois
+    notion: conditions
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 5
+    type: code
+    enonce: |
+      Écrire une fonction `jours(mois, bissextile)` qui renvoie le nombre de jours d'un mois donné par son numéro (de 1 à 12). `bissextile` vaut `True` si l'année est bissextile.
+
+      Les mois 4, 6, 9 et 11 ont 30 jours. Février (le mois 2) a 29 jours les années bissextiles et 28 jours sinon. Les autres mois ont 31 jours.
+    depart: |
+      def jours(mois, bissextile):
+          ...
+    aides:
+      - |
+        def jours(mois, bissextile):
+            # traiter d'abord le cas de fevrier :
+            #     renvoyer 29 si l'annee est bissextile, 28 sinon
+            # si le mois vaut 4, 6, 9 ou 11, renvoyer 30
+            # sinon, renvoyer 31
+      - |
+        def jours(mois, bissextile):
+            if mois == 2:
+                if bissextile:
+                    return ___
+                return ___
+            if mois == 4 or mois == ___ or mois == ___ or mois == ___:
+                return ___
+            return ___
+      - |
+        def jours(mois, bissextile):
+            if mois == 2:
+                if bissextile:
+                    return 29
+                return 28
+            if mois == 4 or mois == 6 or mois == 9 or mois == 11:
+                return ___
+            return ___
+    solution: |
+      def jours(mois, bissextile):
+          if mois == 2:
+              if bissextile:
+                  return 29
+              return 28
+          if mois == 4 or mois == 6 or mois == 9 or mois == 11:
+              return 30
+          return 31
+    tests:
+      - { appel: "jours(1, False)", attendu: "31" }
+      - { appel: "jours(4, False)", attendu: "30" }
+      - { appel: "jours(2, False)", attendu: "28" }
+      - { appel: "jours(2, True)", attendu: "29" }
+      - { appel: "jours(11, True)", attendu: "30", cache: true }
+      - { appel: "jours(6, False)", attendu: "30", cache: true }
+      - { appel: "jours(9, False)", attendu: "30", cache: true }
+      - { appel: "jours(12, True)", attendu: "31", cache: true }

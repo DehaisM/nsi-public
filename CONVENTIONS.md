@@ -130,13 +130,27 @@ page sert à s'entraîner, pas à noter.
 
 Pour ajouter un exercice :
 
-1. L'ajouter dans `docs-public/entrainement/exercices.yml` (le format est expliqué en haut du
-   fichier). Une notion ajoutée à la liste `notions` crée une nouvelle ligne.
+1. L'ajouter dans le fichier de sa notion, `docs-public/entrainement/exercices/<notion>.yml`.
+   Le format est expliqué en haut de `exercices/notions.yml`, qui liste les notions. Ajouter une
+   notion à cette liste, avec son fichier, crée une nouvelle ligne. Une étiquette facultative,
+   par exemple `tags: [maths]`, prépare de futurs filtres.
 2. Lui donner le prochain `numero` libre. **Ne jamais changer ni réutiliser le numéro d'un
    exercice existant** : les codes de sauvegarde des élèves s'appuient dessus.
 3. Lancer `python outils/verifier_exercices.py`, qui contrôle les champs, que la solution
-   réussit les tests et que le code de départ ne les réussit pas. Il affiche le prochain numéro
-   libre. La CI le lance aussi : une erreur dans la banque bloque le déploiement.
+   réussit les tests, que le code de départ ne les réussit pas, et que la solution n'utilise que
+   ce que les élèves ont vu. Il affiche le prochain numéro libre. La CI le lance aussi : une
+   erreur dans la banque bloque le déploiement.
+4. Après un lot d'exercices, lancer `python outils/controler_tests.py`, qui abîme les solutions
+   et liste les erreurs que les tests laissent passer. Certains codes de la liste restent justes :
+   c'est une liste à relire, pas à vider.
+
+**Quand une nouvelle notion est traitée en classe**, la déclarer en haut de
+`outils/verifier_exercices.py` : l'ajouter à `NOTIONS_VUES`, ainsi que ses nouvelles fonctions
+et méthodes. Par exemple, ajouter `"tuples"` lève l'interdiction des tuples. Il faut aussi lui
+donner une entrée dans `AVANT_LA_NOTION`.
+
+Chaque exercice affiche un lien "Signaler un problème", qui ouvre un mail vers l'adresse
+`ADRESSE_SIGNALEMENT` de `entrainement.js`.
 
 Pour envoyer un élève directement sur un exercice, utiliser le lien
 `https://nsi.mdehais.fr/entrainement/#/exo/<id>`.
@@ -144,7 +158,6 @@ Pour envoyer un élève directement sur un exercice, utiliser le lien
 ## Passage à une nouvelle année scolaire
 
 La page Entraînement n'est pas concernée : elle reste en place d'une année sur l'autre.
-
 
 `outils/nouvelle-annee.ps1 -AnneeEcoulee 2026-2027` (Windows) ou
 `outils/nouvelle-annee.sh 2026-2027`. Le script :
