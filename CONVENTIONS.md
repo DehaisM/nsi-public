@@ -150,9 +150,6 @@ et méthodes. Par exemple, ajouter `"dictionnaires"` lève l'interdiction des di
 nouvelle notion doit interdire des formes pas encore vues (une boucle, une liste...), lui donner
 une entrée dans `AVANT_LA_NOTION`.
 
-Chaque exercice affiche un lien "Signaler un problème", qui ouvre un mail vers l'adresse
-`ADRESSE_SIGNALEMENT` de `entrainement.js`.
-
 **Après une modification de la page ou de la banque**, lancer les tests dans le navigateur :
 `node outils/tests/lancer.js` (le mode d'emploi est dans `outils/tests/README.md`).
 

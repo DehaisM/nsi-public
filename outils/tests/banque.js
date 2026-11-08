@@ -32,7 +32,6 @@ const IMG = dossierCaptures("banque");
     await page.waitForSelector(".entr-titre");
     const problemes = [];
     if ((await page.locator(".entr-titre").innerText()) !== exo.titre) problemes.push("titre");
-    if ((await page.locator(".entr-signaler a").getAttribute("href")).indexOf("mailto:") !== 0) problemes.push("signalement");
     // Du Markdown non converti, en dehors du code : des ** ou des ``` restes tels quels.
     const horsCode = await page.locator("#entr-app").evaluate((e) => {
       const copie = e.cloneNode(true);

@@ -8,7 +8,6 @@
   const DELAI_MAX_MS = 5000;
   const DIFFICULTES = { 1: "Facile", 2: "Moyen", 3: "Corsé" };
   const NOMS_AIDES = ["Aide 1", "Aide 2", "Aide 3"];
-  const ADRESSE_SIGNALEMENT = "mathias-romain.dehais@ac-normandie.fr";
   const PYTHON_ABSENT = "Python n'a pas pu se charger. Vérifier la connexion, puis recharger la page.";
   const TAILLE_SERIE = 10;
   // Les etiquettes que l'on peut filtrer (champ tags des exercices), avec leur nom affiche.
@@ -25,7 +24,6 @@
       consigne: "Chaque point est une question, plein quand elle est réussie. Ouvrir un chapitre pour voir ses questions.",
       une: "question", des: "questions", reussie: "réussie", premierCoup: "du premier coup",
       suivant: "Question suivante", retour: "← Toutes les questions",
-      signaler: "Signaler un problème sur cette question",
       numeros: false, // pas de numero d'exercice, pas de badge "sans aide"
     },
     premiere: {
@@ -37,7 +35,6 @@
       consigne: "Chaque point est un exercice, plein quand il est réussi. Ouvrir une notion pour voir leurs titres.",
       une: "exo", des: "exos", reussie: "réussi", premierCoup: "sans aide",
       suivant: "Exo suivant", retour: "← Tous les exercices",
-      signaler: "Signaler un problème sur cet exercice",
       numeros: true,
     },
   };
@@ -605,13 +602,6 @@
     return "--ligne: var(--ligne-" + (memeNiveau.findIndex((n) => n.id === idNotion) % 10 + 1) + ")";
   }
 
-  function lienSignalement(exo) {
-    const sujet = "Entraînement, exercice " + exo.numero + " : " + exo.titre + (exo.resume ? " (valeurs : " + exo.resume + ")" : "");
-    return el("p", { class: "entr-signaler" },
-      el("a", { href: "mailto:" + ADRESSE_SIGNALEMENT + "?subject=" + encodeURIComponent(sujet) },
-        TEXTES[niveauDe(exo.notion)].signaler));
-  }
-
   function nomNotion(id) {
     return banque.notions.find((n) => n.id === id).nom;
   }
@@ -797,8 +787,7 @@
           },
         }, "Nouvelles valeurs") : null;
         retour.append(suite(exo, nouvellesValeurs));
-      }),
-      lienSignalement(affiche)
+      })
     ));
   }
 
@@ -843,8 +832,7 @@
         }, derniere ? "Voir le score" : "Question suivante");
         retour.append(el("div", { class: "entr-actions" }, bouton));
         bouton.focus({ preventScroll: true });
-      }),
-      lienSignalement(affiche)
+      })
     ));
   }
 
@@ -989,8 +977,7 @@
       zoneEditeur,
       el("div", { class: "entr-commandes" }, verifier, boutonAide, recommencer, statut),
       zoneAides,
-      resultat,
-      lienSignalement(exo)
+      resultat
     );
     racine.replaceChildren(bloc);
 

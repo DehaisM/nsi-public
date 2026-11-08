@@ -1,5 +1,5 @@
 // Les questions tirees au hasard, dans le navigateur : bonne reponse acceptee, mauvaise refusee,
-// nouvelles valeurs, serie, bilan et signalement.
+// nouvelles valeurs, serie et bilan.
 const path = require("path");
 const attendu = require("./calcul-attendu.js");
 const { URL_PAGE, chargerBanque, lancerNavigateur, dossierCaptures, verificateur } = require("./commun.js");
@@ -48,8 +48,6 @@ const verif = verificateur({ discret: true });
       verif(exo.id + " : bonne réponse acceptée", /Bonne réponse/.test(t), e + " / attendu " + bonne);
       verif(exo.id + " : l'explication donne la réponse", t.includes(bonne), bonne);
       if (i === 0) {
-        const mail = decodeURIComponent(await p.locator(".entr-signaler a").getAttribute("href"));
-        verif(exo.id + " : les valeurs dans le signalement", /\(valeurs : .+\)/.test(mail), mail);
         await p.screenshot({ path: path.join(IMG, exo.generateur + ".png"), fullPage: true });
       }
       await p.locator("button", { hasText: "Nouvelles valeurs" }).click();
