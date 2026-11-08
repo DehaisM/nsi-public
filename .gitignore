@@ -54,3 +54,6 @@ Thumbs.db
 
 _minted*
 minted-*
+# Tests de la page Entrainement
+outils/tests/node_modules/
+outils/tests/captures/

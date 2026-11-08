@@ -1,0 +1,11 @@
+{
+  "name": "tests-entrainement",
+  "private": true,
+  "description": "Tests dans le navigateur de la page Entrainement",
+  "scripts": {
+    "test": "node lancer.js"
+  },
+  "dependencies": {
+    "playwright-core": "1.40.1"
+  }
+}
