@@ -122,61 +122,28 @@ def _executer_test(test, espace, sortie):
     if "sortie" in test:
         attendu = _normaliser_sortie(test["sortie"])
         obtenu = _normaliser_sortie(sortie)
-        return {
-            "ok": obtenu == attendu,
-            "cache": cache,
-            "libelle": libelle or "Ce que le programme affiche",
-            "attendu": attendu,
-            "obtenu": obtenu,
-            "genre": "sortie",
-        }
+        return {"ok": obtenu == attendu, "cache": cache, "libelle": libelle or "Ce que le programme affiche",
+                "attendu": attendu, "obtenu": obtenu}
 
     attendu = eval(test["attendu"], {})
+    compte_rendu = {"ok": False, "cache": cache, "libelle": libelle, "attendu": repr(attendu), "obtenu": None}
 
     if "variable" in test:
         nom = test["variable"]
-        libelle = libelle or nom
+        compte_rendu["libelle"] = libelle or nom
         if nom not in espace:
-            return {
-                "ok": False,
-                "cache": cache,
-                "libelle": libelle,
-                "attendu": repr(attendu),
-                "obtenu": None,
-                "genre": "variable",
-                "remarque": "La variable " + nom + " n'existe pas.",
-            }
-        obtenu = espace[nom]
-        return {
-            "ok": _egal(obtenu, attendu),
-            "cache": cache,
-            "libelle": libelle,
-            "attendu": repr(attendu),
-            "obtenu": repr(obtenu),
-            "genre": "variable",
-        }
+            compte_rendu["remarque"] = "La variable " + nom + " n'existe pas."
+            return compte_rendu
+        compte_rendu.update(ok=_egal(espace[nom], attendu), obtenu=repr(espace[nom]))
+        return compte_rendu
 
-    libelle = libelle or test["appel"]
+    compte_rendu["libelle"] = libelle or test["appel"]
     try:
         obtenu = eval(test["appel"], espace)
     except Exception as erreur:
-        return {
-            "ok": False,
-            "cache": cache,
-            "libelle": libelle,
-            "attendu": repr(attendu),
-            "obtenu": None,
-            "genre": "appel",
-            "erreur": _decrire_erreur(erreur),
-        }
-    compte_rendu = {
-        "ok": _egal(obtenu, attendu),
-        "cache": cache,
-        "libelle": libelle,
-        "attendu": repr(attendu),
-        "obtenu": repr(obtenu),
-        "genre": "appel",
-    }
+        compte_rendu["erreur"] = _decrire_erreur(erreur)
+        return compte_rendu
+    compte_rendu.update(ok=_egal(obtenu, attendu), obtenu=repr(obtenu))
     if obtenu is None and attendu is not None:
         compte_rendu["remarque"] = (
             "La fonction ne renvoie rien : un return est-il oublié ? "

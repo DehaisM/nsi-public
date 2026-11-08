@@ -9,6 +9,7 @@
   const DIFFICULTES = { 1: "Facile", 2: "Moyen", 3: "Corsé" };
   const NOMS_AIDES = ["Aide 1", "Aide 2", "Aide 3"];
   const ADRESSE_SIGNALEMENT = "mathias-romain.dehais@ac-normandie.fr";
+  const PYTHON_ABSENT = "Python n'a pas pu se charger. Vérifier la connexion, puis recharger la page.";
   const TAILLE_SERIE = 10;
   // Les etiquettes que l'on peut filtrer (champ tags des exercices), avec leur nom affiche.
   const ETIQUETTES = { maths: "Maths" };
@@ -24,6 +25,8 @@
       consigne: "Chaque point est une question, plein quand elle est réussie. Ouvrir un chapitre pour voir ses questions.",
       une: "question", des: "questions", reussie: "réussie", premierCoup: "du premier coup",
       suivant: "Question suivante", retour: "← Toutes les questions",
+      signaler: "Signaler un problème sur cette question",
+      numeros: false, // pas de numero d'exercice, pas de badge "sans aide"
     },
     premiere: {
       nom: "Première NSI",
@@ -34,6 +37,8 @@
       consigne: "Chaque point est un exercice, plein quand il est réussi. Ouvrir une notion pour voir leurs titres.",
       une: "exo", des: "exos", reussie: "réussi", premierCoup: "sans aide",
       suivant: "Exo suivant", retour: "← Tous les exercices",
+      signaler: "Signaler un problème sur cet exercice",
+      numeros: true,
     },
   };
 
@@ -42,6 +47,7 @@
   let etat = chargerEtat();
   let messageAccueil = null;
   let serieRevision = null;
+  let sauvegardePrevue = null;
   const moteur = creerMoteur();
 
   // --- Outils --------------------------------------------------------------
@@ -109,6 +115,8 @@
   }
 
   function sauver() {
+    clearTimeout(sauvegardePrevue);
+    sauvegardePrevue = null;
     try {
       localStorage.setItem(CLE, JSON.stringify(etat));
     } catch (erreur) {
@@ -116,8 +124,22 @@
     }
   }
 
+  // Pendant la frappe dans l'editeur, une seule sauvegarde apres une courte pause.
+  function sauverBientot() {
+    clearTimeout(sauvegardePrevue);
+    sauvegardePrevue = setTimeout(sauver, 500);
+  }
+
+  const SUIVI_VIDE = Object.freeze({ reussi: false, sansAide: false, aides: 0, code: null });
+
+  // Pour lire la progression d'un exercice, sans rien ajouter a l'etat.
+  function lu(id) {
+    return etat.exos[id] || SUIVI_VIDE;
+  }
+
+  // Pour la modifier : cree l'entree si besoin.
   function suivi(id) {
-    if (!etat.exos[id]) etat.exos[id] = { reussi: false, sansAide: false, aides: 0, code: null };
+    if (!etat.exos[id]) etat.exos[id] = Object.assign({}, SUIVI_VIDE);
     return etat.exos[id];
   }
 
@@ -286,7 +308,7 @@
   // Tire d'abord parmi les exercices pas encore reussis.
   function tirer(idActuel) {
     const candidats = exercicesFiltres().filter((exo) => exo.id !== idActuel);
-    const nouveaux = candidats.filter((exo) => !suivi(exo.id).reussi);
+    const nouveaux = candidats.filter((exo) => !lu(exo.id).reussi);
     const reserve = nouveaux.length ? nouveaux : candidats;
     return reserve.length ? reserve[Math.floor(Math.random() * reserve.length)] : null;
   }
@@ -372,8 +394,6 @@
   // --- Accueil -------------------------------------------------------------
 
   function afficherChoixNiveau() {
-    const titre = document.querySelector(".md-content h1");
-    if (titre) titre.hidden = false;
     racine.replaceChildren(el("div", { class: "entr-choix-niveau" },
       el("p", { class: "entr-intro" }, "Choisir son niveau :"),
       el("div", { class: "entr-actions" }, Object.entries(TEXTES).map(([niveau, t]) =>
@@ -406,14 +426,13 @@
   function afficherAccueil() {
     serieRevision = null;
     const t = textes();
-    const conteneur = el("div", { class: "entr-accueil" });
-    const titre = document.querySelector(".md-content h1");
-    if (titre) titre.hidden = false;
+    const conteneur = el("div", {});
     const exos = exercicesDuNiveau();
+    const filtres = new Set(exercicesFiltres());
     const serie = serieEnCours();
     const jour = exoDuJour();
-    const reussis = exos.filter((e) => suivi(e.id).reussi).length;
-    const premierCoup = exos.filter((e) => suivi(e.id).sansAide).length;
+    const reussis = exos.filter((e) => lu(e.id).reussi).length;
+    const premierCoup = exos.filter((e) => lu(e.id).sansAide).length;
     const avecSerie = exos.some(estUneQuestion);
 
     if (messageAccueil) {
@@ -438,15 +457,12 @@
         const exo = tirer();
         if (exo) allerA(exo);
       },
-      disabled: exercicesFiltres().length === 0,
+      disabled: filtres.size === 0,
     }, t.hasard);
     const boutonSerie = avecSerie ? el("button", {
       class: "entr-bouton entr-bouton--signal",
-      onclick() {
-        serieRevision = null;
-        location.hash = "#/serie";
-      },
-      disabled: !exercicesFiltres().some(estUneQuestion),
+      onclick: () => { location.hash = "#/serie"; },
+      disabled: ![...filtres].some(estUneQuestion),
     }, "Série de " + TAILLE_SERIE + " questions") : null;
 
     conteneur.append(
@@ -454,7 +470,7 @@
         el("div", {},
           el("p", { class: "entr-jour__surtitre" }, t.jour),
           el("button", { class: "entr-jour__titre", onclick: () => allerA(jour) },
-            jour.titre + (suivi(jour.id).reussi ? " ✓" : ""))
+            jour.titre + (lu(jour.id).reussi ? " ✓" : ""))
         ),
         el("div", { class: "entr-jour__boutons" }, boutonSerie, hasard)
       ),
@@ -471,9 +487,9 @@
       )
     );
 
-    conteneur.append(...blocReseau());
+    conteneur.append(...blocReseau(filtres));
 
-    const toutReussi = banque.exercices.filter((e) => suivi(e.id).reussi).length;
+    const toutReussi = banque.exercices.filter((e) => lu(e.id).reussi).length;
     conteneur.append(blocSauvegarde(toutReussi));
 
     conteneur.append(el("p", { class: "entr-note" },
@@ -516,7 +532,7 @@
     return el("div", { class: "entr-filtres" },
       el("p", {}, "Le hasard pioche dans :"),
       el("div", { class: "entr-puces" }, notionsDuNiveau()
-        .filter((notion) => banque.exercices.some((e) => e.notion === notion.id))
+        .filter((notion) => exercicesDe(notion.id).length > 0)
         .map((notion) => puce("entr-filtre", notion.nom, etat.notions, notion.id, couleurLigne(notion.id)))),
       el("div", { class: "entr-puces" },
         Object.entries(DIFFICULTES).map(([valeur, nom]) =>
@@ -528,25 +544,28 @@
     );
   }
 
+  function exercicesDe(idNotion) {
+    return banque.exercices.filter((e) => e.notion === idNotion);
+  }
+
   // Une rangee d'arrets : un point par exercice, plein quand il est reussi.
-  function rangee(exos, ici) {
-    const filtres = exercicesFiltres();
+  // filtres (facultatif) : les exercices retenus par les filtres, les autres sont pales.
+  function rangee(exos, ici, filtres) {
     return el("div", { class: "entr-rangee" }, exos.map((exo) => {
       const classes = ["entr-arret"];
-      if (suivi(exo.id).reussi) classes.push("entr-arret--fait");
+      if (lu(exo.id).reussi) classes.push("entr-arret--fait");
       if (exo === ici) classes.push("entr-arret--ici");
-      if (!ici && !filtres.includes(exo)) classes.push("entr-arret--hors");
+      if (filtres && !filtres.has(exo)) classes.push("entr-arret--hors");
       return el("a", { href: "#/exo/" + exo.id, class: classes.join(" "), title: exo.titre, "aria-label": exo.titre });
     }));
   }
 
-  function blocReseau() {
-    const filtres = exercicesFiltres();
+  function blocReseau(filtres) {
     const lignes = el("div", { class: "entr-reseau" });
     notionsDuNiveau().forEach((notion, i) => {
-      const exos = banque.exercices.filter((e) => e.notion === notion.id);
+      const exos = exercicesDe(notion.id);
       if (exos.length === 0) return;
-      const faits = exos.filter((e) => suivi(e.id).reussi).length;
+      const faits = exos.filter((e) => lu(e.id).reussi).length;
       const ouverte = etat.ouvertes.includes(notion.id);
       lignes.append(el("section", { class: "entr-ligne", style: couleurLigne(notion.id) },
         el("button", {
@@ -564,14 +583,14 @@
           el("span", { class: "entr-ligne__fleche", "aria-hidden": "true" }, ouverte ? "▲" : "▼")),
         ouverte
           ? el("ol", { class: "entr-stations" }, exos.map((exo) => {
-            const s = suivi(exo.id);
-            return el("li", { class: (s.reussi ? "entr-station--faite " : "") + (filtres.includes(exo) ? "" : "entr-station--hors") },
+            const s = lu(exo.id);
+            return el("li", { class: (s.reussi ? "entr-station--faite " : "") + (filtres.has(exo) ? "" : "entr-station--hors") },
               el("a", { href: "#/exo/" + exo.id },
                 el("span", { class: "entr-station__nom" }, exo.titre),
-                s.sansAide && etat.niveau === "premiere" ? el("span", { class: "entr-badge" }, "sans aide") : null,
+                s.sansAide && textes().numeros ? el("span", { class: "entr-badge" }, "sans aide") : null,
                 el("span", { class: "entr-station__infos" }, infos(exo))));
           }))
-          : rangee(exos, null)
+          : rangee(exos, null, filtres)
       ));
     });
     return [
@@ -590,7 +609,7 @@
     const sujet = "Entraînement, exercice " + exo.numero + " : " + exo.titre + (exo.resume ? " (valeurs : " + exo.resume + ")" : "");
     return el("p", { class: "entr-signaler" },
       el("a", { href: "mailto:" + ADRESSE_SIGNALEMENT + "?subject=" + encodeURIComponent(sujet) },
-        niveauDe(exo.notion) === "seconde" ? "Signaler un problème sur cette question" : "Signaler un problème sur cet exercice"));
+        TEXTES[niveauDe(exo.notion)].signaler));
   }
 
   function nomNotion(id) {
@@ -599,10 +618,12 @@
 
   // --- Page d'un exercice --------------------------------------------------
 
-  function infos(exo) {
-    const difficulte = DIFFICULTES[exo.difficulte].toLowerCase();
-    if (exo.type === "generateur") return difficulte + ", valeurs tirées au hasard";
-    return exo.duree ? difficulte + ", " + exo.duree + " min" : difficulte;
+  // "facile, 3 min" ; avantDuree permet d'ecrire "facile, environ 3 min".
+  function infos(exo, avantDuree) {
+    const morceaux = [DIFFICULTES[exo.difficulte].toLowerCase()];
+    if (exo.type === "generateur") morceaux.push("valeurs tirées au hasard");
+    else if (exo.duree) morceaux.push((avantDuree || "") + exo.duree + " min");
+    return morceaux.join(", ");
   }
 
   function estUneQuestion(exo) {
@@ -617,19 +638,18 @@
   }
 
   function enTete(exo) {
-    const seconde = niveauDe(exo.notion) === "seconde";
+    const t = TEXTES[niveauDe(exo.notion)];
     return [
-      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, textes().retour)),
-      el("div", { class: "entr-trajet", style: couleurLigne(exo.notion) },
-        rangee(banque.exercices.filter((e) => e.notion === exo.notion), exo)),
-      el("p", { class: "entr-surtitre" }, seconde ? nomNotion(exo.notion) : "Exercice " + exo.numero),
+      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, t.retour)),
+      el("div", { class: "entr-trajet", style: couleurLigne(exo.notion) }, rangee(exercicesDe(exo.notion), exo)),
+      el("p", { class: "entr-surtitre" }, t.numeros ? "Exercice " + exo.numero : nomNotion(exo.notion)),
       el("h1", { class: "entr-titre" }, exo.titre),
-      el("p", { class: "entr-infos" },
-        seconde ? infos(exo) : nomNotion(exo.notion) + ", " + infos(exo).replace(", ", ", environ ")),
+      el("p", { class: "entr-infos" }, t.numeros ? nomNotion(exo.notion) + ", " + infos(exo, "environ ") : infos(exo)),
     ];
   }
 
-  function suite(exo) {
+  // Les boutons apres une reussite ; enPlus s'intercale avant "Retour a la liste".
+  function suite(exo, ...enPlus) {
     return el("div", { class: "entr-actions" },
       el("button", {
         class: "entr-bouton entr-bouton--fort",
@@ -639,6 +659,7 @@
           else location.hash = "#/";
         },
       }, textes().suivant),
+      ...enPlus,
       el("a", { class: "entr-bouton", href: "#/" }, "Retour à la liste")
     );
   }
@@ -651,8 +672,18 @@
         el("a", { href: "images/" + exo.image, target: "_blank", rel: "noopener" },
           el("img", { src: "images/" + exo.image, alt: exo.image_alt || "", loading: "lazy" })),
         el("figcaption", {}, "Toucher l'image pour l'agrandir.")) : null,
-      exo.code ? el("pre", { class: "entr-code entr-papier" }, el("code", {}, exo.code.trimEnd())) : null,
+      exo.code ? el("pre", { class: "entr-code" }, el("code", {}, exo.code.trimEnd())) : null,
     ];
+  }
+
+  // La bonne reponse d'une question, en HTML, pour la rappeler apres une erreur.
+  function bonneReponse(exo) {
+    return exo.type === "reponse" ? echapper(String(exo.reponses[0])) : enLigne(exo.choix[0]);
+  }
+
+  // La partie a laquelle l'eleve repond : des choix, ou une case ou taper la reponse.
+  function partieQuestion(exo, unSeulEssai, quandFini) {
+    return (exo.type === "reponse" ? questionReponse : questionChoix)(exo, unSeulEssai, quandFini);
   }
 
   // attendue : la bonne reponse, en HTML deja echappe, quand il faut la rappeler.
@@ -693,7 +724,7 @@
         }
         retour.replaceChildren(juste
           ? explication(exo, "Bonne réponse", "reussi")
-          : explication(exo, "Ce n'est pas la bonne réponse", "erreur", enLigne(bonne)));
+          : explication(exo, "Ce n'est pas la bonne réponse", "erreur", bonneReponse(exo)));
         quandFini(juste, erreurs === 0, retour);
       },
     }, el("span", { class: "entr-choix__case" }),
@@ -725,7 +756,7 @@
       valider.disabled = true;
       retour.replaceChildren(juste
         ? explication(exo, titre, "reussi")
-        : explication(exo, titre, "erreur", echapper(String(exo.reponses[0]))));
+        : explication(exo, titre, "erreur", bonneReponse(exo)));
       quandFini(juste, erreurs === 0, retour);
     };
     formulaire.addEventListener("submit", (evenement) => {
@@ -753,23 +784,19 @@
 
   function afficherQuestion(exo) {
     const affiche = preparer(exo);
-    const partie = affiche.type === "reponse" ? questionReponse : questionChoix;
     racine.replaceChildren(el("div", {},
       ...enTete(exo),
       ...corps(affiche),
-      ...partie(affiche, false, (juste, premierCoup, retour) => {
+      ...partieQuestion(affiche, false, (juste, premierCoup, retour) => {
         if (juste) noterReussite(exo.id, premierCoup);
-        const actions = suite(exo);
-        if (exo.type === "generateur") {
-          actions.insertBefore(el("button", {
-            class: "entr-bouton",
-            onclick() {
-              afficherQuestion(exo);
-              window.scrollTo(0, 0);
-            },
-          }, "Nouvelles valeurs"), actions.children[1]);
-        }
-        retour.append(actions);
+        const nouvellesValeurs = exo.type === "generateur" ? el("button", {
+          class: "entr-bouton",
+          onclick() {
+            afficherQuestion(exo);
+            window.scrollTo(0, 0);
+          },
+        }, "Nouvelles valeurs") : null;
+        retour.append(suite(exo, nouvellesValeurs));
       }),
       lienSignalement(affiche)
     ));
@@ -781,8 +808,9 @@
 
   function afficherSerie() {
     if (!serieRevision) {
-      const questions = exercicesFiltres().filter(estUneQuestion);
-      serieRevision = { exos: melanger(questions).slice(0, TAILLE_SERIE), affiches: [], index: 0, resultats: [] };
+      const exos = melanger(exercicesFiltres().filter(estUneQuestion)).slice(0, TAILLE_SERIE);
+      // Les valeurs tirees au hasard sont fixees des le depart, et gardees pour le bilan.
+      serieRevision = { exos, affiches: exos.map(preparer), index: 0, resultats: [] };
     }
     const s = serieRevision;
     if (s.exos.length === 0) {
@@ -794,18 +822,15 @@
       return;
     }
     const exo = s.exos[s.index];
-    // Les valeurs tirees au hasard sont gardees pour le bilan de la serie.
-    if (!s.affiches[s.index]) s.affiches[s.index] = preparer(exo);
     const affiche = s.affiches[s.index];
-    const partie = affiche.type === "reponse" ? questionReponse : questionChoix;
     racine.replaceChildren(el("div", {},
       el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "← Arrêter la série")),
       progressionSerie(),
       el("p", { class: "entr-surtitre" }, "Question " + (s.index + 1) + " sur " + s.exos.length + ", " + nomNotion(exo.notion)),
       el("h1", { class: "entr-titre" }, exo.titre),
       ...corps(affiche),
-      ...partie(affiche, true, (juste, premierCoup, retour) => {
-        if (juste) noterReussite(exo.id, true);
+      ...partieQuestion(affiche, true, (juste, premierCoup, retour) => {
+        if (juste) noterReussite(exo.id, premierCoup);
         s.resultats.push(juste);
         const derniere = s.index + 1 >= s.exos.length;
         const bouton = el("button", {
@@ -826,7 +851,7 @@
   function progressionSerie() {
     const s = serieRevision;
     return el("div", { class: "entr-trajet", style: "--ligne: var(--nsi-ligne)" },
-      el("div", { class: "entr-rangee" }, s.exos.map((exo, i) => {
+      el("div", { class: "entr-rangee" }, s.exos.map((_, i) => {
         const classes = ["entr-arret"];
         if (i < s.resultats.length) classes.push(s.resultats[i] ? "entr-arret--fait" : "entr-arret--rate");
         if (i === s.index) classes.push("entr-arret--ici");
@@ -836,9 +861,9 @@
 
   function afficherBilanSerie() {
     const s = serieRevision;
-    const rates = s.affiches.filter((exo, i) => !s.resultats[i]);
+    const rates = s.affiches.filter((_, i) => !s.resultats[i]);
     const score = s.exos.length - rates.length;
-    racine.replaceChildren(el("div", { class: "entr-bilan-serie" },
+    racine.replaceChildren(el("div", {},
       el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "← Retour à la liste")),
       progressionSerie(),
       el("h1", { class: "entr-titre" }, "Score : " + score + " sur " + s.exos.length),
@@ -848,9 +873,7 @@
       rates.map((exo) => el("section", { class: "entr-rate" },
         el("h2", {}, exo.titre),
         el("div", { class: "entr-enonce", html: enHtml(exo.enonce) }),
-        explication(exo, "", "rappel", exo.type === "reponse"
-          ? echapper(String(exo.reponses[0]))
-          : enLigne(exo.choix[0])),
+        explication(exo, "", "rappel", bonneReponse(exo)),
         el("p", {}, el("a", { href: "#/exo/" + exo.id }, "Refaire cette question")))),
       el("div", { class: "entr-actions" },
         el("button", {
@@ -877,7 +900,6 @@
     const resultat = el("div", { class: "entr-resultat", "aria-live": "polite" });
     const zoneAides = el("div", { class: "entr-aides" });
     const zoneEditeur = el("div", { class: "entr-editeur" });
-    let aidesOuvertes = s.aides;
     let ligneMarquee = null;
     let editeur = null;
 
@@ -885,18 +907,17 @@
     const boutonAide = el("button", { class: "entr-bouton", onclick: ouvrirAide });
 
     function majAides() {
-      zoneAides.replaceChildren(...exo.aides.slice(0, aidesOuvertes).map((aide, i) =>
+      zoneAides.replaceChildren(...exo.aides.slice(0, s.aides).map((aide, i) =>
         el("div", { class: "entr-aide" },
           el("p", {}, NOMS_AIDES[i]),
           el("pre", { class: "entr-code" }, el("code", {}, aide.trimEnd())))
       ));
-      boutonAide.textContent = "Une aide ("  + aidesOuvertes + "/" + exo.aides.length + ")";
-      boutonAide.disabled = aidesOuvertes >= exo.aides.length;
+      boutonAide.textContent = "Une aide (" + s.aides + "/" + exo.aides.length + ")";
+      boutonAide.disabled = s.aides >= exo.aides.length;
     }
 
     function ouvrirAide() {
-      aidesOuvertes += 1;
-      s.aides = aidesOuvertes;
+      s.aides += 1;
       sauver();
       majAides();
     }
@@ -931,8 +952,7 @@
       try {
         r = await moteur.executer(exo, editeur.getValue());
       } catch (erreur) {
-        resultat.replaceChildren(el("p", { class: "entr-message entr-message--erreur" },
-          "Python n'a pas pu se charger. Vérifier la connexion, puis recharger la page."));
+        resultat.replaceChildren(el("p", { class: "entr-message entr-message--erreur" }, PYTHON_ABSENT));
         verifier.textContent = "Vérifier";
         return;
       }
@@ -940,12 +960,12 @@
       verifier.textContent = "Vérifier";
       if (r.tropLong) {
         resultat.replaceChildren(el("p", { class: "entr-message entr-message--erreur" },
-          "Le programme ne s'arrête pas : une boucle while dont la condition reste toujours vraie ? Il a été arrêté au bout de 5 secondes."));
+          "Le programme ne s'arrête pas : une boucle while dont la condition reste toujours vraie ? Il a été arrêté au bout de " + DELAI_MAX_MS / 1000 + " secondes."));
         return;
       }
       if (r.erreur) marquerLigne(r.erreur.ligne);
-      if (r.reussi) noterReussite(exo.id, aidesOuvertes === 0);
-      resultat.replaceChildren(...compteRendu(exo, r, aidesOuvertes === 0));
+      if (r.reussi) noterReussite(exo.id, s.aides === 0);
+      resultat.replaceChildren(...compteRendu(exo, r, s.aides === 0));
       resultat.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
 
@@ -954,7 +974,6 @@
       onclick() {
         if (!confirm("Repartir du code de départ et refermer les aides ?")) return;
         editeur.setValue(codeDepart(exo));
-        aidesOuvertes = 0;
         s.aides = 0;
         s.code = null;
         sauver();
@@ -966,7 +985,7 @@
 
     const bloc = el("div", {},
       ...enTete(exo),
-      el("div", { class: "entr-enonce", html: enHtml(exo.enonce) }),
+      ...corps(exo),
       zoneEditeur,
       el("div", { class: "entr-commandes" }, verifier, boutonAide, recommencer, statut),
       zoneAides,
@@ -991,18 +1010,18 @@
     editeur.on("change", () => {
       marquerLigne(null);
       s.code = editeur.getValue();
-      sauver();
+      sauverBientot();
     });
     placerCurseur();
     majAides();
 
     moteur.preparer((etatMoteur) => {
-      const textes = {
+      const messages = {
         chargement: "Python se prépare (quelques secondes la première fois)...",
         pret: "Python est prêt",
-        echec: "Python n'a pas pu se charger. Vérifier la connexion, puis recharger la page.",
+        echec: PYTHON_ABSENT,
       };
-      statut.textContent = textes[etatMoteur];
+      statut.textContent = messages[etatMoteur];
       statut.dataset.etat = etatMoteur;
     });
   }
@@ -1037,7 +1056,7 @@
     }
 
     if (r.reussi) {
-      const solution = el("pre", { class: "entr-code entr-papier", hidden: true }, el("code", {}, exo.solution.trimEnd()));
+      const solution = el("pre", { class: "entr-code", hidden: true }, el("code", {}, exo.solution.trimEnd()));
       blocs.push(el("div", { class: "entr-solution" },
         el("button", { class: "entr-lien", onclick: () => { solution.hidden = !solution.hidden; } },
           "Comparer avec une solution possible"),
@@ -1065,8 +1084,8 @@
         details.append(blocErreur(t.erreur));
       } else {
         details.append(
-          el("div", {}, "Attendu : ", el("code", { class: "entr-valeur" }, t.attendu)),
-          t.obtenu !== null ? el("div", {}, "Obtenu : ", el("code", { class: "entr-valeur" }, t.obtenu)) : null
+          el("div", {}, "Attendu : ", el("code", {}, t.attendu)),
+          t.obtenu !== null ? el("div", {}, "Obtenu : ", el("code", {}, t.obtenu)) : null
         );
       }
       if (t.remarque) details.append(el("div", { class: "entr-remarque" }, t.remarque));
@@ -1078,39 +1097,31 @@
   // --- Navigation ----------------------------------------------------------
 
   function afficher() {
+    if (sauvegardePrevue) sauver();
     const reprise = location.hash.match(/^#\/reprise\/([\w-]+)$/);
     if (reprise) {
       appliquerCode(reprise[1]);
       history.replaceState(null, "", "#/");
     }
-    const niveau = location.hash.match(/^#\/(seconde|premiere)$/);
+    const niveau = location.hash.match(new RegExp("^#/(" + Object.keys(TEXTES).join("|") + ")$"));
     if (niveau) {
       choisirNiveau(niveau[1]);
       history.replaceState(null, "", "#/");
     }
-    const titre = document.querySelector(".md-content h1");
     const route = location.hash.match(/^#\/exo\/([\w-]+)$/);
     const exo = route && banque.exercices.find((e) => e.id === route[1]);
-    if (exo) {
-      // Un lien direct vers une question place la page sur son niveau.
-      if (etat.niveau !== niveauDe(exo.notion)) choisirNiveau(niveauDe(exo.notion));
-      if (titre) titre.hidden = true;
-      if (exo.type === "code") afficherCode(exo);
-      else afficherQuestion(exo);
-      window.scrollTo(0, 0);
-      return;
-    }
-    if (!etat.niveau) {
-      afficherChoixNiveau();
-      return;
-    }
-    if (location.hash === "#/serie") {
-      if (titre) titre.hidden = true;
-      afficherSerie();
-      window.scrollTo(0, 0);
-      return;
-    }
-    afficherAccueil();
+    // Un lien direct vers une question place la page sur son niveau.
+    if (exo && etat.niveau !== niveauDe(exo.notion)) choisirNiveau(niveauDe(exo.notion));
+    const serie = !exo && etat.niveau && location.hash === "#/serie";
+    // Le grand titre de la page s'efface devant celui d'une question ou d'une serie.
+    const titre = document.querySelector(".md-content h1");
+    if (titre) titre.hidden = Boolean(exo || serie);
+    if (exo && exo.type === "code") afficherCode(exo);
+    else if (exo) afficherQuestion(exo);
+    else if (!etat.niveau) afficherChoixNiveau();
+    else if (serie) afficherSerie();
+    else afficherAccueil();
+    if (exo || serie) window.scrollTo(0, 0);
   }
 
   async function demarrer() {
@@ -1133,6 +1144,11 @@
       return;
     }
     window.addEventListener("hashchange", afficher);
+    // Une sauvegarde encore en attente (frappe en cours) est faite avant de quitter la page.
+    // Seulement celle-la : sauver sans raison ecraserait ce qu'un autre onglet a pu enregistrer.
+    const sauverSiPrevu = () => { if (sauvegardePrevue) sauver(); };
+    window.addEventListener("pagehide", sauverSiPrevu);
+    document.addEventListener("visibilitychange", () => { if (document.hidden) sauverSiPrevu(); });
     afficher();
   }
 
