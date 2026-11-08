@@ -15,6 +15,7 @@
 #              prediction : l'eleve predit ce qu'affiche un code
 #              qcm : question de cours a choix (Seconde)
 #              reponse : question de cours a reponse courte, a taper (Seconde)
+#              generateur : question de calcul a valeurs tirees au hasard (Seconde)
 #
 # Pour le type code :
 #   enonce, depart (code de depart), aides (3 niveaux), solution, tests
@@ -41,6 +42,11 @@
 #   calcul (facultatif) : une expression Python qui refait le calcul ; le verificateur controle
 #   qu'elle donne bien une des reponses acceptees. Les modules ipaddress et math sont disponibles.
 #   La page ignore les espaces et les majuscules, et accepte la virgule comme le point.
+#
+# Pour le type generateur :
+#   generateur (le nom d'un generateur de entrainement/generateurs.js), cours
+#   L'enonce, la reponse et l'explication sont fabriques a chaque essai, avec de nouvelles valeurs.
+#   Apres une modification de generateurs.js, lancer : python outils/controler_generateurs.py
 #
 # Chaque notion appartient a un niveau : premiere par defaut, ou niveau: seconde.
 # La page n'affiche que les notions du niveau choisi par l'eleve.
