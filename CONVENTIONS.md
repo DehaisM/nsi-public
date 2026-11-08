@@ -155,6 +155,24 @@ Chaque exercice affiche un lien "Signaler un problème", qui ouvre un mail vers 
 Pour envoyer un élève directement sur un exercice, utiliser le lien
 `https://nsi.mdehais.fr/entrainement/#/exo/<id>`.
 
+### Les questions de révision de Seconde
+
+La même page sert aussi aux Seconde : l'élève choisit son niveau en haut de la page, et ce choix
+est gardé. Les liens `https://nsi.mdehais.fr/entrainement/#/seconde` et `#/premiere` ouvrent
+directement un niveau. La progression et le code de sauvegarde couvrent les deux niveaux.
+
+- Une notion de Seconde porte `niveau: seconde` dans `exercices/notions.yml` : une notion par
+  chapitre de cours, par exemple `internet-3` pour le chapitre 3 d'Internet quand il aura été vu.
+- Deux types de questions : `qcm` (la bonne réponse est le premier choix, la page mélange) et
+  `reponse` (une réponse courte à taper, avec la liste des réponses acceptées). Le format est
+  expliqué en haut de `exercices/notions.yml`.
+- Chaque question a un champ `cours`, le passage du cours à relire, affiché avec l'explication.
+- Pour un calcul, le champ `calcul` refait le calcul en Python : le vérificateur contrôle qu'il
+  donne bien une des réponses acceptées.
+- Les images vont dans `docs-public/entrainement/images/`, avec une description dans `image_alt`.
+- Le bouton "Série de 10 questions" tire 10 questions parmi les chapitres choisis, une seule
+  réponse par question, puis affiche le score et les questions ratées avec leur explication.
+
 ## Fichiers tiers et versions
 
 Le site ne charge rien depuis un autre service : les polices sont dans `docs-public/assets/fonts/`

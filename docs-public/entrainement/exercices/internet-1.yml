@@ -1,0 +1,429 @@
+exercices:
+
+  - id: reseau-definition
+    numero: 138
+    titre: Un réseau
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Qu'est-ce qu'un réseau ?
+    choix:
+      - "Un ensemble de machines reliées entre elles, capables d'échanger des informations"
+      - "Un ensemble de sites web"
+      - "Un logiciel qui permet d'aller sur Internet"
+      - "Un ordinateur très puissant"
+    explication: |
+      Un réseau, ce sont des machines reliées entre elles qui peuvent échanger des informations, quelle que soit leur taille.
+    cours: "Chapitre 1, Qu'est-ce qu'un réseau ?"
+
+  - id: deux-ordinateurs
+    numero: 139
+    titre: Le plus petit réseau
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Deux ordinateurs reliés par un simple câble forment-ils un réseau ?
+    choix:
+      - "Oui, c'est déjà un réseau"
+      - "Non, il faut au moins trois machines"
+      - "Non, il faut qu'ils soient connectés à Internet"
+      - "Non, il faut un routeur entre les deux"
+    explication: |
+      Deux machines reliées qui peuvent échanger des informations forment déjà un réseau.
+    cours: "Chapitre 1, Qu'est-ce qu'un réseau ?"
+
+  - id: connexion-sans-fil
+    numero: 140
+    titre: Une connexion sans fil
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Laquelle de ces connexions est **sans fil** ?
+    choix:
+      - "Le Wi-Fi"
+      - "Un câble RJ45"
+      - "La fibre optique"
+    explication: |
+      Le Wi-Fi, le Bluetooth et les réseaux mobiles (4G, 5G) sont des connexions sans fil. Le câble RJ45 (Ethernet) et la fibre optique sont des connexions filaires.
+    cours: "Chapitre 1, Qu'est-ce qu'un réseau ?"
+
+  - id: connexion-filaire
+    numero: 141
+    titre: Une connexion filaire
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Laquelle de ces connexions est **filaire** ?
+    choix:
+      - "La fibre optique"
+      - "La 4G"
+      - "Le Bluetooth"
+      - "Le Wi-Fi"
+    explication: |
+      La fibre optique passe par un câble : c'est une connexion filaire, comme le câble RJ45. La 4G, le Bluetooth et le Wi-Fi sont sans fil.
+    cours: "Chapitre 1, Qu'est-ce qu'un réseau ?"
+
+  - id: internet-definition
+    numero: 142
+    titre: Internet
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Qu'est-ce qu'Internet ?
+    choix:
+      - "Un réseau mondial qui interconnecte des millions de réseaux plus petits"
+      - "Un seul grand réseau, qui appartient à une entreprise"
+      - "Un logiciel installé sur les ordinateurs"
+      - "Un ensemble de satellites"
+    explication: |
+      Internet relie entre eux des réseaux de toutes tailles : réseaux domestiques, réseaux d'entreprises, réseaux des fournisseurs d'accès. On dit que c'est un **réseau de réseaux**.
+    cours: "Chapitre 1, Qu'est-ce qu'un réseau ?"
+
+  - id: sens-du-mot-internet
+    numero: 143
+    titre: Le mot Internet
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Que signifie littéralement le mot **Internet** ?
+    choix:
+      - "Entre les réseaux"
+      - "Réseau international"
+      - "Réseau intelligent"
+      - "Réseau interne"
+    explication: |
+      Internet signifie "entre les réseaux" : c'est l'interconnexion de réseaux différents, rendue possible par un langage commun, TCP/IP.
+    cours: "Chapitre 1, Une histoire de guerre froide et de coopération"
+
+  - id: contexte-guerre-froide
+    numero: 144
+    titre: Le contexte de départ
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Dans quel contexte commence l'histoire d'Internet, au milieu des années 1960 ?
+    choix:
+      - "La guerre froide entre les États-Unis et l'URSS"
+      - "La Seconde Guerre mondiale"
+      - "La construction de l'Union européenne"
+      - "L'arrivée des téléphones portables"
+    explication: |
+      En pleine guerre froide, les autorités américaines redoutent qu'une attaque ne détruise leurs moyens de communication.
+    cours: "Chapitre 1, Une histoire de guerre froide et de coopération"
+
+  - id: reseau-decentralise
+    numero: 145
+    titre: Un réseau décentralisé
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Pourquoi les autorités américaines voulaient-elles un réseau **décentralisé**, sans point de contrôle unique ?
+    choix:
+      - "Pour qu'il continue à fonctionner même si une partie de ses machines tombe en panne"
+      - "Pour qu'il soit plus rapide"
+      - "Pour qu'il coûte moins cher à construire"
+      - "Pour qu'une seule personne puisse tout contrôler"
+    explication: |
+      Sans point de contrôle unique, détruire une partie du réseau n'empêche pas le reste de communiquer.
+    cours: "Chapitre 1, Une histoire de guerre froide et de coopération"
+
+  - id: darpa
+    numero: 146
+    titre: Qui finance ARPANET ?
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Qui finance le projet ARPANET ?
+    choix:
+      - "La DARPA, une agence de recherche du ministère de la Défense américain"
+      - "L'URSS"
+      - "Une entreprise d'informatique privée"
+      - "Les universités européennes"
+    explication: |
+      ARPANET est financé par la DARPA, une agence de recherche liée à l'armée américaine.
+    cours: "Chapitre 1, Une histoire de guerre froide et de coopération"
+
+  - id: arpanet-1969
+    numero: 147
+    titre: Le premier ARPANET
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    enonce: En décembre 1969, le tout premier réseau ARPANET relie combien d'universités américaines ?
+    indication: "Un nombre"
+    reponses: ["4", "quatre"]
+    explication: |
+      Il relie quatre universités : UCLA, Stanford, UC Santa Barbara et l'université de l'Utah. Le réseau grandit ensuite très vite.
+    cours: "Chapitre 1, Une histoire de guerre froide et de coopération"
+
+  - id: inventeurs-tcp-ip
+    numero: 148
+    titre: Les inventeurs de TCP/IP
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Qui met au point le protocole TCP/IP, en 1974 ?
+    choix:
+      - "Vint Cerf et Bob Kahn"
+      - "Bill Gates et Paul Allen"
+      - "Steve Jobs et Steve Wozniak"
+      - "Alan Turing"
+    explication: |
+      Les chercheurs Vint Cerf et Bob Kahn créent TCP/IP en 1974, un langage commun qui permet à des réseaux différents de communiquer.
+    cours: "Chapitre 1, Une histoire de guerre froide et de coopération"
+
+  - id: pourquoi-tcp-ip
+    numero: 149
+    titre: Pourquoi TCP/IP ?
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Pourquoi le protocole TCP/IP a-t-il été créé ?
+    choix:
+      - "Pour que des réseaux construits avec des technologies différentes puissent communiquer entre eux"
+      - "Pour rendre ARPANET plus rapide"
+      - "Pour protéger les données par un mot de passe"
+      - "Pour relier les ordinateurs sans câble"
+    explication: |
+      D'autres réseaux que ARPANET apparaissent, avec des technologies différentes. TCP/IP leur donne un langage commun pour s'interconnecter.
+    cours: "Chapitre 1, Une histoire de guerre froide et de coopération"
+
+  - id: adoption-tcp-ip
+    numero: 150
+    titre: L'adoption de TCP/IP
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    enonce: En quelle année ARPANET adopte-t-il officiellement TCP/IP ?
+    indication: "Une année"
+    reponses: ["1983"]
+    explication: |
+      TCP/IP est mis au point en 1974, puis adopté officiellement par ARPANET en 1983. N'importe quel réseau qui utilise ce langage peut alors s'y relier.
+    cours: "Chapitre 1, Une histoire de guerre froide et de coopération"
+
+  - id: ouverture-grand-public
+    numero: 151
+    titre: Internet pour tous
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Quand Internet s'ouvre-t-il au grand public ?
+    choix:
+      - "Dans les années 1990"
+      - "Dans les années 1960"
+      - "Dans les années 1970"
+      - "Dans les années 2010"
+    explication: |
+      Internet est réservé aux chercheurs pendant plus de vingt ans. Il s'ouvre au grand public dans les années 1990, avec les premiers fournisseurs d'accès.
+    cours: "Chapitre 1, Une histoire de guerre froide et de coopération"
+
+  - id: ordre-chronologique
+    numero: 152
+    titre: Dans l'ordre
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 3
+    type: qcm
+    enonce: Quel est le bon ordre chronologique ?
+    choix:
+      - "Premiers nœuds d'ARPANET, puis adoption de TCP/IP, puis ouverture au grand public"
+      - "Adoption de TCP/IP, puis premiers nœuds d'ARPANET, puis ouverture au grand public"
+      - "Premiers nœuds d'ARPANET, puis ouverture au grand public, puis adoption de TCP/IP"
+      - "Ouverture au grand public, puis premiers nœuds d'ARPANET, puis adoption de TCP/IP"
+    explication: |
+      Les premiers nœuds d'ARPANET datent de 1969, l'adoption de TCP/IP de 1983, et l'ouverture au grand public des années 1990.
+    cours: "Chapitre 1, Une histoire de guerre froide et de coopération"
+
+  - id: pas-dans-les-nuages
+    numero: 153
+    titre: Pas dans les nuages
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Malgré l'expression "le cloud", sur quoi repose Internet ?
+    choix:
+      - "Sur des objets bien réels : câbles, switchs, routeurs et serveurs"
+      - "Uniquement sur des satellites"
+      - "Sur des ondes qui circulent sans aucun matériel"
+      - "Uniquement sur les téléphones des utilisateurs"
+    explication: |
+      Internet repose sur une infrastructure physique : des câbles, y compris au fond des océans, et des appareils qui relient et stockent les données.
+    cours: "Chapitre 1, L'infrastructure physique d'Internet"
+
+  - id: cable-sous-marin
+    numero: 154
+    titre: Au fond des océans
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Quel type de câble est utilisé pour les longues distances, y compris au fond des océans ?
+    choix:
+      - "Le câble à fibre optique"
+      - "Le câble RJ45"
+      - "Le câble électrique"
+      - "Aucun câble : les continents sont reliés en Wi-Fi"
+    explication: |
+      Le câble RJ45 sert dans les réseaux locaux. Pour les longues distances et sous les océans, on utilise la fibre optique.
+    cours: "Chapitre 1, L'infrastructure physique d'Internet"
+
+  - id: role-switch
+    numero: 155
+    titre: Le switch
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Quel est le rôle d'un **switch** ?
+    choix:
+      - "Relier plusieurs machines d'un même réseau local entre elles, par câble"
+      - "Relier plusieurs réseaux entre eux et choisir le chemin des informations"
+      - "Stocker des données et les mettre à disposition d'autres machines"
+      - "Transformer les données en ondes Wi-Fi"
+    explication: |
+      Le switch relie les machines **d'un même réseau local**. C'est le routeur qui relie des réseaux différents entre eux.
+    cours: "Chapitre 1, L'infrastructure physique d'Internet"
+
+  - id: role-routeur
+    numero: 156
+    titre: Le routeur
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Quel est le rôle d'un **routeur** ?
+    choix:
+      - "Relier plusieurs réseaux entre eux, et choisir vers où envoyer les informations"
+      - "Relier les machines d'un même réseau local entre elles"
+      - "Stocker des pages web et les envoyer à qui les demande"
+      - "Afficher les pages web à l'écran"
+    explication: |
+      Le routeur relie des réseaux différents, et il choisit vers où envoyer chaque information qui le traverse.
+    cours: "Chapitre 1, L'infrastructure physique d'Internet"
+
+  - id: role-serveur
+    numero: 157
+    titre: Le serveur
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Quel est le rôle d'un **serveur** ?
+    choix:
+      - "Stocker des données ou des services, et les mettre à disposition des machines qui s'y connectent"
+      - "Relier plusieurs réseaux entre eux"
+      - "Relier les machines d'un même réseau local entre elles"
+      - "Protéger un réseau contre les attaques"
+    explication: |
+      Un serveur stocke des données ou des services, comme des pages web ou des fichiers, et les fournit aux machines qui les demandent.
+    cours: "Chapitre 1, L'infrastructure physique d'Internet"
+
+  - id: appareil-salle-info
+    numero: 158
+    titre: Dans une salle informatique
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Dans une salle informatique, un boîtier relie par câble tous les ordinateurs de la salle, qui forment un seul réseau local. De quel appareil s'agit-il ?
+    choix:
+      - "Un switch"
+      - "Un routeur"
+      - "Un serveur"
+      - "Un câble à fibre optique"
+    explication: |
+      Relier les machines d'**un même réseau local**, c'est le rôle du switch. Pour relier ce réseau à d'autres réseaux, il faudrait un routeur.
+    cours: "Chapitre 1, L'infrastructure physique d'Internet"
+
+  - id: machine-du-site
+    numero: 159
+    titre: Où est stocké le site ?
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Le site web d'un journal est stocké sur une machine, qui envoie ses pages aux ordinateurs qui les demandent. Comment s'appelle cette machine ?
+    choix:
+      - "Un serveur"
+      - "Un routeur"
+      - "Un switch"
+      - "Un câble"
+    explication: |
+      Stocker des données ou des services, comme des pages web, et les mettre à disposition des autres machines : c'est le rôle d'un serveur.
+    cours: "Chapitre 1, L'infrastructure physique d'Internet"
+
+  - id: filius-numero-3
+    numero: 160
+    titre: "Le schéma Filius : l'élément 3"
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Sur ce schéma d'un "mini Internet", réalisé avec le logiciel Filius, quel élément porte le numéro **3** ?
+    image: filius-mini-internet.jpg
+    image_alt: "Schéma Filius : des ordinateurs et des serveurs, des boîtiers noirs qui les regroupent, et des boîtiers gris nommés de A à G reliés entre eux. Cinq éléments portent un numéro."
+    choix: ["Un switch", "Un routeur", "Un serveur", "Un ordinateur", "Un câble"]
+    explication: |
+      Le boîtier noir numéro 3 relie entre eux les ordinateurs M20 à M23, qui forment un réseau local : c'est un switch. Les boîtiers gris, nommés de A à G, sont les routeurs.
+    cours: "Chapitre 1, L'infrastructure physique d'Internet, exercice Identifier les éléments d'un réseau"
+
+  - id: filius-numero-4
+    numero: 161
+    titre: "Le schéma Filius : l'élément 4"
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Sur ce schéma d'un "mini Internet", réalisé avec le logiciel Filius, quel élément porte le numéro **4** ?
+    image: filius-mini-internet.jpg
+    image_alt: "Schéma Filius : des ordinateurs et des serveurs, des boîtiers noirs qui les regroupent, et des boîtiers gris nommés de A à G reliés entre eux. Cinq éléments portent un numéro."
+    choix: ["Un routeur", "Un switch", "Un serveur", "Un ordinateur", "Un câble"]
+    explication: |
+      L'élément numéro 4 est le boîtier gris F. Il est relié à plusieurs autres boîtiers gris, donc à plusieurs réseaux : c'est un routeur.
+    cours: "Chapitre 1, L'infrastructure physique d'Internet, exercice Identifier les éléments d'un réseau"
+
+  - id: filius-numero-5
+    numero: 162
+    titre: "Le schéma Filius : l'élément 5"
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Sur ce schéma d'un "mini Internet", réalisé avec le logiciel Filius, quel élément porte le numéro **5** ?
+    image: filius-mini-internet.jpg
+    image_alt: "Schéma Filius : des ordinateurs et des serveurs, des boîtiers noirs qui les regroupent, et des boîtiers gris nommés de A à G reliés entre eux. Cinq éléments portent un numéro."
+    choix: ["Un serveur", "Un routeur", "Un switch", "Un ordinateur", "Un câble"]
+    explication: |
+      L'élément numéro 5, M19, est une tour qui met des données à disposition des autres machines : c'est un serveur.
+    cours: "Chapitre 1, L'infrastructure physique d'Internet, exercice Identifier les éléments d'un réseau"
+
+  - id: filius-nombre-routeurs
+    numero: 163
+    titre: "Le schéma Filius : les routeurs"
+    notion: internet-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    enonce: Sur ce schéma d'un "mini Internet", combien y a-t-il de routeurs ?
+    image: filius-mini-internet.jpg
+    image_alt: "Schéma Filius : des ordinateurs et des serveurs, des boîtiers noirs qui les regroupent, et des boîtiers gris nommés de A à G reliés entre eux. Cinq éléments portent un numéro."
+    indication: "Un nombre"
+    reponses: ["7", "sept"]
+    explication: |
+      Les routeurs sont les boîtiers gris qui relient les réseaux entre eux. Ils sont nommés par les lettres de A à G : il y en a 7.
+    cours: "Chapitre 1, L'infrastructure physique d'Internet, exercice Identifier les éléments d'un réseau"

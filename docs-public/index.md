@@ -22,7 +22,8 @@ Numérique et sciences informatiques (NSI) : bases de Python, types construits.
 ## Pour s'entraîner
 
 ### [Entraînement](entrainement/index.md)
-Exercices de Python à faire directement dans le navigateur
+Questions de révision pour la Seconde, exercices de Python pour la Première, directement dans le navigateur
+
 ## Années précédentes
 
 ### [Archives](archives/index.md)

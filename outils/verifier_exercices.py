@@ -5,7 +5,10 @@ Pour chaque exercice :
 - la solution, et les autres solutions proposees, reussissent tous les tests ;
 - le code de depart ne les reussit pas ;
 - la bonne reponse d'une prediction est bien le premier choix ;
-- le code n'utilise que ce que les eleves ont vu (voir les listes ci-dessous).
+- le code n'utilise que ce que les eleves ont vu (voir les listes ci-dessous) ;
+- un QCM a des choix tous differents, et une reponse courte donne le resultat de son
+  calcul quand il y en a un ;
+- l'exercice est bien declare pour le niveau de sa notion.
 
 Utilisation, depuis la racine du site : python outils/verifier_exercices.py
 """
@@ -13,6 +16,8 @@ import ast
 import contextlib
 import importlib.util
 import io
+import ipaddress
+import math
 import re
 import sys
 from pathlib import Path
@@ -27,7 +32,15 @@ CARACTERES_PROSCRITS = re.compile("[—–«»]")
 CHAMPS = {
     "code": {"enonce", "depart", "aides", "solution", "tests"},
     "prediction": {"enonce", "code", "choix", "explication"},
+    "qcm": {"enonce", "choix", "explication", "cours"},
+    "reponse": {"enonce", "reponses", "explication", "cours"},
 }
+AVEC_DUREE = {"code", "prediction"}
+
+
+def normaliser(texte):
+    """Comme la page : sans espaces, en minuscules, avec un point decimal."""
+    return re.sub(r"\s+", "", str(texte)).lower().replace(",", ".")
 
 # Ce que les eleves ont vu en Premiere, releve dans les corriges des TP0.1 a TP1.2.
 # A completer au fil de l'annee : ajouter "tuples" ici retire l'interdiction des tuples.
@@ -119,15 +132,39 @@ def verifier(exo, notions):
     genre = exo.get("type")
     if genre not in CHAMPS:
         return ["type inconnu : " + str(genre)]
-    for champ in CHAMPS[genre] | {"titre", "notion", "niveaux", "difficulte", "duree"}:
+    communs = {"titre", "notion", "niveaux", "difficulte"} | ({"duree"} if genre in AVEC_DUREE else set())
+    for champ in CHAMPS[genre] | communs:
         if champ not in exo:
             problemes.append("champ manquant : " + champ)
     if problemes:
         return problemes
     if exo["notion"] not in notions:
-        problemes.append("notion inconnue : " + exo["notion"])
+        return ["notion inconnue : " + exo["notion"]]
+    if notions[exo["notion"]] not in exo["niveaux"]:
+        problemes.append("niveaux ne contient pas " + notions[exo["notion"]] + ", le niveau de sa notion")
     if any(CARACTERES_PROSCRITS.search(t) for t in textes(exo)):
         problemes.append("tiret long ou guillemet chevron dans le texte")
+    if exo.get("image") and not (DOSSIER / "images" / exo["image"]).is_file():
+        problemes.append("image introuvable : images/" + exo["image"])
+
+    if genre == "qcm":
+        choix = exo["choix"]
+        if not 3 <= len(choix) <= 5 or not all(isinstance(c, str) and c.strip() for c in choix):
+            problemes.append("il faut de 3 à 5 choix, tous écrits sous forme de texte")
+        elif len({normaliser(c) for c in choix}) != len(choix):
+            problemes.append("deux choix identiques")
+        return problemes
+
+    if genre == "reponse":
+        reponses = exo["reponses"]
+        if not reponses or not all(isinstance(r, (str, int)) for r in reponses):
+            return problemes + ["il faut au moins une réponse acceptée"]
+        if "calcul" in exo:
+            # Le calcul refait la question a partir de ses donnees : la reponse attendue doit en sortir.
+            obtenu = eval(exo["calcul"], {"ipaddress": ipaddress, "math": math})
+            if normaliser(obtenu) not in {normaliser(r) for r in reponses}:
+                problemes.append(f"le calcul donne {obtenu!r}, absent des réponses acceptées")
+        return problemes
 
     if genre == "prediction":
         sortie = io.StringIO()
@@ -174,7 +211,7 @@ def charger_banque():
 
 def main():
     notions_liste, exercices = charger_banque()
-    notions = {n["id"] for n in notions_liste}
+    notions = {n["id"]: n.get("niveau", "premiere") for n in notions_liste}
     vus = set()
     numeros = set()
     erreurs = 0
@@ -196,13 +233,14 @@ def main():
                 print("        " + probleme)
         erreurs += len(problemes)
 
-    print("\nnotion        exos  facile moyen corsé  à écrire  prédiction  maths")
+    print("\nnotion        exos  facile moyen corsé  à écrire  prédiction  qcm  réponse  maths")
     for notion in notions_liste:
         lot = [e for e in exercices if e["notion"] == notion["id"]]
+        compte = lambda genre: sum(e.get("type") == genre for e in lot)  # noqa: E731
         print(
             f"{notion['id']:<13} {len(lot):>4}"
-            + "".join(f"{sum(e['difficulte'] == d for e in lot):>7}" for d in (1, 2, 3))
-            + f"{sum(e['type'] == 'code' for e in lot):>9}{sum(e['type'] == 'prediction' for e in lot):>11}"
+            + "".join(f"{sum(e.get('difficulte') == d for e in lot):>7}" for d in (1, 2, 3))
+            + f"{compte('code'):>9}{compte('prediction'):>11}{compte('qcm'):>6}{compte('reponse'):>8}"
             + f"{sum('maths' in (e.get('tags') or []) for e in lot):>8}"
         )
     print(f"\n{len(exercices)} exercices, {erreurs} problème(s)")
