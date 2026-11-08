@@ -146,8 +146,9 @@ Pour ajouter un exercice :
 
 **Quand une nouvelle notion est traitée en classe**, la déclarer en haut de
 `outils/verifier_exercices.py` : l'ajouter à `NOTIONS_VUES`, ainsi que ses nouvelles fonctions
-et méthodes. Par exemple, ajouter `"tuples"` lève l'interdiction des tuples. Il faut aussi lui
-donner une entrée dans `AVANT_LA_NOTION`.
+et méthodes. Par exemple, ajouter `"dictionnaires"` lève l'interdiction des dictionnaires. Si la
+nouvelle notion doit interdire des formes pas encore vues (une boucle, une liste...), lui donner
+une entrée dans `AVANT_LA_NOTION`.
 
 Chaque exercice affiche un lien "Signaler un problème", qui ouvre un mail vers l'adresse
 `ADRESSE_SIGNALEMENT` de `entrainement.js`.

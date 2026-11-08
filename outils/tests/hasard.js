@@ -2,16 +2,11 @@
 // nouvelles valeurs, serie, bilan et signalement.
 const path = require("path");
 const attendu = require("./calcul-attendu.js");
-const { URL_PAGE, SITE, RACINE, chargerBanque, lancerNavigateur, dossierCaptures } = require("./commun.js");
+const { URL_PAGE, chargerBanque, lancerNavigateur, dossierCaptures, verificateur } = require("./commun.js");
 const IMG = dossierCaptures("hasard");
 const TOURS = Number(process.env.TOURS || 25);
 
-let echecs = 0;
-const vus = [];
-function verif(nom, ok, detail) {
-  if (!ok) { console.log("ECHEC " + nom + (detail ? "  -> " + detail : "")); echecs++; }
-  vus.push(nom);
-}
+const verif = verificateur({ discret: true });
 
 (async () => {
   const b = await lancerNavigateur();
@@ -97,8 +92,8 @@ function verif(nom, ok, detail) {
   }
   verif("une série a contenu une question tirée au hasard", avecHasard);
 
-  console.log(questions + " questions tirées au hasard faites, " + vus.length + " vérifications");
+  console.log(questions + " questions tirées au hasard faites, " + verif.faites + " vérifications");
   console.log("erreurs de page : " + (erreurs.length ? erreurs.join(" | ") : "aucune"));
-  console.log(echecs ? echecs + " ECHEC(S)" : "TOUT EST OK");
+  verif.verdict();
   await b.close();
 })().catch((e) => { console.error(String(e).slice(0, 900)); process.exit(1); });

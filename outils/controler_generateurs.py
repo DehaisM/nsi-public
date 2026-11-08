@@ -12,17 +12,17 @@ La CI le lance aussi : une erreur bloque le deploiement.
 """
 import ipaddress
 import json
-import re
 import shutil
 import subprocess
 import sys
-from pathlib import Path
 
 sys.stdout.reconfigure(encoding="utf-8")
+sys.dont_write_bytecode = True  # pas de __pycache__ dans le depot
 
-FICHIER = Path(__file__).resolve().parent.parent / "docs-public" / "entrainement" / "generateurs.js"
+from banque import CARACTERES_PROSCRITS, DOSSIER  # noqa: E402
+
+FICHIER = DOSSIER / "generateurs.js"
 TIRAGES = 3000
-CARACTERES_PROSCRITS = re.compile("[—–«»]")
 SCRIPT = """
 const G = require(process.argv[1]);
 const sortie = {};

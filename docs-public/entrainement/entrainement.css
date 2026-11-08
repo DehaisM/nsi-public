@@ -252,7 +252,7 @@
 /* Les questions de cours */
 .entr-figure { margin: .8rem 0; }
 .entr-figure img { display: block; max-width: 100%; height: auto; border: 1px solid var(--nsi-filet); border-radius: var(--nsi-rayon); }
-.md-typeset .entr-message > div, .md-typeset .entr-cours { color: var(--entr-encre); }
+.md-typeset .entr-message > div { color: var(--entr-encre); }
 .md-typeset .entr-cours { margin: .45rem 0 0; font-size: .7rem; color: var(--entr-doux); }
 .entr-reponse { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; }
 .entr-champ--reponse { max-width: 16rem; font-size: .85rem; }

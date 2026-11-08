@@ -33,10 +33,24 @@ function lancerNavigateur() {
   return chromium.launch({ channel: process.env.NAVIGATEUR || "msedge", headless: !process.env.VOIR });
 }
 
+// verif(nom, ok, detail) affiche ok ou ECHEC et compte les echecs ; verif.verdict() conclut par
+// "TOUT EST OK", la phrase que lancer.js attend. Discret : seuls les echecs s'affichent.
+function verificateur({ discret = false } = {}) {
+  const verif = (nom, ok, detail) => {
+    if (!ok || !discret) console.log((ok ? "ok    " : "ECHEC ") + nom + (detail ? "  -> " + detail : ""));
+    if (!ok) verif.echecs++;
+    verif.faites++;
+  };
+  verif.echecs = 0;
+  verif.faites = 0;
+  verif.verdict = () => console.log(verif.echecs ? "\n" + verif.echecs + " ECHEC(S)" : "\nTOUT EST OK");
+  return verif;
+}
+
 function dossierCaptures(...sousDossiers) {
   const dossier = path.join(__dirname, "captures", ...sousDossiers);
   fs.mkdirSync(dossier, { recursive: true });
   return dossier;
 }
 
-module.exports = { RACINE, SITE, URL_PAGE, chargerBanque, lancerNavigateur, dossierCaptures };
+module.exports = { RACINE, SITE, URL_PAGE, chargerBanque, lancerNavigateur, dossierCaptures, verificateur };

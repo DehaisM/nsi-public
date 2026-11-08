@@ -5,8 +5,10 @@ const PYODIDE = new URL("vendor/pyodide/", self.location).href;
 importScripts(PYODIDE + "pyodide.js");
 
 async function demarrer() {
+  // Le correcteur se telecharge pendant que Python demarre.
+  const source = fetch("correcteur.py");
   const pyodide = await loadPyodide({ indexURL: PYODIDE });
-  const reponse = await fetch("correcteur.py");
+  const reponse = await source;
   if (!reponse.ok) throw new Error("correcteur.py introuvable");
   pyodide.runPython(await reponse.text());
   return pyodide.globals.get("corriger");

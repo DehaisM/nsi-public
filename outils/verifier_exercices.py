@@ -14,21 +14,17 @@ Utilisation, depuis la racine du site : python outils/verifier_exercices.py
 """
 import ast
 import contextlib
-import importlib.util
 import io
 import ipaddress
 import math
 import re
 import sys
-from pathlib import Path
-
-import yaml
 
 sys.stdout.reconfigure(encoding="utf-8")
 sys.dont_write_bytecode = True  # pas de __pycache__ publie avec le site
 
-DOSSIER = Path(__file__).resolve().parent.parent / "docs-public" / "entrainement"
-CARACTERES_PROSCRITS = re.compile("[—–«»]")
+from banque import CARACTERES_PROSCRITS, DOSSIER, charger_banque, charger_correcteur, niveau_de  # noqa: E402
+
 CHAMPS = {
     "code": {"enonce", "depart", "aides", "solution", "tests"},
     "prediction": {"enonce", "code", "choix", "explication"},
@@ -45,31 +41,27 @@ def normaliser(texte):
     return re.sub(r"\s+", "", str(texte)).lower().replace(",", ".")
 
 # Ce que les eleves ont vu en Premiere, releve dans les corriges des TP0.1 a TP1.3.
-# A completer au fil de l'annee : ajouter "tuples" ici retire l'interdiction des tuples.
+# A completer au fil de l'annee : ajouter "dictionnaires" ici retire l'interdiction des dictionnaires.
 NOTIONS_VUES = {"variables", "conditions", "for", "while", "fonctions", "listes", "grilles", "tuples"}
 FONCTIONS_VUES = {"print", "len", "int", "float", "str", "type", "range", "list", "tuple"}
 METHODES_VUES = {"append", "pop", "insert", "index", "sqrt"}
 MODULES_VUS = {"math"}
 
-# Dans un exercice sur une notion, ce qui n'a pas encore ete introduit.
+# Dans un exercice sur une notion, les formes qui n'ont pas encore ete introduites.
+# Une notion absente de cette table peut tout utiliser.
 AVANT_LA_NOTION = {
     "variables": (ast.If, ast.For, ast.While, ast.FunctionDef, ast.List, ast.ListComp),
     "conditions": (ast.For, ast.While, ast.List, ast.ListComp),
     "for": (ast.While, ast.ListComp),
     "while": (ast.ListComp,),
     "fonctions": (ast.ListComp,),
-    "listes": (),
-    "grilles": (),
-    "tuples": (),
 }
 NOMS_DES_FORMES = {
     ast.If: "if", ast.For: "for", ast.While: "while", ast.FunctionDef: "def",
     ast.List: "une liste", ast.ListComp: "une liste en compréhension",
 }
 
-spec = importlib.util.spec_from_file_location("correcteur", DOSSIER / "correcteur.py")
-correcteur = importlib.util.module_from_spec(spec)
-spec.loader.exec_module(correcteur)
+correcteur = charger_correcteur()
 
 
 def textes(valeur):
@@ -118,15 +110,6 @@ def controler_notions(code, notion):
             trouves.add("from ... import")
         elif isinstance(noeud, (ast.Lambda, ast.Try, ast.ClassDef, ast.With, ast.GeneratorExp, ast.DictComp, ast.SetComp)):
             trouves.add(type(noeud).__name__)
-    if "tuples" not in NOTIONS_VUES:
-        # Seul l'echange a, b = b, a a ete vu : un tuple ne sert pas de valeur.
-        for noeud in ast.walk(arbre):
-            if isinstance(noeud, ast.Assign) and isinstance(noeud.targets[0], ast.Tuple):
-                noeud.value._echange = True
-                noeud.targets[0]._echange = True
-        for noeud in ast.walk(arbre):
-            if isinstance(noeud, ast.Tuple) and not getattr(noeud, "_echange", False):
-                trouves.add("un tuple")
     return trouves
 
 
@@ -205,22 +188,9 @@ def verifier(exo, notions):
     return problemes
 
 
-def charger_banque():
-    index = yaml.safe_load((DOSSIER / "exercices" / "notions.yml").read_text(encoding="utf-8"))
-    exercices = []
-    for notion in index["notions"]:
-        fichier = DOSSIER / "exercices" / (notion["id"] + ".yml")
-        contenu = yaml.safe_load(fichier.read_text(encoding="utf-8"))
-        for exo in contenu["exercices"]:
-            if exo.get("notion") != notion["id"]:
-                raise SystemExit(f"{fichier.name} : l'exercice {exo.get('id')} a pour notion {exo.get('notion')}")
-            exercices.append(exo)
-    return index["notions"], exercices
-
-
 def main():
     notions_liste, exercices = charger_banque()
-    notions = {n["id"]: n.get("niveau", "premiere") for n in notions_liste}
+    notions = {n["id"]: niveau_de(n) for n in notions_liste}
     vus = set()
     numeros = set()
     erreurs = 0

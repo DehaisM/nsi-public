@@ -7,20 +7,12 @@ const PREMIERE = () => {
   } catch (erreur) {}
 };
 const path = require("path");
-const { URL_PAGE, SITE, RACINE, chargerBanque, lancerNavigateur, dossierCaptures } = require("./commun.js");
+const { URL_PAGE, chargerBanque, lancerNavigateur, dossierCaptures, verificateur } = require("./commun.js");
 const IMG = dossierCaptures();
 
-let echecs = 0;
-function verif(nom, ok, detail) {
-  console.log((ok ? "ok    " : "ECHEC ") + nom + (detail ? "  -> " + detail : ""));
-  if (!ok) echecs++;
-}
+const verif = verificateur();
 
-const SOLUTIONS = {
-  "tarif-cinema": "def tarif(age):\n    if age < 14:\n        return 5\n    return 9",
-  "rendre-la-monnaie": "def monnaie(prix, paye):\n    if paye >= prix:\n        return paye - prix\n    return 0",
-  "colonne-grille": "def colonne(grille, j):\n    return [l[j] for l in grille]",
-};
+const SOLUTIONS = Object.fromEntries(chargerBanque().exercices.map((e) => [e.id, e.solution]));
 
 async function reussir(page, id, avecAide) {
   await page.goto(URL_PAGE + "#/exo/" + id);
@@ -45,7 +37,7 @@ async function appareil(navigateur, options) {
   const contexte = await navigateur.newContext(Object.assign({ viewport: { width: 1280, height: 900 } }, options || {}));
   await contexte.addInitScript(PREMIERE);
   const page = await contexte.newPage();
-  page.on("pageerror", (e) => { console.log("ERREUR PAGE " + e.message); echecs++; });
+  page.on("pageerror", (e) => verif("pas d'erreur dans la page", false, e.message));
   return page;
 }
 const message = (page) => page.locator("#entr-app .entr-message").innerText();
@@ -190,6 +182,6 @@ const message = (page) => page.locator("#entr-app .entr-message").innerText();
   const deborde = await tel.evaluate(() => document.documentElement.scrollWidth - window.innerWidth);
   verif("telephone : pas de debordement", deborde <= 0, deborde + " px");
 
-  console.log(echecs ? "\n" + echecs + " ECHEC(S)" : "\nTOUT EST OK");
+  verif.verdict();
   await navigateur.close();
 })().catch((e) => { console.error(String(e).slice(0, 800)); process.exit(1); });

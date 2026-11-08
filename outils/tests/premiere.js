@@ -6,14 +6,10 @@ const PREMIERE = () => {
   } catch (erreur) {}
 };
 const path = require("path");
-const { URL_PAGE, SITE, RACINE, chargerBanque, lancerNavigateur, dossierCaptures } = require("./commun.js");
+const { URL_PAGE, chargerBanque, lancerNavigateur, dossierCaptures, verificateur } = require("./commun.js");
 const IMG = dossierCaptures();
 
-let echecs = 0;
-function verif(nom, ok, detail) {
-  console.log((ok ? "ok    " : "ECHEC ") + nom + (detail ? "  -> " + detail : ""));
-  if (!ok) echecs++;
-}
+const verif = verificateur();
 
 async function ecrire(page, code) {
   await page.evaluate((c) => document.querySelector(".CodeMirror").CodeMirror.setValue(c), code);
@@ -193,6 +189,6 @@ async function ouvrir(page, id) {
   }
 
   console.log("\nerreurs navigateur : " + (erreursConsole.length ? "\n" + [...new Set(erreursConsole)].join("\n") : "aucune"));
-  console.log(echecs ? echecs + " ECHEC(S)" : "TOUT EST OK");
+  verif.verdict();
   await navigateur.close();
 })().catch((e) => { console.error(e); process.exit(1); });

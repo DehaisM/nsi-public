@@ -1,14 +1,10 @@
 // Scenario d'un eleve de Seconde : choix du niveau, questions, serie de revision, changement d'appareil.
 const attendu = require("./calcul-attendu.js");
 const path = require("path");
-const { URL_PAGE, SITE, RACINE, chargerBanque, lancerNavigateur, dossierCaptures } = require("./commun.js");
+const { URL_PAGE, SITE, chargerBanque, lancerNavigateur, dossierCaptures, verificateur } = require("./commun.js");
 const IMG = dossierCaptures("seconde");
 
-let echecs = 0;
-function verif(nom, ok, detail) {
-  console.log((ok ? "ok    " : "ECHEC ") + nom + (detail ? "  -> " + detail : ""));
-  if (!ok) echecs++;
-}
+const verif = verificateur();
 const texte = (p) => p.locator("#entr-app").innerText();
 
 (async () => {
@@ -168,6 +164,6 @@ const texte = (p) => p.locator("#entr-app").innerText();
   await p.screenshot({ path: path.join(IMG, "10-sombre.png"), fullPage: true });
 
   console.log("\nerreurs de page : " + (erreurs.length ? erreurs.join(" | ") : "aucune"));
-  console.log(echecs ? echecs + " ECHEC(S)" : "TOUT EST OK");
+  verif.verdict();
   await b.close();
 })().catch((e) => { console.error(String(e).slice(0, 900)); process.exit(1); });

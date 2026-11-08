@@ -7,20 +7,22 @@ const { spawnSync } = require("child_process");
 const path = require("path");
 
 const TESTS = {
-  "code-sauvegarde.js": "Code de sauvegarde (sans navigateur)",
-  "premiere.js": "Un élève de Première",
-  "changer-appareil.js": "Changer d'appareil",
-  "seconde.js": "Un élève de Seconde",
-  "hasard.js": "Les questions tirées au hasard",
-  "filtre-maths.js": "Le filtre Maths",
-  "banque.js": "Chaque exercice et chaque question de la banque",
+  "code-sauvegarde.js": { titre: "Code de sauvegarde (sans navigateur)", modes: ["tout", "rapide"] },
+  "premiere.js": { titre: "Un élève de Première", modes: ["tout", "rapide"] },
+  "changer-appareil.js": { titre: "Changer d'appareil", modes: ["tout", "rapide"] },
+  "seconde.js": { titre: "Un élève de Seconde", modes: ["tout", "rapide"] },
+  "hasard.js": { titre: "Les questions tirées au hasard", modes: ["tout", "rapide"] },
+  "filtre-maths.js": { titre: "Le filtre Maths", modes: ["tout", "rapide"] },
+  "banque.js": { titre: "Chaque exercice et chaque question de la banque", modes: ["tout"] },
+  "en-ligne.js": { titre: "Le site publié", modes: ["en-ligne"] },
 };
 
 const mode = process.argv[2] || "tout";
-let liste = Object.keys(TESTS);
-if (mode === "rapide") liste = liste.filter((t) => t !== "banque.js");
-if (mode === "en-ligne") liste = ["en-ligne.js"];
-TESTS["en-ligne.js"] = "Le site publié";
+const liste = Object.keys(TESTS).filter((fichier) => TESTS[fichier].modes.includes(mode));
+if (!liste.length) {
+  console.log("Mode inconnu : " + mode + " (tout, rapide ou en-ligne)");
+  process.exit(1);
+}
 
 let echecs = 0;
 for (const fichier of liste) {
@@ -29,7 +31,7 @@ for (const fichier of liste) {
   const sortie = (r.stdout || "") + (r.stderr || "");
   const reussi = r.status === 0 && /TOUT EST OK/.test(sortie);
   const duree = Math.round((Date.now() - debut) / 1000) + " s";
-  console.log((reussi ? "ok      " : "ECHEC   ") + TESTS[fichier] + " (" + duree + ")");
+  console.log((reussi ? "ok      " : "ECHEC   ") + TESTS[fichier].titre + " (" + duree + ")");
   if (!reussi) {
     echecs++;
     const lignes = sortie.split("\n").filter((l) => /ECHEC|Error|erreur/i.test(l) && !/^ok/.test(l));

@@ -1,7 +1,7 @@
 // Fait chaque exercice de la banque dans le vrai navigateur, avec Pyodide :
 // la solution doit etre acceptee, et le code de depart refuse.
 const path = require("path");
-const { URL_PAGE, SITE, RACINE, chargerBanque, lancerNavigateur, dossierCaptures } = require("./commun.js");
+const { URL_PAGE, chargerBanque, lancerNavigateur, dossierCaptures } = require("./commun.js");
 const IMG = dossierCaptures("banque");
 
 (async () => {
@@ -11,11 +11,7 @@ const IMG = dossierCaptures("banque");
   page.on("pageerror", (e) => erreurs.push(e.message));
   await page.goto(URL_PAGE + "#/premiere");
   await page.waitForSelector(".entr-bilan");
-  const exos = await page.evaluate(async () => {
-    const lire = async (n) => jsyaml.load(await (await fetch("exercices/" + n + ".yml")).text());
-    const { notions } = await lire("notions");
-    return (await Promise.all(notions.map((n) => lire(n.id)))).flatMap((l) => l.exercices);
-  });
+  const exos = chargerBanque().exercices;
 
   const attendreFin = () => page.waitForFunction(() => {
     const b = document.querySelector("#entr-app .entr-commandes button");
@@ -62,9 +58,9 @@ const IMG = dossierCaptures("banque");
       await page.locator(".entr-reponse button").click();
       if (!/pas la bonne réponse/.test(await page.locator("#entr-app").innerText())) problemes.push("mauvaise réponse acceptée");
       for (const r of exo.reponses) {
-        await page.goto(URL_PAGE + "#/exo/" + exo.id + "?" + Math.random());
+        await page.goto(URL_PAGE + "#/");
         await page.goto(URL_PAGE + "#/exo/" + exo.id);
-        await page.waitForSelector(".entr-champ--reponse");
+        await page.waitForFunction(() => document.querySelector(".entr-champ--reponse")?.value === "");
         await page.locator(".entr-champ--reponse").fill("  " + String(r).toUpperCase() + " ");
         await page.locator(".entr-reponse button").click();
         if (!/Bonne réponse/.test(await page.locator("#entr-app").innerText())) problemes.push("réponse acceptée refusée : " + r);

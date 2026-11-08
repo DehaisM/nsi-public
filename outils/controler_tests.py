@@ -15,12 +15,11 @@ import json
 import subprocess
 import sys
 from concurrent.futures import ThreadPoolExecutor
-from pathlib import Path
-
-import yaml
 
 sys.stdout.reconfigure(encoding="utf-8")
-base = Path(__file__).resolve().parent.parent / "docs-public" / "entrainement"
+sys.dont_write_bytecode = True  # pas de __pycache__ dans le depot
+
+from banque import DOSSIER, charger_banque  # noqa: E402
 
 ENFANT = """
 import importlib.util, json, sys
@@ -36,39 +35,64 @@ ECHANGES = {ast.Lt: ast.LtE, ast.LtE: ast.Lt, ast.Gt: ast.GtE, ast.GtE: ast.Gt, 
 OPERATEURS = {ast.Add: ast.Sub, ast.Sub: ast.Add, ast.Mult: ast.Add, ast.FloorDiv: ast.Mod, ast.Mod: ast.FloorDiv, ast.Div: ast.Mult}
 
 
+def abimer_compare(noeud):
+    noeud.ops[0] = ECHANGES[type(noeud.ops[0])]()
+
+
+def abimer_operateur(noeud):
+    noeud.op = OPERATEURS[type(noeud.op)]()
+
+
+def abimer_logique(noeud):
+    noeud.op = ast.Or() if isinstance(noeud.op, ast.And) else ast.And()
+
+
+def inverser(noeud):
+    noeud.value = not noeud.value
+
+
+def plus_un(noeud):
+    noeud.value += 1
+
+
+def moins_un(noeud):
+    noeud.value -= 1
+
+
+def abimages(noeud):
+    """Les petites erreurs que l'on peut introduire sur ce noeud."""
+    if isinstance(noeud, ast.Compare) and type(noeud.ops[0]) in ECHANGES:
+        return [abimer_compare]
+    if isinstance(noeud, ast.BinOp) and type(noeud.op) in OPERATEURS:
+        return [abimer_operateur]
+    if isinstance(noeud, ast.BoolOp):
+        return [abimer_logique]
+    if isinstance(noeud, ast.Constant) and isinstance(noeud.value, bool):
+        return [inverser]
+    if isinstance(noeud, ast.Constant) and type(noeud.value) in (int, float):
+        return [plus_un, moins_un]
+    return []
+
+
 def mutants(code):
+    """Les versions abimees du code, sans doublon. L'arbre n'est copie que pour les noeuds a abimer."""
     arbre = ast.parse(code)
-    n = sum(1 for _ in ast.walk(arbre))
+    a_abimer = [(rang, abime) for rang, noeud in enumerate(ast.walk(arbre)) for abime in abimages(noeud)]
     vus = set()
-    for rang in range(n):
-        for variante in range(2):
-            copie = copy.deepcopy(arbre)
-            noeud = list(ast.walk(copie))[rang]
-            if isinstance(noeud, ast.Compare) and type(noeud.ops[0]) in ECHANGES and variante == 0:
-                noeud.ops[0] = ECHANGES[type(noeud.ops[0])]()
-            elif isinstance(noeud, ast.BinOp) and type(noeud.op) in OPERATEURS and variante == 0:
-                noeud.op = OPERATEURS[type(noeud.op)]()
-            elif isinstance(noeud, ast.BoolOp) and variante == 0:
-                noeud.op = ast.Or() if isinstance(noeud.op, ast.And) else ast.And()
-            elif isinstance(noeud, ast.Constant) and isinstance(noeud.value, bool):
-                if variante == 1:
-                    continue
-                noeud.value = not noeud.value
-            elif isinstance(noeud, ast.Constant) and type(noeud.value) in (int, float):
-                noeud.value = noeud.value + (1 if variante == 0 else -1)
-            else:
-                continue
-            texte = ast.unparse(copie)
-            if texte not in vus:
-                vus.add(texte)
-                yield texte
+    for rang, abime in a_abimer:
+        copie = copy.deepcopy(arbre)
+        abime(list(ast.walk(copie))[rang])
+        texte = ast.unparse(copie)
+        if texte not in vus:
+            vus.add(texte)
+            yield texte
 
 
 def passe(travail):
     exo, code = travail
     try:
         r = subprocess.run(
-            [sys.executable, "-c", ENFANT, str(base / "correcteur.py")],
+            [sys.executable, "-c", ENFANT, str(DOSSIER / "correcteur.py")],
             input=json.dumps({"exo": exo, "code": code}), capture_output=True, text=True, encoding="utf-8", timeout=3,
         )
     except subprocess.TimeoutExpired:
@@ -76,13 +100,8 @@ def passe(travail):
     return r.stdout.strip() == "OUI"
 
 
-index = yaml.safe_load((base / "exercices" / "notions.yml").read_text(encoding="utf-8"))
-travaux = []
-for notion in index["notions"]:
-    contenu = yaml.safe_load((base / "exercices" / (notion["id"] + ".yml")).read_text(encoding="utf-8"))
-    for exo in contenu["exercices"]:
-        if exo["type"] == "code":
-            travaux.extend((exo, code) for code in mutants(exo["solution"]))
+_, exercices = charger_banque()
+travaux = [(exo, code) for exo in exercices if exo["type"] == "code" for code in mutants(exo["solution"])]
 
 with ThreadPoolExecutor(8) as pool:
     resultats = list(pool.map(passe, travaux))

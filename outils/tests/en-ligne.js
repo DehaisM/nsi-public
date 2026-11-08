@@ -1,11 +1,10 @@
 // Controle du site reellement en ligne : chaque page repond, l'Entrainement fonctionne.
 const path = require("path");
-const { RACINE, chargerBanque, lancerNavigateur, dossierCaptures } = require("./commun.js");
+const { chargerBanque, lancerNavigateur, dossierCaptures, verificateur } = require("./commun.js");
 // Ce test vise le site publie, sauf si SITE indique une autre adresse.
 const BASE = (process.env.SITE || "https://nsi.mdehais.fr/").replace(/\/?$/, "/");
 const IMG = dossierCaptures("en-ligne");
-let echecs = 0;
-const verif = (nom, ok, detail) => { console.log((ok ? "ok    " : "ECHEC ") + nom + (detail ? "  -> " + detail : "")); if (!ok) echecs++; };
+const verif = verificateur();
 
 (async () => {
   const nbPremiere = chargerBanque().duNiveau("premiere").length;
@@ -62,8 +61,7 @@ const verif = (nom, ok, detail) => { console.log((ok ? "ok    " : "ECHEC ") + no
   await tel.waitForSelector(".entr-bilan");
   verif("largeur telephone : pas de debordement", (await tel.evaluate(() => document.documentElement.scrollWidth - innerWidth)) <= 0);
 
-  const utiles = pannes.filter((x) => !x.includes("?v="));
   console.log("\npannes : " + (pannes.length ? "\n" + [...new Set(pannes)].join("\n") : "aucune"));
-  console.log(echecs ? echecs + " ECHEC(S)" : "TOUT EST OK");
+  verif.verdict();
   await b.close();
 })().catch((e) => { console.error(String(e).slice(0, 700)); process.exit(1); });

@@ -1,8 +1,7 @@
 // Le filtre "Maths" : il ne garde que les exercices etiquetes, se combine aux autres filtres et se retient.
 const path = require("path");
-const { URL_PAGE, SITE, RACINE, chargerBanque, lancerNavigateur, dossierCaptures } = require("./commun.js");
-let echecs = 0;
-const verif = (nom, ok, detail) => { console.log((ok ? "ok    " : "ECHEC ") + nom + (detail ? "  -> " + detail : "")); if (!ok) echecs++; };
+const { URL_PAGE, lancerNavigateur, dossierCaptures, verificateur } = require("./commun.js");
+const verif = verificateur();
 
 (async () => {
   const b = await lancerNavigateur();
@@ -47,6 +46,6 @@ const verif = (nom, ok, detail) => { console.log((ok ? "ok    " : "ECHEC ") + no
   await p.locator(".entr-niveaux button", { hasText: "Seconde" }).click();
   verif("pas de bouton Maths en Seconde", (await p.locator(".entr-filtre", { hasText: "Maths" }).count()) === 0);
   console.log("erreurs de page : " + (erreurs.length ? erreurs.join(" | ") : "aucune"));
-  console.log(echecs ? echecs + " ECHEC(S)" : "TOUT EST OK");
+  verif.verdict();
   await b.close();
 })().catch((e) => { console.error(String(e).slice(0, 700)); process.exit(1); });
