@@ -1,0 +1,865 @@
+exercices:
+
+  - id: predire-tranche-tuple
+    numero: 205
+    titre: Indices et tranches d'un tuple
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      t = ("a", "b", "c", "d")
+      print(t[-2], t[1:3])
+    choix: ["c ('b', 'c')", "c ('b', 'c', 'd')", "b ('a', 'b')", "d ('b', 'c')"]
+    explication: |
+      `t[-2]` est l'avant-dernier élément, `"c"`. Comme pour une liste, la tranche `t[1:3]` prend les indices 1 et 2, et elle donne un nouveau **tuple**.
+
+  - id: predire-virgule
+    numero: 206
+    titre: La virgule qui change tout
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      a = (3)
+      b = (3,)
+      print(a * 2, b * 2)
+    choix: ["6 (3, 3)", "6 6", "(3, 3) (3, 3)", "(6,) (6,)"]
+    explication: |
+      Sans virgule, `(3)` n'est que l'entier 3 entre parenthèses : `a * 2` vaut 6. Avec la virgule, `(3,)` est un tuple, et multiplier un tuple par 2 le répète : `(3, 3)`.
+
+  - id: predire-depaquetage-fibonacci
+    numero: 207
+    titre: Deux affectations à la fois
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 2
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      a, b = 1, 2
+      a, b = b, a + b
+      print(a, b)
+    choix: ["2 3", "2 4", "3 2", "1 2"]
+    explication: |
+      À droite du `=`, le tuple `(b, a + b)` est calculé **en entier** avec les anciennes valeurs, soit `(2, 3)`, avant d'être dépaqueté dans `a` et `b`.
+
+  - id: predire-nouveau-tuple
+    numero: 208
+    titre: Un nouveau tuple
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 2
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      t = (1, 2)
+      u = t
+      t = t + (3,)
+      print(u)
+    choix: ["(1, 2)", "(1, 2, 3)", "(3,)", "[1, 2, 3]"]
+    explication: |
+      Un tuple ne se modifie pas : `t + (3,)` construit un **nouveau** tuple, et seul `t` désigne ce nouveau tuple. `u` désigne toujours l'ancien, `(1, 2)`.
+
+  - id: predire-tuple-de-points
+    numero: 209
+    titre: Un tuple de points
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      points = ((1, 2), (3, 4), (5, 6))
+      print(points[1][0])
+    choix: ["3", "2", "4", "(3, 4)"]
+    explication: |
+      `points[1]` est le deuxième point, `(3, 4)`. Son élément d'indice 0 est 3.
+
+  - id: extremites
+    numero: 210
+    titre: Le premier et le dernier
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Écrire une fonction `extremites(valeurs)` qui reçoit un tuple non vide et renvoie le tuple formé de son premier et de son dernier élément. Par exemple, `extremites((4, 7, 9))` renvoie `(4, 9)`.
+    depart: |
+      def extremites(valeurs):
+          ...
+    aides:
+      - |
+        def extremites(valeurs):
+            # recuperer le premier element, d'indice 0
+            # recuperer le dernier element, avec un indice negatif
+            # renvoyer les deux, separes par une virgule
+      - |
+        def extremites(valeurs):
+            return valeurs[___], valeurs[___]
+      - |
+        def extremites(valeurs):
+            return valeurs[0], valeurs[___]
+    solution: |
+      def extremites(valeurs):
+          return valeurs[0], valeurs[-1]
+    autres_solutions:
+      - |
+        def extremites(valeurs):
+            return (valeurs[0], valeurs[len(valeurs) - 1])
+    tests:
+      - { appel: "extremites((4, 7, 9))", attendu: "(4, 9)" }
+      - { appel: "extremites((5,))", attendu: "(5, 5)", libelle: "extremites((5,)) : un seul élément" }
+      - { appel: "extremites(('a', 'b'))", attendu: "('a', 'b')" }
+      - { appel: "extremites((1, 2, 3, 4, 5))", attendu: "(1, 5)", cache: true }
+
+  - id: symetrique
+    numero: 211
+    titre: Le point symétrique
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    tags: [maths]
+    type: code
+    enonce: |
+      Le symétrique du point `(x, y)` par rapport à la diagonale du repère est le point `(y, x)`.
+
+      Écrire une fonction `symetrique(point)` qui reçoit un point sous forme de tuple et renvoie son symétrique, lui aussi sous forme de tuple.
+    depart: |
+      def symetrique(point):
+          ...
+    aides:
+      - |
+        def symetrique(point):
+            # depaqueter point dans deux variables x et y
+            # renvoyer le tuple forme de y puis de x
+      - |
+        def symetrique(point):
+            x, y = ___
+            return ___, ___
+      - |
+        def symetrique(point):
+            x, y = point
+            return ___
+    solution: |
+      def symetrique(point):
+          x, y = point
+          return y, x
+    autres_solutions:
+      - |
+        def symetrique(point):
+            return (point[1], point[0])
+    tests:
+      - { appel: "symetrique((2, 5))", attendu: "(5, 2)" }
+      - { appel: "symetrique((0, -3))", attendu: "(-3, 0)" }
+      - { appel: "symetrique((4, 4))", attendu: "(4, 4)", libelle: "symetrique((4, 4)) : un point sur la diagonale" }
+      - { appel: "symetrique((1.5, 7))", attendu: "(7, 1.5)", cache: true }
+
+  - id: ordonner-couple
+    numero: 212
+    titre: Ranger un couple
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Compléter la fonction `ordonner(couple)` pour qu'elle renvoie le tuple formé des deux mêmes nombres, rangés du plus petit au plus grand. Par exemple, `ordonner((8, 3))` renvoie `(3, 8)`.
+    depart: |
+      def ordonner(couple):
+          a, b = ___
+          if a <= b:
+              return ___
+          return ___
+    interdit: [min, max, sorted, sort]
+    aides:
+      - |
+        # commencer par depaqueter le couple dans a et b
+        # s'ils sont deja dans l'ordre, renvoyer le couple tel quel
+        # sinon, renvoyer les deux nombres dans l'autre sens
+      - |
+        def ordonner(couple):
+            a, b = couple
+            if a <= b:
+                return ___, ___
+            return ___, ___
+      - |
+        def ordonner(couple):
+            a, b = couple
+            if a <= b:
+                return a, b
+            return ___
+    solution: |
+      def ordonner(couple):
+          a, b = couple
+          if a <= b:
+              return a, b
+          return b, a
+    tests:
+      - { appel: "ordonner((8, 3))", attendu: "(3, 8)" }
+      - { appel: "ordonner((1, 9))", attendu: "(1, 9)" }
+      - { appel: "ordonner((5, 5))", attendu: "(5, 5)", libelle: "ordonner((5, 5)) : deux nombres égaux" }
+      - { appel: "ordonner((0, -4))", attendu: "(-4, 0)", cache: true }
+
+  - id: resultat-match
+    numero: 213
+    titre: Le résultat du match
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Le score d'un match est un tuple `(buts_a, buts_b)` : les buts de l'équipe A, puis ceux de l'équipe B.
+
+      Écrire une fonction `resultat(score)` qui renvoie `"A"` si l'équipe A a gagné, `"B"` si l'équipe B a gagné, et `"nul"` en cas d'égalité.
+    depart: |
+      def resultat(score):
+          ...
+    aides:
+      - |
+        def resultat(score):
+            # depaqueter le score dans deux variables
+            # comparer les deux nombres de buts
+      - |
+        def resultat(score):
+            a, b = score
+            if a > b:
+                return ___
+            elif ___:
+                return "B"
+            return ___
+      - |
+        def resultat(score):
+            a, b = score
+            if a > b:
+                return "A"
+            elif b > a:
+                return "B"
+            return ___
+    solution: |
+      def resultat(score):
+          a, b = score
+          if a > b:
+              return "A"
+          elif b > a:
+              return "B"
+          return "nul"
+    tests:
+      - { appel: "resultat((3, 1))", attendu: "'A'" }
+      - { appel: "resultat((0, 2))", attendu: "'B'" }
+      - { appel: "resultat((2, 2))", attendu: "'nul'" }
+      - { appel: "resultat((1, 0))", attendu: "'A'", cache: true }
+      - { appel: "resultat((0, 0))", attendu: "'nul'", cache: true }
+
+  - id: bug-translation
+    numero: 214
+    titre: Le point qui ne bouge pas
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 1
+    duree: 3
+    type: code
+    enonce: |
+      Cette fonction doit renvoyer le point `p` déplacé de `dx` horizontalement et de `dy` verticalement. Par exemple, `translation((1, 2), 3, -1)` doit renvoyer `(4, 1)`. Elle provoque une erreur : la lire, puis corriger la fonction.
+    depart: |
+      def translation(p, dx, dy):
+          p[0] = p[0] + dx
+          p[1] = p[1] + dy
+          return p
+    aides:
+      - |
+        # quel type d'erreur s'affiche ?
+        # peut-on modifier un element d'un tuple ?
+        # que faut-il faire a la place ?
+      - |
+        def translation(p, dx, dy):
+            return (p[0] + ___, p[1] + ___)
+      - |
+        def translation(p, dx, dy):
+            x, y = p
+            return (x + dx, ___)
+    solution: |
+      def translation(p, dx, dy):
+          return (p[0] + dx, p[1] + dy)
+    autres_solutions:
+      - |
+        def translation(p, dx, dy):
+            x, y = p
+            return x + dx, y + dy
+    tests:
+      - { appel: "translation((1, 2), 3, -1)", attendu: "(4, 1)" }
+      - { appel: "translation((0, 0), 0, 0)", attendu: "(0, 0)" }
+      - { appel: "translation((-2, 5), 2, -5)", attendu: "(0, 0)", cache: true }
+
+  - id: bilan-notes
+    numero: 215
+    titre: Le bilan des notes
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `bilan(notes)` qui reçoit un tuple de notes non vide et renvoie le tuple `(nombre, moyenne)` : le nombre de notes, puis leur moyenne, sans utiliser `sum`.
+    depart: |
+      def bilan(notes):
+          ...
+    interdit: [sum]
+    aides:
+      - |
+        def bilan(notes):
+            # additionner les notes avec une boucle
+            # compter les notes avec len
+            # renvoyer les deux valeurs, separees par une virgule
+      - |
+        def bilan(notes):
+            total = 0
+            for n in notes:
+                total = ___
+            nombre = len(___)
+            return nombre, ___
+      - |
+        def bilan(notes):
+            total = 0
+            for n in notes:
+                total = total + n
+            nombre = len(notes)
+            return nombre, ___
+    solution: |
+      def bilan(notes):
+          total = 0
+          for n in notes:
+              total = total + n
+          nombre = len(notes)
+          return nombre, total / nombre
+    tests:
+      - { appel: "bilan((10, 14, 18))", attendu: "(3, 14.0)" }
+      - { appel: "bilan((7,))", attendu: "(1, 7.0)", libelle: "bilan((7,)) : une seule note" }
+      - { appel: "bilan((12, 13))", attendu: "(2, 12.5)" }
+      - { appel: "bilan((0, 20, 5, 15))", attendu: "(4, 10.0)", cache: true }
+
+  - id: plus-tot
+    numero: 216
+    titre: La date la plus ancienne
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 5
+    type: code
+    enonce: |
+      Une date est un tuple `(jour, mois, annee)`. Écrire une fonction `plus_tot(d1, d2)` qui renvoie la plus ancienne des deux dates. Par exemple, `plus_tot((14, 7, 1789), (11, 11, 1918))` renvoie `(14, 7, 1789)`.
+
+      Attention : il faut d'abord comparer les années, puis les mois, puis les jours.
+    depart: |
+      def plus_tot(d1, d2):
+          ...
+    aides:
+      - |
+        def plus_tot(d1, d2):
+            # depaqueter les deux dates
+            # si les annees sont differentes, la plus petite annee l'emporte
+            # sinon, si les mois sont differents, le plus petit mois l'emporte
+            # sinon, comparer les jours
+      - |
+        def plus_tot(d1, d2):
+            j1, m1, a1 = d1
+            j2, m2, a2 = d2
+            if a1 != a2:
+                if a1 < a2:
+                    return d1
+                return ___
+            if m1 != m2:
+                if m1 < m2:
+                    return ___
+                return ___
+            if j1 <= j2:
+                return ___
+            return ___
+      - |
+        def plus_tot(d1, d2):
+            j1, m1, a1 = d1
+            j2, m2, a2 = d2
+            if a1 != a2:
+                if a1 < a2:
+                    return d1
+                return d2
+            if m1 != m2:
+                if m1 < m2:
+                    return d1
+                return d2
+            if j1 <= j2:
+                return ___
+            return ___
+    solution: |
+      def plus_tot(d1, d2):
+          j1, m1, a1 = d1
+          j2, m2, a2 = d2
+          if a1 != a2:
+              if a1 < a2:
+                  return d1
+              return d2
+          if m1 != m2:
+              if m1 < m2:
+                  return d1
+              return d2
+          if j1 <= j2:
+              return d1
+          return d2
+    autres_solutions:
+      - |
+        def plus_tot(d1, d2):
+            j1, m1, a1 = d1
+            j2, m2, a2 = d2
+            if (a1, m1, j1) <= (a2, m2, j2):
+                return d1
+            return d2
+    tests:
+      - { appel: "plus_tot((14, 7, 1789), (11, 11, 1918))", attendu: "(14, 7, 1789)" }
+      - { appel: "plus_tot((1, 12, 2025), (31, 1, 2025))", attendu: "(31, 1, 2025)", libelle: "plus_tot((1, 12, 2025), (31, 1, 2025)) : même année" }
+      - { appel: "plus_tot((20, 3, 2026), (5, 3, 2026))", attendu: "(5, 3, 2026)", libelle: "plus_tot((20, 3, 2026), (5, 3, 2026)) : même mois" }
+      - { appel: "plus_tot((30, 1, 2000), (1, 2, 1999))", attendu: "(1, 2, 1999)", libelle: "plus_tot((30, 1, 2000), (1, 2, 1999)) : le jour et le mois ne suffisent pas" }
+      - { appel: "plus_tot((8, 5, 1945), (8, 5, 1945))", attendu: "(8, 5, 1945)", cache: true }
+      - { appel: "plus_tot((1, 1, 2001), (31, 12, 2000))", attendu: "(31, 12, 2000)", cache: true }
+
+  - id: dans-le-carre
+    numero: 217
+    titre: Les points dans le carré
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `dans_le_carre(points, c)` qui reçoit un tuple de points `(x, y)` et renvoie combien d'entre eux sont dans le carré allant de 0 à `c` sur les deux axes, bords compris.
+    depart: |
+      def dans_le_carre(points, c):
+          ...
+    aides:
+      - |
+        def dans_le_carre(points, c):
+            # creer un compteur qui vaut 0
+            # parcourir les points, en les depaquetant en x et y
+            #     si x et y sont tous les deux entre 0 et c, ajouter 1 au compteur
+            # renvoyer le compteur
+      - |
+        def dans_le_carre(points, c):
+            compteur = 0
+            for x, y in points:
+                if 0 <= x <= ___ and ___ <= y <= ___:
+                    compteur = compteur + 1
+            return compteur
+      - |
+        def dans_le_carre(points, c):
+            compteur = 0
+            for x, y in points:
+                if 0 <= x <= c and 0 <= y <= c:
+                    compteur = ___
+            return compteur
+    solution: |
+      def dans_le_carre(points, c):
+          compteur = 0
+          for x, y in points:
+              if 0 <= x <= c and 0 <= y <= c:
+                  compteur = compteur + 1
+          return compteur
+    autres_solutions:
+      - |
+        def dans_le_carre(points, c):
+            compteur = 0
+            for p in points:
+                if p[0] >= 0 and p[0] <= c and p[1] >= 0 and p[1] <= c:
+                    compteur = compteur + 1
+            return compteur
+    tests:
+      - { appel: "dans_le_carre(((1, 1), (5, 2), (2, 9)), 4)", attendu: "1" }
+      - { appel: "dans_le_carre(((0, 0), (4, 4)), 4)", attendu: "2", libelle: "dans_le_carre(((0, 0), (4, 4)), 4) : les bords comptent" }
+      - { appel: "dans_le_carre(((-1, 2), (2, -1)), 4)", attendu: "0", libelle: "dans_le_carre(((-1, 2), (2, -1)), 4) : des coordonnées négatives" }
+      - { appel: "dans_le_carre((), 4)", attendu: "0", cache: true }
+      - { appel: "dans_le_carre(((3, 5), (5, 3), (3, 3)), 4)", attendu: "1", cache: true }
+
+  - id: arrivee-deplacements
+    numero: 218
+    titre: Le point d'arrivée
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    type: code
+    enonce: |
+      Un robot part du point `depart`, puis il enchaîne des déplacements. Chaque déplacement est un tuple `(dx, dy)`, et ils sont tous réunis dans un tuple `deplacements`.
+
+      Écrire une fonction `arrivee(depart, deplacements)` qui renvoie le point d'arrivée. Par exemple, `arrivee((0, 0), ((2, 1), (-1, 3)))` renvoie `(1, 4)`.
+    depart: |
+      def arrivee(depart, deplacements):
+          ...
+    aides:
+      - |
+        def arrivee(depart, deplacements):
+            # depaqueter le point de depart dans x et y
+            # parcourir les deplacements, en les depaquetant en dx et dy
+            #     ajouter dx a x et dy a y
+            # renvoyer le tuple (x, y)
+      - |
+        def arrivee(depart, deplacements):
+            x, y = ___
+            for dx, dy in ___:
+                x = ___
+                y = ___
+            return x, y
+      - |
+        def arrivee(depart, deplacements):
+            x, y = depart
+            for dx, dy in deplacements:
+                x = x + dx
+                y = ___
+            return x, y
+    solution: |
+      def arrivee(depart, deplacements):
+          x, y = depart
+          for dx, dy in deplacements:
+              x = x + dx
+              y = y + dy
+          return x, y
+    tests:
+      - { appel: "arrivee((0, 0), ((2, 1), (-1, 3)))", attendu: "(1, 4)" }
+      - { appel: "arrivee((5, 5), ())", attendu: "(5, 5)", libelle: "arrivee((5, 5), ()) : aucun déplacement" }
+      - { appel: "arrivee((1, 2), ((0, -2),))", attendu: "(1, 0)" }
+      - { appel: "arrivee((0, 0), ((1, 0), (1, 0), (0, 1)))", attendu: "(2, 1)", cache: true }
+
+  - id: le-plus-cher
+    numero: 219
+    titre: L'article le plus cher
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    type: code
+    enonce: |
+      Un ticket de caisse est un tuple d'articles, et chaque article est un tuple `(nom, prix)`.
+
+      Écrire une fonction `le_plus_cher(articles)` qui renvoie le **nom** de l'article le plus cher, sans utiliser `max`. Le ticket n'est pas vide, et en cas d'égalité, renvoyer le premier.
+    depart: |
+      def le_plus_cher(articles):
+          ...
+    interdit: [max, sorted, sort]
+    aides:
+      - |
+        def le_plus_cher(articles):
+            # retenir le premier article comme meilleur
+            # parcourir les articles, en les depaquetant en nom et prix
+            #     si le prix est plus grand que celui du meilleur, retenir cet article
+            # renvoyer le nom du meilleur
+      - |
+        def le_plus_cher(articles):
+            meilleur_nom, meilleur_prix = articles[___]
+            for nom, prix in articles:
+                if prix > ___:
+                    meilleur_nom, meilleur_prix = ___, ___
+            return meilleur_nom
+      - |
+        def le_plus_cher(articles):
+            meilleur_nom, meilleur_prix = articles[0]
+            for nom, prix in articles:
+                if prix > meilleur_prix:
+                    meilleur_nom, meilleur_prix = nom, prix
+            return ___
+    solution: |
+      def le_plus_cher(articles):
+          meilleur_nom, meilleur_prix = articles[0]
+          for nom, prix in articles:
+              if prix > meilleur_prix:
+                  meilleur_nom, meilleur_prix = nom, prix
+          return meilleur_nom
+    tests:
+      - { appel: "le_plus_cher((('pain', 1.2), ('fromage', 4.5), ('lait', 0.9)))", attendu: "'fromage'" }
+      - { appel: "le_plus_cher((('eau', 0.5),))", attendu: "'eau'", libelle: "un seul article" }
+      - { appel: "le_plus_cher((('stylo', 2), ('cahier', 2)))", attendu: "'stylo'", libelle: "deux prix égaux : le premier" }
+      - { appel: "le_plus_cher((('a', 1), ('b', 2), ('c', 3)))", attendu: "'c'", cache: true }
+      - { appel: "le_plus_cher((('a', 3), ('b', 2), ('c', 1)))", attendu: "'a'", cache: true }
+
+  - id: moyenne-ponderee
+    numero: 220
+    titre: La moyenne avec coefficients
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 4
+    tags: [maths]
+    type: code
+    enonce: |
+      Chaque note est un tuple `(note, coefficient)`, et toutes les notes sont réunies dans un tuple. Écrire une fonction `moyenne_ponderee(notes)` qui renvoie la moyenne pondérée. Par exemple, `moyenne_ponderee(((12, 2), (18, 1)))` renvoie 14.0.
+
+      Pour rappel, on additionne les produits note × coefficient, puis on divise par la somme des coefficients.
+    depart: |
+      def moyenne_ponderee(notes):
+          ...
+    interdit: [sum]
+    aides:
+      - |
+        def moyenne_ponderee(notes):
+            # creer deux totaux qui valent 0 : les points et les coefficients
+            # parcourir les notes, en les depaquetant en note et coefficient
+            #     ajouter note * coefficient aux points, et coefficient aux coefficients
+            # renvoyer les points divises par les coefficients
+      - |
+        def moyenne_ponderee(notes):
+            points = 0
+            coefficients = 0
+            for note, coef in notes:
+                points = ___
+                coefficients = ___
+            return points / coefficients
+      - |
+        def moyenne_ponderee(notes):
+            points = 0
+            coefficients = 0
+            for note, coef in notes:
+                points = points + note * coef
+                coefficients = ___
+            return points / coefficients
+    solution: |
+      def moyenne_ponderee(notes):
+          points = 0
+          coefficients = 0
+          for note, coef in notes:
+              points = points + note * coef
+              coefficients = coefficients + coef
+          return points / coefficients
+    tests:
+      - { appel: "moyenne_ponderee(((12, 2), (18, 1)))", attendu: "14.0" }
+      - { appel: "moyenne_ponderee(((15, 1),))", attendu: "15.0", libelle: "une seule note" }
+      - { appel: "moyenne_ponderee(((10, 1), (20, 1)))", attendu: "15.0", libelle: "des coefficients égaux : la moyenne habituelle" }
+      - { appel: "moyenne_ponderee(((8, 3), (16, 1), (11, 2)))", attendu: "10.333333333333334", cache: true }
+
+  - id: plus-proche-origine
+    numero: 221
+    titre: Le plus proche de l'origine
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 2
+    duree: 5
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `plus_proche(points)` qui reçoit un tuple non vide de points `(x, y)` et renvoie celui qui est le plus proche de l'origine `(0, 0)`. En cas d'égalité, renvoyer le premier.
+
+      Conseil : pour comparer des distances, il suffit de comparer leurs carrés `x * x + y * y`, sans calculer de racine.
+    depart: |
+      def plus_proche(points):
+          ...
+    interdit: [min, sorted, sort]
+    aides:
+      - |
+        def plus_proche(points):
+            # retenir le premier point comme meilleur
+            # parcourir les points
+            #     si le carre de la distance du point est plus petit que celui du meilleur, le retenir
+            # renvoyer le meilleur point
+      - |
+        def plus_proche(points):
+            meilleur = points[0]
+            for p in points:
+                if p[0] * p[0] + p[1] * p[1] < meilleur[___] * meilleur[___] + meilleur[___] * meilleur[___]:
+                    meilleur = ___
+            return meilleur
+      - |
+        def plus_proche(points):
+            meilleur = points[0]
+            for p in points:
+                if p[0] * p[0] + p[1] * p[1] < meilleur[0] * meilleur[0] + meilleur[1] * meilleur[1]:
+                    meilleur = ___
+            return meilleur
+    solution: |
+      def plus_proche(points):
+          meilleur = points[0]
+          for p in points:
+              if p[0] * p[0] + p[1] * p[1] < meilleur[0] * meilleur[0] + meilleur[1] * meilleur[1]:
+                  meilleur = p
+          return meilleur
+    autres_solutions:
+      - |
+        def carre_distance(point):
+            x, y = point
+            return x * x + y * y
+
+        def plus_proche(points):
+            meilleur = points[0]
+            for p in points:
+                if carre_distance(p) < carre_distance(meilleur):
+                    meilleur = p
+            return meilleur
+    tests:
+      - { appel: "plus_proche(((3, 4), (1, 1), (5, 0)))", attendu: "(1, 1)" }
+      - { appel: "plus_proche(((2, 0),))", attendu: "(2, 0)", libelle: "un seul point" }
+      - { appel: "plus_proche(((-1, -1), (2, 2)))", attendu: "(-1, -1)", libelle: "des coordonnées négatives" }
+      - { appel: "plus_proche(((0, 3), (3, 0)))", attendu: "(0, 3)", libelle: "deux distances égales : le premier" }
+      - { appel: "plus_proche(((5, 5), (0, 1), (1, 0)))", attendu: "(0, 1)", cache: true }
+      - { appel: "plus_proche(((4, 4), (3, 3), (0, 6)))", attendu: "(3, 3)", cache: true }
+      - { appel: "plus_proche(((3, 1), (2, 2)))", attendu: "(2, 2)", cache: true }
+      - { appel: "plus_proche(((1, 3), (2, 2)))", attendu: "(2, 2)", cache: true }
+
+  - id: boite-englobante
+    numero: 222
+    titre: Le rectangle qui contient tout
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    tags: [maths]
+    type: code
+    enonce: |
+      Écrire une fonction `boite(points)` qui reçoit un tuple non vide de points `(x, y)` et renvoie le plus petit rectangle qui les contient tous, sous la forme `((xmin, ymin), (xmax, ymax))` : son coin en bas à gauche, puis son coin en haut à droite. Ne pas utiliser `min` ni `max`.
+
+      Par exemple, `boite(((1, 5), (3, 2), (2, 7)))` renvoie `((1, 2), (3, 7))`.
+    depart: |
+      def boite(points):
+          ...
+    interdit: [min, max, sorted, sort]
+    aides:
+      - |
+        def boite(points):
+            # partir du premier point pour les quatre valeurs xmin, xmax, ymin, ymax
+            # parcourir les points, en les depaquetant en x et y
+            #     mettre a jour xmin si x est plus petit, xmax si x est plus grand
+            #     faire de meme pour y
+            # renvoyer ((xmin, ymin), (xmax, ymax))
+      - |
+        def boite(points):
+            xmin, ymin = points[0]
+            xmax, ymax = points[0]
+            for x, y in points:
+                if x < xmin:
+                    xmin = x
+                if x > ___:
+                    xmax = ___
+                if y < ___:
+                    ymin = ___
+                if y > ___:
+                    ymax = ___
+            return ((___, ___), (___, ___))
+      - |
+        def boite(points):
+            xmin, ymin = points[0]
+            xmax, ymax = points[0]
+            for x, y in points:
+                if x < xmin:
+                    xmin = x
+                if x > xmax:
+                    xmax = x
+                if y < ymin:
+                    ymin = y
+                if y > ymax:
+                    ymax = y
+            return ___
+    solution: |
+      def boite(points):
+          xmin, ymin = points[0]
+          xmax, ymax = points[0]
+          for x, y in points:
+              if x < xmin:
+                  xmin = x
+              if x > xmax:
+                  xmax = x
+              if y < ymin:
+                  ymin = y
+              if y > ymax:
+                  ymax = y
+          return ((xmin, ymin), (xmax, ymax))
+    tests:
+      - { appel: "boite(((1, 5), (3, 2), (2, 7)))", attendu: "((1, 2), (3, 7))" }
+      - { appel: "boite(((4, 4),))", attendu: "((4, 4), (4, 4))", libelle: "un seul point" }
+      - { appel: "boite(((-2, 3), (5, -1)))", attendu: "((-2, -1), (5, 3))", libelle: "des coordonnées négatives" }
+      - { appel: "boite(((0, 0), (9, 1), (3, 8), (1, 2)))", attendu: "((0, 0), (9, 8))", cache: true }
+      - { appel: "boite(((5, 5), (4, 6), (6, 4)))", attendu: "((4, 4), (6, 6))", cache: true }
+
+  - id: somme-fractions
+    numero: 223
+    titre: Additionner deux fractions
+    notion: tuples
+    niveaux: [premiere]
+    difficulte: 3
+    duree: 6
+    tags: [maths]
+    type: code
+    enonce: |
+      Une fraction est un tuple `(numerateur, denominateur)`, avec des entiers strictement positifs.
+
+      Écrire une fonction `pgcd(a, b)`, puis une fonction `somme(f1, f2)` qui **utilise** `pgcd` et renvoie la somme des deux fractions, sous forme simplifiée. Par exemple, `somme((1, 4), (1, 4))` renvoie `(1, 2)`.
+
+      Pour rappel, a/b + c/d = (a × d + c × b) / (b × d), puis on simplifie en divisant le numérateur et le dénominateur par leur PGCD.
+    depart: |
+      def pgcd(a, b):
+          ...
+
+      def somme(f1, f2):
+          ...
+    aides:
+      - |
+        def pgcd(a, b):
+            # tant que b n'est pas nul, remplacer (a, b) par (b, reste de a par b)
+            # renvoyer a
+
+        def somme(f1, f2):
+            # depaqueter les deux fractions
+            # calculer le numerateur et le denominateur de la somme
+            # diviser les deux par leur pgcd (division entiere) et renvoyer le tuple
+      - |
+        def pgcd(a, b):
+            while b != 0:
+                a, b = b, a % ___
+            return a
+
+        def somme(f1, f2):
+            a, b = f1
+            c, d = f2
+            num = a * d + ___
+            den = ___
+            g = pgcd(___, ___)
+            return num // g, den // g
+      - |
+        def pgcd(a, b):
+            while b != 0:
+                a, b = b, a % b
+            return a
+
+        def somme(f1, f2):
+            a, b = f1
+            c, d = f2
+            num = a * d + c * b
+            den = b * d
+            g = pgcd(num, den)
+            return ___
+    solution: |
+      def pgcd(a, b):
+          while b != 0:
+              a, b = b, a % b
+          return a
+
+      def somme(f1, f2):
+          a, b = f1
+          c, d = f2
+          num = a * d + c * b
+          den = b * d
+          g = pgcd(num, den)
+          return num // g, den // g
+    tests:
+      - { appel: "pgcd(12, 18)", attendu: "6" }
+      - { appel: "somme((1, 4), (1, 4))", attendu: "(1, 2)" }
+      - { appel: "somme((1, 2), (1, 3))", attendu: "(5, 6)", libelle: "somme((1, 2), (1, 3)) : déjà simplifiée" }
+      - { appel: "somme((1, 2), (1, 2))", attendu: "(1, 1)", libelle: "somme((1, 2), (1, 2)) : la somme vaut 1" }
+      - { appel: "somme((2, 3), (5, 6))", attendu: "(3, 2)", cache: true }
+      - { appel: "somme((3, 10), (1, 15))", attendu: "(11, 30)", cache: true }
+      - { appel: "pgcd(7, 5)", attendu: "1", cache: true }

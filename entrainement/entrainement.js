@@ -10,6 +10,8 @@
   const NOMS_AIDES = ["Aide 1", "Aide 2", "Aide 3"];
   const ADRESSE_SIGNALEMENT = "mathias-romain.dehais@ac-normandie.fr";
   const TAILLE_SERIE = 10;
+  // Les etiquettes que l'on peut filtrer (champ tags des exercices), avec leur nom affiche.
+  const ETIQUETTES = { maths: "Maths" };
 
   // Les mots de la page, selon le niveau choisi.
   const TEXTES = {
@@ -95,7 +97,7 @@
   // --- Progression ---------------------------------------------------------
 
   function etatVide() {
-    return { exos: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [], ouvertes: [], niveau: null };
+    return { exos: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [], ouvertes: [], niveau: null, etiquettes: [] };
   }
 
   function chargerEtat() {
@@ -276,7 +278,8 @@
     const actives = etat.notions.filter((id) => notionsDuNiveau().some((n) => n.id === id));
     return exercicesDuNiveau().filter((exo) =>
       (actives.length === 0 || actives.includes(exo.notion)) &&
-      (etat.difficultes.length === 0 || etat.difficultes.includes(exo.difficulte))
+      (etat.difficultes.length === 0 || etat.difficultes.includes(exo.difficulte)) &&
+      (etat.etiquettes.length === 0 || (exo.tags || []).some((tag) => etat.etiquettes.includes(tag)))
     );
   }
 
@@ -515,8 +518,13 @@
       el("div", { class: "entr-puces" }, notionsDuNiveau()
         .filter((notion) => banque.exercices.some((e) => e.notion === notion.id))
         .map((notion) => puce("entr-filtre", notion.nom, etat.notions, notion.id, couleurLigne(notion.id)))),
-      el("div", { class: "entr-puces" }, Object.entries(DIFFICULTES).map(([valeur, nom]) =>
-        puce("entr-filtre entr-filtre--neutre", nom, etat.difficultes, Number(valeur))))
+      el("div", { class: "entr-puces" },
+        Object.entries(DIFFICULTES).map(([valeur, nom]) =>
+          puce("entr-filtre entr-filtre--neutre", nom, etat.difficultes, Number(valeur))),
+        // Une etiquette n'apparait que si le niveau a des exercices qui la portent.
+        Object.entries(ETIQUETTES)
+          .filter(([tag]) => exercicesDuNiveau().some((exo) => (exo.tags || []).includes(tag)))
+          .map(([tag, nom]) => puce("entr-filtre entr-filtre--neutre entr-filtre--etiquette", nom, etat.etiquettes, tag)))
     );
   }
 

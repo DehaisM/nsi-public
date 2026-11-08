@@ -84,6 +84,7 @@
 }
 .entr-filtre::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--ligne); }
 .entr-filtre--neutre::before { content: none; }
+.entr-filtre--etiquette { margin-left: .6rem; }
 .entr-filtre:hover { border-color: var(--ligne); }
 .entr-filtre--active { border-color: var(--ligne); background: color-mix(in srgb, var(--ligne) 18%, transparent); font-weight: 800; }
 
