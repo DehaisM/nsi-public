@@ -44,10 +44,10 @@ def normaliser(texte):
     """Comme la page : sans espaces, en minuscules, avec un point decimal."""
     return re.sub(r"\s+", "", str(texte)).lower().replace(",", ".")
 
-# Ce que les eleves ont vu en Premiere, releve dans les corriges des TP0.1 a TP1.2.
+# Ce que les eleves ont vu en Premiere, releve dans les corriges des TP0.1 a TP1.3.
 # A completer au fil de l'annee : ajouter "tuples" ici retire l'interdiction des tuples.
-NOTIONS_VUES = {"variables", "conditions", "for", "while", "fonctions", "listes", "grilles"}
-FONCTIONS_VUES = {"print", "len", "int", "float", "str", "type", "range", "list"}
+NOTIONS_VUES = {"variables", "conditions", "for", "while", "fonctions", "listes", "grilles", "tuples"}
+FONCTIONS_VUES = {"print", "len", "int", "float", "str", "type", "range", "list", "tuple"}
 METHODES_VUES = {"append", "pop", "insert", "index", "sqrt"}
 MODULES_VUS = {"math"}
 
@@ -60,6 +60,7 @@ AVANT_LA_NOTION = {
     "fonctions": (ast.ListComp,),
     "listes": (),
     "grilles": (),
+    "tuples": (),
 }
 NOMS_DES_FORMES = {
     ast.If: "if", ast.For: "for", ast.While: "while", ast.FunctionDef: "def",

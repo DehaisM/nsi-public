@@ -61,5 +61,6 @@ notions:
   - { id: fonctions, nom: "Fonctions" }
   - { id: listes, nom: "Listes" }
   - { id: grilles, nom: "Grilles" }
+  - { id: tuples, nom: "Tuples" }
   - { id: internet-1, nom: "Internet, chapitre 1", niveau: seconde }
   - { id: internet-2, nom: "Internet, chapitre 2", niveau: seconde }
