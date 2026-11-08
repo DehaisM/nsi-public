@@ -135,8 +135,6 @@
 .entr-station__infos { display: block; font-size: .62rem; color: var(--entr-doux); }
 
 .md-typeset .entr-badge { display: inline-block; margin-left: .5rem; font-size: .62rem; font-weight: 800; color: var(--entr-vert); white-space: nowrap; }
-.md-typeset .entr-signaler { margin: 2rem 0 0; font-size: .62rem; }
-.md-typeset .entr-signaler a { color: var(--entr-doux); text-decoration: underline; text-underline-offset: .15em; }
 
 /* En-tete d'un exercice */
 .md-typeset .entr-retour { margin: 0 0 1rem; font-size: .68rem; }

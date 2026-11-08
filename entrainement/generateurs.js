@@ -2,8 +2,8 @@
 // et une explication refaite sur ces valeurs-la.
 //
 // Chaque generateur recoit une fonction de hasard (Math.random par defaut) et renvoie :
-// enonce, indication, reponses (la premiere est affichee), explication, resume (les valeurs,
-// pour le signalement) et donnees (les valeurs, pour outils/controler_generateurs.py).
+// enonce, indication, reponses (la premiere est affichee), explication, resume (les valeurs
+// en bref, pour les messages du controle) et donnees (les valeurs, pour outils/controler_generateurs.py).
 const Generateurs = (function () {
   "use strict";
 
