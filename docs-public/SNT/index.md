@@ -18,4 +18,4 @@ Tables de données et fichiers CSV
 ## Réviser
 
 ### [Questions de révision](../entrainement/index.md#/seconde)
-QCM et questions courtes sur le cours, pour s'entraîner avant les contrôles
+

@@ -1,5 +1,5 @@
 ---
-description: "Questions de révision sur le cours de SNT et exercices de Python de NSI, à faire directement dans le navigateur, avec correction immédiate, sans compte ni installation."
+description: "Des outils pour s'entraîner chez soi"
 title: Entraînement
 hide:
   - navigation

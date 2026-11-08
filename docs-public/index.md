@@ -11,10 +11,10 @@ Tous mes cours sont utilisables par toutes et tous. Contactez-moi à mathias-rom
 ## Enseignements
 
 ### [Seconde GT](SNT/index.md)
-Sciences numériques et technologie (SNT) : Internet, données structurées.
+Sciences numériques et technologie
 
 ### [Première NSI](1NSI/index.md)
-Numérique et sciences informatiques (NSI) : bases de Python, types construits.
+Numérique et sciences informatiques
 
 ### [Terminale NSI](TNSI/index.md)
 
@@ -22,7 +22,7 @@ Numérique et sciences informatiques (NSI) : bases de Python, types construits.
 ## Pour s'entraîner
 
 ### [Entraînement](entrainement/index.md)
-Questions de révision pour la Seconde, exercices de Python pour la Première, directement dans le navigateur
+Des outils pour s'entraîner quand on a du temps 
 
 ## Années précédentes
 
