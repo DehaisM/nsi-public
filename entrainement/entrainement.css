@@ -238,6 +238,30 @@
 }
 .entr-champ::placeholder { font-family: var(--nsi-titres); color: var(--entr-doux); }
 
+/* Le choix du niveau */
+.entr-niveaux { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem; margin: 0 0 .8rem; font-size: .72rem; color: var(--entr-doux); }
+.entr-niveaux .entr-filtre { color: var(--entr-encre); }
+.md-typeset .entr-bouton--grand { font-size: .9rem; padding: .7rem 1.4rem; }
+
+/* Deux boutons dans le panneau du jour */
+.entr-jour__boutons { display: flex; flex-wrap: wrap; gap: .5rem; }
+.md-typeset .entr-bouton--clair { border-color: rgba(255, 255, 255, .75); color: #fff; }
+.md-typeset .entr-bouton--clair:hover:not(:disabled) { background: rgba(255, 255, 255, .15); color: #fff; }
+
+/* Les questions de cours */
+.entr-figure { margin: .8rem 0; }
+.entr-figure img { display: block; max-width: 100%; height: auto; border: 1px solid var(--nsi-filet); border-radius: var(--nsi-rayon); }
+.md-typeset .entr-message > div, .md-typeset .entr-cours { color: var(--entr-encre); }
+.md-typeset .entr-cours { margin: .45rem 0 0; font-size: .7rem; color: var(--entr-doux); }
+.entr-reponse { display: flex; flex-wrap: wrap; gap: .5rem; margin: 1rem 0; }
+.entr-champ--reponse { max-width: 16rem; font-size: .85rem; }
+.md-typeset .entr-arret--rate { border-color: var(--entr-rouge); background: var(--entr-erreur-fond); }
+.md-typeset .entr-attendue { margin: .3rem 0 .2rem; color: var(--entr-encre); font-weight: 800; }
+.md-typeset .entr-message--rappel > .entr-attendue { margin-top: 0; }
+.md-typeset .entr-figure figcaption { margin-top: .25rem; font-size: .62rem; color: var(--entr-doux); }
+.entr-rate { margin: 1.4rem 0; padding-top: .6rem; border-top: 1px solid var(--nsi-filet); }
+.md-typeset .entr-rate h2 { margin: 0 0 .3rem; font-size: .9rem; }
+
 @media (max-width: 34rem) {
     .entr-statut { margin-left: 0; width: 100%; }
     .entr-jour { padding: .9rem 1rem; }

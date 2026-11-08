@@ -1,0 +1,527 @@
+exercices:
+
+  - id: paquets-definition
+    numero: 164
+    titre: Les petits morceaux
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Avant d'être envoyée sur Internet, une information est découpée en petits morceaux. Comment s'appellent-ils ?
+    choix: ["Des paquets", "Des octets", "Des protocoles", "Des adresses IP"]
+    explication: |
+      Une page web, une photo ou un message est découpé en **paquets**, qui voyagent chacun de leur côté.
+    cours: "Chapitre 2, Les protocoles de communication"
+
+  - id: chemin-des-paquets
+    numero: 165
+    titre: Le chemin des paquets
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Les paquets d'un même message suivent-ils tous le même chemin ?
+    choix:
+      - "Pas forcément : chaque paquet voyage indépendamment et peut emprunter un chemin différent"
+      - "Oui, ils suivent toujours le même chemin, les uns derrière les autres"
+      - "Oui, ils passent tous par le même routeur"
+      - "Non, chaque paquet a son propre câble, réservé pour lui"
+    explication: |
+      Chaque paquet voyage indépendamment des autres : deux paquets d'un même message peuvent passer par des routeurs différents.
+    cours: "Chapitre 2, Les protocoles de communication"
+
+  - id: protocole-definition
+    numero: 166
+    titre: Un protocole
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Qu'est-ce qu'un **protocole** de communication ?
+    choix:
+      - "Un ensemble de règles qui indiquent comment deux machines doivent communiquer"
+      - "Un appareil qui relie plusieurs réseaux"
+      - "Un logiciel qui protège contre les virus"
+      - "Le câble qui relie deux machines"
+    explication: |
+      Un protocole fixe les règles d'un échange : comment le commencer, comment l'organiser, comment vérifier que tout s'est bien passé.
+    cours: "Chapitre 2, Les protocoles de communication"
+
+  - id: role-tcp
+    numero: 167
+    titre: Le rôle de TCP
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Dans TCP/IP, quel est le rôle de **TCP** ?
+    choix:
+      - "Découper le message en paquets numérotés"
+      - "Acheminer chaque paquet jusqu'à sa destination"
+      - "Donner une adresse à chaque machine"
+      - "Stocker les pages web"
+    explication: |
+      TCP découpe le message en paquets numérotés. C'est IP qui achemine ensuite chaque paquet jusqu'à sa destination.
+    cours: "Chapitre 2, Les protocoles de communication"
+
+  - id: role-ip
+    numero: 168
+    titre: Le rôle d'IP
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Dans TCP/IP, quel est le rôle d'**IP** ?
+    choix:
+      - "Acheminer chaque paquet jusqu'à sa destination, éventuellement par des chemins différents"
+      - "Découper le message en paquets numérotés"
+      - "Relier les machines d'un même réseau local"
+      - "Afficher les pages web à l'écran"
+    explication: |
+      IP achemine chaque paquet, grâce aux adresses IP. Le découpage en paquets numérotés, lui, est le travail de TCP.
+    cours: "Chapitre 2, Les protocoles de communication"
+
+  - id: paquets-numerotes
+    numero: 169
+    titre: Des paquets numérotés
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: qcm
+    enonce: TCP numérote les paquets d'un message. À quoi cela sert-il à l'arrivée ?
+    choix:
+      - "À remettre les paquets dans l'ordre, puisqu'ils peuvent arriver par des chemins différents"
+      - "À aller plus vite dans les routeurs"
+      - "À compter le nombre de routeurs traversés"
+      - "À protéger les paquets contre le piratage"
+    explication: |
+      Les paquets voyagent indépendamment et peuvent emprunter des chemins différents : ils n'arrivent donc pas forcément dans l'ordre. Leur numéro permet de reconstituer le message.
+    cours: "Chapitre 2, Les protocoles de communication"
+
+  - id: role-adresse-ip
+    numero: 170
+    titre: À quoi sert une adresse IP ?
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: À quoi sert l'adresse IP d'une machine ?
+    choix:
+      - "À savoir où envoyer les données, comme une adresse postale"
+      - "À protéger la machine contre les virus"
+      - "À mesurer la vitesse de la connexion"
+      - "À donner un nom à un site web"
+    explication: |
+      L'adresse IP joue le rôle d'une adresse postale : elle indique où envoyer les données. Sans elle, un paquet ne pourrait pas trouver sa destination.
+    cours: "Chapitre 2, Adresse IP"
+
+  - id: adresse-unique
+    numero: 171
+    titre: Une adresse unique
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: D'après le cours, deux machines qui circulent sur Internet peuvent-elles avoir la même adresse IP ?
+    choix:
+      - "Non, chaque machine doit avoir une adresse unique"
+      - "Oui, si elles sont dans le même pays"
+      - "Oui, si elles sont de la même marque"
+      - "Oui, sans aucune condition"
+    explication: |
+      Pour circuler sur Internet, chaque machine doit posséder une adresse **unique**, sinon on ne saurait pas à laquelle envoyer les données.
+    cours: "Chapitre 2, Adresse IP"
+
+  - id: ipv4-octets
+    numero: 172
+    titre: Les octets d'une adresse IPv4
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    enonce: Combien d'**octets** composent une adresse IPv4 ?
+    indication: "Un nombre"
+    reponses: ["4", "quatre"]
+    explication: |
+      Une adresse IPv4 est composée de 4 octets, écrits sous forme de 4 nombres séparés par des points, comme `192.168.1.14`.
+    cours: "Chapitre 2, Adresse IP"
+
+  - id: ipv4-bits
+    numero: 173
+    titre: Les bits d'une adresse IPv4
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    enonce: Combien de **bits** composent une adresse IPv4 ?
+    indication: "Un nombre"
+    reponses: ["32"]
+    calcul: "4 * 8"
+    explication: |
+      Une adresse IPv4 compte 4 octets, et un octet compte 8 bits : 4 × 8 = 32 bits.
+    cours: "Chapitre 2, Adresse IP"
+
+  - id: valeurs-d-un-octet
+    numero: 174
+    titre: Les valeurs d'un nombre
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Dans une adresse IPv4 écrite en décimal pointé, quelles valeurs peut prendre chacun des 4 nombres ?
+    choix: ["De 0 à 255", "De 0 à 256", "De 1 à 255", "De 0 à 999"]
+    explication: |
+      Chaque nombre correspond à un octet, donc à 8 bits : sa valeur va de 0 (`00000000`) à 255 (`11111111`).
+    cours: "Chapitre 2, Adresse IP"
+
+  - id: adresse-valide
+    numero: 175
+    titre: Une adresse valide
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Laquelle de ces adresses IPv4 est valide ?
+    choix: ["`192.168.1.14`", "`192.168.1.256`", "`192.168.1`", "`300.10.2.1`"]
+    explication: |
+      Une adresse IPv4 compte exactement 4 nombres, chacun compris entre 0 et 255. `256` et `300` sont trop grands, et `192.168.1` n'a que 3 nombres.
+    cours: "Chapitre 2, Adresse IP"
+
+  - id: adresse-invalide
+    numero: 176
+    titre: Une adresse impossible
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Pourquoi `10.0.300.4` n'est-elle pas une adresse IPv4 valide ?
+    choix:
+      - "Parce que 300 dépasse 255, la plus grande valeur d'un octet"
+      - "Parce qu'une adresse ne peut pas commencer par 10"
+      - "Parce qu'il manque un nombre"
+      - "Parce qu'une adresse ne peut pas contenir de 0"
+    explication: |
+      Chaque nombre d'une adresse IPv4 est un octet : il ne peut pas dépasser 255.
+    cours: "Chapitre 2, Adresse IP"
+
+  - id: decimal-pointe
+    numero: 177
+    titre: Une écriture pour les humains
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Comment s'appelle l'écriture d'une adresse IP sous la forme `192.168.1.14` ?
+    choix: ["La notation décimale pointée", "Le binaire", "L'adresse IPv6", "Le masque de sous-réseau"]
+    explication: |
+      L'ordinateur manipule l'adresse en binaire. La notation décimale pointée est simplement une écriture plus agréable pour les humains.
+    cours: "Chapitre 2, Adresse IP"
+
+  - id: pourquoi-ipv6
+    numero: 178
+    titre: Pourquoi IPv6 ?
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Pourquoi a-t-on créé une nouvelle version du protocole IP, **IPv6** ?
+    choix:
+      - "Parce que le stock d'adresses IPv4 a fini par s'épuiser"
+      - "Pour rendre les connexions plus rapides"
+      - "Pour remplacer le Wi-Fi"
+      - "Parce qu'IPv4 n'utilisait pas le binaire"
+    explication: |
+      Avec 32 bits, IPv4 ne permet qu'un peu plus de 4 milliards d'adresses. Avec la multiplication des appareils connectés, elles ont fini par manquer.
+    cours: "Chapitre 2, Adresse IP"
+
+  - id: ipv6-bits
+    numero: 179
+    titre: Les bits d'une adresse IPv6
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    enonce: Combien de **bits** composent une adresse IPv6 ?
+    indication: "Un nombre"
+    reponses: ["128"]
+    calcul: "16 * 8"
+    explication: |
+      Une adresse IPv6 compte 16 octets, soit 16 × 8 = 128 bits, au lieu de 32 pour IPv4.
+    cours: "Chapitre 2, Adresse IP"
+
+  - id: nombre-valeurs-octet
+    numero: 180
+    titre: Les valeurs d'un octet
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    enonce: Combien de valeurs différentes un octet peut-il prendre ?
+    indication: "Un nombre"
+    reponses: ["256", "2^8"]
+    calcul: "2 ** 8"
+    explication: |
+      Un octet compte 8 bits, et chaque bit vaut 0 ou 1 : 2 × 2 × ... × 2 = 2⁸ = 256 valeurs, de 0 à 255.
+    cours: "Chapitre 2, Adresse IP, exercice Octet et nombre d'adresses"
+
+  - id: nombre-adresses-ipv4
+    numero: 181
+    titre: Combien d'adresses IPv4 ?
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Combien d'adresses IPv4 différentes existe-t-il ?
+    choix: ["2³², un peu plus de 4 milliards", "2⁸, soit 256", "4 × 255, soit 1020", "2¹²⁸"]
+    explication: |
+      Une adresse IPv4 compte 32 bits, qui valent chacun 0 ou 1 : cela donne 2³² adresses, soit un peu plus de 4 milliards. 2¹²⁸, c'est le nombre d'adresses IPv6.
+    cours: "Chapitre 2, Adresse IP, exercice Octet et nombre d'adresses"
+
+  - id: octet-en-binaire
+    numero: 182
+    titre: Un octet en binaire
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    enonce: Convertir le nombre 77 en binaire, sur 8 bits.
+    indication: "8 chiffres, 0 ou 1"
+    reponses: ["01001101"]
+    calcul: "format(77, '08b')"
+    explication: |
+      77 = 64 + 8 + 4 + 1. En plaçant un 1 sous 64, 8, 4 et 1 dans le tableau des puissances de 2 (128, 64, 32, 16, 8, 4, 2, 1), on obtient `01001101`.
+    cours: "Chapitre 2, Adresse IP, exercice Convertir une adresse IP (méthode de la Thématique 0)"
+
+  - id: octet-en-decimal
+    numero: 183
+    titre: Un octet en décimal
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    enonce: Convertir l'octet `00101100` en décimal.
+    indication: "Un nombre"
+    reponses: ["44"]
+    calcul: "int('00101100', 2)"
+    explication: |
+      Les bits à 1 sont sous 32, 8 et 4 : 32 + 8 + 4 = 44.
+    cours: "Chapitre 2, Adresse IP, exercice Convertir une adresse IP (méthode de la Thématique 0)"
+
+  - id: adresse-en-decimal
+    numero: 184
+    titre: Une adresse en décimal pointé
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: reponse
+    enonce: |
+      Convertir en décimal pointé l'adresse IP suivante, donnée en binaire :
+
+      `11000000.10101000.00001010.00000011`
+    indication: "Quatre nombres séparés par des points"
+    reponses: ["192.168.10.3"]
+    calcul: "'.'.join(str(int(octet, 2)) for octet in '11000000.10101000.00001010.00000011'.split('.'))"
+    explication: |
+      On convertit chaque octet séparément : `11000000` vaut 128 + 64 = 192, `10101000` vaut 128 + 32 + 8 = 168, `00001010` vaut 8 + 2 = 10, et `00000011` vaut 2 + 1 = 3.
+    cours: "Chapitre 2, Adresse IP, exercice Convertir une adresse IP"
+
+  - id: adresse-en-binaire
+    numero: 185
+    titre: Une adresse en binaire
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: reponse
+    enonce: Convertir en binaire l'adresse IP `10.1.2.255`, octet par octet, en séparant les octets par des points.
+    indication: "Quatre groupes de 8 bits séparés par des points"
+    reponses: ["00001010.00000001.00000010.11111111"]
+    calcul: "'.'.join(format(int(n), '08b') for n in '10.1.2.255'.split('.'))"
+    explication: |
+      Chaque nombre s'écrit sur 8 bits : 10 = 8 + 2 donne `00001010`, 1 donne `00000001`, 2 donne `00000010`, et 255, la plus grande valeur, donne `11111111`.
+    cours: "Chapitre 2, Adresse IP, exercice Convertir une adresse IP"
+
+  - id: role-masque
+    numero: 186
+    titre: Le masque de sous-réseau
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: À quoi sert un **masque de sous-réseau** ?
+    choix:
+      - "À indiquer quelle partie de l'adresse IP désigne le réseau, et quelle partie désigne la machine"
+      - "À cacher l'adresse IP d'une machine"
+      - "À chiffrer les paquets"
+      - "À relier deux réseaux entre eux"
+    explication: |
+      Le masque indique, bit par bit, la partie réseau (bits à 1) et la partie machine (bits à 0) d'une adresse IP.
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: analogie-code-postal
+    numero: 187
+    titre: L'adresse postale
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: On compare une adresse IP à une adresse postale. À quoi correspond la **partie réseau** de l'adresse IP ?
+    choix:
+      - "Au code postal, qui identifie la ville"
+      - "Au numéro et au nom de la rue, qui identifient la maison"
+      - "Au nom de la personne"
+      - "Au timbre"
+    explication: |
+      Le code postal identifie la ville, comme la partie réseau identifie le réseau. Le numéro et la rue identifient une maison dans la ville, comme la partie machine identifie une machine dans le réseau.
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: notation-slash
+    numero: 188
+    titre: La notation /n
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Que signifie le `/24` dans l'adresse `192.168.1.14/24` ?
+    choix:
+      - "Les 24 premiers bits de l'adresse forment la partie réseau"
+      - "Le réseau contient 24 machines"
+      - "L'adresse compte 24 octets"
+      - "La machine porte le numéro 24 dans le réseau"
+    explication: |
+      Avec la notation `/n`, `n` est le nombre de bits réservés au réseau. Ici, 24 bits pour le réseau, et il en reste 8 pour la machine.
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: bits-machine
+    numero: 189
+    titre: Les bits de la machine
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    enonce: Avec un masque `/26`, combien de bits reste-t-il pour la partie machine ?
+    indication: "Un nombre"
+    reponses: ["6"]
+    calcul: "32 - 26"
+    explication: |
+      Une adresse IPv4 compte 32 bits. Le masque `/26` en réserve 26 au réseau : il en reste 32 - 26 = 6 pour la machine.
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: adresses-slash-24
+    numero: 190
+    titre: La taille d'un réseau /24
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    enonce: Combien d'adresses sont possibles dans un réseau `/24` ?
+    indication: "Un nombre"
+    reponses: ["256", "2^8"]
+    calcul: "2 ** (32 - 24)"
+    explication: |
+      Il reste 32 - 24 = 8 bits pour la machine, donc 2⁸ = 256 adresses possibles.
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: adresses-slash-28
+    numero: 191
+    titre: La taille d'un réseau /28
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    enonce: Combien d'adresses sont possibles dans un réseau `/28` ?
+    indication: "Un nombre"
+    reponses: ["16", "2^4"]
+    calcul: "2 ** (32 - 28)"
+    explication: |
+      Il reste 32 - 28 = 4 bits pour la machine, donc 2⁴ = 16 adresses possibles.
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: plus-petit-reseau
+    numero: 192
+    titre: Le plus petit réseau
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Lequel de ces masques donne le réseau avec le **moins** d'adresses possibles ?
+    choix: ["`/30`", "`/24`", "`/16`", "`/8`"]
+    explication: |
+      Plus le nombre après le `/` est grand, moins il reste de bits pour la machine, donc moins il y a d'adresses : un `/30` n'en a que 2² = 4.
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: adresse-reseau-24
+    numero: 193
+    titre: L'adresse réseau, avec /24
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    enonce: Quelle est l'adresse réseau de `192.168.5.37/24` ?
+    indication: "Quatre nombres séparés par des points"
+    reponses: ["192.168.5.0"]
+    calcul: "str(ipaddress.ip_network('192.168.5.37/24', strict=False).network_address)"
+    explication: |
+      Avec `/24`, les 3 premiers octets (24 bits) forment la partie réseau et restent identiques. Le dernier octet appartient à la machine : tous ses bits sont remplacés par des 0, ce qui donne 0.
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: adresse-reseau-16
+    numero: 194
+    titre: L'adresse réseau, avec /16
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    enonce: Quelle est l'adresse réseau de `172.20.14.9/16` ?
+    indication: "Quatre nombres séparés par des points"
+    reponses: ["172.20.0.0"]
+    calcul: "str(ipaddress.ip_network('172.20.14.9/16', strict=False).network_address)"
+    explication: |
+      Avec `/16`, seuls les 2 premiers octets forment la partie réseau. Les 2 derniers octets appartiennent à la machine et passent à 0.
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: adresse-reseau-26
+    numero: 195
+    titre: L'adresse réseau, avec /26
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: reponse
+    enonce: Quelle est l'adresse réseau de `10.0.0.200/26` ?
+    indication: "Quatre nombres séparés par des points"
+    reponses: ["10.0.0.192"]
+    calcul: "str(ipaddress.ip_network('10.0.0.200/26', strict=False).network_address)"
+    explication: |
+      Le `/26` tombe dans le quatrième octet : 200 s'écrit `11001000`. On garde ses 2 premiers bits (`11`) et on remplace les 6 autres par des 0 : `11000000`, soit 192.
+    cours: "Chapitre 2, Masques de sous-réseau, exemple 192.168.1.130/26"
+
+  - id: adresse-reseau-27
+    numero: 196
+    titre: L'adresse réseau, avec /27
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: reponse
+    enonce: Quelle est l'adresse réseau de `192.168.3.77/27` ?
+    indication: "Quatre nombres séparés par des points"
+    reponses: ["192.168.3.64"]
+    calcul: "str(ipaddress.ip_network('192.168.3.77/27', strict=False).network_address)"
+    explication: |
+      Le `/27` laisse 3 bits de réseau dans le quatrième octet : 77 s'écrit `01001101`. On garde `010` et on remplace les 5 autres bits par des 0 : `01000000`, soit 64.
+    cours: "Chapitre 2, Masques de sous-réseau, exemple 192.168.1.130/26"
+
+  - id: meme-reseau
+    numero: 197
+    titre: Dans le même réseau ?
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: qcm
+    enonce: Les machines `192.168.1.10/24` et `192.168.2.10/24` sont-elles dans le même réseau ?
+    choix:
+      - "Non : leurs adresses réseau sont 192.168.1.0 et 192.168.2.0"
+      - "Oui : elles ont le même masque"
+      - "Oui : leurs adresses finissent toutes les deux par 10"
+      - "On ne peut pas le savoir sans connaître le routeur"
+    explication: |
+      Deux machines sont dans le même réseau si elles ont la même adresse réseau. Avec `/24`, l'adresse réseau garde les 3 premiers octets : 192.168.1.0 d'un côté, 192.168.2.0 de l'autre.
+    cours: "Chapitre 2, Masques de sous-réseau"

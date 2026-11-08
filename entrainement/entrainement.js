@@ -9,11 +9,37 @@
   const DIFFICULTES = { 1: "Facile", 2: "Moyen", 3: "Corsé" };
   const NOMS_AIDES = ["Aide 1", "Aide 2", "Aide 3"];
   const ADRESSE_SIGNALEMENT = "mathias-romain.dehais@ac-normandie.fr";
+  const TAILLE_SERIE = 10;
+
+  // Les mots de la page, selon le niveau choisi.
+  const TEXTES = {
+    seconde: {
+      nom: "Seconde",
+      intro: "Des questions sur le cours, pour réviser les notions de base avant les contrôles.",
+      jour: "Question du jour",
+      hasard: "Une question au hasard",
+      lignes: "Questions par chapitre",
+      consigne: "Chaque point est une question, plein quand elle est réussie. Ouvrir un chapitre pour voir ses questions.",
+      une: "question", des: "questions", reussie: "réussie", premierCoup: "du premier coup",
+      suivant: "Question suivante", retour: "← Toutes les questions",
+    },
+    premiere: {
+      nom: "Première NSI",
+      intro: "Des exercices de Python, à faire quand on veut, en quelques minutes.",
+      jour: "Exo du jour",
+      hasard: "Un exo au hasard",
+      lignes: "Exercices par notion",
+      consigne: "Chaque point est un exercice, plein quand il est réussi. Ouvrir une notion pour voir leurs titres.",
+      une: "exo", des: "exos", reussie: "réussi", premierCoup: "sans aide",
+      suivant: "Exo suivant", retour: "← Tous les exercices",
+    },
+  };
 
 
   let banque = null;
   let etat = chargerEtat();
   let messageAccueil = null;
+  let serieRevision = null;
   const moteur = creerMoteur();
 
   // --- Outils --------------------------------------------------------------
@@ -69,7 +95,7 @@
   // --- Progression ---------------------------------------------------------
 
   function etatVide() {
-    return { exos: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [], ouvertes: [] };
+    return { exos: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [], ouvertes: [], niveau: null };
   }
 
   function chargerEtat() {
@@ -150,6 +176,11 @@
       return;
     }
     const gagnes = fusionner(contenu);
+    if (!etat.niveau) {
+      // Sur un appareil neuf, le niveau se deduit des exercices recuperes.
+      const recupere = banque.exercices.find((exo) => contenu.reussites.has(exo.numero));
+      if (recupere) choisirNiveau(niveauDe(recupere.notion));
+    }
     const texte = gagnes === 0
       ? "Code bien lu, mais il n'apporte aucun exo de plus sur cet appareil."
       : "Progression récupérée : " + gagnes + (gagnes > 1 ? " exos réussis en plus sur cet appareil." : " exo réussi en plus sur cet appareil.");
@@ -211,11 +242,40 @@
     return bloc;
   }
 
+  // --- Niveaux -------------------------------------------------------------
+  // Chaque notion appartient a un niveau (premiere par defaut). La page n'affiche
+  // que les notions du niveau choisi ; la progression et le code de sauvegarde
+  // couvrent tous les niveaux.
+
+  function textes() {
+    return TEXTES[etat.niveau] || TEXTES.premiere;
+  }
+
+  function niveauDe(notionOuId) {
+    const notion = typeof notionOuId === "string" ? banque.notions.find((n) => n.id === notionOuId) : notionOuId;
+    return notion.niveau || "premiere";
+  }
+
+  function notionsDuNiveau(niveau) {
+    return banque.notions.filter((n) => niveauDe(n) === (niveau || etat.niveau));
+  }
+
+  function exercicesDuNiveau() {
+    const ids = notionsDuNiveau().map((n) => n.id);
+    return banque.exercices.filter((exo) => ids.includes(exo.notion));
+  }
+
+  function choisirNiveau(niveau) {
+    etat.niveau = niveau;
+    sauver();
+  }
+
   // --- Tirage --------------------------------------------------------------
 
   function exercicesFiltres() {
-    return banque.exercices.filter((exo) =>
-      (etat.notions.length === 0 || etat.notions.includes(exo.notion)) &&
+    const actives = etat.notions.filter((id) => notionsDuNiveau().some((n) => n.id === id));
+    return exercicesDuNiveau().filter((exo) =>
+      (actives.length === 0 || actives.includes(exo.notion)) &&
       (etat.difficultes.length === 0 || etat.difficultes.includes(exo.difficulte))
     );
   }
@@ -234,7 +294,8 @@
     for (const c of dateLocale()) {
       empreinte = Math.imul(empreinte ^ c.charCodeAt(0), 16777619);
     }
-    return banque.exercices[(empreinte >>> 0) % banque.exercices.length];
+    const exos = exercicesDuNiveau();
+    return exos.length ? exos[(empreinte >>> 0) % exos.length] : null;
   }
 
   function allerA(exo) {
@@ -307,15 +368,50 @@
 
   // --- Accueil -------------------------------------------------------------
 
+  function afficherChoixNiveau() {
+    const titre = document.querySelector(".md-content h1");
+    if (titre) titre.hidden = false;
+    racine.replaceChildren(el("div", { class: "entr-choix-niveau" },
+      el("p", { class: "entr-intro" }, "Choisir son niveau :"),
+      el("div", { class: "entr-actions" }, Object.entries(TEXTES).map(([niveau, t]) =>
+        el("button", {
+          class: "entr-bouton entr-bouton--fort entr-bouton--grand",
+          onclick() {
+            choisirNiveau(niveau);
+            afficher();
+          },
+        }, t.nom))),
+      el("p", { class: "entr-consigne" }, "Ce choix est gardé sur cet appareil, et il se change à tout moment en haut de la page.")));
+  }
+
+  function blocNiveaux() {
+    return el("div", { class: "entr-niveaux" },
+      el("span", {}, "Niveau :"),
+      Object.entries(TEXTES).map(([niveau, t]) => {
+        const actif = etat.niveau === niveau;
+        return el("button", {
+          class: "entr-filtre entr-filtre--neutre" + (actif ? " entr-filtre--active" : ""),
+          "aria-pressed": String(actif),
+          onclick() {
+            choisirNiveau(niveau);
+            afficher();
+          },
+        }, t.nom);
+      }));
+  }
+
   function afficherAccueil() {
+    serieRevision = null;
+    const t = textes();
     const conteneur = el("div", { class: "entr-accueil" });
     const titre = document.querySelector(".md-content h1");
     if (titre) titre.hidden = false;
+    const exos = exercicesDuNiveau();
     const serie = serieEnCours();
     const jour = exoDuJour();
-    const jourFait = suivi(jour.id).reussi;
-    const reussis = banque.exercices.filter((e) => suivi(e.id).reussi).length;
-    const sansAide = banque.exercices.filter((e) => suivi(e.id).sansAide).length;
+    const reussis = exos.filter((e) => suivi(e.id).reussi).length;
+    const premierCoup = exos.filter((e) => suivi(e.id).sansAide).length;
+    const avecSerie = exos.some(estUneQuestion);
 
     if (messageAccueil) {
       conteneur.append(el("p", {
@@ -325,27 +421,44 @@
       messageAccueil = null;
     }
 
+    conteneur.append(blocNiveaux(), el("p", { class: "entr-intro" }, t.intro));
+
+    if (exos.length === 0) {
+      conteneur.append(el("p", { class: "entr-consigne" }, "Aucune question pour ce niveau pour l'instant."));
+      racine.replaceChildren(conteneur);
+      return;
+    }
+
+    const hasard = el("button", {
+      class: "entr-bouton " + (avecSerie ? "entr-bouton--clair" : "entr-bouton--signal"),
+      onclick() {
+        const exo = tirer();
+        if (exo) allerA(exo);
+      },
+      disabled: exercicesFiltres().length === 0,
+    }, t.hasard);
+    const boutonSerie = avecSerie ? el("button", {
+      class: "entr-bouton entr-bouton--signal",
+      onclick() {
+        serieRevision = null;
+        location.hash = "#/serie";
+      },
+      disabled: !exercicesFiltres().some(estUneQuestion),
+    }, "Série de " + TAILLE_SERIE + " questions") : null;
+
     conteneur.append(
-      el("p", { class: "entr-intro" }, "Des exercices de Python, à faire quand on veut, en quelques minutes."),
       el("div", { class: "entr-jour" },
         el("div", {},
-          el("p", { class: "entr-jour__surtitre" }, "Exo du jour"),
+          el("p", { class: "entr-jour__surtitre" }, t.jour),
           el("button", { class: "entr-jour__titre", onclick: () => allerA(jour) },
-            jour.titre + (jourFait ? " ✓" : ""))
+            jour.titre + (suivi(jour.id).reussi ? " ✓" : ""))
         ),
-        el("button", {
-          class: "entr-bouton entr-bouton--signal",
-          onclick() {
-            const exo = tirer();
-            if (exo) allerA(exo);
-          },
-          disabled: exercicesFiltres().length === 0,
-        }, "Un exo au hasard")
+        el("div", { class: "entr-jour__boutons" }, boutonSerie, hasard)
       ),
       blocFiltres(),
       el("p", { class: "entr-bilan" },
-        reussis + " exo" + (reussis > 1 ? "s" : "") + " réussi" + (reussis > 1 ? "s" : "") + " sur " + banque.exercices.length,
-        sansAide > 0 ? ", dont " + sansAide + " sans aide" : "",
+        reussis + " " + (reussis > 1 ? t.des : t.une) + " " + t.reussie + (reussis > 1 ? "s" : "") + " sur " + exos.length,
+        premierCoup > 0 ? ", dont " + premierCoup + " " + t.premierCoup : "",
         ". ",
         serie > 0 ? serie + (serie > 1 ? " jours de suite. " : " jour de suite. ") : null,
         el("button", {
@@ -357,7 +470,8 @@
 
     conteneur.append(...blocReseau());
 
-    conteneur.append(blocSauvegarde(reussis));
+    const toutReussi = banque.exercices.filter((e) => suivi(e.id).reussi).length;
+    conteneur.append(blocSauvegarde(toutReussi));
 
     conteneur.append(el("p", { class: "entr-note" },
       "La progression est gardée dans ce navigateur, sur cet appareil. Rien n'est envoyé : personne d'autre ne la voit. ",
@@ -398,7 +512,7 @@
     };
     return el("div", { class: "entr-filtres" },
       el("p", {}, "Le hasard pioche dans :"),
-      el("div", { class: "entr-puces" }, banque.notions
+      el("div", { class: "entr-puces" }, notionsDuNiveau()
         .filter((notion) => banque.exercices.some((e) => e.notion === notion.id))
         .map((notion) => puce("entr-filtre", notion.nom, etat.notions, notion.id, couleurLigne(notion.id)))),
       el("div", { class: "entr-puces" }, Object.entries(DIFFICULTES).map(([valeur, nom]) =>
@@ -421,7 +535,7 @@
   function blocReseau() {
     const filtres = exercicesFiltres();
     const lignes = el("div", { class: "entr-reseau" });
-    banque.notions.forEach((notion, i) => {
+    notionsDuNiveau().forEach((notion, i) => {
       const exos = banque.exercices.filter((e) => e.notion === notion.id);
       if (exos.length === 0) return;
       const faits = exos.filter((e) => suivi(e.id).reussi).length;
@@ -446,28 +560,29 @@
             return el("li", { class: (s.reussi ? "entr-station--faite " : "") + (filtres.includes(exo) ? "" : "entr-station--hors") },
               el("a", { href: "#/exo/" + exo.id },
                 el("span", { class: "entr-station__nom" }, exo.titre),
-                s.sansAide ? el("span", { class: "entr-badge" }, "sans aide") : null,
-                el("span", { class: "entr-station__infos" }, DIFFICULTES[exo.difficulte].toLowerCase() + ", " + exo.duree + " min")));
+                s.sansAide && etat.niveau === "premiere" ? el("span", { class: "entr-badge" }, "sans aide") : null,
+                el("span", { class: "entr-station__infos" }, infos(exo))));
           }))
           : rangee(exos, null)
       ));
     });
     return [
-      el("h2", {}, "Exercices par notion"),
-      el("p", { class: "entr-consigne" }, "Chaque point est un exercice, plein quand il est réussi. Ouvrir une notion pour voir leurs titres."),
+      el("h2", {}, textes().lignes),
+      el("p", { class: "entr-consigne" }, textes().consigne),
       lignes,
     ];
   }
 
   function couleurLigne(idNotion) {
-    return "--ligne: var(--ligne-" + (banque.notions.findIndex((n) => n.id === idNotion) % 10 + 1) + ")";
+    const memeNiveau = notionsDuNiveau(niveauDe(idNotion));
+    return "--ligne: var(--ligne-" + (memeNiveau.findIndex((n) => n.id === idNotion) % 10 + 1) + ")";
   }
 
   function lienSignalement(exo) {
     const sujet = "Entraînement, exercice " + exo.numero + " : " + exo.titre;
     return el("p", { class: "entr-signaler" },
       el("a", { href: "mailto:" + ADRESSE_SIGNALEMENT + "?subject=" + encodeURIComponent(sujet) },
-        "Signaler un problème sur cet exercice"));
+        niveauDe(exo.notion) === "seconde" ? "Signaler un problème sur cette question" : "Signaler un problème sur cet exercice"));
   }
 
   function nomNotion(id) {
@@ -476,15 +591,25 @@
 
   // --- Page d'un exercice --------------------------------------------------
 
+  function infos(exo) {
+    const difficulte = DIFFICULTES[exo.difficulte].toLowerCase();
+    return exo.duree ? difficulte + ", " + exo.duree + " min" : difficulte;
+  }
+
+  function estUneQuestion(exo) {
+    return exo.type === "qcm" || exo.type === "reponse";
+  }
+
   function enTete(exo) {
+    const seconde = niveauDe(exo.notion) === "seconde";
     return [
-      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "← Tous les exercices")),
+      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, textes().retour)),
       el("div", { class: "entr-trajet", style: couleurLigne(exo.notion) },
         rangee(banque.exercices.filter((e) => e.notion === exo.notion), exo)),
-      el("p", { class: "entr-surtitre" }, "Exercice " + exo.numero),
+      el("p", { class: "entr-surtitre" }, seconde ? nomNotion(exo.notion) : "Exercice " + exo.numero),
       el("h1", { class: "entr-titre" }, exo.titre),
       el("p", { class: "entr-infos" },
-        nomNotion(exo.notion) + ", " + DIFFICULTES[exo.difficulte].toLowerCase() + ", environ " + exo.duree + " min"),
+        seconde ? infos(exo) : nomNotion(exo.notion) + ", " + infos(exo).replace(", ", ", environ ")),
     ];
   }
 
@@ -497,50 +622,217 @@
           if (prochain) allerA(prochain);
           else location.hash = "#/";
         },
-      }, "Exo suivant"),
+      }, textes().suivant),
       el("a", { class: "entr-bouton", href: "#/" }, "Retour à la liste")
     );
   }
 
-  function afficherPrediction(exo) {
+  // L'enonce d'une question, avec son image ou son code s'il y en a.
+  function corps(exo) {
+    return [
+      el("div", { class: "entr-enonce", html: enHtml(exo.enonce) }),
+      exo.image ? el("figure", { class: "entr-figure" },
+        el("a", { href: "images/" + exo.image, target: "_blank", rel: "noopener" },
+          el("img", { src: "images/" + exo.image, alt: exo.image_alt || "", loading: "lazy" })),
+        el("figcaption", {}, "Toucher l'image pour l'agrandir.")) : null,
+      exo.code ? el("pre", { class: "entr-code entr-papier" }, el("code", {}, exo.code.trimEnd())) : null,
+    ];
+  }
+
+  // attendue : la bonne reponse, en HTML deja echappe, quand il faut la rappeler.
+  function explication(exo, titre, genre, attendue) {
+    return el("div", { class: "entr-message entr-message--" + genre },
+      titre ? el("strong", {}, titre) : null,
+      attendue ? el("p", { class: "entr-attendue", html: "Bonne réponse : " + attendue }) : null,
+      el("div", { html: enHtml(exo.explication) }),
+      exo.cours ? el("p", { class: "entr-cours" }, "À relire dans le cours : " + exo.cours) : null);
+  }
+
+  // Une question a choix : prediction de code ou QCM. Avec unSeulEssai, la
+  // premiere reponse est definitive (mode serie) ; sinon, on peut reessayer.
+  function questionChoix(exo, unSeulEssai, quandFini) {
     let erreurs = 0;
-    const bloc = el("div", {});
     const retour = el("div", { "aria-live": "polite" });
     const bonne = exo.choix[0];
-    const choix = el("div", { class: "entr-choix" }, melanger(exo.choix).map((texte) =>
-      el("button", {
-        class: "entr-choix__bouton",
-        onclick(evenement) {
-          const bouton = evenement.currentTarget;
-          if (texte !== bonne) {
-            erreurs += 1;
-            bouton.disabled = true;
-            bouton.classList.add("entr-choix__bouton--faux");
-            retour.replaceChildren(el("p", { class: "entr-message entr-message--alerte" },
-              "Ce n'est pas la bonne réponse. Suivre le programme ligne par ligne, en notant la valeur des variables."));
-            return;
-          }
-          noterReussite(exo.id, erreurs === 0);
-          bouton.classList.add("entr-choix__bouton--juste");
-          for (const b of choix.querySelectorAll("button")) b.disabled = true;
-          retour.replaceChildren(
-            el("div", { class: "entr-message entr-message--reussi" },
-              el("strong", {}, "Bonne réponse"),
-              el("div", { html: enHtml(exo.explication) })),
-            suite(exo)
-          );
-        },
-      }, el("span", { class: "entr-choix__case" }), el("code", {}, texte))
-    ));
-    bloc.append(
+    const boutons = melanger(exo.choix).map((texte) => el("button", {
+      class: "entr-choix__bouton",
+      "data-bonne": texte === bonne ? "oui" : null,
+      onclick(evenement) {
+        const bouton = evenement.currentTarget;
+        const juste = texte === bonne;
+        if (!juste && !unSeulEssai) {
+          erreurs += 1;
+          bouton.disabled = true;
+          bouton.classList.add("entr-choix__bouton--faux");
+          retour.replaceChildren(el("p", { class: "entr-message entr-message--alerte" },
+            exo.type === "prediction"
+              ? "Ce n'est pas la bonne réponse. Suivre le programme ligne par ligne, en notant la valeur des variables."
+              : "Ce n'est pas la bonne réponse. Essayer encore."));
+          return;
+        }
+        if (!juste) bouton.classList.add("entr-choix__bouton--faux");
+        for (const b of boutons) {
+          b.disabled = true;
+          if (b.dataset.bonne) b.classList.add("entr-choix__bouton--juste");
+        }
+        retour.replaceChildren(juste
+          ? explication(exo, "Bonne réponse", "reussi")
+          : explication(exo, "Ce n'est pas la bonne réponse", "erreur", enLigne(bonne)));
+        quandFini(juste, erreurs === 0, retour);
+      },
+    }, el("span", { class: "entr-choix__case" }),
+    exo.type === "prediction" ? el("code", {}, texte) : el("span", { html: enLigne(texte) })));
+    return [el("div", { class: "entr-choix" }, boutons), retour];
+  }
+
+  // Une reponse courte a taper : espaces, majuscules et virgule decimale sont toleres.
+  function normaliser(texte) {
+    return String(texte).trim().toLowerCase().replace(/\s+/g, "").replace(/,/g, ".");
+  }
+
+  function questionReponse(exo, unSeulEssai, quandFini) {
+    let erreurs = 0;
+    const retour = el("div", { "aria-live": "polite" });
+    const champ = el("input", {
+      class: "entr-champ entr-champ--reponse",
+      type: "text",
+      placeholder: exo.indication || "Réponse",
+      "aria-label": "Réponse",
+      autocomplete: "off",
+      autocapitalize: "off",
+      spellcheck: "false",
+    });
+    const valider = el("button", { class: "entr-bouton entr-bouton--fort", type: "submit" }, "Vérifier");
+    const formulaire = el("form", { class: "entr-reponse" }, champ, valider);
+    const finir = (juste, titre) => {
+      champ.disabled = true;
+      valider.disabled = true;
+      retour.replaceChildren(juste
+        ? explication(exo, titre, "reussi")
+        : explication(exo, titre, "erreur", echapper(String(exo.reponses[0]))));
+      quandFini(juste, erreurs === 0, retour);
+    };
+    formulaire.addEventListener("submit", (evenement) => {
+      evenement.preventDefault();
+      if (champ.value.trim() === "") return;
+      if (exo.reponses.some((r) => normaliser(r) === normaliser(champ.value))) {
+        finir(true, "Bonne réponse");
+        return;
+      }
+      erreurs += 1;
+      if (unSeulEssai) {
+        finir(false, "Ce n'est pas la bonne réponse");
+        return;
+      }
+      retour.replaceChildren(el("p", { class: "entr-message entr-message--alerte" },
+        "Ce n'est pas la bonne réponse. Vérifier, puis réessayer. ",
+        erreurs >= 2 ? el("button", {
+          class: "entr-lien",
+          type: "button",
+          onclick: () => finir(false, "Réponse"),
+        }, "Voir la réponse") : null));
+    });
+    return [formulaire, retour];
+  }
+
+  function afficherQuestion(exo) {
+    const partie = exo.type === "reponse" ? questionReponse : questionChoix;
+    racine.replaceChildren(el("div", {},
       ...enTete(exo),
-      el("div", { class: "entr-enonce", html: enHtml(exo.enonce) }),
-      el("pre", { class: "entr-code entr-papier" }, el("code", {}, exo.code.trimEnd())),
-      choix,
-      retour,
+      ...corps(exo),
+      ...partie(exo, false, (juste, premierCoup, retour) => {
+        if (juste) noterReussite(exo.id, premierCoup);
+        retour.append(suite(exo));
+      }),
       lienSignalement(exo)
-    );
-    racine.replaceChildren(bloc);
+    ));
+  }
+
+  // --- Mode serie ----------------------------------------------------------
+  // Une serie de questions tirees au hasard parmi les filtres, une seule reponse
+  // par question, puis le score et les questions ratees.
+
+  function afficherSerie() {
+    if (!serieRevision) {
+      const questions = exercicesFiltres().filter(estUneQuestion);
+      serieRevision = { exos: melanger(questions).slice(0, TAILLE_SERIE), index: 0, resultats: [] };
+    }
+    const s = serieRevision;
+    if (s.exos.length === 0) {
+      location.hash = "#/";
+      return;
+    }
+    if (s.index >= s.exos.length) {
+      afficherBilanSerie();
+      return;
+    }
+    const exo = s.exos[s.index];
+    const partie = exo.type === "reponse" ? questionReponse : questionChoix;
+    racine.replaceChildren(el("div", {},
+      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "← Arrêter la série")),
+      progressionSerie(),
+      el("p", { class: "entr-surtitre" }, "Question " + (s.index + 1) + " sur " + s.exos.length + ", " + nomNotion(exo.notion)),
+      el("h1", { class: "entr-titre" }, exo.titre),
+      ...corps(exo),
+      ...partie(exo, true, (juste, premierCoup, retour) => {
+        if (juste) noterReussite(exo.id, true);
+        s.resultats.push(juste);
+        const derniere = s.index + 1 >= s.exos.length;
+        const bouton = el("button", {
+          class: "entr-bouton entr-bouton--fort",
+          onclick() {
+            s.index += 1;
+            afficherSerie();
+            window.scrollTo(0, 0);
+          },
+        }, derniere ? "Voir le score" : "Question suivante");
+        retour.append(el("div", { class: "entr-actions" }, bouton));
+        bouton.focus({ preventScroll: true });
+      }),
+      lienSignalement(exo)
+    ));
+  }
+
+  function progressionSerie() {
+    const s = serieRevision;
+    return el("div", { class: "entr-trajet", style: "--ligne: var(--nsi-ligne)" },
+      el("div", { class: "entr-rangee" }, s.exos.map((exo, i) => {
+        const classes = ["entr-arret"];
+        if (i < s.resultats.length) classes.push(s.resultats[i] ? "entr-arret--fait" : "entr-arret--rate");
+        if (i === s.index) classes.push("entr-arret--ici");
+        return el("span", { class: classes.join(" ") });
+      })));
+  }
+
+  function afficherBilanSerie() {
+    const s = serieRevision;
+    const rates = s.exos.filter((exo, i) => !s.resultats[i]);
+    const score = s.exos.length - rates.length;
+    racine.replaceChildren(el("div", { class: "entr-bilan-serie" },
+      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "← Retour à la liste")),
+      progressionSerie(),
+      el("h1", { class: "entr-titre" }, "Score : " + score + " sur " + s.exos.length),
+      el("p", {}, rates.length === 0
+        ? "Toutes les réponses sont justes."
+        : "Les questions ratées sont rappelées ci-dessous, avec leur explication."),
+      rates.map((exo) => el("section", { class: "entr-rate" },
+        el("h2", {}, exo.titre),
+        el("div", { class: "entr-enonce", html: enHtml(exo.enonce) }),
+        explication(exo, "", "rappel", exo.type === "reponse"
+          ? echapper(String(exo.reponses[0]))
+          : enLigne(exo.choix[0])),
+        el("p", {}, el("a", { href: "#/exo/" + exo.id }, "Refaire cette question")))),
+      el("div", { class: "entr-actions" },
+        el("button", {
+          class: "entr-bouton entr-bouton--fort",
+          onclick() {
+            serieRevision = null;
+            afficherSerie();
+            window.scrollTo(0, 0);
+          },
+        }, "Nouvelle série"),
+        el("a", { class: "entr-bouton", href: "#/" }, "Retour à la liste"))
+    ));
   }
 
   // Le code de depart, avec le curseur pret a ecrire a la suite.
@@ -761,17 +1053,34 @@
       appliquerCode(reprise[1]);
       history.replaceState(null, "", "#/");
     }
-    const route = location.hash.match(/^#\/exo\/([\w-]+)$/);
-    const exo = route && banque.exercices.find((e) => e.id === route[1]);
-    if (!exo) {
-      afficherAccueil();
-      return;
+    const niveau = location.hash.match(/^#\/(seconde|premiere)$/);
+    if (niveau) {
+      choisirNiveau(niveau[1]);
+      history.replaceState(null, "", "#/");
     }
     const titre = document.querySelector(".md-content h1");
-    if (titre) titre.hidden = true;
-    if (exo.type === "prediction") afficherPrediction(exo);
-    else afficherCode(exo);
-    window.scrollTo(0, 0);
+    const route = location.hash.match(/^#\/exo\/([\w-]+)$/);
+    const exo = route && banque.exercices.find((e) => e.id === route[1]);
+    if (exo) {
+      // Un lien direct vers une question place la page sur son niveau.
+      if (etat.niveau !== niveauDe(exo.notion)) choisirNiveau(niveauDe(exo.notion));
+      if (titre) titre.hidden = true;
+      if (exo.type === "code") afficherCode(exo);
+      else afficherQuestion(exo);
+      window.scrollTo(0, 0);
+      return;
+    }
+    if (!etat.niveau) {
+      afficherChoixNiveau();
+      return;
+    }
+    if (location.hash === "#/serie") {
+      if (titre) titre.hidden = true;
+      afficherSerie();
+      window.scrollTo(0, 0);
+      return;
+    }
+    afficherAccueil();
   }
 
   async function demarrer() {
@@ -785,6 +1094,9 @@
       const { notions } = await lire("notions");
       const lots = await Promise.all(notions.map((notion) => lire(notion.id)));
       banque = { notions, exercices: lots.flatMap((lot) => lot.exercices) };
+      // Avant les niveaux, la page ne servait qu'a la Premiere : on garde ce choix
+      // pour les eleves qui ont deja une progression.
+      if (!etat.niveau && Object.values(etat.exos).some((s) => s.reussi)) choisirNiveau("premiere");
     } catch (erreur) {
       racine.replaceChildren(el("p", { class: "entr-message entr-message--erreur" },
         "La page n'a pas pu se charger. Vérifier la connexion, puis recharger."));

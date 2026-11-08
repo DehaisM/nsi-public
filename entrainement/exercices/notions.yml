@@ -7,12 +7,14 @@
 #              numero libre, ne jamais changer ni reutiliser celui d'un exercice existant
 #   titre      titre court
 #   notion     une des notions listees ci-dessous
-#   niveaux    liste : seconde et/ou premiere
+#   niveaux    liste : seconde et/ou premiere (doit contenir le niveau de la notion)
 #   difficulte 1, 2 ou 3
-#   duree      duree indicative en minutes
+#   duree      duree indicative en minutes (pour les types code et prediction)
 #   tags       facultatif, par exemple [maths] : prevu pour de futurs filtres
 #   type       code : l'eleve ecrit du code, verifie par des tests
 #              prediction : l'eleve predit ce qu'affiche un code
+#              qcm : question de cours a choix (Seconde)
+#              reponse : question de cours a reponse courte, a taper (Seconde)
 #
 # Pour le type code :
 #   enonce, depart (code de depart), aides (3 niveaux), solution, tests
@@ -28,6 +30,21 @@
 #   La bonne reponse est toujours le PREMIER choix : la page melange ensuite les choix,
 #   et le verificateur controle que c'est bien ce que le code affiche.
 #
+# Pour le type qcm :
+#   enonce, choix (de 3 a 5 textes), explication, cours (le passage du cours a relire)
+#   La bonne reponse est toujours le PREMIER choix : la page melange ensuite les choix.
+#   image (facultatif) : un fichier du dossier entrainement/images, avec image_alt pour le decrire
+#
+# Pour le type reponse :
+#   enonce, reponses (les reponses acceptees, la premiere est celle affichee), explication, cours
+#   indication (facultatif) : ce qu'on attend, affiche dans la case, par exemple "Un nombre"
+#   calcul (facultatif) : une expression Python qui refait le calcul ; le verificateur controle
+#   qu'elle donne bien une des reponses acceptees. Les modules ipaddress et math sont disponibles.
+#   La page ignore les espaces et les majuscules, et accepte la virgule comme le point.
+#
+# Chaque notion appartient a un niveau : premiere par defaut, ou niveau: seconde.
+# La page n'affiche que les notions du niveau choisi par l'eleve.
+#
 # Apres chaque modification, lancer : python outils/verifier_exercices.py
 
 notions:
@@ -38,3 +55,5 @@ notions:
   - { id: fonctions, nom: "Fonctions" }
   - { id: listes, nom: "Listes" }
   - { id: grilles, nom: "Grilles" }
+  - { id: internet-1, nom: "Internet, chapitre 1", niveau: seconde }
+  - { id: internet-2, nom: "Internet, chapitre 2", niveau: seconde }
