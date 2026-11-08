@@ -525,3 +525,73 @@ exercices:
     explication: |
       Deux machines sont dans le même réseau si elles ont la même adresse réseau. Avec `/24`, l'adresse réseau garde les 3 premiers octets : 192.168.1.0 d'un côté, 192.168.2.0 de l'autre.
     cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: au-hasard-octet-binaire
+    numero: 198
+    titre: "Au hasard : un octet en binaire"
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: generateur
+    generateur: octet-vers-binaire
+    cours: "Chapitre 2, Adresse IP, exercice Convertir une adresse IP (méthode de la Thématique 0)"
+
+  - id: au-hasard-octet-decimal
+    numero: 199
+    titre: "Au hasard : un octet en décimal"
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: generateur
+    generateur: octet-vers-decimal
+    cours: "Chapitre 2, Adresse IP, exercice Convertir une adresse IP (méthode de la Thématique 0)"
+
+  - id: au-hasard-adresse-decimal
+    numero: 200
+    titre: "Au hasard : une adresse en décimal pointé"
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: generateur
+    generateur: adresse-vers-decimal
+    cours: "Chapitre 2, Adresse IP, exercice Convertir une adresse IP"
+
+  - id: au-hasard-adresse-binaire
+    numero: 201
+    titre: "Au hasard : une adresse en binaire"
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: generateur
+    generateur: adresse-vers-binaire
+    cours: "Chapitre 2, Adresse IP, exercice Convertir une adresse IP"
+
+  - id: au-hasard-bits-machine
+    numero: 202
+    titre: "Au hasard : les bits de la machine"
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: generateur
+    generateur: bits-machine
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: au-hasard-nombre-adresses
+    numero: 203
+    titre: "Au hasard : la taille d'un réseau"
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: generateur
+    generateur: nombre-adresses
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: au-hasard-adresse-reseau
+    numero: 204
+    titre: "Au hasard : l'adresse réseau"
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: generateur
+    generateur: adresse-reseau
+    cours: "Chapitre 2, Masques de sous-réseau, exemple 192.168.1.130/26"

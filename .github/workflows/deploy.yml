@@ -29,6 +29,9 @@ jobs:
       - name: Verifier les exercices d'entrainement
         run: python outils/verifier_exercices.py
 
+      - name: Controler les questions tirees au hasard
+        run: python outils/controler_generateurs.py
+
       - name: Build site
         run: mkdocs build --strict
 

@@ -20,4 +20,5 @@ hide:
 <script src="vendor/codemirror.min.js"></script>
 <script src="vendor/python.min.js"></script>
 <script src="code-sauvegarde.js"></script>
+<script src="generateurs.js"></script>
 <script src="entrainement.js"></script>

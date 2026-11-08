@@ -170,6 +170,11 @@ directement un niveau. La progression et le code de sauvegarde couvrent les deux
 - Pour un calcul, le champ `calcul` refait le calcul en Python : le vérificateur contrôle qu'il
   donne bien une des réponses acceptées.
 - Les images vont dans `docs-public/entrainement/images/`, avec une description dans `image_alt`.
+- Le type `generateur` donne une question de calcul à valeurs tirées au hasard (adresse réseau,
+  conversions...) : chaque essai a de nouvelles valeurs et une explication refaite sur ces
+  valeurs. Les générateurs sont écrits dans `docs-public/entrainement/generateurs.js`. Après une
+  modification, lancer `python outils/controler_generateurs.py` (il faut Node.js) : il fait des
+  milliers de tirages et refait chaque calcul en Python. La CI le lance aussi.
 - Le bouton "Série de 10 questions" tire 10 questions parmi les chapitres choisis, une seule
   réponse par question, puis affiche le score et les questions ratées avec leur explication.
 

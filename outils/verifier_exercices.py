@@ -34,7 +34,9 @@ CHAMPS = {
     "prediction": {"enonce", "code", "choix", "explication"},
     "qcm": {"enonce", "choix", "explication", "cours"},
     "reponse": {"enonce", "reponses", "explication", "cours"},
+    "generateur": {"generateur", "cours"},
 }
+GENERATEURS = DOSSIER / "generateurs.js"
 AVEC_DUREE = {"code", "prediction"}
 
 
@@ -155,6 +157,12 @@ def verifier(exo, notions):
             problemes.append("deux choix identiques")
         return problemes
 
+    if genre == "generateur":
+        # Le calcul lui-meme est controle par outils/controler_generateurs.py.
+        if not re.search(r'^\s*"' + re.escape(exo["generateur"]) + r'"\(hasard\)', GENERATEURS.read_text(encoding="utf-8"), re.M):
+            problemes.append("générateur inconnu dans generateurs.js : " + exo["generateur"])
+        return problemes
+
     if genre == "reponse":
         reponses = exo["reponses"]
         if not reponses or not all(isinstance(r, (str, int)) for r in reponses):
@@ -233,14 +241,14 @@ def main():
                 print("        " + probleme)
         erreurs += len(problemes)
 
-    print("\nnotion        exos  facile moyen corsé  à écrire  prédiction  qcm  réponse  maths")
+    print("\nnotion        exos  facile moyen corsé  à écrire  prédiction  qcm  réponse  hasard  maths")
     for notion in notions_liste:
         lot = [e for e in exercices if e["notion"] == notion["id"]]
         compte = lambda genre: sum(e.get("type") == genre for e in lot)  # noqa: E731
         print(
             f"{notion['id']:<13} {len(lot):>4}"
             + "".join(f"{sum(e.get('difficulte') == d for e in lot):>7}" for d in (1, 2, 3))
-            + f"{compte('code'):>9}{compte('prediction'):>11}{compte('qcm'):>6}{compte('reponse'):>8}"
+            + f"{compte('code'):>9}{compte('prediction'):>11}{compte('qcm'):>6}{compte('reponse'):>8}{compte('generateur'):>8}"
             + f"{sum('maths' in (e.get('tags') or []) for e in lot):>8}"
         )
     print(f"\n{len(exercices)} exercices, {erreurs} problème(s)")

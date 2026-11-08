@@ -579,7 +579,7 @@
   }
 
   function lienSignalement(exo) {
-    const sujet = "Entraînement, exercice " + exo.numero + " : " + exo.titre;
+    const sujet = "Entraînement, exercice " + exo.numero + " : " + exo.titre + (exo.resume ? " (valeurs : " + exo.resume + ")" : "");
     return el("p", { class: "entr-signaler" },
       el("a", { href: "mailto:" + ADRESSE_SIGNALEMENT + "?subject=" + encodeURIComponent(sujet) },
         niveauDe(exo.notion) === "seconde" ? "Signaler un problème sur cette question" : "Signaler un problème sur cet exercice"));
@@ -593,11 +593,19 @@
 
   function infos(exo) {
     const difficulte = DIFFICULTES[exo.difficulte].toLowerCase();
+    if (exo.type === "generateur") return difficulte + ", valeurs tirées au hasard";
     return exo.duree ? difficulte + ", " + exo.duree + " min" : difficulte;
   }
 
   function estUneQuestion(exo) {
-    return exo.type === "qcm" || exo.type === "reponse";
+    return exo.type === "qcm" || exo.type === "reponse" || exo.type === "generateur";
+  }
+
+  // Une question de calcul a valeurs tirees au hasard devient, a chaque affichage,
+  // une question a reponse courte avec ses propres valeurs (voir generateurs.js).
+  function preparer(exo) {
+    if (exo.type !== "generateur") return exo;
+    return Object.assign({}, exo, Generateurs.tirer(exo.generateur), { type: "reponse" });
   }
 
   function enTete(exo) {
@@ -736,15 +744,26 @@
   }
 
   function afficherQuestion(exo) {
-    const partie = exo.type === "reponse" ? questionReponse : questionChoix;
+    const affiche = preparer(exo);
+    const partie = affiche.type === "reponse" ? questionReponse : questionChoix;
     racine.replaceChildren(el("div", {},
       ...enTete(exo),
-      ...corps(exo),
-      ...partie(exo, false, (juste, premierCoup, retour) => {
+      ...corps(affiche),
+      ...partie(affiche, false, (juste, premierCoup, retour) => {
         if (juste) noterReussite(exo.id, premierCoup);
-        retour.append(suite(exo));
+        const actions = suite(exo);
+        if (exo.type === "generateur") {
+          actions.insertBefore(el("button", {
+            class: "entr-bouton",
+            onclick() {
+              afficherQuestion(exo);
+              window.scrollTo(0, 0);
+            },
+          }, "Nouvelles valeurs"), actions.children[1]);
+        }
+        retour.append(actions);
       }),
-      lienSignalement(exo)
+      lienSignalement(affiche)
     ));
   }
 
@@ -755,7 +774,7 @@
   function afficherSerie() {
     if (!serieRevision) {
       const questions = exercicesFiltres().filter(estUneQuestion);
-      serieRevision = { exos: melanger(questions).slice(0, TAILLE_SERIE), index: 0, resultats: [] };
+      serieRevision = { exos: melanger(questions).slice(0, TAILLE_SERIE), affiches: [], index: 0, resultats: [] };
     }
     const s = serieRevision;
     if (s.exos.length === 0) {
@@ -767,14 +786,17 @@
       return;
     }
     const exo = s.exos[s.index];
-    const partie = exo.type === "reponse" ? questionReponse : questionChoix;
+    // Les valeurs tirees au hasard sont gardees pour le bilan de la serie.
+    if (!s.affiches[s.index]) s.affiches[s.index] = preparer(exo);
+    const affiche = s.affiches[s.index];
+    const partie = affiche.type === "reponse" ? questionReponse : questionChoix;
     racine.replaceChildren(el("div", {},
       el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "← Arrêter la série")),
       progressionSerie(),
       el("p", { class: "entr-surtitre" }, "Question " + (s.index + 1) + " sur " + s.exos.length + ", " + nomNotion(exo.notion)),
       el("h1", { class: "entr-titre" }, exo.titre),
-      ...corps(exo),
-      ...partie(exo, true, (juste, premierCoup, retour) => {
+      ...corps(affiche),
+      ...partie(affiche, true, (juste, premierCoup, retour) => {
         if (juste) noterReussite(exo.id, true);
         s.resultats.push(juste);
         const derniere = s.index + 1 >= s.exos.length;
@@ -789,7 +811,7 @@
         retour.append(el("div", { class: "entr-actions" }, bouton));
         bouton.focus({ preventScroll: true });
       }),
-      lienSignalement(exo)
+      lienSignalement(affiche)
     ));
   }
 
@@ -806,7 +828,7 @@
 
   function afficherBilanSerie() {
     const s = serieRevision;
-    const rates = s.exos.filter((exo, i) => !s.resultats[i]);
+    const rates = s.affiches.filter((exo, i) => !s.resultats[i]);
     const score = s.exos.length - rates.length;
     racine.replaceChildren(el("div", { class: "entr-bilan-serie" },
       el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "← Retour à la liste")),
@@ -1085,7 +1107,7 @@
 
   async function demarrer() {
     try {
-      if (!window.jsyaml || !window.CodeMirror) throw new Error("composants absents");
+      if (!window.jsyaml || !window.CodeMirror || typeof Generateurs === "undefined") throw new Error("composants absents");
       const lire = async (nom) => {
         const reponse = await fetch("exercices/" + nom + ".yml");
         if (!reponse.ok) throw new Error(nom + " introuvable");
