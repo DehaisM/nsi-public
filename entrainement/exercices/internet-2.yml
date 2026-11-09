@@ -418,22 +418,56 @@ exercices:
     reponses: ["256", "2^8"]
     calcul: "2 ** (32 - 24)"
     explication: |
-      Il reste 32 - 24 = 8 bits pour la machine, donc 2⁸ = 256 adresses possibles.
+      Il reste 32 - 24 = 8 bits pour la machine, donc 2⁸ = 256 adresses possibles. Deux d'entre elles sont réservées (l'adresse réseau et l'adresse de diffusion) : on ne peut donc connecter que 254 machines.
     cours: "Chapitre 2, Masques de sous-réseau"
 
   - id: adresses-slash-28
     numero: 191
-    titre: La taille d'un réseau /28
+    titre: Les machines d'un réseau /28
     notion: internet-2
     niveaux: [seconde]
     difficulte: 2
     type: reponse
-    enonce: Combien d'adresses sont possibles dans un réseau `/28` ?
+    enonce: Combien de machines peut-on connecter dans un réseau `/28` ?
     indication: "Un nombre"
-    reponses: ["16", "2^4"]
-    calcul: "2 ** (32 - 28)"
+    reponses: ["14", "2^4-2"]
+    calcul: "2 ** (32 - 28) - 2"
     explication: |
-      Il reste 32 - 28 = 4 bits pour la machine, donc 2⁴ = 16 adresses possibles.
+      Il reste 32 - 28 = 4 bits pour la machine, donc 2⁴ = 16 adresses. On retire l'adresse réseau et l'adresse de diffusion, qui ne sont jamais données à une machine : 16 - 2 = 14 machines.
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: adresses-reservees
+    numero: 224
+    titre: Les deux adresses réservées
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Un réseau `/24` compte 256 adresses. Pourquoi ne peut-on y connecter que 254 machines ?
+    choix:
+      - "Deux adresses sont réservées : l'adresse réseau et l'adresse de diffusion"
+      - "Deux adresses sont réservées au routeur et au switch"
+      - "La première et la dernière machine branchées sont refusées"
+      - "Il faut garder deux adresses libres en cas de panne"
+    explication: |
+      L'adresse réseau (tous les bits machine à 0) désigne le réseau lui-même, et l'adresse de diffusion (tous les bits machine à 1) sert à écrire à toutes les machines à la fois. Aucune des deux n'est donnée à une machine : 256 - 2 = 254.
+    cours: "Chapitre 2, Masques de sous-réseau"
+
+  - id: adresse-diffusion
+    numero: 225
+    titre: L'adresse de diffusion
+    notion: internet-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Dans un réseau, à quoi sert l'adresse dont tous les bits machine valent 1 ?
+    choix:
+      - "À envoyer un message à toutes les machines du réseau à la fois"
+      - "À désigner le réseau lui-même"
+      - "À désigner le routeur du réseau"
+      - "À rien : c'est l'adresse d'une machine comme les autres"
+    explication: |
+      C'est l'adresse de diffusion (*broadcast* en anglais) : un message envoyé à cette adresse arrive à toutes les machines du réseau. C'est l'adresse réseau, avec tous les bits machine à 0, qui désigne le réseau lui-même.
     cours: "Chapitre 2, Masques de sous-réseau"
 
   - id: plus-petit-reseau
@@ -446,7 +480,7 @@ exercices:
     enonce: Lequel de ces masques donne le réseau avec le **moins** d'adresses possibles ?
     choix: ["`/30`", "`/24`", "`/16`", "`/8`"]
     explication: |
-      Plus le nombre après le `/` est grand, moins il reste de bits pour la machine, donc moins il y a d'adresses : un `/30` n'en a que 2² = 4.
+      Plus le nombre après le `/` est grand, moins il reste de bits pour la machine, donc moins il y a d'adresses : un `/30` n'en a que 2² = 4, dont 2 seulement pour des machines.
     cours: "Chapitre 2, Masques de sous-réseau"
 
   - id: adresse-reseau-24

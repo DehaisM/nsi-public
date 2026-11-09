@@ -127,17 +127,31 @@ const Generateurs = (function () {
       };
     },
 
+    // Une fois sur deux, le nombre de machines : on retire les deux adresses reservees.
     "nombre-adresses"(hasard) {
       const m = entier(hasard, 16, 30);
+      const machines = hasard() < 0.5;
       const k = 32 - m;
       const total = Math.pow(2, k);
+      const debut = "Il reste 32 - " + m + " = " + k + " bits pour la machine, donc " + puissance(k) + " = " + total + " adresses";
+      if (!machines) {
+        return {
+          resume: "/" + m + " adresses",
+          donnees: { masque: m, machines },
+          enonce: "Combien d'adresses sont possibles dans un réseau `/" + m + "` ?",
+          indication: "Un nombre",
+          reponses: [String(total), "2^" + k],
+          explication: debut + " possibles.",
+        };
+      }
       return {
-        resume: "/" + m,
-        donnees: { masque: m },
-        enonce: "Combien d'adresses sont possibles dans un réseau `/" + m + "` ?",
+        resume: "/" + m + " machines",
+        donnees: { masque: m, machines },
+        enonce: "Combien de machines peut-on connecter dans un réseau `/" + m + "` ?",
         indication: "Un nombre",
-        reponses: [String(total), "2^" + k],
-        explication: "Il reste 32 - " + m + " = " + k + " bits pour la machine, donc " + puissance(k) + " = " + total + " adresses possibles.",
+        reponses: [String(total - 2), "2^" + k + "-2"],
+        explication: debut + ". On retire l'adresse réseau et l'adresse de diffusion, qui ne sont jamais données à une machine : "
+          + total + " - 2 = " + (total - 2) + " machines.",
       };
     },
 
