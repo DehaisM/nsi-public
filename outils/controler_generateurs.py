@@ -53,7 +53,9 @@ def attendu(nom, d):
     if nom == "bits-machine":
         return str(32 - d["masque"]), not 8 <= d["masque"] <= 30
     if nom == "nombre-adresses":
-        return str(2 ** (32 - d["masque"])), not 16 <= d["masque"] <= 30
+        reseau = ipaddress.ip_network("0.0.0.0/" + str(d["masque"]))
+        adresses = reseau.num_addresses
+        return str(adresses - 2 if d["machines"] else adresses), not 16 <= d["masque"] <= 30
     if nom == "adresse-reseau":
         reseau = ipaddress.ip_network(d["adresse"] + "/" + str(d["masque"]), strict=False)
         machine_nulle = str(reseau.network_address) == d["adresse"]

@@ -28,7 +28,7 @@ module.exports = function attendu(generateur, enonce) {
     case "bits-machine":
       return String(32 - masque);
     case "nombre-adresses":
-      return String(2 ** (32 - masque));
+      return String(2 ** (32 - masque) - (/machines/.test(enonce) ? 2 : 0));
     case "adresse-reseau": {
       const entier = ((ip[0] * 256 + ip[1]) * 256 + ip[2]) * 256 + ip[3];
       const taille = 2 ** (32 - masque);
