@@ -1,5 +1,5 @@
 ---
-description: "Cours et TP de SNT en Seconde GT au lycée Jean Prévost de Montivilliers : Internet, données structurées et fichiers CSV."
+description: "Cours et TP de SNT en Seconde GT au lycée Jean Prévost de Montivilliers : Internet, données structurées et fichiers CSV, programmation en Python."
 ---
 
 # Seconde GT 
@@ -14,6 +14,9 @@ Fonctionnement d'Internet
 
 ### [Thématique 2 : Données structurées](donnees/index.md)
 Tables de données et fichiers CSV
+
+### [Thématique 3 : Programmation en Python](programmation/index.md)
+Variables, types et calculs
 
 ## Réviser
 

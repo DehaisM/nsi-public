@@ -59,6 +59,7 @@ nav:
       - Introduction: SNT/introduction/index.md
       - Thématique 1 - Internet: SNT/internet/index.md
       - Thématique 2 - Données structurées: SNT/donnees/index.md
+      - Thématique 3 - Programmation: SNT/programmation/index.md
 
   - Première NSI:
       - 1NSI/index.md
