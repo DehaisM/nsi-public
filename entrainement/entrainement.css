@@ -177,6 +177,7 @@
 /* Les aides */
 .md-typeset .entr-aide { margin: .8rem 0; padding: .55rem .8rem .7rem; max-width: 34rem; background: var(--nsi-panneau); border-radius: var(--nsi-rayon); }
 .md-typeset .entr-aide p { margin: 0 0 .2rem; font-size: .72rem; font-weight: 800; }
+.md-typeset .entr-aide .entr-aide__texte { margin: 0; font-size: .8rem; font-weight: 400; }
 .md-typeset #entr-app .entr-aide .entr-code code { background: none; padding: 0; }
 .md-typeset .entr-aide .entr-code { margin: 0; }
 

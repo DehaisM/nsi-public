@@ -16,24 +16,20 @@ exercices:
       def colonne(grille, j):
           ...
     aides:
-      - |
-        def colonne(grille, j):
-            # creer une liste vide
-            # parcourir chaque ligne de la grille
-            #     ajouter a la liste l'element d'indice j de cette ligne
-            # renvoyer la liste
-      - |
-        def colonne(grille, j):
-            resultat = []
-            for ligne in grille:
-                resultat.append(ligne[___])
-            return ___
-      - |
-        def colonne(grille, j):
-            resultat = []
-            for ligne in grille:
-                resultat.append(ligne[j])
-            return ___
+      - idee: |
+          La colonne `j` est formée de l'élément d'indice `j` de chaque ligne. Il suffit donc de parcourir les lignes.
+      - pseudo: |
+          def colonne(grille, j):
+              # creer une liste vide
+              # parcourir chaque ligne de la grille
+              #     ajouter a la liste l'element d'indice j de cette ligne
+              # renvoyer la liste
+      - trous: |
+          def colonne(grille, j):
+              resultat = []
+              for ligne in grille:
+                  resultat.append(ligne[___])
+              return ___
     solution: |
       def colonne(grille, j):
           resultat = []
@@ -61,29 +57,23 @@ exercices:
       def compter(grille, symbole):
           ...
     aides:
-      - |
-        def compter(grille, symbole):
-            # creer un compteur qui vaut 0
-            # parcourir chaque ligne de la grille
-            #     parcourir chaque case de cette ligne
-            #         si la case contient symbole, ajouter 1 au compteur
-            # renvoyer le compteur
-      - |
-        def compter(grille, symbole):
-            total = 0
-            for ligne in ___:
-                for case in ___:
-                    if case == ___:
-                        total = total + 1
-            return total
-      - |
-        def compter(grille, symbole):
-            total = 0
-            for ligne in grille:
-                for case in ligne:
-                    if case == ___:
-                        total = total + 1
-            return total
+      - idee: |
+          Une boucle sur les lignes, et à l'intérieur une boucle sur les cases de chaque ligne : on passe ainsi par toutes les cases.
+      - pseudo: |
+          def compter(grille, symbole):
+              # creer un compteur qui vaut 0
+              # parcourir chaque ligne de la grille
+              #     parcourir chaque case de cette ligne
+              #         si la case contient symbole, ajouter 1 au compteur
+              # renvoyer le compteur
+      - trous: |
+          def compter(grille, symbole):
+              total = 0
+              for ligne in ___:
+                  for case in ___:
+                      if case == ___:
+                          total = total + 1
+              return total
     solution: |
       def compter(grille, symbole):
           total = 0
@@ -130,24 +120,20 @@ exercices:
           ...
     interdit: [sum]
     aides:
-      - |
-        def somme_ligne(grille, i):
-            # creer une variable total qui vaut 0
-            # parcourir les elements de la ligne d'indice i
-            #     ajouter l'element a total
-            # renvoyer total
-      - |
-        def somme_ligne(grille, i):
-            total = 0
-            for valeur in grille[___]:
-                total = ___
-            return total
-      - |
-        def somme_ligne(grille, i):
-            total = 0
-            for valeur in grille[i]:
-                total = ___
-            return total
+      - idee: |
+          `grille[i]` est une liste comme une autre : il suffit d'additionner ses éléments.
+      - pseudo: |
+          def somme_ligne(grille, i):
+              # creer une variable total qui vaut 0
+              # parcourir les elements de la ligne d'indice i
+              #     ajouter l'element a total
+              # renvoyer total
+      - trous: |
+          def somme_ligne(grille, i):
+              total = 0
+              for valeur in grille[___]:
+                  total = ___
+              return total
     solution: |
       def somme_ligne(grille, i):
           total = 0
@@ -180,27 +166,16 @@ exercices:
               grille.append(___)
           return grille
     aides:
-      - |
-        # la boucle sur i construit les lignes, il y en a n
-        # la boucle sur j remplit une ligne, elle a m cases
-      - |
-        def creer_grille(n, m, valeur):
-            grille = []
-            for i in range(n):
-                ligne = []
-                for j in range(___):
-                    ligne.append(___)
-                grille.append(___)
-            return grille
-      - |
-        def creer_grille(n, m, valeur):
-            grille = []
-            for i in range(n):
-                ligne = []
-                for j in range(m):
-                    ligne.append(valeur)
-                grille.append(___)
-            return grille
+      - idee: |
+          Une grille est une liste de lignes, et chaque ligne est elle-même une liste. Il faut donc construire chaque ligne avant de l'ajouter à la grille.
+      - pseudo: |
+          def creer_grille(n, m, valeur):
+              # creer une grille vide
+              # repeter n fois :
+              #     creer une ligne vide
+              #     y ajouter m fois valeur
+              #     ajouter la ligne a la grille
+              # renvoyer la grille
     solution: |
       def creer_grille(n, m, valeur):
           grille = []
@@ -240,21 +215,10 @@ exercices:
               total = total + grille[i][0]
           return total
     aides:
-      - |
-        # quelles cases cette boucle additionne-t-elle ?
-        # pour une case de la diagonale, que vaut l'indice de colonne ?
-      - |
-        def somme_diagonale(grille):
-            total = 0
-            for i in range(len(grille)):
-                total = total + grille[i][___]
-            return total
-      - |
-        def somme_diagonale(grille):
-            total = 0
-            for i in range(len(grille)):
-                total = total + grille[i][i]
-            return ___
+      - idee: |
+          Quelles cases cette boucle additionne-t-elle ? Pour une case de la diagonale, l'indice de colonne est égal à l'indice de ligne.
+      - ou: |
+          L'erreur est à la ligne 4, dans les indices de la case ajoutée au total.
     solution: |
       def somme_diagonale(grille):
           total = 0
@@ -283,41 +247,30 @@ exercices:
           ...
     interdit: [sum]
     aides:
-      - |
-        def somme_de(ligne):
-            # commencer par ecrire une fonction qui renvoie la somme d'une ligne
+      - idee: |
+          Il faut une somme de référence, à laquelle comparer toutes les lignes. Une petite fonction qui calcule la somme d'une ligne simplifie le travail.
+      - pseudo: |
+          def somme_de(ligne):
+              # commencer par ecrire une fonction qui renvoie la somme d'une ligne
 
-        def lignes_egales(grille):
-            # calculer la somme de la premiere ligne, c'est la reference
-            # parcourir les lignes
-            #     si la somme d'une ligne differe de la reference, renvoyer False
-            # apres la boucle, renvoyer True
-      - |
-        def somme_de(ligne):
-            total = 0
-            for valeur in ligne:
-                total = ___
-            return total
+          def lignes_egales(grille):
+              # calculer la somme de la premiere ligne, c'est la reference
+              # parcourir les lignes
+              #     si la somme d'une ligne differe de la reference, renvoyer False
+              # apres la boucle, renvoyer True
+      - trous: |
+          def somme_de(ligne):
+              total = 0
+              for valeur in ligne:
+                  total = ___
+              return total
 
-        def lignes_egales(grille):
-            reference = somme_de(grille[___])
-            for ligne in grille:
-                if somme_de(___) != reference:
-                    return ___
-            return ___
-      - |
-        def somme_de(ligne):
-            total = 0
-            for valeur in ligne:
-                total = total + valeur
-            return total
-
-        def lignes_egales(grille):
-            reference = somme_de(grille[0])
-            for ligne in grille:
-                if somme_de(ligne) != reference:
-                    return False
-            return ___
+          def lignes_egales(grille):
+              reference = somme_de(grille[___])
+              for ligne in grille:
+                  if somme_de(___) != reference:
+                      return ___
+              return ___
     solution: |
       def somme_de(ligne):
           total = 0
@@ -388,24 +341,20 @@ exercices:
           ...
     interdit: [sum]
     aides:
-      - |
-        def somme_colonne(grille, j):
-            # creer une variable total qui vaut 0
-            # parcourir les lignes de la grille
-            #     ajouter a total l'element d'indice j de la ligne
-            # renvoyer total
-      - |
-        def somme_colonne(grille, j):
-            total = 0
-            for ligne in ___:
-                total = total + ligne[___]
-            return total
-      - |
-        def somme_colonne(grille, j):
-            total = 0
-            for ligne in grille:
-                total = total + ligne[j]
-            return ___
+      - idee: |
+          Parcourir les lignes, et additionner l'élément d'indice `j` de chacune.
+      - pseudo: |
+          def somme_colonne(grille, j):
+              # creer une variable total qui vaut 0
+              # parcourir les lignes de la grille
+              #     ajouter a total l'element d'indice j de la ligne
+              # renvoyer total
+      - trous: |
+          def somme_colonne(grille, j):
+              total = 0
+              for ligne in ___:
+                  total = total + ligne[___]
+              return total
     solution: |
       def somme_colonne(grille, j):
           total = 0
@@ -432,27 +381,22 @@ exercices:
       def aplatir(grille):
           ...
     aides:
-      - |
-        def aplatir(grille):
-            # creer une liste vide
-            # parcourir les lignes de la grille
-            #     parcourir les elements de la ligne
-            #         ajouter l'element a la liste
-            # renvoyer la liste
-      - |
-        def aplatir(grille):
-            resultat = []
-            for ligne in ___:
-                for valeur in ___:
-                    resultat.append(___)
-            return resultat
-      - |
-        def aplatir(grille):
-            resultat = []
-            for ligne in grille:
-                for valeur in ligne:
-                    resultat.append(___)
-            return resultat
+      - idee: |
+          Deux boucles imbriquées passent par toutes les cases, ligne par ligne : il suffit d'ajouter chaque case à une liste simple.
+      - pseudo: |
+          def aplatir(grille):
+              # creer une liste vide
+              # parcourir les lignes de la grille
+              #     parcourir les elements de la ligne
+              #         ajouter l'element a la liste
+              # renvoyer la liste
+      - trous: |
+          def aplatir(grille):
+              resultat = []
+              for ligne in ___:
+                  for valeur in ___:
+                      resultat.append(___)
+              return resultat
     solution: |
       def aplatir(grille):
           resultat = []
@@ -499,28 +443,22 @@ exercices:
           ...
     interdit: [max, sort, sorted]
     aides:
-      - |
-        def maximum(grille):
-            # retenir la premiere case de la grille
-            # parcourir les lignes, puis les valeurs de chaque ligne
-            #     si la valeur est plus grande que la valeur retenue, la retenir
-            # renvoyer la valeur retenue
-      - |
-        def maximum(grille):
-            meilleur = grille[0][___]
-            for ligne in grille:
-                for valeur in ligne:
-                    if valeur > ___:
-                        meilleur = ___
-            return meilleur
-      - |
-        def maximum(grille):
-            meilleur = grille[0][0]
-            for ligne in grille:
-                for valeur in ligne:
-                    if valeur > meilleur:
-                        meilleur = ___
-            return meilleur
+      - idee: |
+          Comme pour le maximum d'une liste, mais avec deux boucles. Partir d'une case de la grille, pas de 0.
+      - pseudo: |
+          def maximum(grille):
+              # retenir la premiere case de la grille
+              # parcourir les lignes, puis les valeurs de chaque ligne
+              #     si la valeur est plus grande que la valeur retenue, la retenir
+              # renvoyer la valeur retenue
+      - trous: |
+          def maximum(grille):
+              meilleur = grille[0][___]
+              for ligne in grille:
+                  for valeur in ligne:
+                      if valeur > ___:
+                          meilleur = ___
+              return meilleur
     solution: |
       def maximum(grille):
           meilleur = grille[0][0]
@@ -550,32 +488,25 @@ exercices:
       def table(n):
           ...
     aides:
-      - |
-        def table(n):
-            # creer une grille vide
-            # pour chaque ligne i, de 1 a n :
-            #     creer une ligne vide
-            #     pour chaque colonne j, de 1 a n, ajouter le produit de i et j a la ligne
-            #     ajouter la ligne a la grille
-            # renvoyer la grille
-      - |
-        def table(n):
-            grille = []
-            for i in range(1, ___):
-                ligne = []
-                for j in range(1, ___):
-                    ligne.append(___)
-                grille.append(___)
-            return grille
-      - |
-        def table(n):
-            grille = []
-            for i in range(1, n + 1):
-                ligne = []
-                for j in range(1, n + 1):
-                    ligne.append(i * j)
-                grille.append(___)
-            return grille
+      - idee: |
+          En numérotant les lignes et les colonnes à partir de 1, la case de la ligne `i` et de la colonne `j` contient `i × j`. Construire les lignes une par une.
+      - pseudo: |
+          def table(n):
+              # creer une grille vide
+              # pour chaque ligne i, de 1 a n :
+              #     creer une ligne vide
+              #     pour chaque colonne j, de 1 a n, ajouter le produit de i et j a la ligne
+              #     ajouter la ligne a la grille
+              # renvoyer la grille
+      - trous: |
+          def table(n):
+              grille = []
+              for i in range(1, ___):
+                  ligne = []
+                  for j in range(1, ___):
+                      ligne.append(___)
+                  grille.append(___)
+              return grille
     solution: |
       def table(n):
           grille = []
@@ -614,23 +545,10 @@ exercices:
           return total
     interdit: [sum]
     aides:
-      - |
-        # que vaut len(grille) : le nombre de lignes ou le nombre de colonnes ?
-        # combien de valeurs j doit-il prendre pour une ligne de 3 cases ?
-      - |
-        def somme_cases(grille):
-            total = 0
-            for i in range(len(grille)):
-                for j in range(len(___)):
-                    total = total + grille[i][j]
-            return total
-      - |
-        def somme_cases(grille):
-            total = 0
-            for i in range(len(grille)):
-                for j in range(len(grille[i])):
-                    total = ___
-            return total
+      - idee: |
+          `len(grille)` donne le nombre de lignes. Combien de valeurs `j` doit-il prendre pour une ligne de 3 cases ?
+      - ou: |
+          L'erreur est à la ligne 4, dans le `range` de la deuxième boucle.
     solution: |
       def somme_cases(grille):
           total = 0
@@ -666,33 +584,25 @@ exercices:
       def ligne_complete(grille, symbole):
           ...
     aides:
-      - |
-        def ligne_complete(grille, symbole):
-            # parcourir les lignes de la grille
-            #     supposer que la ligne est complete
-            #     parcourir ses cases : si une case differe de symbole, la ligne n'est pas complete
-            #     si la ligne est restee complete, renvoyer True
-            # apres la boucle, renvoyer False
-      - |
-        def ligne_complete(grille, symbole):
-            for ligne in grille:
-                complete = ___
-                for case in ligne:
-                    if case != symbole:
-                        complete = ___
-                if complete:
-                    return ___
-            return ___
-      - |
-        def ligne_complete(grille, symbole):
-            for ligne in grille:
-                complete = True
-                for case in ligne:
-                    if case != symbole:
-                        complete = False
-                if complete:
-                    return ___
-            return ___
+      - idee: |
+          Regarder les lignes une par une. Il suffit d'une case différente de `symbole` pour qu'une ligne ne soit pas complète.
+      - pseudo: |
+          def ligne_complete(grille, symbole):
+              # parcourir les lignes de la grille
+              #     supposer que la ligne est complete
+              #     parcourir ses cases : si une case differe de symbole, la ligne n'est pas complete
+              #     si la ligne est restee complete, renvoyer True
+              # apres la boucle, renvoyer False
+      - trous: |
+          def ligne_complete(grille, symbole):
+              for ligne in grille:
+                  complete = ___
+                  for case in ligne:
+                      if case != symbole:
+                          complete = ___
+                  if complete:
+                      return ___
+              return ___
     solution: |
       def ligne_complete(grille, symbole):
           for ligne in grille:
@@ -725,32 +635,25 @@ exercices:
       def transposee(grille):
           ...
     aides:
-      - |
-        def transposee(grille):
-            # creer une grille vide
-            # pour chaque indice de colonne j :
-            #     creer une nouvelle ligne
-            #     parcourir les lignes de la grille et ajouter l'element d'indice j
-            #     ajouter la nouvelle ligne a la grille resultat
-            # renvoyer le resultat
-      - |
-        def transposee(grille):
-            resultat = []
-            for j in range(len(grille[___])):
-                nouvelle = []
-                for ligne in grille:
-                    nouvelle.append(ligne[___])
-                resultat.append(___)
-            return resultat
-      - |
-        def transposee(grille):
-            resultat = []
-            for j in range(len(grille[0])):
-                nouvelle = []
-                for ligne in grille:
-                    nouvelle.append(ligne[j])
-                resultat.append(___)
-            return resultat
+      - idee: |
+          La ligne `j` de la nouvelle grille est la colonne `j` de l'ancienne. Construire chaque nouvelle ligne en parcourant les lignes de l'ancienne grille.
+      - pseudo: |
+          def transposee(grille):
+              # creer une grille vide
+              # pour chaque indice de colonne j :
+              #     creer une nouvelle ligne
+              #     parcourir les lignes de la grille et ajouter l'element d'indice j
+              #     ajouter la nouvelle ligne a la grille resultat
+              # renvoyer le resultat
+      - trous: |
+          def transposee(grille):
+              resultat = []
+              for j in range(len(grille[___])):
+                  nouvelle = []
+                  for ligne in grille:
+                      nouvelle.append(ligne[___])
+                  resultat.append(___)
+              return resultat
     solution: |
       def transposee(grille):
           resultat = []
@@ -784,37 +687,27 @@ exercices:
       def a_gagne(grille, s):
           ...
     aides:
-      - |
-        def a_gagne(grille, s):
-            # pour i allant de 0 a 2 :
-            #     tester si les 3 cases de la ligne i contiennent s
-            #     tester si les 3 cases de la colonne i contiennent s
-            # tester la diagonale qui descend, puis celle qui monte
-            # si rien n'a marche, renvoyer False
-      - |
-        def a_gagne(grille, s):
-            for i in range(3):
-                if grille[i][0] == s and grille[i][1] == s and grille[i][2] == s:
-                    return True
-                if grille[0][i] == s and grille[___][i] == s and grille[___][i] == s:
-                    return True
-            if grille[0][0] == s and grille[1][1] == s and grille[___][___] == s:
-                return True
-            if grille[0][2] == s and grille[1][1] == s and grille[___][___] == s:
-                return True
-            return False
-      - |
-        def a_gagne(grille, s):
-            for i in range(3):
-                if grille[i][0] == s and grille[i][1] == s and grille[i][2] == s:
-                    return True
-                if grille[0][i] == s and grille[1][i] == s and grille[2][i] == s:
-                    return True
-            if grille[0][0] == s and grille[1][1] == s and grille[2][2] == s:
-                return True
-            if grille[0][2] == s and grille[1][1] == s and grille[___][___] == s:
-                return True
-            return False
+      - idee: |
+          Il y a 8 façons de gagner : 3 lignes, 3 colonnes et 2 diagonales. Une seule boucle peut tester à la fois la ligne `i` et la colonne `i`.
+      - pseudo: |
+          def a_gagne(grille, s):
+              # pour i allant de 0 a 2 :
+              #     tester si les 3 cases de la ligne i contiennent s
+              #     tester si les 3 cases de la colonne i contiennent s
+              # tester la diagonale qui descend, puis celle qui monte
+              # si rien n'a marche, renvoyer False
+      - trous: |
+          def a_gagne(grille, s):
+              for i in range(3):
+                  if grille[i][0] == s and grille[i][1] == s and grille[i][2] == s:
+                      return True
+                  if grille[0][i] == s and grille[___][i] == s and grille[___][i] == s:
+                      return True
+              if grille[0][0] == s and grille[1][1] == s and grille[___][___] == s:
+                  return True
+              if grille[0][2] == s and grille[1][1] == s and grille[___][___] == s:
+                  return True
+              return False
     solution: |
       def a_gagne(grille, s):
           for i in range(3):
@@ -853,31 +746,24 @@ exercices:
       def mines_autour(grille, i, j):
           ...
     aides:
-      - |
-        def mines_autour(grille, i, j):
-            # creer un compteur qui vaut 0
-            # parcourir les lignes de i - 1 a i + 1, et les colonnes de j - 1 a j + 1
-            #     ignorer la case (i, j) elle-meme et les indices en dehors de la grille
-            #     ajouter la valeur de la case au compteur
-            # renvoyer le compteur
-      - |
-        def mines_autour(grille, i, j):
-            compteur = 0
-            for a in range(i - 1, i + ___):
-                for b in range(j - 1, j + ___):
-                    dedans = a >= 0 and a < len(grille) and b >= 0 and b < len(grille[0])
-                    if dedans and (a != i or b != ___):
-                        compteur = compteur + grille[___][___]
-            return compteur
-      - |
-        def mines_autour(grille, i, j):
-            compteur = 0
-            for a in range(i - 1, i + 2):
-                for b in range(j - 1, j + 2):
-                    dedans = a >= 0 and a < len(grille) and b >= 0 and b < len(grille[0])
-                    if dedans and (a != i or b != j):
-                        compteur = compteur + ___
-            return compteur
+      - idee: |
+          Les 8 voisines sont dans les lignes `i - 1` à `i + 1` et les colonnes `j - 1` à `j + 1`. Il faut ignorer la case elle-même, et les indices qui sortent de la grille.
+      - pseudo: |
+          def mines_autour(grille, i, j):
+              # creer un compteur qui vaut 0
+              # parcourir les lignes de i - 1 a i + 1, et les colonnes de j - 1 a j + 1
+              #     ignorer la case (i, j) elle-meme et les indices en dehors de la grille
+              #     ajouter la valeur de la case au compteur
+              # renvoyer le compteur
+      - trous: |
+          def mines_autour(grille, i, j):
+              compteur = 0
+              for a in range(i - 1, i + ___):
+                  for b in range(j - 1, j + ___):
+                      dedans = a >= 0 and a < len(grille) and b >= 0 and b < len(grille[0])
+                      if dedans and (a != i or b != ___):
+                          compteur = compteur + grille[___][___]
+              return compteur
     solution: |
       def mines_autour(grille, i, j):
           compteur = 0
@@ -916,54 +802,36 @@ exercices:
           ...
     interdit: [sum]
     aides:
-      - |
-        def est_magique(grille):
-            # prendre la somme de la premiere ligne comme reference
-            # pour chaque indice i :
-            #     calculer la somme de la ligne i et celle de la colonne i
-            #     si l'une differe de la reference, renvoyer False
-            # calculer la somme de chaque diagonale et la comparer aussi a la reference
-            # si tout est bon, renvoyer True
-      - |
-        def est_magique(grille):
-            n = len(grille)
-            reference = 0
-            for j in range(n):
-                reference = reference + grille[0][j]
-            for i in range(n):
-                ligne = 0
-                colonne = 0
-                for j in range(n):
-                    ligne = ligne + grille[i][___]
-                    colonne = colonne + grille[___][i]
-                if ligne != reference or colonne != reference:
-                    return False
-            diagonale1 = 0
-            diagonale2 = 0
-            for i in range(n):
-                diagonale1 = diagonale1 + grille[i][___]
-                diagonale2 = diagonale2 + grille[i][n - 1 - ___]
-            return diagonale1 == ___ and diagonale2 == ___
-      - |
-        def est_magique(grille):
-            n = len(grille)
-            reference = 0
-            for j in range(n):
-                reference = reference + grille[0][j]
-            for i in range(n):
-                ligne = 0
-                colonne = 0
-                for j in range(n):
-                    ligne = ligne + grille[i][j]
-                    colonne = colonne + grille[j][i]
-                if ligne != reference or colonne != reference:
-                    return False
-            diagonale1 = 0
-            diagonale2 = 0
-            for i in range(n):
-                diagonale1 = diagonale1 + grille[i][i]
-                diagonale2 = diagonale2 + grille[i][n - 1 - i]
-            return ___
+      - idee: |
+          Toutes les sommes doivent être égales à une même valeur de référence. Il y en a beaucoup : des boucles évitent de toutes les écrire à la main.
+      - pseudo: |
+          def est_magique(grille):
+              # prendre la somme de la premiere ligne comme reference
+              # pour chaque indice i :
+              #     calculer la somme de la ligne i et celle de la colonne i
+              #     si l'une differe de la reference, renvoyer False
+              # calculer la somme de chaque diagonale et la comparer aussi a la reference
+              # si tout est bon, renvoyer True
+      - trous: |
+          def est_magique(grille):
+              n = len(grille)
+              reference = 0
+              for j in range(n):
+                  reference = reference + grille[0][j]
+              for i in range(n):
+                  ligne = 0
+                  colonne = 0
+                  for j in range(n):
+                      ligne = ligne + grille[i][___]
+                      colonne = colonne + grille[___][i]
+                  if ligne != reference or colonne != reference:
+                      return False
+              diagonale1 = 0
+              diagonale2 = 0
+              for i in range(n):
+                  diagonale1 = diagonale1 + grille[i][___]
+                  diagonale2 = diagonale2 + grille[i][n - 1 - ___]
+              return diagonale1 == ___ and diagonale2 == ___
     solution: |
       def est_magique(grille):
           n = len(grille)

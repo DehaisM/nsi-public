@@ -16,22 +16,18 @@ exercices:
       def tarif(age):
           ...
     aides:
-      - |
-        def tarif(age):
-            # si age est strictement inferieur a 14, renvoyer 5
-            # sinon, renvoyer 9
-      - |
-        def tarif(age):
-            if age < ___:
-                return ___
-            else:
-                return ___
-      - |
-        def tarif(age):
-            if age < 14:
-                return 5
-            else:
-                return ___
+      - idee: |
+          Il n'y a que deux cas : un `if` pour les moins de 14 ans, et un `else` pour tous les autres.
+      - pseudo: |
+          def tarif(age):
+              # si age est strictement inferieur a 14, renvoyer 5
+              # sinon, renvoyer 9
+      - trous: |
+          def tarif(age):
+              if age < ___:
+                  return ___
+              else:
+                  return ___
     solution: |
       def tarif(age):
           if age < 14:
@@ -65,26 +61,10 @@ exercices:
           else:
               return "Refusé"
     aides:
-      - |
-        # suivre le code a la main avec note = 18
-        # quel est le premier test vrai ?
-        # dans quel ordre faut-il donc faire les tests ?
-      - |
-        def mention(note):
-            if note >= ___:
-                return "Très bien"
-            elif note >= ___:
-                return "Admis"
-            else:
-                return "Refusé"
-      - |
-        def mention(note):
-            if note >= 16:
-                return "Très bien"
-            elif note >= ___:
-                return "Admis"
-            else:
-                return "Refusé"
+      - idee: |
+          Suivre le code à la main avec une note de 18 : quel est le premier test vrai ? Python s'arrête au premier test vrai d'un `if ... elif`.
+      - ou: |
+          Aucun test n'est faux pris tout seul : l'erreur vient de l'ordre des deux premiers tests.
     solution: |
       def mention(note):
           if note >= 16:
@@ -139,20 +119,17 @@ exercices:
       def frais(montant):
           ...
     aides:
-      - |
-        def frais(montant):
-            # si montant vaut au moins 50, renvoyer 0
-            # sinon, renvoyer 5
-      - |
-        def frais(montant):
-            if montant >= ___:
-                return ___
-            return ___
-      - |
-        def frais(montant):
-            if montant >= 50:
-                return 0
-            return ___
+      - idee: |
+          Deux cas seulement. Attention à un achat de 50 euros pile : la livraison est-elle offerte ?
+      - pseudo: |
+          def frais(montant):
+              # si montant vaut au moins 50, renvoyer 0
+              # sinon, renvoyer 5
+      - trous: |
+          def frais(montant):
+              if montant >= ___:
+                  return ___
+              return ___
     solution: |
       def frais(montant):
           if montant >= 50:
@@ -180,19 +157,10 @@ exercices:
               return True
           return False
     aides:
-      - |
-        # suivre le code a la main avec age = 16 et permis = True
-        # le mot "et" de l'enonce correspond a quel operateur ?
-      - |
-        def peut_conduire(age, permis):
-            if age >= 18 ___ permis:
-                return True
-            return False
-      - |
-        def peut_conduire(age, permis):
-            if age >= 18 and ___:
-                return True
-            return False
+      - idee: |
+          Suivre le code à la main avec 16 ans et le permis, puis relire l'énoncé : quelles conditions faut-il réunir pour conduire ?
+      - ou: |
+          L'erreur est à la ligne 2, dans la condition du `if` : un seul mot est à changer.
     solution: |
       def peut_conduire(age, permis):
           if age >= 18 and permis:
@@ -225,25 +193,20 @@ exercices:
       def meme_signe(a, b):
           ...
     aides:
-      - |
-        def meme_signe(a, b):
-            # si a et b sont tous les deux strictement positifs, renvoyer True
-            # si a et b sont tous les deux strictement negatifs, renvoyer True
-            # dans tous les autres cas, renvoyer False
-      - |
-        def meme_signe(a, b):
-            if a > 0 and ___:
-                return True
-            if a < 0 and ___:
-                return True
-            return ___
-      - |
-        def meme_signe(a, b):
-            if a > 0 and b > 0:
-                return True
-            if a < 0 and b < 0:
-                return True
-            return ___
+      - idee: |
+          La réponse est `True` dans deux cas seulement, et `False` dans tous les autres. Un `and` permet de tester deux conditions à la fois.
+      - pseudo: |
+          def meme_signe(a, b):
+              # si a et b sont tous les deux strictement positifs, renvoyer True
+              # si a et b sont tous les deux strictement negatifs, renvoyer True
+              # dans tous les autres cas, renvoyer False
+      - trous: |
+          def meme_signe(a, b):
+              if a > 0 and ___:
+                  return True
+              if a < 0 and ___:
+                  return True
+              return ___
     solution: |
       def meme_signe(a, b):
           if a > 0 and b > 0:
@@ -288,19 +251,14 @@ exercices:
               return True
           return False
     aides:
-      - |
-        # le premier test verifie la longueur a
-        # il faut faire la meme chose pour b, puis pour c
-      - |
-        def triangle_possible(a, b, c):
-            if a < b + c and b < ___ and c < ___:
-                return True
-            return False
-      - |
-        def triangle_possible(a, b, c):
-            if a < b + c and b < a + c and c < ___:
-                return True
-            return False
+      - idee: |
+          Le premier test est déjà écrit pour la longueur `a`. Il faut faire la même chose pour `b`, puis pour `c`.
+      - pseudo: |
+          def triangle_possible(a, b, c):
+              # si a est plus petit que b + c,
+              #    et b plus petit que a + c,
+              #    et c plus petit que a + b : renvoyer True
+              # sinon, renvoyer False
     solution: |
       def triangle_possible(a, b, c):
           if a < b + c and b < a + c and c < a + b:
@@ -338,27 +296,21 @@ exercices:
       def ouvrir(code, erreurs):
           ...
     aides:
-      - |
-        def ouvrir(code, erreurs):
-            # tester d'abord si la porte est bloquee
-            # sinon, tester si le code est bon
-            # sinon, renvoyer "refusée"
-      - |
-        def ouvrir(code, erreurs):
-            if erreurs >= ___:
-                return "bloquée"
-            elif code == ___:
-                return ___
-            else:
-                return ___
-      - |
-        def ouvrir(code, erreurs):
-            if erreurs >= 3:
-                return "bloquée"
-            elif code == 1234:
-                return "ouverte"
-            else:
-                return ___
+      - idee: |
+          L'ordre des tests compte : si la porte est bloquée, le code ne sert à rien. Tester donc d'abord le nombre d'erreurs.
+      - pseudo: |
+          def ouvrir(code, erreurs):
+              # tester d'abord si la porte est bloquee
+              # sinon, tester si le code est bon
+              # sinon, renvoyer "refusée"
+      - trous: |
+          def ouvrir(code, erreurs):
+              if erreurs >= ___:
+                  return "bloquée"
+              elif code == ___:
+                  return ___
+              else:
+                  return ___
     solution: |
       def ouvrir(code, erreurs):
           if erreurs >= 3:
@@ -390,30 +342,23 @@ exercices:
       def jours(mois, bissextile):
           ...
     aides:
-      - |
-        def jours(mois, bissextile):
-            # traiter d'abord le cas de fevrier :
-            #     renvoyer 29 si l'annee est bissextile, 28 sinon
-            # si le mois vaut 4, 6, 9 ou 11, renvoyer 30
-            # sinon, renvoyer 31
-      - |
-        def jours(mois, bissextile):
-            if mois == 2:
-                if bissextile:
-                    return ___
-                return ___
-            if mois == 4 or mois == ___ or mois == ___ or mois == ___:
-                return ___
-            return ___
-      - |
-        def jours(mois, bissextile):
-            if mois == 2:
-                if bissextile:
-                    return 29
-                return 28
-            if mois == 4 or mois == 6 or mois == 9 or mois == 11:
-                return ___
-            return ___
+      - idee: |
+          Février est le seul mois qui dépend de l'année : le traiter à part, en premier.
+      - pseudo: |
+          def jours(mois, bissextile):
+              # traiter d'abord le cas de fevrier :
+              #     renvoyer 29 si l'annee est bissextile, 28 sinon
+              # si le mois vaut 4, 6, 9 ou 11, renvoyer 30
+              # sinon, renvoyer 31
+      - trous: |
+          def jours(mois, bissextile):
+              if mois == 2:
+                  if bissextile:
+                      return ___
+                  return ___
+              if mois == 4 or mois == ___ or mois == ___ or mois == ___:
+                  return ___
+              return ___
     solution: |
       def jours(mois, bissextile):
           if mois == 2:
@@ -449,20 +394,17 @@ exercices:
           ...
     interdit: [abs]
     aides:
-      - |
-        def absolue(x):
-            # si x est positif ou nul, renvoyer x
-            # sinon, renvoyer son oppose
-      - |
-        def absolue(x):
-            if x >= ___:
-                return ___
-            return ___
-      - |
-        def absolue(x):
-            if x >= 0:
-                return x
-            return ___
+      - idee: |
+          Si `x` est négatif, son opposé `-x` est positif. Il n'y a que deux cas.
+      - pseudo: |
+          def absolue(x):
+              # si x est positif ou nul, renvoyer x
+              # sinon, renvoyer son oppose
+      - trous: |
+          def absolue(x):
+              if x >= ___:
+                  return ___
+              return ___
     solution: |
       def absolue(x):
           if x >= 0:
@@ -488,20 +430,17 @@ exercices:
       def heure_valide(h, m):
           ...
     aides:
-      - |
-        def heure_valide(h, m):
-            # les deux conditions doivent etre vraies en meme temps
-            # chacune porte sur une borne basse et une borne haute
-      - |
-        def heure_valide(h, m):
-            if h >= ___ and h <= ___ and m >= ___ and m <= ___:
-                return True
-            return False
-      - |
-        def heure_valide(h, m):
-            if h >= 0 and h <= 23 and m >= 0 and m <= 59:
-                return ___
-            return ___
+      - idee: |
+          Les deux conditions doivent être vraies en même temps, et chacune a une borne basse et une borne haute.
+      - pseudo: |
+          def heure_valide(h, m):
+              # les deux conditions doivent etre vraies en meme temps
+              # chacune porte sur une borne basse et une borne haute
+      - trous: |
+          def heure_valide(h, m):
+              if h >= ___ and h <= ___ and m >= ___ and m <= ___:
+                  return True
+              return False
     solution: |
       def heure_valide(h, m):
           if h >= 0 and h <= 23 and m >= 0 and m <= 59:
@@ -539,25 +478,10 @@ exercices:
           else:
               return 2
     aides:
-      - |
-        # une personne de 4 ans a-t-elle moins de 4 ans ?
-        # quel operateur traduit "moins de 4 ans" ?
-      - |
-        def tarif_bus(age):
-            if age ___ 4:
-                return 0
-            elif age < 18:
-                return 1
-            else:
-                return 2
-      - |
-        def tarif_bus(age):
-            if age < 4:
-                return ___
-            elif age < 18:
-                return 1
-            else:
-                return 2
+      - idee: |
+          Suivre le code à la main avec 4 ans : quel test est vrai en premier ? Que dit l'énoncé pour cet âge ?
+      - ou: |
+          L'erreur est à la ligne 2, dans la comparaison du premier test.
     solution: |
       def tarif_bus(age):
           if age < 4:
@@ -625,25 +549,20 @@ exercices:
       def vainqueur(a, b):
           ...
     aides:
-      - |
-        def vainqueur(a, b):
-            # A gagne s'il a au moins 6 jeux et au moins 2 jeux de plus que B
-            # B gagne dans le cas symetrique
-            # sinon, le set continue
-      - |
-        def vainqueur(a, b):
-            if a >= 6 and a - b >= ___:
-                return "A"
-            if b >= ___ and b - a >= ___:
-                return "B"
-            return ___
-      - |
-        def vainqueur(a, b):
-            if a >= 6 and a - b >= 2:
-                return "A"
-            if b >= 6 and b - a >= 2:
-                return "B"
-            return ___
+      - idee: |
+          Écrire d'abord la condition de victoire de A, en la testant sur 6 à 4 et sur 6 à 5. Celle de B s'obtient en échangeant les rôles.
+      - pseudo: |
+          def vainqueur(a, b):
+              # A gagne s'il a au moins 6 jeux et au moins 2 jeux de plus que B
+              # B gagne dans le cas symetrique
+              # sinon, le set continue
+      - trous: |
+          def vainqueur(a, b):
+              if a >= 6 and a - b >= ___:
+                  return "A"
+              if b >= ___ and b - a >= ___:
+                  return "B"
+              return ___
     solution: |
       def vainqueur(a, b):
           if a >= 6 and a - b >= 2:
@@ -678,20 +597,17 @@ exercices:
       def cout(go):
           ...
     aides:
-      - |
-        def cout(go):
-            # si la consommation ne depasse pas 20 Go, le prix est celui du forfait
-            # sinon, calculer le nombre de Go en trop et ajouter leur prix au forfait
-      - |
-        def cout(go):
-            if go <= ___:
-                return ___
-            return 10 + (go - ___) * ___
-      - |
-        def cout(go):
-            if go <= 20:
-                return 10
-            return 10 + (go - 20) * ___
+      - idee: |
+          Deux cas : on reste dans les 20 Go, ou on les dépasse. Dans le second cas, on ne paie en plus que les Go en trop.
+      - pseudo: |
+          def cout(go):
+              # si la consommation ne depasse pas 20 Go, le prix est celui du forfait
+              # sinon, calculer le nombre de Go en trop et ajouter leur prix au forfait
+      - trous: |
+          def cout(go):
+              if go <= ___:
+                  return ___
+              return 10 + (go - ___) * ___
     solution: |
       def cout(go):
           if go <= 20:
@@ -720,30 +636,22 @@ exercices:
       def prix_parking(minutes):
           ...
     aides:
-      - |
-        def prix_parking(minutes):
-            # tester les durees de la plus courte a la plus longue
-            # chaque test n'est atteint que si les precedents sont faux
-      - |
-        def prix_parking(minutes):
-            if minutes <= ___:
-                return 0
-            elif minutes <= ___:
-                return 2
-            elif minutes <= ___:
-                return 3.5
-            else:
-                return ___
-      - |
-        def prix_parking(minutes):
-            if minutes <= 30:
-                return 0
-            elif minutes <= 60:
-                return 2
-            elif minutes <= 120:
-                return 3.5
-            else:
-                return ___
+      - idee: |
+          Tester les durées de la plus courte à la plus longue : avec `elif`, chaque test n'est atteint que si les précédents sont faux.
+      - pseudo: |
+          def prix_parking(minutes):
+              # tester les durees de la plus courte a la plus longue
+              # chaque test n'est atteint que si les precedents sont faux
+      - trous: |
+          def prix_parking(minutes):
+              if minutes <= ___:
+                  return 0
+              elif minutes <= ___:
+                  return 2
+              elif minutes <= ___:
+                  return 3.5
+              else:
+                  return ___
     solution: |
       def prix_parking(minutes):
           if minutes <= 30:
@@ -782,25 +690,20 @@ exercices:
           ...
     interdit: [sorted, sort, min, max]
     aides:
-      - |
-        def milieu(a, b, c):
-            # b est au milieu s'il est entre a et c, dans un sens ou dans l'autre
-            # a est au milieu s'il est entre b et c, dans un sens ou dans l'autre
-            # sinon, c'est c
-      - |
-        def milieu(a, b, c):
-            if (a <= b and b <= c) or (c <= b and b <= ___):
-                return b
-            if (b <= a and a <= ___) or (c <= a and a <= ___):
-                return a
-            return ___
-      - |
-        def milieu(a, b, c):
-            if (a <= b and b <= c) or (c <= b and b <= a):
-                return b
-            if (b <= a and a <= c) or (c <= a and a <= b):
-                return ___
-            return ___
+      - idee: |
+          Un nombre est au milieu s'il est plus grand que l'un des deux autres et plus petit que l'autre. Il faut penser aux deux sens.
+      - pseudo: |
+          def milieu(a, b, c):
+              # b est au milieu s'il est entre a et c, dans un sens ou dans l'autre
+              # a est au milieu s'il est entre b et c, dans un sens ou dans l'autre
+              # sinon, c'est c
+      - trous: |
+          def milieu(a, b, c):
+              if (a <= b and b <= c) or (c <= b and b <= ___):
+                  return b
+              if (b <= a and a <= ___) or (c <= a and a <= ___):
+                  return a
+              return ___
     solution: |
       def milieu(a, b, c):
           if (a <= b and b <= c) or (c <= b and b <= a):
@@ -846,34 +749,25 @@ exercices:
           ...
     interdit: [min, max]
     aides:
-      - |
-        def commun(a, b, c, d):
-            # la partie commune commence au plus grand des deux debuts
-            # elle finit a la plus petite des deux fins
-            # si elle finit avant de commencer, il n'y a rien en commun
-            # sinon, renvoyer sa longueur
-      - |
-        def commun(a, b, c, d):
-            debut = a
-            if c > a:
-                debut = ___
-            fin = b
-            if d < b:
-                fin = ___
-            if fin < debut:
-                return ___
-            return ___
-      - |
-        def commun(a, b, c, d):
-            debut = a
-            if c > a:
-                debut = c
-            fin = b
-            if d < b:
-                fin = d
-            if fin < debut:
-                return 0
-            return ___
+      - idee: |
+          Dessiner les deux intervalles sur une droite. La partie commune commence au plus grand des deux débuts et finit à la plus petite des deux fins.
+      - pseudo: |
+          def commun(a, b, c, d):
+              # la partie commune commence au plus grand des deux debuts
+              # elle finit a la plus petite des deux fins
+              # si elle finit avant de commencer, il n'y a rien en commun
+              # sinon, renvoyer sa longueur
+      - trous: |
+          def commun(a, b, c, d):
+              debut = a
+              if c > a:
+                  debut = ___
+              fin = b
+              if d < b:
+                  fin = ___
+              if fin < debut:
+                  return ___
+              return ___
     solution: |
       def commun(a, b, c, d):
           debut = a

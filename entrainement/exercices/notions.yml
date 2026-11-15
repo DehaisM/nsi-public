@@ -18,7 +18,17 @@
 #              generateur : question de calcul a valeurs tirees au hasard (Seconde)
 #
 # Pour le type code :
-#   enonce, depart (code de depart), aides (3 niveaux), solution, tests
+#   enonce, depart (code de depart), aides, solution, tests
+#   aides : une liste ; chaque aide a un genre, qui donne son titre sur la page
+#     idee    une idee pour demarrer : une ou deux phrases en francais, sans code (les `noms` sont permis)
+#     ou      ou chercher (exercice "trouver l'erreur") : la ligne ou la zone fautive, sans la correction
+#     pseudo  le pseudo-code : la structure du programme, en commentaires
+#     trous   le code a trous : le programme avec des ___ a completer
+#   Selon l'exercice :
+#     ecrire le code       idee, pseudo, trous
+#     trouver l'erreur     idee, ou
+#     completer un code    idee, pseudo (le code de depart est deja un code a trous)
+#   Pas d'aide quasi complete : il doit toujours rester l'essentiel a trouver.
 #   autres_solutions (facultatif) : d'autres bonnes reponses, pour verifier que les tests les acceptent
 #   interdit (facultatif) : noms interdits, plus "[:]" pour les tranches et "in" pour le test d'appartenance
 #   Un test est l'un de ces trois genres (ajouter cache: true pour ne pas montrer le cas a l'eleve) :
