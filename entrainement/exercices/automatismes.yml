@@ -1,0 +1,62 @@
+# Automatismes (Premiere) : des questions courtes, tirees au hasard, une competence a la fois.
+# Les questions sont fabriquees par automatismes.py, qui doit avoir une fonction pour chaque id.
+#
+#   id           identifiant, minuscules (sert dans l'adresse de la page : #/auto/<id>)
+#   numero       meme suite que les exercices (prendre le prochain numero libre, ne jamais le
+#                changer) : une competence acquise compte comme un exercice reussi dans le
+#                code de sauvegarde
+#   nom          nom court
+#   description  ce que l'on travaille, en une ligne
+#
+# Une competence est acquise apres 5 bonnes reponses d'affilee (ACQUIS dans entrainement.js).
+# Apres une modification : python outils/controler_automatismes.py
+competences:
+  - id: range
+    numero: 226
+    nom: range
+    description: Les valeurs d'un range, le nombre de tours d'une boucle, trouver le bon range
+
+  - id: division
+    numero: 227
+    nom: Division entière et reste
+    description: Les opérateurs // et %, pair ou impair, le chiffre des unités
+
+  - id: indices
+    numero: 228
+    nom: Indices
+    description: Un élément d'une liste ou d'un texte, les indices négatifs, l'indice qui n'existe pas
+
+  - id: tranches
+    numero: 229
+    nom: Tranches
+    description: Des morceaux de liste ou de texte, comme L[1:4] ou mot[:3]
+
+  - id: conditions
+    numero: 230
+    nom: Conditions
+    description: True ou False, avec les comparaisons, and, or et not
+
+  - id: conversions
+    numero: 231
+    nom: Conversions
+    description: Passer d'un texte à un nombre et inversement, avec int et str
+
+  - id: methodes
+    numero: 232
+    nom: Méthodes de liste
+    description: La liste après append, pop et insert, et ce que renvoient pop et index
+
+  - id: boucles
+    numero: 233
+    nom: Petites boucles
+    description: La valeur d'une variable après une boucle de quelques lignes
+
+  - id: grilles
+    numero: 234
+    nom: Grilles
+    description: Une case d'une grille, son nombre de lignes et de colonnes
+
+  - id: tuples
+    numero: 235
+    nom: Tuples
+    description: Indices, dépaquetage, échange de valeurs, et ce qu'on ne peut pas faire

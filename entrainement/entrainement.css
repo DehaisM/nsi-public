@@ -83,6 +83,8 @@
     border: 1.5px solid var(--nsi-filet); border-radius: var(--nsi-rayon);
 }
 .entr-filtre::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--ligne); }
+/* Sans couleur de ligne (difficulte, Maths, niveau) : le vert du site quand le filtre est choisi. */
+.entr-filtre--neutre { --ligne: var(--md-accent-fg-color); }
 .entr-filtre--neutre::before { content: none; }
 .entr-filtre--etiquette { margin-left: .6rem; }
 .entr-filtre:hover { border-color: var(--ligne); }
@@ -100,7 +102,7 @@
     background: var(--ligne); color: #fff; font-size: .78rem; line-height: 1;
 }
 .entr-ligne__compte { margin-left: auto; font-weight: 600; font-size: .66rem; color: var(--entr-doux); }
-.entr-ligne__fleche { font-size: .5rem; color: var(--entr-doux); }
+.entr-ligne__fleche { font-size: .6rem; font-weight: 400; color: var(--entr-doux); }
 
 /* Une rangee d'arrets, relies par un trait, qui passe a la ligne au besoin */
 .entr-rangee { display: flex; flex-wrap: wrap; gap: .4rem .55rem; padding: .3rem .1rem .3rem .25rem; margin-left: .3rem; overflow: hidden; }
@@ -195,10 +197,10 @@
 .md-typeset .entr-sous-titre { margin: .9rem 0 0; font-size: .68rem; color: var(--entr-doux); }
 .md-typeset ul.entr-tests { list-style: none; margin: .7rem 0; padding: 0; }
 .md-typeset ul.entr-tests li { margin: .25rem 0; }
-.entr-test__marque { display: inline-block; width: 1.25rem; font-size: .85rem; font-weight: 800; }
+.entr-test__marque { display: inline-block; width: 3.6rem; font-size: .66rem; font-weight: 800; }
 .entr-test--ok .entr-test__marque { color: var(--entr-vert); }
 .entr-test--ko .entr-test__marque { color: var(--entr-rouge); }
-.entr-test__details { margin: .15rem 0 .5rem 1.25rem; font-size: .72rem; }
+.entr-test__details { margin: .15rem 0 .5rem 3.6rem; font-size: .72rem; }
 .entr-remarque { margin-top: .25rem; font-size: .74rem; color: var(--entr-rouge); }
 .md-typeset .entr-caches { margin: .4rem 0; font-size: .74rem; }
 .entr-caches--ok { color: var(--entr-vert); }
@@ -215,12 +217,8 @@
 .entr-choix__bouton:hover:not(:disabled) .entr-choix__case { background: var(--entr-signal); }
 .entr-choix__bouton:disabled { cursor: default; }
 .entr-choix__bouton:disabled:not(.entr-choix__bouton--juste):not(.entr-choix__bouton--faux) { opacity: .5; }
-.entr-choix__bouton--juste .entr-choix__case::after,
-.entr-choix__bouton--faux .entr-choix__case::after {
-    position: absolute; left: .12rem; bottom: 0; font-size: .85rem; font-weight: 800; line-height: 1;
-}
-.entr-choix__bouton--juste .entr-choix__case::after { content: "✓"; color: var(--entr-vert); }
-.entr-choix__bouton--faux .entr-choix__case::after { content: "✗"; color: var(--entr-rouge); }
+.entr-choix__bouton--juste .entr-choix__case { background: var(--entr-vert); border-color: var(--entr-vert); }
+.entr-choix__bouton--faux .entr-choix__case { background: var(--entr-rouge); border-color: var(--entr-rouge); }
 
 /* Le code de sauvegarde */
 .md-typeset .entr-code-sauvegarde {
@@ -261,6 +259,22 @@
 .md-typeset .entr-figure figcaption { margin-top: .25rem; font-size: .62rem; color: var(--entr-doux); }
 .entr-rate { margin: 1.4rem 0; padding-top: .6rem; border-top: 1px solid var(--nsi-filet); }
 .md-typeset .entr-rate h2 { margin: 0 0 .3rem; font-size: .9rem; }
+
+/* Automatismes : une tuile par competence, et les pastilles de la serie en cours */
+.entr-competences { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: .5rem; margin-top: .6rem; }
+.md-typeset .entr-competence {
+    display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+    padding: .5rem .7rem; color: var(--entr-encre); font: 700 .75rem var(--nsi-titres);
+    border: 1.5px solid var(--nsi-filet); border-radius: var(--nsi-rayon);
+}
+.md-typeset .entr-competence:hover, .md-typeset .entr-competence:focus-visible { color: var(--entr-encre); border-color: var(--md-accent-fg-color); }
+.md-typeset .entr-competence--acquise { border-color: var(--entr-vert); background: color-mix(in srgb, var(--entr-vert) 10%, transparent); }
+.md-typeset .entr-competence .entr-badge { margin-left: 0; }
+.entr-pastilles { display: inline-flex; gap: .2rem; vertical-align: middle; }
+.entr-pastille { width: .45rem; height: .45rem; border-radius: 50%; border: 1.5px solid var(--entr-vert); }
+.entr-pastille--pleine { background: var(--entr-vert); }
+.md-typeset .entr-auto__serie { margin: .3rem 0 1rem; font-size: .75rem; color: var(--entr-doux); }
+.md-typeset .entr-auto .entr-enonce { font-size: .85rem; }
 
 @media (max-width: 34rem) {
     .entr-statut { margin-left: 0; width: 100%; }
