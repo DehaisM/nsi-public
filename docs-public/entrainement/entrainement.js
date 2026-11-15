@@ -522,7 +522,7 @@
     const puce = (classe, nom, liste, valeur, style) => {
       const actif = liste.includes(valeur);
       return el("button", {
-        class: classe + (actif ? " " + classe + "--active" : ""),
+        class: classe + (actif ? " entr-filtre--active" : ""),
         style,
         "aria-pressed": String(actif),
         onclick() {

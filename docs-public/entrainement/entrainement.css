@@ -83,6 +83,8 @@
     border: 1.5px solid var(--nsi-filet); border-radius: var(--nsi-rayon);
 }
 .entr-filtre::before { content: ""; width: .5rem; height: .5rem; border-radius: 50%; background: var(--ligne); }
+/* Sans couleur de ligne (difficulte, Maths, niveau) : le vert du site quand le filtre est choisi. */
+.entr-filtre--neutre { --ligne: var(--md-accent-fg-color); }
 .entr-filtre--neutre::before { content: none; }
 .entr-filtre--etiquette { margin-left: .6rem; }
 .entr-filtre:hover { border-color: var(--ligne); }
