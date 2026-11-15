@@ -15,3 +15,7 @@ Premiers pas en Python
 ### [Thématique 1 : Types construits](types-construits/index.md)
 Tuples, Listes et Dictionnaires
 
+## Projets
+
+### [Projet 1 : Puissance 4](projet1-puissance4/index.md)
+Premier projet en Python, avec VS Code
