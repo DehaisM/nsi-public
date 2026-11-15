@@ -31,7 +31,7 @@
       lignes: "Questions par chapitre",
       consigne: "Chaque point est une question, plein quand elle est réussie. Ouvrir un chapitre pour voir ses questions.",
       une: "question", des: "questions", reussie: "réussie", premierCoup: "du premier coup",
-      suivant: "Question suivante", retour: "← Toutes les questions",
+      suivant: "Question suivante", retour: "Toutes les questions",
       numeros: false, // pas de numero d'exercice, pas de badge "sans aide"
     },
     premiere: {
@@ -42,7 +42,7 @@
       lignes: "Exercices par notion",
       consigne: "Chaque point est un exercice, plein quand il est réussi. Ouvrir une notion pour voir leurs titres.",
       une: "exo", des: "exos", reussie: "réussi", premierCoup: "sans aide",
-      suivant: "Exo suivant", retour: "← Tous les exercices",
+      suivant: "Exo suivant", retour: "Tous les exercices",
       numeros: true,
     },
   };
@@ -246,7 +246,7 @@
         const bouton = evenement.currentTarget;
         try {
           await navigator.clipboard.writeText(texte);
-          bouton.textContent = "Copié !";
+          bouton.textContent = "Copié";
           setTimeout(() => { bouton.textContent = libelle; }, 1500);
         } catch (erreur) {
           window.prompt("Copier ce texte :", texte);
@@ -502,7 +502,7 @@
         el("div", {},
           el("p", { class: "entr-jour__surtitre" }, t.jour),
           el("button", { class: "entr-jour__titre", onclick: () => allerA(jour) },
-            jour.titre + (lu(jour.id).reussi ? " ✓" : ""))
+            jour.titre + (lu(jour.id).reussi ? " (réussi)" : ""))
         ),
         el("div", { class: "entr-jour__boutons" }, boutonSerie, hasard)
       ),
@@ -613,7 +613,7 @@
           el("span", { class: "entr-ligne__num" }, String(i + 1)),
           el("span", {}, notion.nom),
           el("span", { class: "entr-ligne__compte" }, faits + " sur " + exos.length),
-          el("span", { class: "entr-ligne__fleche", "aria-hidden": "true" }, ouverte ? "▲" : "▼")),
+          el("span", { class: "entr-ligne__fleche" }, ouverte ? "masquer" : "afficher")),
         ouverte
           ? el("ol", { class: "entr-stations" }, exos.map((exo) => {
             const s = lu(exo.id);
@@ -870,7 +870,7 @@
     }
 
     async function nouvelleQuestion() {
-      zone.replaceChildren(el("p", { class: "entr-consigne" }, "Question en préparation..."));
+      zone.replaceChildren(el("p", { class: "entr-consigne" }, "Question en préparation."));
       try {
         question = await demander({ faire: "tirer", competence: competence.id, graine: Math.floor(Math.random() * 2 ** 31) });
       } catch (erreur) {
@@ -923,7 +923,7 @@
           titre = "Bonne réponse";
           if (s.serie >= ACQUIS && !s.acquis) {
             s.acquis = true;
-            titre = "Bonne réponse. Compétence acquise !";
+            titre = "Bonne réponse. Compétence acquise.";
           }
         } else {
           s.serie = 0;
@@ -958,7 +958,7 @@
       zone));
     majCompteur();
     moteur.preparer((etatMoteur) => {
-      statut.textContent = etatMoteur === "echec" ? PYTHON_ABSENT : "Python se prépare (quelques secondes la première fois)...";
+      statut.textContent = etatMoteur === "echec" ? PYTHON_ABSENT : "Python se prépare : quelques secondes la première fois.";
       statut.hidden = etatMoteur === "pret";
     });
     nouvelleQuestion();
@@ -986,7 +986,7 @@
     const exo = s.exos[s.index];
     const affiche = s.affiches[s.index];
     racine.replaceChildren(el("div", {},
-      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "← Arrêter la série")),
+      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "Arrêter la série")),
       progressionSerie(),
       el("p", { class: "entr-surtitre" }, "Question " + (s.index + 1) + " sur " + s.exos.length + ", " + nomNotion(exo.notion)),
       el("h1", { class: "entr-titre" }, exo.titre),
@@ -1025,7 +1025,7 @@
     const rates = s.affiches.filter((_, i) => !s.resultats[i]);
     const score = s.exos.length - rates.length;
     racine.replaceChildren(el("div", {},
-      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "← Retour à la liste")),
+      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "Retour à la liste")),
       progressionSerie(),
       el("h1", { class: "entr-titre" }, "Score : " + score + " sur " + s.exos.length),
       el("p", {}, rates.length === 0
@@ -1110,7 +1110,7 @@
 
     async function lancer() {
       verifier.disabled = true;
-      verifier.textContent = "Vérification...";
+      verifier.textContent = "Vérification en cours";
       marquerLigne(null);
       let r;
       try {
@@ -1180,7 +1180,7 @@
 
     moteur.preparer((etatMoteur) => {
       const messages = {
-        chargement: "Python se prépare (quelques secondes la première fois)...",
+        chargement: "Python se prépare : quelques secondes la première fois.",
         pret: "Python est prêt",
         echec: PYTHON_ABSENT,
       };
@@ -1212,9 +1212,9 @@
     const caches = r.tests.filter((t) => t.cache);
     if (caches.length && visibles.every((t) => t.ok) && !r.erreur && !r.alerte) {
       const rates = caches.filter((t) => !t.ok).length;
-      let message = "✓ Les tests cachés passent aussi.";
-      if (rates === 1) message = "✗ Un test caché échoue : penser aux cas particuliers.";
-      if (rates > 1) message = "✗ " + rates + " tests cachés échouent : penser aux cas particuliers.";
+      let message = "Les tests cachés passent aussi.";
+      if (rates === 1) message = "Un test caché échoue : penser aux cas particuliers.";
+      if (rates > 1) message = rates + " tests cachés échouent : penser aux cas particuliers.";
       blocs.push(el("p", { class: "entr-caches entr-caches--" + (rates ? "ko" : "ok") }, message));
     }
 
@@ -1239,7 +1239,7 @@
   // Un seul test detaille a la fois : on corrige un probleme, puis on reverifie.
   function ligneTest(t, detailler) {
     const ligne = el("li", { class: t.ok ? "entr-test--ok" : "entr-test--ko" },
-      el("span", { class: "entr-test__marque" }, t.ok ? "✓" : "✗"),
+      el("span", { class: "entr-test__marque" }, t.ok ? "réussi" : "échoue"),
       el("code", {}, t.libelle));
     if (detailler) {
       const details = el("div", { class: "entr-test__details" });
