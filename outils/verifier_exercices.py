@@ -172,7 +172,15 @@ def verifier(exo, notions):
         return problemes
 
     if len(exo["aides"]) != 3:
-        problemes.append("il faut 3 niveaux d'aide")
+        problemes.append("il faut 3 niveaux d'aide : une idée, le pseudo-code, le code à trous")
+    else:
+        idee, pseudo, trous = (aide.strip() for aide in exo["aides"])
+        if "\n" in idee or "___" in idee or "```" in idee:
+            problemes.append("aide 1 : une idée en une ou deux phrases, sans bloc de code")
+        if "#" not in pseudo or "___" in pseudo:
+            problemes.append("aide 2 : du pseudo-code en commentaires, sans trous")
+        if "___" not in trous:
+            problemes.append("aide 3 : un code à trous, avec des ___")
     solutions = [exo["solution"]] + list(exo.get("autres_solutions") or [])
     for rang, solution in enumerate(solutions):
         resultat = correcteur.executer_programme(exo, solution)

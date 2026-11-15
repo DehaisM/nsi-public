@@ -17,6 +17,8 @@ exercices:
           ...
     aides:
       - |
+        Simuler les soirs un par un : tant qu'il reste des pages, on en lit `rythme` et on compte un soir de plus.
+      - |
         def nb_soirs(pages, rythme):
             # creer un compteur de soirs qui vaut 0
             # tant qu'il reste des pages a lire :
@@ -28,13 +30,6 @@ exercices:
             soirs = 0
             while pages > ___:
                 pages = ___
-                soirs = ___
-            return soirs
-      - |
-        def nb_soirs(pages, rythme):
-            soirs = 0
-            while pages > 0:
-                pages = pages - rythme
                 soirs = ___
             return soirs
     solution: |
@@ -91,22 +86,19 @@ exercices:
           return compteur
     aides:
       - |
-        # suivre le code a la main avec objectif = 30 et depot = 10
-        # quand total vaut 30, l'objectif est-il atteint ?
-        # la boucle doit-elle continuer dans ce cas ?
+        Suivre le code à la main avec un objectif de 30 et un dépôt de 10. Quand le total vaut 30, l'objectif est atteint : la boucle doit-elle continuer ?
+      - |
+        def semaines(objectif, depot):
+            # partir d'un total et d'un compteur qui valent 0
+            # tant que le total est strictement inferieur a l'objectif :
+            #     ajouter depot au total
+            #     ajouter 1 au compteur
+            # renvoyer le compteur
       - |
         def semaines(objectif, depot):
             total = 0
             compteur = 0
             while total ___ objectif:
-                total = total + depot
-                compteur = compteur + 1
-            return compteur
-      - |
-        def semaines(objectif, depot):
-            total = 0
-            compteur = 0
-            while total < ___:
                 total = total + depot
                 compteur = compteur + 1
             return compteur
@@ -148,20 +140,19 @@ exercices:
           return compteur
     aides:
       - |
-        # a chaque tour, on retire un chiffre et on compte 1
-        # quelle valeur prend n quand il n'a plus de chiffres ?
+        À chaque tour, on retire un chiffre à `n` et on compte 1. Quand il n'y a plus de chiffres, que vaut `n` ?
+      - |
+        def nb_chiffres(n):
+            # creer un compteur qui vaut 0
+            # tant que n est strictement positif :
+            #     retirer le dernier chiffre de n
+            #     ajouter 1 au compteur
+            # renvoyer le compteur
       - |
         def nb_chiffres(n):
             compteur = 0
             while n > 0:
                 n = n // ___
-                compteur = ___
-            return compteur
-      - |
-        def nb_chiffres(n):
-            compteur = 0
-            while n > 0:
-                n = n // 10
                 compteur = ___
             return compteur
     solution: |
@@ -196,6 +187,8 @@ exercices:
           ...
     aides:
       - |
+        Partir de `n` et avancer de 1 en 1 tant qu'on n'est pas tombé sur un multiple de `m`.
+      - |
         def prochain_multiple(n, m):
             # tant que n n'est pas un multiple de m :
             #     ajouter 1 a n
@@ -203,11 +196,6 @@ exercices:
       - |
         def prochain_multiple(n, m):
             while n % m != ___:
-                n = ___
-            return n
-      - |
-        def prochain_multiple(n, m):
-            while n % m != 0:
                 n = ___
             return n
     solution: |
@@ -247,6 +235,8 @@ exercices:
           ...
     aides:
       - |
+        Simuler les rebonds un par un : à chaque rebond, la hauteur est divisée par 2. S'arrêter dès qu'elle passe sous 1 mètre.
+      - |
         def rebonds(hauteur):
             # creer un compteur qui vaut 0
             # tant que la hauteur vaut au moins 1 :
@@ -258,13 +248,6 @@ exercices:
             compteur = 0
             while hauteur >= ___:
                 hauteur = ___
-                compteur = ___
-            return compteur
-      - |
-        def rebonds(hauteur):
-            compteur = 0
-            while hauteur >= 1:
-                hauteur = hauteur / 2
                 compteur = ___
             return compteur
     solution: |
@@ -298,6 +281,8 @@ exercices:
           ...
     aides:
       - |
+        Suivre la méthode de l'énoncé : tant que les deux nombres sont différents, le plus grand est remplacé par la différence.
+      - |
         def pgcd(a, b):
             # tant que a et b sont differents :
             #     si a est plus grand que b, retirer b a a
@@ -311,14 +296,6 @@ exercices:
                 else:
                     b = ___
             return ___
-      - |
-        def pgcd(a, b):
-            while a != b:
-                if a > b:
-                    a = a - b
-                else:
-                    b = ___
-            return a
     solution: |
       def pgcd(a, b):
           while a != b:
@@ -358,6 +335,8 @@ exercices:
           ...
     aides:
       - |
+        Retirer les chiffres de `n` un par un en partant de la droite, et les placer au fur et à mesure dans un nouveau nombre.
+      - |
         def a_l_envers(n):
             # creer une variable resultat qui vaut 0
             # tant que n est strictement positif :
@@ -371,13 +350,6 @@ exercices:
             while n > 0:
                 resultat = resultat * ___ + n % ___
                 n = n // ___
-            return resultat
-      - |
-        def a_l_envers(n):
-            resultat = 0
-            while n > 0:
-                resultat = resultat * 10 + n % 10
-                n = ___
             return resultat
     solution: |
       def a_l_envers(n):
@@ -445,6 +417,8 @@ exercices:
           ...
     aides:
       - |
+        Essayer les diviseurs 2, 3, 4... dans l'ordre, et s'arrêter au premier qui divise `n`. On est sûr d'en trouver un : au pire, `n` lui-même.
+      - |
         def plus_petit_diviseur(n):
             # commencer par essayer le diviseur 2
             # tant que ce nombre ne divise pas n, passer au suivant
@@ -453,12 +427,6 @@ exercices:
         def plus_petit_diviseur(n):
             d = ___
             while n % d != ___:
-                d = ___
-            return d
-      - |
-        def plus_petit_diviseur(n):
-            d = 2
-            while n % d != 0:
                 d = ___
             return d
     solution: |
@@ -490,6 +458,8 @@ exercices:
           ...
     aides:
       - |
+        Simuler les heures une par une : à chaque heure, la population double. Compter les heures jusqu'à atteindre l'objectif.
+      - |
         def heures(population, objectif):
             # creer un compteur qui vaut 0
             # tant que la population n'a pas atteint l'objectif :
@@ -501,13 +471,6 @@ exercices:
             compteur = 0
             while population < ___:
                 population = ___
-                compteur = ___
-            return compteur
-      - |
-        def heures(population, objectif):
-            compteur = 0
-            while population < objectif:
-                population = population * 2
                 compteur = ___
             return compteur
     solution: |
@@ -540,6 +503,8 @@ exercices:
           ...
     aides:
       - |
+        Diviser 17 par 5, c'est compter combien de fois on peut retirer 5 à 17 : 12, 7, 2, soit 3 fois.
+      - |
         def quotient(a, b):
             # creer un compteur qui vaut 0
             # tant que a vaut au moins b :
@@ -551,13 +516,6 @@ exercices:
             compteur = 0
             while a >= ___:
                 a = ___
-                compteur = ___
-            return compteur
-      - |
-        def quotient(a, b):
-            compteur = 0
-            while a >= b:
-                a = a - b
                 compteur = ___
             return compteur
     solution: |
@@ -590,6 +548,8 @@ exercices:
           ...
     aides:
       - |
+        Simuler les années une par une, et s'arrêter dès que la somme atteint le double du départ.
+      - |
         def annees(depart, taux):
             # creer une variable somme qui vaut depart et un compteur qui vaut 0
             # tant que somme est inferieure au double de depart :
@@ -603,14 +563,6 @@ exercices:
             while somme < ___:
                 somme = somme + somme * ___ / 100
                 compteur = compteur + 1
-            return compteur
-      - |
-        def annees(depart, taux):
-            somme = depart
-            compteur = 0
-            while somme < 2 * depart:
-                somme = somme + somme * taux / 100
-                compteur = ___
             return compteur
     solution: |
       def annees(depart, taux):
@@ -644,6 +596,8 @@ exercices:
     interdit: [sqrt]
     aides:
       - |
+        Essayer 0, 1, 2... et avancer tant que le carré de l'entier suivant ne dépasse pas `n`.
+      - |
         def racine_entiere(n):
             # partir de k = 0
             # tant que le carre de k + 1 ne depasse pas n, augmenter k de 1
@@ -652,12 +606,6 @@ exercices:
         def racine_entiere(n):
             k = 0
             while (k + 1) * (___) <= ___:
-                k = ___
-            return k
-      - |
-        def racine_entiere(n):
-            k = 0
-            while (k + 1) * (k + 1) <= n:
                 k = ___
             return k
     solution: |
@@ -692,6 +640,8 @@ exercices:
           ...
     aides:
       - |
+        Une puissance de 2 se divise par 2 encore et encore jusqu'à tomber sur 1. Un autre nombre s'arrête avant, sur un nombre impair plus grand que 1.
+      - |
         def est_puissance_de_2(n):
             # tant que n est pair, le diviser par 2
             # n est une puissance de 2 s'il ne reste que 1 a la fin
@@ -700,11 +650,6 @@ exercices:
             while n % ___ == 0:
                 n = n // ___
             return n == ___
-      - |
-        def est_puissance_de_2(n):
-            while n % 2 == 0:
-                n = n // 2
-            return ___
     solution: |
       def est_puissance_de_2(n):
           while n % 2 == 0:
@@ -739,6 +684,8 @@ exercices:
           ...
     aides:
       - |
+        Avancer d'indice en indice tant qu'on ne trouve pas de voyelle, sans dépasser la fin du mot. Si on arrive au bout, c'est qu'il n'y en a pas.
+      - |
         def premiere_voyelle(mot):
             # partir de l'indice 0
             # tant que l'indice est valide :
@@ -752,14 +699,6 @@ exercices:
                 if mot[i] in "aeiouy":
                     return ___
                 i = ___
-            return ___
-      - |
-        def premiere_voyelle(mot):
-            i = 0
-            while i < len(mot):
-                if mot[i] in "aeiouy":
-                    return i
-                i = i + 1
             return ___
     solution: |
       def premiere_voyelle(mot):
@@ -793,6 +732,8 @@ exercices:
           ...
     aides:
       - |
+        Il faut deux boucles : une qui recommence tant que `n` a au moins deux chiffres, et à l'intérieur, une qui calcule la somme des chiffres.
+      - |
         def reduire(n):
             # tant que n a au moins deux chiffres :
             #     calculer la somme de ses chiffres (avec % 10 et // 10, dans une seconde boucle)
@@ -805,15 +746,6 @@ exercices:
                 while n > 0:
                     somme = somme + n % ___
                     n = n // ___
-                n = ___
-            return n
-      - |
-        def reduire(n):
-            while n >= 10:
-                somme = 0
-                while n > 0:
-                    somme = somme + n % 10
-                    n = n // 10
                 n = ___
             return n
     solution: |
@@ -864,6 +796,8 @@ exercices:
     interdit: [bin]
     aides:
       - |
+        Faire la méthode à la main avec 11 : les restes successifs donnent les chiffres de droite à gauche. Le cas `n = 0` est à part.
+      - |
         def en_binaire(n):
             # traiter d'abord le cas ou n vaut 0
             # creer une chaine vide
@@ -879,15 +813,6 @@ exercices:
             while n > 0:
                 resultat = str(n % ___) + ___
                 n = n // ___
-            return resultat
-      - |
-        def en_binaire(n):
-            if n == 0:
-                return "0"
-            resultat = ""
-            while n > 0:
-                resultat = str(n % 2) + resultat
-                n = ___
             return resultat
     solution: |
       def en_binaire(n):
@@ -925,6 +850,8 @@ exercices:
     interdit: [sqrt]
     aides:
       - |
+        À chaque tour, l'intervalle entre `bas` et `haut` est coupé en deux, et on garde la moitié qui contient la racine. Le carré du milieu indique de quel côté elle se trouve.
+      - |
         def racine(x):
             # creer bas qui vaut 0 et haut qui vaut x
             # tant que haut - bas depasse 0.001 :
@@ -940,17 +867,6 @@ exercices:
                 milieu = (bas + haut) / ___
                 if milieu * milieu < x:
                     bas = ___
-                else:
-                    haut = ___
-            return bas
-      - |
-        def racine(x):
-            bas = 0
-            haut = x
-            while haut - bas > 0.001:
-                milieu = (bas + haut) / 2
-                if milieu * milieu < x:
-                    bas = milieu
                 else:
                     haut = ___
             return bas

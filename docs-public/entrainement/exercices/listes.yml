@@ -34,19 +34,18 @@ exercices:
           return ___
     aides:
       - |
-        # que faut-il ajouter a resultat a chaque tour de boucle ?
-        # que doit renvoyer la fonction a la fin ?
+        La boucle parcourt les scores un par un. À chaque tour, on ajoute à `resultat` le double du score, et à la fin on renvoie la nouvelle liste.
+      - |
+        def doubler(scores):
+            # creer une liste vide
+            # parcourir les scores
+            #     ajouter le double du score a la liste
+            # renvoyer la liste
       - |
         def doubler(scores):
             resultat = []
             for s in scores:
                 resultat.append(s * ___)
-            return ___
-      - |
-        def doubler(scores):
-            resultat = []
-            for s in scores:
-                resultat.append(s * 2)
             return ___
     solution: |
       def doubler(scores):
@@ -74,6 +73,8 @@ exercices:
           ...
     aides:
       - |
+        Créer une nouvelle liste vide, puis y ajouter avec `append` chaque taille assez grande. La liste de départ n'est pas touchée.
+      - |
         def autorises(tailles, minimum):
             # creer une liste vide
             # parcourir les tailles
@@ -86,13 +87,6 @@ exercices:
                 if t >= ___:
                     resultat.append(___)
             return ___
-      - |
-        def autorises(tailles, minimum):
-            resultat = []
-            for t in tailles:
-                if t >= minimum:
-                    resultat.append(___)
-            return resultat
     solution: |
       def autorises(tailles, minimum):
           resultat = []
@@ -127,22 +121,19 @@ exercices:
           return maxi
     aides:
       - |
-        # suivre le code a la main avec [-5, -2, -9]
-        # que se passe-t-il au premier tour de boucle ?
-        # par quelle valeur faudrait-il commencer ?
+        Suivre le code à la main avec `[-5, -2, -9]` : aucune température n'est plus grande que 0. Il faut partir d'une valeur qui vient de la liste.
+      - |
+        def plus_chaud(temperatures):
+            # retenir la premiere temperature de la liste
+            # parcourir les temperatures
+            #     si la temperature est plus grande que celle retenue, la retenir
+            # renvoyer la temperature retenue
       - |
         def plus_chaud(temperatures):
             maxi = temperatures[___]
             for t in temperatures:
                 if t > maxi:
                     maxi = t
-            return maxi
-      - |
-        def plus_chaud(temperatures):
-            maxi = temperatures[0]
-            for t in temperatures:
-                if t > maxi:
-                    maxi = ___
             return maxi
     solution: |
       def plus_chaud(temperatures):
@@ -209,18 +200,17 @@ exercices:
           return total
     aides:
       - |
-        # quelles valeurs prend i pour une liste de longueur 3 ?
-        # quels sont les indices valides de cette liste ?
+        Quelles valeurs prend `i` pour une liste de longueur 3 ? Les comparer aux indices valides de la liste.
+      - |
+        def somme(nombres):
+            # creer une variable total qui vaut 0
+            # parcourir tous les indices de la liste, du premier au dernier
+            #     ajouter l'element a total
+            # renvoyer total
       - |
         def somme(nombres):
             total = 0
             for i in range(___):
-                total = total + nombres[i]
-            return total
-      - |
-        def somme(nombres):
-            total = 0
-            for i in range(len(___)):
                 total = total + nombres[i]
             return total
     solution: |
@@ -258,6 +248,8 @@ exercices:
           ...
     aides:
       - |
+        Un compteur qui part de 0, et qui augmente de 1 à chaque température strictement positive.
+      - |
         def jours_positifs(temperatures):
             # creer un compteur qui vaut 0
             # parcourir les temperatures
@@ -268,13 +260,6 @@ exercices:
             compteur = 0
             for t in ___:
                 if t > ___:
-                    compteur = ___
-            return compteur
-      - |
-        def jours_positifs(temperatures):
-            compteur = 0
-            for t in temperatures:
-                if t > 0:
                     compteur = ___
             return compteur
     solution: |
@@ -307,6 +292,8 @@ exercices:
     interdit: [max]
     aides:
       - |
+        Retenir l'indice du plus grand élément trouvé jusqu'ici, et le remplacer quand on trouve plus grand. Il faut donc parcourir les indices, pas les valeurs.
+      - |
         def indice_max(valeurs):
             # garder en memoire l'indice du meilleur element, en commencant par 0
             # parcourir les indices de la liste
@@ -317,13 +304,6 @@ exercices:
             meilleur = 0
             for i in range(len(___)):
                 if valeurs[i] > valeurs[___]:
-                    meilleur = ___
-            return meilleur
-      - |
-        def indice_max(valeurs):
-            meilleur = 0
-            for i in range(len(valeurs)):
-                if valeurs[i] > valeurs[meilleur]:
                     meilleur = ___
             return meilleur
     solution: |
@@ -357,6 +337,8 @@ exercices:
           ...
     aides:
       - |
+        Garder un total qui grossit au fil du parcours, et ajouter ce total à la nouvelle liste à chaque tour.
+      - |
         def cumul(valeurs):
             # creer une liste vide et un total qui vaut 0
             # parcourir les valeurs
@@ -369,14 +351,6 @@ exercices:
             total = 0
             for v in valeurs:
                 total = ___
-                resultat.append(___)
-            return resultat
-      - |
-        def cumul(valeurs):
-            resultat = []
-            total = 0
-            for v in valeurs:
-                total = total + v
                 resultat.append(___)
             return resultat
     solution: |
@@ -423,6 +397,8 @@ exercices:
     interdit: [sorted, sort]
     aides:
       - |
+        Une liste est triée si chaque élément est plus petit que son voisin de droite, ou égal. Il suffit d'un seul voisin mal rangé pour répondre `False`.
+      - |
         def est_triee(valeurs):
             # parcourir les indices, sauf le dernier
             #     si l'element est plus grand que son voisin de droite, renvoyer False
@@ -432,12 +408,6 @@ exercices:
             for i in range(len(valeurs) - ___):
                 if valeurs[i] > valeurs[___]:
                     return ___
-            return ___
-      - |
-        def est_triee(valeurs):
-            for i in range(len(valeurs) - 1):
-                if valeurs[i] > valeurs[i + 1]:
-                    return False
             return ___
     solution: |
       def est_triee(valeurs):
@@ -515,6 +485,8 @@ exercices:
           ...
     aides:
       - |
+        Les deux listes se lisent ensemble : il faut parcourir les indices, pour lire `prix[i]` et `quantites[i]` au même tour.
+      - |
         def total_panier(prix, quantites):
             # creer une variable total qui vaut 0
             # parcourir les indices des listes
@@ -526,12 +498,6 @@ exercices:
             for i in range(len(___)):
                 total = total + prix[___] * quantites[___]
             return total
-      - |
-        def total_panier(prix, quantites):
-            total = 0
-            for i in range(len(prix)):
-                total = total + prix[i] * quantites[i]
-            return ___
     solution: |
       def total_panier(prix, quantites):
           total = 0
@@ -559,6 +525,8 @@ exercices:
           ...
     aides:
       - |
+        Parcourir les indices de la liste, et garder chaque indice où se trouve `cible`.
+      - |
         def positions(valeurs, cible):
             # creer une liste vide
             # parcourir les indices de valeurs
@@ -569,13 +537,6 @@ exercices:
             resultat = []
             for i in range(len(___)):
                 if valeurs[i] == ___:
-                    resultat.append(___)
-            return resultat
-      - |
-        def positions(valeurs, cible):
-            resultat = []
-            for i in range(len(valeurs)):
-                if valeurs[i] == cible:
                     resultat.append(___)
             return resultat
     solution: |
@@ -631,19 +592,18 @@ exercices:
           return resultat
     aides:
       - |
-        # que vaut i au dernier tour de boucle ?
-        # l'element d'indice i + 1 existe-t-il alors ?
+        Au dernier tour de boucle, que vaut `i` ? L'élément d'indice `i + 1` existe-t-il encore ?
+      - |
+        def ecarts(mesures):
+            # creer une liste vide
+            # parcourir les indices, sauf le dernier
+            #     ajouter l'ecart entre l'element suivant et l'element
+            # renvoyer la liste
       - |
         def ecarts(mesures):
             resultat = []
             for i in range(len(mesures) - ___):
                 resultat.append(mesures[i + 1] - mesures[i])
-            return resultat
-      - |
-        def ecarts(mesures):
-            resultat = []
-            for i in range(len(mesures) - 1):
-                resultat.append(___)
             return resultat
     solution: |
       def ecarts(mesures):
@@ -674,6 +634,8 @@ exercices:
     interdit: [sum]
     aides:
       - |
+        Il faut deux parcours : un premier pour calculer la moyenne, puis un second pour garder les notes au-dessus.
+      - |
         def au_dessus(notes):
             # calculer la somme des notes avec une boucle
             # en deduire la moyenne
@@ -688,17 +650,6 @@ exercices:
             resultat = []
             for n in notes:
                 if n > ___:
-                    resultat.append(___)
-            return resultat
-      - |
-        def au_dessus(notes):
-            total = 0
-            for n in notes:
-                total = total + n
-            moyenne = total / len(notes)
-            resultat = []
-            for n in notes:
-                if n > moyenne:
                     resultat.append(___)
             return resultat
     solution: |
@@ -735,6 +686,8 @@ exercices:
           ...
     aides:
       - |
+        Les deux listes ont la même longueur : parcourir les indices, et à chaque tour ajouter un élément de `A`, puis un élément de `B`.
+      - |
         def entrelacer(A, B):
             # creer une liste vide
             # parcourir les indices de A
@@ -746,13 +699,6 @@ exercices:
             for i in range(len(___)):
                 resultat.append(A[___])
                 resultat.append(B[___])
-            return resultat
-      - |
-        def entrelacer(A, B):
-            resultat = []
-            for i in range(len(A)):
-                resultat.append(A[i])
-                resultat.append(___)
             return resultat
     solution: |
       def entrelacer(A, B):
@@ -783,6 +729,8 @@ exercices:
     interdit: [max, sort, sorted]
     aides:
       - |
+        Découper le problème : écrire d'abord une fonction qui renvoie le plus grand élément. Le deuxième plus grand est le plus grand de ceux qui restent, une fois le premier retiré.
+      - |
         def plus_grand(valeurs):
             # commencer par ecrire une fonction qui renvoie le plus grand element
 
@@ -805,21 +753,6 @@ exercices:
                 if v != ___:
                     reste.append(v)
             return plus_grand(___)
-      - |
-        def plus_grand(valeurs):
-            meilleur = valeurs[0]
-            for v in valeurs:
-                if v > meilleur:
-                    meilleur = v
-            return meilleur
-
-        def deuxieme(valeurs):
-            premier = plus_grand(valeurs)
-            reste = []
-            for v in valeurs:
-                if v != premier:
-                    reste.append(v)
-            return ___
     solution: |
       def plus_grand(valeurs):
           meilleur = valeurs[0]
@@ -859,6 +792,8 @@ exercices:
           ...
     aides:
       - |
+        Parcourir la liste en comparant chaque élément au précédent. Il faut deux compteurs : la série en cours, et la meilleure série vue jusqu'ici.
+      - |
         def plus_longue_serie(valeurs):
             # traiter d'abord la liste vide
             # garder deux compteurs : la serie en cours et la meilleure serie, tous les deux a 1
@@ -878,20 +813,6 @@ exercices:
                     en_cours = en_cours + 1
                 else:
                     en_cours = ___
-                if en_cours > meilleure:
-                    meilleure = ___
-            return meilleure
-      - |
-        def plus_longue_serie(valeurs):
-            if len(valeurs) == 0:
-                return 0
-            en_cours = 1
-            meilleure = 1
-            for i in range(1, len(valeurs)):
-                if valeurs[i] == valeurs[i - 1]:
-                    en_cours = en_cours + 1
-                else:
-                    en_cours = 1
                 if en_cours > meilleure:
                     meilleure = ___
             return meilleure

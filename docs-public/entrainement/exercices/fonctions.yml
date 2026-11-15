@@ -15,6 +15,8 @@ exercices:
           ...
     aides:
       - |
+        Deux cas : la personne a assez payé, ou pas. Dans le premier cas, on rend la différence.
+      - |
         def monnaie(prix, paye):
             # si paye est superieur ou egal a prix, renvoyer la difference
             # sinon, renvoyer 0
@@ -22,11 +24,6 @@ exercices:
         def monnaie(prix, paye):
             if paye >= ___:
                 return ___
-            return ___
-      - |
-        def monnaie(prix, paye):
-            if paye >= prix:
-                return paye - prix
             return ___
     solution: |
       def monnaie(prix, paye):
@@ -73,6 +70,8 @@ exercices:
           ...
     aides:
       - |
+        Une remise de 20 pour cent sur 50 euros, c'est 10 euros de moins. Calculer d'abord le montant de la remise.
+      - |
         def prix_solde(prix, remise):
             # calculer le montant de la remise : prix fois remise divise par 100
             # le retirer du prix et renvoyer le resultat
@@ -80,10 +79,6 @@ exercices:
         def prix_solde(prix, remise):
             montant = prix * ___ / 100
             return prix - ___
-      - |
-        def prix_solde(prix, remise):
-            montant = prix * remise / 100
-            return ___
     solution: |
       def prix_solde(prix, remise):
           montant = prix * remise / 100
@@ -120,8 +115,14 @@ exercices:
           return ___
     aides:
       - |
-        # en_fahrenheit traduit la formule de l'enonce
-        # gel appelle en_fahrenheit, puis compare le resultat a 32
+        `en_fahrenheit` traduit la formule de l'énoncé. `gel` n'a pas à refaire le calcul : elle appelle `en_fahrenheit`, puis compare le résultat à 32.
+      - |
+        def en_fahrenheit(c):
+            # multiplier c par 9, diviser par 5, ajouter 32, et renvoyer le resultat
+
+        def gel(c):
+            # convertir c en Fahrenheit en appelant en_fahrenheit
+            # renvoyer le resultat de la comparaison avec 32
       - |
         def en_fahrenheit(c):
             return c * 9 / 5 + ___
@@ -129,13 +130,6 @@ exercices:
         def gel(c):
             f = en_fahrenheit(___)
             return f <= ___
-      - |
-        def en_fahrenheit(c):
-            return c * 9 / 5 + 32
-
-        def gel(c):
-            f = en_fahrenheit(c)
-            return ___
     solution: |
       def en_fahrenheit(c):
           return c * 9 / 5 + 32
@@ -192,6 +186,8 @@ exercices:
           ...
     aides:
       - |
+        Calculer d'abord l'écart horizontal et l'écart vertical, puis appliquer la formule de l'énoncé, qui ressemble au théorème de Pythagore.
+      - |
         import math
 
         def distance(xa, ya, xb, yb):
@@ -204,12 +200,6 @@ exercices:
         def distance(xa, ya, xb, yb):
             somme = (xb - xa) ** 2 + (___) ** 2
             return math.sqrt(___)
-      - |
-        import math
-
-        def distance(xa, ya, xb, yb):
-            somme = (xb - xa) ** 2 + (yb - ya) ** 2
-            return ___
     solution: |
       import math
 
@@ -241,20 +231,17 @@ exercices:
                   return False
     aides:
       - |
-        # suivre le code a la main avec "chat"
-        # combien de lettres sont regardees avant le premier return ?
-        # a quel moment peut-on etre sur qu'il n'y a aucune voyelle ?
+        Suivre le code à la main avec `"chat"` : combien de lettres sont regardées avant le premier `return` ? On ne peut dire qu'il n'y a aucune voyelle qu'après les avoir toutes regardées.
+      - |
+        def a_une_voyelle(mot):
+            # parcourir les lettres de mot
+            #     si la lettre est une voyelle, renvoyer True
+            # apres la boucle seulement, renvoyer False
       - |
         def a_une_voyelle(mot):
             for lettre in mot:
                 if lettre in "aeiouy":
                     return ___
-            return ___
-      - |
-        def a_une_voyelle(mot):
-            for lettre in mot:
-                if lettre in "aeiouy":
-                    return True
             return ___
     solution: |
       def a_une_voyelle(mot):
@@ -291,6 +278,8 @@ exercices:
           ...
     aides:
       - |
+        Écrire d'abord `contient_chiffre` et la tester seule. `est_solide` n'a plus qu'à combiner deux conditions.
+      - |
         def contient_chiffre(texte):
             # parcourir les caracteres de texte
             #     si le caractere est dans "0123456789", renvoyer True
@@ -307,15 +296,6 @@ exercices:
 
         def est_solide(mdp):
             return len(mdp) >= ___ and contient_chiffre(___)
-      - |
-        def contient_chiffre(texte):
-            for caractere in texte:
-                if caractere in "0123456789":
-                    return True
-            return False
-
-        def est_solide(mdp):
-            return len(mdp) >= 8 and ___
     solution: |
       def contient_chiffre(texte):
           for caractere in texte:
@@ -385,14 +365,14 @@ exercices:
           print(longueur * largeur)
     aides:
       - |
-        # que renvoie une fonction qui ne contient pas de return ?
-        # quelle instruction permet de donner le resultat a la suite du programme ?
+        Afficher un résultat ne le donne pas au reste du programme. Que renvoie une fonction qui n'a pas de `return` ?
+      - |
+        def aire(longueur, largeur):
+            # calculer longueur fois largeur
+            # renvoyer ce resultat au lieu de l'afficher
       - |
         def aire(longueur, largeur):
             ___ longueur * largeur
-      - |
-        def aire(longueur, largeur):
-            return ___
     solution: |
       def aire(longueur, largeur):
           return longueur * largeur
@@ -417,6 +397,8 @@ exercices:
           ...
     aides:
       - |
+        Une vitesse en km/h, c'est une distance divisée par une durée en heures. Il faut donc d'abord convertir les minutes en heures.
+      - |
         def vitesse(distance, duree):
             # convertir la duree en heures : une heure dure 60 minutes
             # diviser la distance par cette duree et renvoyer le resultat
@@ -424,10 +406,6 @@ exercices:
         def vitesse(distance, duree):
             heures = duree / ___
             return distance / ___
-      - |
-        def vitesse(distance, duree):
-            heures = duree / 60
-            return ___
     solution: |
       def vitesse(distance, duree):
           heures = duree / 60
@@ -458,16 +436,14 @@ exercices:
           return a % ___ == ___
     aides:
       - |
-        # a est un multiple de b si la division de a par b tombe juste
-        # que vaut alors le reste de cette division ?
+        `a` est un multiple de `b` si la division de `a` par `b` tombe juste. Que vaut alors le reste ?
+      - |
+        def est_multiple(a, b):
+            # calculer le reste de la division de a par b
+            # renvoyer le resultat de la comparaison de ce reste avec 0
       - |
         def est_multiple(a, b):
             return a % b == ___
-      - |
-        def est_multiple(a, b):
-            if a % b == 0:
-                return ___
-            return ___
     solution: |
       def est_multiple(a, b):
           return a % b == 0
@@ -541,6 +517,8 @@ exercices:
           ...
     aides:
       - |
+        Écrire d'abord `moyenne3` et la tester seule. `resultat` l'appelle, puis compare la moyenne obtenue à 10.
+      - |
         def moyenne3(a, b, c):
             # renvoyer la somme des trois nombres divisee par 3
 
@@ -554,15 +532,6 @@ exercices:
         def resultat(a, b, c):
             m = moyenne3(___, ___, ___)
             if m >= ___:
-                return "admis"
-            return ___
-      - |
-        def moyenne3(a, b, c):
-            return (a + b + c) / 3
-
-        def resultat(a, b, c):
-            m = moyenne3(a, b, c)
-            if m >= 10:
                 return "admis"
             return ___
     solution: |
@@ -601,6 +570,8 @@ exercices:
           ...
     aides:
       - |
+        `points` compare les buts d'un seul match, avec trois cas. `total` appelle `points` deux fois, une fois par match.
+      - |
         def points(pour, contre):
             # comparer les buts marques et les buts encaisses
             # renvoyer 3, 1 ou 0
@@ -617,16 +588,6 @@ exercices:
 
         def total(p1, c1, p2, c2):
             return points(___, ___) + points(___, ___)
-      - |
-        def points(pour, contre):
-            if pour > contre:
-                return 3
-            elif pour == contre:
-                return 1
-            return 0
-
-        def total(p1, c1, p2, c2):
-            return points(p1, c1) + ___
     solution: |
       def points(pour, contre):
           if pour > contre:
@@ -670,6 +631,8 @@ exercices:
           ...
     aides:
       - |
+        `nb_jours` ressemble à l'exercice sur les jours du mois. `date_valide` vérifie d'abord que le mois existe, avant d'appeler `nb_jours`.
+      - |
         def est_bissextile(annee):
             return (annee % 4 == 0 and annee % 100 != 0) or annee % 400 == 0
 
@@ -698,23 +661,6 @@ exercices:
             if mois < ___ or mois > ___:
                 return False
             return jour >= ___ and jour <= nb_jours(___, ___)
-      - |
-        def est_bissextile(annee):
-            return (annee % 4 == 0 and annee % 100 != 0) or annee % 400 == 0
-
-        def nb_jours(mois, annee):
-            if mois == 2:
-                if est_bissextile(annee):
-                    return 29
-                return 28
-            if mois == 4 or mois == 6 or mois == 9 or mois == 11:
-                return 30
-            return 31
-
-        def date_valide(jour, mois, annee):
-            if mois < 1 or mois > 12:
-                return False
-            return jour >= 1 and jour <= ___
     solution: |
       def est_bissextile(annee):
           return (annee % 4 == 0 and annee % 100 != 0) or annee % 400 == 0
@@ -770,6 +716,8 @@ exercices:
     interdit: [count, sorted, sort]
     aides:
       - |
+        Deux mots sont des anagrammes si chaque lettre de l'un apparaît autant de fois dans l'autre. `compte` permet justement de comparer ces nombres.
+      - |
         def compte(mot, lettre):
             # compter les lettres de mot egales a lettre
 
@@ -791,21 +739,6 @@ exercices:
                 return False
             for lettre in a:
                 if compte(a, lettre) != compte(___, ___):
-                    return ___
-            return ___
-      - |
-        def compte(mot, lettre):
-            total = 0
-            for x in mot:
-                if x == lettre:
-                    total = total + 1
-            return total
-
-        def sont_anagrammes(a, b):
-            if len(a) != len(b):
-                return False
-            for lettre in a:
-                if compte(a, lettre) != compte(b, lettre):
                     return ___
             return ___
     solution: |
@@ -854,6 +787,8 @@ exercices:
           ...
     aides:
       - |
+        Écrire et tester d'abord `chiffre_double`. Pour `est_valide`, parcourir le numéro en partant de la droite : un chiffre sur deux passe par `chiffre_double`.
+      - |
         def chiffre_double(c):
             # calculer le double de c
             # retirer 9 s'il depasse 9, puis le renvoyer
@@ -880,21 +815,6 @@ exercices:
                     chiffre = chiffre_double(___)
                 total = ___
             return total % 10 == ___
-      - |
-        def chiffre_double(c):
-            d = c * 2
-            if d > 9:
-                return d - 9
-            return d
-
-        def est_valide(numero):
-            total = 0
-            for position in range(len(numero)):
-                chiffre = int(numero[len(numero) - 1 - position])
-                if position % 2 == 1:
-                    chiffre = chiffre_double(chiffre)
-                total = total + chiffre
-            return ___
     solution: |
       def chiffre_double(c):
           d = c * 2

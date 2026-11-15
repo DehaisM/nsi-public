@@ -7,7 +7,8 @@
   const CLE = "nsi-entrainement";
   const DELAI_MAX_MS = 5000;
   const DIFFICULTES = { 1: "Facile", 2: "Moyen", 3: "Corsé" };
-  const NOMS_AIDES = ["Aide 1", "Aide 2", "Aide 3"];
+  // Dans l'ordre de la banque : une phrase, puis du code.
+  const NOMS_AIDES = ["Une idée pour démarrer", "Le pseudo-code", "Le code à trous"];
   const PYTHON_ABSENT = "Python n'a pas pu se charger. Vérifier la connexion, puis recharger la page.";
   const TAILLE_SERIE = 10;
   // Les etiquettes que l'on peut filtrer (champ tags des exercices), avec leur nom affiche.
@@ -898,7 +899,9 @@
       zoneAides.replaceChildren(...exo.aides.slice(0, s.aides).map((aide, i) =>
         el("div", { class: "entr-aide" },
           el("p", {}, NOMS_AIDES[i]),
-          el("pre", { class: "entr-code" }, el("code", {}, aide.trimEnd())))
+          i === 0
+            ? el("p", { class: "entr-aide__idee", html: enLigne(aide.trim().replace(/ ([?!:;])/g, " $1")) })
+            : el("pre", { class: "entr-code" }, el("code", {}, aide.trimEnd())))
       ));
       boutonAide.textContent = "Une aide (" + s.aides + "/" + exo.aides.length + ")";
       boutonAide.disabled = s.aides >= exo.aides.length;
