@@ -23,7 +23,8 @@ import sys
 sys.stdout.reconfigure(encoding="utf-8")
 sys.dont_write_bytecode = True  # pas de __pycache__ publie avec le site
 
-from banque import CARACTERES_PROSCRITS, DOSSIER, charger_banque, charger_correcteur, niveau_de  # noqa: E402
+from banque import (CARACTERES_PROSCRITS, DOSSIER, charger_banque, charger_competences,  # noqa: E402
+                    charger_correcteur, niveau_de)
 
 CHAMPS = {
     "code": {"enonce", "depart", "aides", "solution", "tests"},
@@ -235,6 +236,26 @@ def main():
             numeros.add(numero)
         if problemes:
             print("ERREUR  " + exo["id"])
+            for probleme in problemes:
+                print("        " + probleme)
+        erreurs += len(problemes)
+
+    # Les competences des automatismes partagent les numeros des exercices (code de sauvegarde).
+    for competence in charger_competences():
+        problemes = []
+        numero = competence.get("numero")
+        if not isinstance(numero, int) or numero < 1:
+            problemes.append("il faut un numero : un entier à partir de 1")
+        elif numero in numeros:
+            problemes.append(f"numero {numero} déjà utilisé")
+        else:
+            numeros.add(numero)
+        if not {"id", "nom", "description"} <= set(competence):
+            problemes.append("il faut id, nom et description")
+        if any(CARACTERES_PROSCRITS.search(t) for t in textes(competence)):
+            problemes.append("tiret long ou guillemet chevron dans le texte")
+        if problemes:
+            print("ERREUR  automatisme " + str(competence.get("id")))
             for probleme in problemes:
                 print("        " + probleme)
         erreurs += len(problemes)

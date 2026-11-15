@@ -264,6 +264,22 @@
 .entr-rate { margin: 1.4rem 0; padding-top: .6rem; border-top: 1px solid var(--nsi-filet); }
 .md-typeset .entr-rate h2 { margin: 0 0 .3rem; font-size: .9rem; }
 
+/* Automatismes : une tuile par competence, et les pastilles de la serie en cours */
+.entr-competences { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: .5rem; margin-top: .6rem; }
+.md-typeset .entr-competence {
+    display: flex; align-items: center; justify-content: space-between; gap: .5rem;
+    padding: .5rem .7rem; color: var(--entr-encre); font: 700 .75rem var(--nsi-titres);
+    border: 1.5px solid var(--nsi-filet); border-radius: var(--nsi-rayon);
+}
+.md-typeset .entr-competence:hover, .md-typeset .entr-competence:focus-visible { color: var(--entr-encre); border-color: var(--md-accent-fg-color); }
+.md-typeset .entr-competence--acquise { border-color: var(--entr-vert); background: color-mix(in srgb, var(--entr-vert) 10%, transparent); }
+.md-typeset .entr-competence .entr-badge { margin-left: 0; }
+.entr-pastilles { display: inline-flex; gap: .2rem; vertical-align: middle; }
+.entr-pastille { width: .45rem; height: .45rem; border-radius: 50%; border: 1.5px solid var(--entr-vert); }
+.entr-pastille--pleine { background: var(--entr-vert); }
+.md-typeset .entr-auto__serie { margin: .3rem 0 1rem; font-size: .75rem; color: var(--entr-doux); }
+.md-typeset .entr-auto .entr-enonce { font-size: .85rem; }
+
 @media (max-width: 34rem) {
     .entr-statut { margin-left: 0; width: 100%; }
     .entr-jour { padding: .9rem 1rem; }

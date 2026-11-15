@@ -16,6 +16,8 @@
   };
   const PYTHON_ABSENT = "Python n'a pas pu se charger. Vérifier la connexion, puis recharger la page.";
   const TAILLE_SERIE = 10;
+  // Automatismes : une competence est acquise apres ce nombre de bonnes reponses d'affilee.
+  const ACQUIS = 5;
   // Les etiquettes que l'on peut filtrer (champ tags des exercices), avec leur nom affiche.
   const ETIQUETTES = { maths: "Maths" };
 
@@ -106,7 +108,7 @@
   // --- Progression ---------------------------------------------------------
 
   function etatVide() {
-    return { exos: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [], ouvertes: [], niveau: null, etiquettes: [] };
+    return { exos: {}, auto: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [], ouvertes: [], niveau: null, etiquettes: [] };
   }
 
   function chargerEtat() {
@@ -150,12 +152,27 @@
     const s = suivi(id);
     s.reussi = true;
     if (sansAide) s.sansAide = true;
+    noterJour();
+    sauver();
+  }
+
+  // Les jours de suite : un jour compte des qu'on y reussit quelque chose.
+  function noterJour() {
     const aujourdhui = dateLocale();
     if (etat.serie.dernier !== aujourdhui) {
       etat.serie.longueur = etat.serie.dernier === dateLocale(-1) ? etat.serie.longueur + 1 : 1;
       etat.serie.dernier = aujourdhui;
     }
-    sauver();
+  }
+
+  // La progression d'une competence des automatismes : la serie de bonnes reponses en cours.
+  function suiviAuto(id) {
+    if (!etat.auto[id]) etat.auto[id] = { serie: 0, acquis: false, faites: 0 };
+    return etat.auto[id];
+  }
+
+  function acquis(competence) {
+    return Boolean(etat.auto[competence.id] && etat.auto[competence.id].acquis);
   }
 
   function serieEnCours() {
@@ -169,7 +186,8 @@
   function creerCode() {
     const reussites = banque.exercices
       .filter((exo) => etat.exos[exo.id] && etat.exos[exo.id].reussi)
-      .map((exo) => ({ numero: exo.numero, sansAide: etat.exos[exo.id].sansAide }));
+      .map((exo) => ({ numero: exo.numero, sansAide: etat.exos[exo.id].sansAide }))
+      .concat(banque.competences.filter(acquis).map((c) => ({ numero: c.numero, sansAide: true })));
     return CodeSauvegarde.creer(reussites, etat.serie);
   }
 
@@ -183,6 +201,12 @@
       if (!s.reussi) gagnes += 1;
       s.reussi = true;
       if (contenu.reussites.get(exo.numero)) s.sansAide = true;
+    }
+    for (const competence of banque.competences) {
+      if (!contenu.reussites.has(competence.numero)) continue;
+      const s = suiviAuto(competence.id);
+      if (!s.acquis) gagnes += 1;
+      s.acquis = true;
     }
     if (contenu.dernier) {
       const local = etat.serie;
@@ -207,10 +231,11 @@
       // Sur un appareil neuf, le niveau se deduit des exercices recuperes.
       const recupere = banque.exercices.find((exo) => contenu.reussites.has(exo.numero));
       if (recupere) choisirNiveau(niveauDe(recupere.notion));
+      else if (banque.competences.some((c) => contenu.reussites.has(c.numero))) choisirNiveau("premiere");
     }
     const texte = gagnes === 0
       ? "Code bien lu, mais il n'apporte aucun exo de plus sur cet appareil."
-      : "Progression récupérée : " + gagnes + (gagnes > 1 ? " exos réussis en plus sur cet appareil." : " exo réussi en plus sur cet appareil.");
+      : "Progression récupérée : " + gagnes + (gagnes > 1 ? " réussites en plus sur cet appareil." : " réussite en plus sur cet appareil.");
     messageAccueil = { genre: "reussi", texte };
   }
 
@@ -259,7 +284,7 @@
         el("p", { class: "entr-code-sauvegarde" }, code),
         el("div", { class: "entr-actions" }, boutonCopier("Copier le code", code), boutonCopier("Copier le lien", lien)),
         el("p", { class: "entr-consigne" },
-          "Ce code contient les exos réussis, les badges et la série à cet instant, mais pas le code en cours d'écriture. Après d'autres exos, il faut reprendre le nouveau code affiché ici.")
+          "Ce code contient les exos réussis, les automatismes acquis, les badges et la série à cet instant, mais pas le code en cours d'écriture. Après d'autres exos, il faut reprendre le nouveau code affiché ici.")
       );
     }
     bloc.append(
@@ -370,27 +395,31 @@
       pret.catch(() => {});
     }
 
+    // Un exercice a corriger ({ exo, code }) ou une demande pour les automatismes ({ auto }).
+    async function envoyer(message) {
+      await pret;
+      return new Promise((resoudre, rejeter) => {
+        numero += 1;
+        const minuteur = setTimeout(() => {
+          // Boucle infinie probable : on arrete Python et on en relance un.
+          worker.terminate();
+          attente = null;
+          demarrer();
+          resoudre({ tropLong: true });
+        }, DELAI_MAX_MS);
+        attente = { numero, resoudre, rejeter, minuteur };
+        worker.postMessage(Object.assign({ numero }, message));
+      });
+    }
+
     return {
       preparer(rappel) {
         auChangement = rappel;
         if (!worker) demarrer();
         else pret.then(() => rappel("pret"), () => rappel("echec"));
       },
-      async executer(exo, code) {
-        await pret;
-        return new Promise((resoudre, rejeter) => {
-          numero += 1;
-          const minuteur = setTimeout(() => {
-            // Boucle infinie probable : on arrete Python et on en relance un.
-            worker.terminate();
-            attente = null;
-            demarrer();
-            resoudre({ tropLong: true });
-          }, DELAI_MAX_MS);
-          attente = { numero, resoudre, rejeter, minuteur };
-          worker.postMessage({ numero, exo, code });
-        });
-      },
+      executer: (exo, code) => envoyer({ exo, code }),
+      automatisme: (demande) => envoyer({ auto: demande }),
     };
   }
 
@@ -490,9 +519,10 @@
       )
     );
 
+    if (etat.niveau === "premiere" && banque.competences.length) conteneur.append(blocAutomatismes());
     conteneur.append(...blocReseau(filtres));
 
-    const toutReussi = banque.exercices.filter((e) => lu(e.id).reussi).length;
+    const toutReussi = banque.exercices.filter((e) => lu(e.id).reussi).length + banque.competences.filter(acquis).length;
     conteneur.append(blocSauvegarde(toutReussi));
 
     conteneur.append(el("p", { class: "entr-note" },
@@ -795,6 +825,143 @@
         retour.append(suite(exo, nouvellesValeurs));
       })
     ));
+  }
+
+  // --- Automatismes --------------------------------------------------------
+  // Des questions courtes, fabriquees et verifiees par automatismes.py, une
+  // competence a la fois. ACQUIS bonnes reponses d'affilee : la competence est acquise.
+
+  function pastilles(n) {
+    return el("span", { class: "entr-pastilles", role: "img", "aria-label": Math.min(n, ACQUIS) + " sur " + ACQUIS },
+      Array.from({ length: ACQUIS }, (_, i) => el("span", { class: "entr-pastille" + (i < n ? " entr-pastille--pleine" : "") })));
+  }
+
+  function blocAutomatismes() {
+    const nbAcquis = banque.competences.filter(acquis).length;
+    return el("div", { class: "entr-automatismes" },
+      el("h2", {}, "Automatismes"),
+      el("p", { class: "entr-consigne" },
+        "Des questions de quelques secondes, tirées au hasard, à répéter jusqu'à ce que ça devienne un réflexe. Une compétence est acquise après " +
+        ACQUIS + " bonnes réponses d'affilée : " + nbAcquis + " sur " + banque.competences.length + " pour l'instant."),
+      el("div", { class: "entr-competences" }, banque.competences.map((c) =>
+        el("a", { href: "#/auto/" + c.id, class: "entr-competence" + (acquis(c) ? " entr-competence--acquise" : ""), title: c.description },
+          el("span", { class: "entr-competence__nom" }, c.nom),
+          acquis(c) ? el("span", { class: "entr-badge" }, "acquis") : pastilles(etat.auto[c.id] ? etat.auto[c.id].serie : 0)))));
+  }
+
+  function afficherAutomatisme(competence) {
+    const s = suiviAuto(competence.id);
+    const compteur = el("p", { class: "entr-auto__serie" });
+    const statut = el("p", { class: "entr-statut" });
+    const zone = el("div", { class: "entr-auto" });
+    let question = null;
+
+    function majCompteur() {
+      compteur.replaceChildren(
+        "Bonnes réponses d'affilée : " + s.serie + " ",
+        pastilles(s.serie),
+        ...(acquis(competence) ? [el("span", { class: "entr-badge" }, "acquis")] : []));
+    }
+
+    async function demander(demande) {
+      const r = await moteur.automatisme(demande);
+      if (r.tropLong) throw new Error("Python ne répond pas");
+      return r;
+    }
+
+    async function nouvelleQuestion() {
+      zone.replaceChildren(el("p", { class: "entr-consigne" }, "Question en préparation..."));
+      try {
+        question = await demander({ faire: "tirer", competence: competence.id, graine: Math.floor(Math.random() * 2 ** 31) });
+      } catch (erreur) {
+        zone.replaceChildren(el("p", { class: "entr-message entr-message--erreur" }, PYTHON_ABSENT));
+        return;
+      }
+      racine.entrQuestion = question; // lu par les tests automatiques (outils/tests/automatismes.js)
+      poserQuestion();
+    }
+
+    function poserQuestion() {
+      const champ = el("input", {
+        class: "entr-champ entr-champ--reponse",
+        type: "text",
+        placeholder: question.indication,
+        "aria-label": "Réponse",
+        autocomplete: "off",
+        autocapitalize: "off",
+        spellcheck: "false",
+      });
+      const valider = el("button", { class: "entr-bouton entr-bouton--fort", type: "submit" }, "Vérifier");
+      const formulaire = el("form", { class: "entr-reponse" }, champ, valider);
+      const retour = el("div", { "aria-live": "polite" });
+
+      formulaire.addEventListener("submit", async (evenement) => {
+        evenement.preventDefault();
+        if (champ.value.trim() === "" || valider.disabled) return;
+        valider.disabled = true;
+        let verdict;
+        try {
+          verdict = await demander({ faire: "verifier", question, reponse: champ.value });
+        } catch (erreur) {
+          retour.replaceChildren(el("p", { class: "entr-message entr-message--erreur" }, PYTHON_ABSENT));
+          valider.disabled = false;
+          return;
+        }
+        // Une reponse mal ecrite (guillemets oublies...) ne compte pas : on peut la corriger.
+        if (!verdict.comprise) {
+          valider.disabled = false;
+          retour.replaceChildren(el("p", { class: "entr-message entr-message--alerte" }, verdict.message));
+          champ.focus();
+          return;
+        }
+        champ.disabled = true;
+        s.faites += 1;
+        let titre = "Ce n'est pas la bonne réponse";
+        if (verdict.juste) {
+          s.serie += 1;
+          noterJour();
+          titre = "Bonne réponse";
+          if (s.serie >= ACQUIS && !s.acquis) {
+            s.acquis = true;
+            titre = "Bonne réponse. Compétence acquise !";
+          }
+        } else {
+          s.serie = 0;
+        }
+        sauver();
+        majCompteur();
+        const suivante = el("button", { class: "entr-bouton entr-bouton--fort", onclick: nouvelleQuestion }, "Question suivante");
+        retour.replaceChildren(
+          el("div", { class: "entr-message entr-message--" + (verdict.juste ? "reussi" : "erreur") },
+            el("strong", {}, titre),
+            verdict.juste ? null : el("p", { class: "entr-attendue", html: "Bonne réponse : <code>" + echapper(question.reponse) + "</code>" }),
+            el("div", { html: enHtml(question.explication) })),
+          el("div", { class: "entr-actions" }, suivante, el("a", { class: "entr-bouton", href: "#/" }, "Retour à la liste")));
+        suivante.focus({ preventScroll: true });
+      });
+
+      zone.replaceChildren(el("div", {},
+        el("div", { class: "entr-enonce", html: enHtml(question.enonce) }),
+        question.code ? el("pre", { class: "entr-code" }, el("code", {}, question.code)) : null,
+        formulaire,
+        retour));
+      if (matchMedia("(pointer: fine)").matches) champ.focus();
+    }
+
+    racine.replaceChildren(el("div", {},
+      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, TEXTES.premiere.retour)),
+      el("p", { class: "entr-surtitre" }, "Automatisme"),
+      el("h1", { class: "entr-titre" }, competence.nom),
+      el("p", { class: "entr-infos" }, competence.description),
+      compteur,
+      statut,
+      zone));
+    majCompteur();
+    moteur.preparer((etatMoteur) => {
+      statut.textContent = etatMoteur === "echec" ? PYTHON_ABSENT : "Python se prépare (quelques secondes la première fois)...";
+      statut.hidden = etatMoteur === "pret";
+    });
+    nouvelleQuestion();
   }
 
   // --- Mode serie ----------------------------------------------------------
@@ -1109,15 +1276,19 @@
     // Un lien direct vers une question place la page sur son niveau.
     if (exo && etat.niveau !== niveauDe(exo.notion)) choisirNiveau(niveauDe(exo.notion));
     const serie = !exo && etat.niveau && location.hash === "#/serie";
-    // Le grand titre de la page s'efface devant celui d'une question ou d'une serie.
+    const routeAuto = location.hash.match(/^#\/auto\/([\w-]+)$/);
+    const competence = routeAuto && banque.competences.find((c) => c.id === routeAuto[1]);
+    if (competence && etat.niveau !== "premiere") choisirNiveau("premiere");
+    // Le grand titre de la page s'efface devant celui d'une question, d'une serie ou d'un automatisme.
     const titre = document.querySelector(".md-content h1");
-    if (titre) titre.hidden = Boolean(exo || serie);
-    if (exo && exo.type === "code") afficherCode(exo);
+    if (titre) titre.hidden = Boolean(exo || serie || competence);
+    if (competence) afficherAutomatisme(competence);
+    else if (exo && exo.type === "code") afficherCode(exo);
     else if (exo) afficherQuestion(exo);
     else if (!etat.niveau) afficherChoixNiveau();
     else if (serie) afficherSerie();
     else afficherAccueil();
-    if (exo || serie) window.scrollTo(0, 0);
+    if (exo || serie || competence) window.scrollTo(0, 0);
   }
 
   async function demarrer() {
@@ -1130,7 +1301,8 @@
       };
       const { notions } = await lire("notions");
       const lots = await Promise.all(notions.map((notion) => lire(notion.id)));
-      banque = { notions, exercices: lots.flatMap((lot) => lot.exercices) };
+      const { competences } = await lire("automatismes");
+      banque = { notions, exercices: lots.flatMap((lot) => lot.exercices), competences };
       // Avant les niveaux, la page ne servait qu'a la Premiere : on garde ce choix
       // pour les eleves qui ont deja une progression.
       if (!etat.niveau && Object.values(etat.exos).some((s) => s.reussi)) choisirNiveau("premiere");

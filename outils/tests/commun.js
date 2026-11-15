@@ -22,6 +22,7 @@ function chargerBanque() {
   return {
     notions,
     exercices,
+    competences: lire("automatismes").competences,
     duNiveau: (niveau) => exercices.filter((e) => niveauDe(notions.find((n) => n.id === e.notion)) === niveau),
     notionsDuNiveau: (niveau) => notions.filter((n) => niveauDe(n) === niveau && exercices.some((e) => e.notion === n.id)),
     deLaNotion: (id) => exercices.filter((e) => e.notion === id),

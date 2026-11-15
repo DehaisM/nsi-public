@@ -32,6 +32,9 @@ jobs:
       - name: Controler les questions tirees au hasard
         run: python outils/controler_generateurs.py
 
+      - name: Controler les automatismes
+        run: python outils/controler_automatismes.py
+
       - name: Build site
         run: mkdocs build --strict
 

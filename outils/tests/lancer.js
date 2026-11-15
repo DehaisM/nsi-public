@@ -13,6 +13,7 @@ const TESTS = {
   "seconde.js": { titre: "Un élève de Seconde", modes: ["tout", "rapide"] },
   "hasard.js": { titre: "Les questions tirées au hasard", modes: ["tout", "rapide"] },
   "filtre-maths.js": { titre: "Le filtre Maths", modes: ["tout", "rapide"] },
+  "automatismes.js": { titre: "Les automatismes", modes: ["tout", "rapide"] },
   "banque.js": { titre: "Chaque exercice et chaque question de la banque", modes: ["tout"] },
   "en-ligne.js": { titre: "Le site publié", modes: ["en-ligne"] },
 };

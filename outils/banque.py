@@ -31,9 +31,23 @@ def charger_banque():
     return index["notions"], exercices
 
 
+def charger_competences():
+    """Les competences des automatismes (exercices/automatismes.yml)."""
+    return yaml.safe_load((DOSSIER / "exercices" / "automatismes.yml").read_text(encoding="utf-8"))["competences"]
+
+
+def _charger_module(nom):
+    spec = importlib.util.spec_from_file_location(nom, DOSSIER / (nom + ".py"))
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
 def charger_correcteur():
     """Le correcteur de la page (correcteur.py), le meme que celui qui tourne dans le navigateur."""
-    spec = importlib.util.spec_from_file_location("correcteur", DOSSIER / "correcteur.py")
-    correcteur = importlib.util.module_from_spec(spec)
-    spec.loader.exec_module(correcteur)
-    return correcteur
+    return _charger_module("correcteur")
+
+
+def charger_automatismes():
+    """Le fabricant de questions des automatismes (automatismes.py), le meme que dans le navigateur."""
+    return _charger_module("automatismes")

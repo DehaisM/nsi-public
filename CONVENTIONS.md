@@ -156,6 +156,23 @@ une entrée dans `AVANT_LA_NOTION`.
 Pour envoyer un élève directement sur un exercice, utiliser le lien
 `https://nsi.mdehais.fr/entrainement/#/exo/<id>`.
 
+### Les automatismes (Première)
+
+Des questions de quelques secondes, tirées au hasard à l'infini, une compétence à la fois
+(`range`, division entière, indices...), pour que les bases deviennent des réflexes. Une
+compétence est acquise après 5 bonnes réponses d'affilée ; une erreur remet la série à zéro.
+
+- La liste des compétences est dans `exercices/automatismes.yml`. Chacune a un `numero` pris dans
+  la même suite que les exercices : une compétence acquise passe dans le code de sauvegarde.
+- Les questions sont fabriquées par `docs-public/entrainement/automatismes.py`, une fonction par
+  compétence. Python exécute le code montré à l'élève pour trouver la bonne réponse : seules les
+  explications sont rédigées à la main. La réponse de l'élève est lue comme une valeur Python
+  (`[3, 7]`, `"abc"`, `True`, ou `erreur`), et un `range` est accepté sous toutes ses écritures.
+- Après une modification, lancer `python outils/controler_automatismes.py` : il tire des milliers
+  de questions par compétence et vérifie réponses, explications et notions vues. La CI le lance
+  aussi.
+- Lien direct vers une compétence : `https://nsi.mdehais.fr/entrainement/#/auto/<id>`.
+
 ### Les questions de révision de Seconde
 
 La même page sert aussi aux Seconde : l'élève choisit son niveau en haut de la page, et ce choix

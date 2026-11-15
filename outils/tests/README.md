@@ -30,6 +30,9 @@ Aucun navigateur n'est téléchargé : les tests pilotent Edge.
 
 Chaque fichier peut aussi se lancer seul, par exemple `node outils/tests/seconde.js`.
 
+Depuis la version 157 d'Edge, le navigateur refuse de démarrer quand les tests sont lancés depuis
+Git Bash : les lancer depuis PowerShell ou l'invite de commandes.
+
 Options, par variables d'environnement :
 
 - `SITE=https://nsi.mdehais.fr/` pour tester une autre adresse que le serveur local ;
@@ -46,6 +49,7 @@ Options, par variables d'environnement :
 | `seconde.js` | un élève de Seconde : choix du niveau, QCM, réponses courtes, série et score |
 | `hasard.js` | les questions tirées au hasard : la réponse attendue est recalculée par une autre méthode (`calcul-attendu.js`) |
 | `filtre-maths.js` | le filtre Maths |
+| `automatismes.js` | les automatismes : chaque compétence jusqu'à être acquise, la série remise à zéro après une erreur, le code de sauvegarde |
 | `banque.js` | chaque exercice : la solution est acceptée, le code de départ refusé, les mauvaises réponses refusées |
 | `en-ligne.js` | le site publié : pages, PDF, couleurs, exercices, Python et code de sauvegarde |
 

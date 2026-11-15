@@ -67,7 +67,7 @@ const message = (page) => page.locator("#entr-app .entr-message").innerText();
   let b = await bilan(tel);
   verif("code saisi : exos et badge recuperes", /2 exos réussis/.test(b) && /1 sans aide/.test(b), b);
   verif("code saisi : serie recuperee", /1 jour de suite/.test(b));
-  verif("code saisi : message", /2 exos réussis en plus/.test(await message(tel)), await message(tel));
+  verif("code saisi : message", /2 réussites en plus/.test(await message(tel)), await message(tel));
   await tel.locator(".entr-ligne__titre", { hasText: "Conditions" }).click();
   await tel.locator(".entr-ligne__titre", { hasText: "Grilles" }).click();
   verif("le bon badge sur le bon exo", await tel.evaluate(() => {
