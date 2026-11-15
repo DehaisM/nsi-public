@@ -13,16 +13,16 @@ exercices:
     depart: |
 
     aides:
-      - |
-        `range` accepte un troisième nombre, le pas. Avec un pas négatif, on compte à rebours. Attention : la borne de fin n'est jamais atteinte.
-      - |
-        # faire une boucle for dont la variable va de 5 a 1
-        #     afficher la variable
-        # apres la boucle, afficher Partez !
-      - |
-        for i in range(___, ___, ___):
-            print(i)
-        print("Partez !")
+      - idee: |
+          `range` accepte un troisième nombre, le pas. Avec un pas négatif, on compte à rebours. Attention : la borne de fin n'est jamais atteinte.
+      - pseudo: |
+          # faire une boucle for dont la variable va de 5 a 1
+          #     afficher la variable
+          # apres la boucle, afficher Partez !
+      - trous: |
+          for i in range(___, ___, ___):
+              print(i)
+          print("Partez !")
     solution: |
       for i in range(5, 0, -1):
           print(i)
@@ -45,21 +45,21 @@ exercices:
       def compter_voyelles(mot):
           ...
     aides:
-      - |
-        Parcourir les lettres du mot une par une, et compter celles qui sont des voyelles. L'opérateur `in` teste si une lettre fait partie d'une chaîne.
-      - |
-        def compter_voyelles(mot):
-            # creer un compteur qui vaut 0
-            # parcourir chaque lettre de mot
-            #     si la lettre fait partie de "aeiouy", ajouter 1 au compteur
-            # renvoyer le compteur
-      - |
-        def compter_voyelles(mot):
-            compteur = ___
-            for lettre in ___:
-                if lettre in "aeiouy":
-                    compteur = ___
-            return ___
+      - idee: |
+          Parcourir les lettres du mot une par une, et compter celles qui sont des voyelles. L'opérateur `in` teste si une lettre fait partie d'une chaîne.
+      - pseudo: |
+          def compter_voyelles(mot):
+              # creer un compteur qui vaut 0
+              # parcourir chaque lettre de mot
+              #     si la lettre fait partie de "aeiouy", ajouter 1 au compteur
+              # renvoyer le compteur
+      - trous: |
+          def compter_voyelles(mot):
+              compteur = ___
+              for lettre in ___:
+                  if lettre in "aeiouy":
+                      compteur = ___
+              return ___
     solution: |
       def compter_voyelles(mot):
           compteur = 0
@@ -109,14 +109,14 @@ exercices:
       n = 7
 
     aides:
-      - |
-        Une boucle dont la variable va de 1 à 10. À chaque tour, un seul `print` affiche toute la ligne.
-      - |
-        # faire une boucle dont la variable va de 1 a 10
-        #     afficher n, "x", la variable, "=" et le produit
-      - |
-        for i in range(___, ___):
-            print(n, "x", i, "=", ___)
+      - idee: |
+          Une boucle dont la variable va de 1 à 10. À chaque tour, un seul `print` affiche toute la ligne.
+      - pseudo: |
+          # faire une boucle dont la variable va de 1 a 10
+          #     afficher n, "x", la variable, "=" et le produit
+      - trous: |
+          for i in range(___, ___):
+              print(n, "x", i, "=", ___)
     solution: |
       n = 7
       for i in range(1, 11):
@@ -142,19 +142,10 @@ exercices:
               resultat = resultat * x
           return resultat
     aides:
-      - |
-        Suivre le code à la main avec `x = 2` et `n = 3` : que vaut `resultat` après le premier tour ? Multiplier par 0 donne toujours 0.
-      - |
-        def puissance(x, n):
-            # partir d'un resultat qui vaut 1
-            # repeter n fois : multiplier resultat par x
-            # renvoyer resultat
-      - |
-        def puissance(x, n):
-            resultat = ___
-            for i in range(n):
-                resultat = resultat * x
-            return resultat
+      - idee: |
+          Suivre le code à la main avec `x = 2` et `n = 3` : que vaut `resultat` après le premier tour ? Multiplier par 0 donne toujours 0.
+      - ou: |
+          L'erreur est à la ligne 2, avant la boucle : c'est la valeur de départ de `resultat`.
     solution: |
       def puissance(x, n):
           resultat = 1
@@ -184,20 +175,20 @@ exercices:
       def factorielle(n):
           ...
     aides:
-      - |
-        Partir d'un produit, puis le multiplier par chaque entier de 1 à `n`. Pour un produit, on ne part pas de 0.
-      - |
-        def factorielle(n):
-            # creer une variable produit qui vaut 1
-            # parcourir les entiers de 1 a n
-            #     multiplier produit par l'entier
-            # renvoyer produit
-      - |
-        def factorielle(n):
-            produit = ___
-            for i in range(___, ___):
-                produit = ___
-            return produit
+      - idee: |
+          Partir d'un produit, puis le multiplier par chaque entier de 1 à `n`. Pour un produit, on ne part pas de 0.
+      - pseudo: |
+          def factorielle(n):
+              # creer une variable produit qui vaut 1
+              # parcourir les entiers de 1 a n
+              #     multiplier produit par l'entier
+              # renvoyer produit
+      - trous: |
+          def factorielle(n):
+              produit = ___
+              for i in range(___, ___):
+                  produit = ___
+              return produit
     solution: |
       def factorielle(n):
           produit = 1
@@ -231,21 +222,21 @@ exercices:
       def sans_espaces(phrase):
           ...
     aides:
-      - |
-        Construire la réponse petit à petit : partir d'une chaîne vide et y ajouter chaque caractère qui n'est pas un espace.
-      - |
-        def sans_espaces(phrase):
-            # creer une chaine vide
-            # parcourir chaque caractere de phrase
-            #     si ce n'est pas un espace, l'ajouter a la fin de la chaine
-            # renvoyer la chaine
-      - |
-        def sans_espaces(phrase):
-            resultat = ""
-            for caractere in ___:
-                if caractere != ___:
-                    resultat = ___
-            return resultat
+      - idee: |
+          Construire la réponse petit à petit : partir d'une chaîne vide et y ajouter chaque caractère qui n'est pas un espace.
+      - pseudo: |
+          def sans_espaces(phrase):
+              # creer une chaine vide
+              # parcourir chaque caractere de phrase
+              #     si ce n'est pas un espace, l'ajouter a la fin de la chaine
+              # renvoyer la chaine
+      - trous: |
+          def sans_espaces(phrase):
+              resultat = ""
+              for caractere in ___:
+                  if caractere != ___:
+                      resultat = ___
+              return resultat
     solution: |
       def sans_espaces(phrase):
           resultat = ""
@@ -283,18 +274,18 @@ exercices:
       n = 4
 
     aides:
-      - |
-        Chaque ligne est la précédente avec un chiffre de plus à droite. Garder une chaîne qui s'allonge à chaque tour.
-      - |
-        # creer une chaine vide
-        # faire une boucle dont la variable va de 1 a n
-        #     ajouter la variable, transformee en texte, a la fin de la chaine
-        #     afficher la chaine
-      - |
-        ligne = ""
-        for i in range(1, ___):
-            ligne = ligne + ___
-            print(ligne)
+      - idee: |
+          Chaque ligne est la précédente avec un chiffre de plus à droite. Garder une chaîne qui s'allonge à chaque tour.
+      - pseudo: |
+          # creer une chaine vide
+          # faire une boucle dont la variable va de 1 a n
+          #     ajouter la variable, transformee en texte, a la fin de la chaine
+          #     afficher la chaine
+      - trous: |
+          ligne = ""
+          for i in range(1, ___):
+              ligne = ligne + ___
+              print(ligne)
     solution: |
       n = 4
       ligne = ""
@@ -322,21 +313,21 @@ exercices:
       def est_parfait(n):
           ...
     aides:
-      - |
-        Additionner tous les diviseurs de `n` plus petits que `n`, puis comparer la somme à `n`. Un nombre divise `n` si le reste de la division vaut 0.
-      - |
-        def est_parfait(n):
-            # creer une variable somme qui vaut 0
-            # parcourir les entiers de 1 a n - 1
-            #     si l'entier divise n, l'ajouter a somme
-            # renvoyer le resultat de la comparaison entre somme et n
-      - |
-        def est_parfait(n):
-            somme = 0
-            for d in range(1, ___):
-                if n % d == ___:
-                    somme = ___
-            return somme == ___
+      - idee: |
+          Additionner tous les diviseurs de `n` plus petits que `n`, puis comparer la somme à `n`. Un nombre divise `n` si le reste de la division vaut 0.
+      - pseudo: |
+          def est_parfait(n):
+              # creer une variable somme qui vaut 0
+              # parcourir les entiers de 1 a n - 1
+              #     si l'entier divise n, l'ajouter a somme
+              # renvoyer le resultat de la comparaison entre somme et n
+      - trous: |
+          def est_parfait(n):
+              somme = 0
+              for d in range(1, ___):
+                  if n % d == ___:
+                      somme = ___
+              return somme == ___
     solution: |
       def est_parfait(n):
           somme = 0
@@ -398,20 +389,20 @@ exercices:
           ...
     interdit: [sum]
     aides:
-      - |
-        `range` peut avancer de 2 en 2 : en partant de 1, on ne tombe que sur des nombres impairs.
-      - |
-        def somme_impairs(n):
-            # creer une variable total qui vaut 0
-            # parcourir les entiers impairs de 1 a n avec un pas de 2
-            #     ajouter l'entier a total
-            # renvoyer total
-      - |
-        def somme_impairs(n):
-            total = 0
-            for i in range(1, ___, ___):
-                total = total + i
-            return total
+      - idee: |
+          `range` peut avancer de 2 en 2 : en partant de 1, on ne tombe que sur des nombres impairs.
+      - pseudo: |
+          def somme_impairs(n):
+              # creer une variable total qui vaut 0
+              # parcourir les entiers impairs de 1 a n avec un pas de 2
+              #     ajouter l'entier a total
+              # renvoyer total
+      - trous: |
+          def somme_impairs(n):
+              total = 0
+              for i in range(1, ___, ___):
+                  total = total + i
+              return total
     solution: |
       def somme_impairs(n):
           total = 0
@@ -447,20 +438,20 @@ exercices:
       def doubler_lettres(mot):
           ...
     aides:
-      - |
-        Partir d'une chaîne vide et, pour chaque lettre du mot, l'ajouter deux fois.
-      - |
-        def doubler_lettres(mot):
-            # creer une chaine vide
-            # parcourir les lettres de mot
-            #     ajouter deux fois la lettre a la fin de la chaine
-            # renvoyer la chaine
-      - |
-        def doubler_lettres(mot):
-            resultat = ""
-            for lettre in ___:
-                resultat = resultat + ___
-            return resultat
+      - idee: |
+          Partir d'une chaîne vide et, pour chaque lettre du mot, l'ajouter deux fois.
+      - pseudo: |
+          def doubler_lettres(mot):
+              # creer une chaine vide
+              # parcourir les lettres de mot
+              #     ajouter deux fois la lettre a la fin de la chaine
+              # renvoyer la chaine
+      - trous: |
+          def doubler_lettres(mot):
+              resultat = ""
+              for lettre in ___:
+                  resultat = resultat + ___
+              return resultat
     solution: |
       def doubler_lettres(mot):
           resultat = ""
@@ -516,20 +507,10 @@ exercices:
           return resultat
     interdit: ["[:]"]
     aides:
-      - |
-        Suivre le code à la main avec `"abc"`. Chaque nouvelle lettre est collée à droite du résultat : où faudrait-il la placer pour retourner le mot ?
-      - |
-        def envers(mot):
-            # partir d'une chaine vide
-            # parcourir les lettres de mot
-            #     placer la lettre a gauche du resultat
-            # renvoyer le resultat
-      - |
-        def envers(mot):
-            resultat = ""
-            for lettre in mot:
-                resultat = ___ + ___
-            return resultat
+      - idee: |
+          Suivre le code à la main avec `"abc"`. Chaque nouvelle lettre est collée à droite du résultat : où faudrait-il la placer pour retourner le mot ?
+      - ou: |
+          L'erreur est à la ligne 4, dans la boucle : c'est l'ordre des deux morceaux que l'on colle.
     solution: |
       def envers(mot):
           resultat = ""
@@ -559,20 +540,20 @@ exercices:
       def somme_chiffres(n):
           ...
     aides:
-      - |
-        Transformer le nombre en texte permet de parcourir ses chiffres un par un. Chaque chiffre doit ensuite redevenir un nombre pour être additionné.
-      - |
-        def somme_chiffres(n):
-            # creer une variable total qui vaut 0
-            # parcourir les caracteres de str(n)
-            #     ajouter a total le caractere transforme en nombre
-            # renvoyer total
-      - |
-        def somme_chiffres(n):
-            total = 0
-            for chiffre in ___:
-                total = total + ___
-            return total
+      - idee: |
+          Transformer le nombre en texte permet de parcourir ses chiffres un par un. Chaque chiffre doit ensuite redevenir un nombre pour être additionné.
+      - pseudo: |
+          def somme_chiffres(n):
+              # creer une variable total qui vaut 0
+              # parcourir les caracteres de str(n)
+              #     ajouter a total le caractere transforme en nombre
+              # renvoyer total
+      - trous: |
+          def somme_chiffres(n):
+              total = 0
+              for chiffre in ___:
+                  total = total + ___
+              return total
     solution: |
       def somme_chiffres(n):
           total = 0
@@ -601,21 +582,21 @@ exercices:
       def somme_multiples(n):
           ...
     aides:
-      - |
-        Parcourir tous les entiers plus petits que `n`, et ne garder que les multiples de 3 ou de 5 : un reste nul dans la division indique un multiple.
-      - |
-        def somme_multiples(n):
-            # creer une variable total qui vaut 0
-            # parcourir les entiers de 1 a n - 1
-            #     si l'entier est multiple de 3 ou de 5, l'ajouter a total
-            # renvoyer total
-      - |
-        def somme_multiples(n):
-            total = 0
-            for i in range(1, ___):
-                if i % 3 == ___ or i % 5 == ___:
-                    total = total + i
-            return total
+      - idee: |
+          Parcourir tous les entiers plus petits que `n`, et ne garder que les multiples de 3 ou de 5 : un reste nul dans la division indique un multiple.
+      - pseudo: |
+          def somme_multiples(n):
+              # creer une variable total qui vaut 0
+              # parcourir les entiers de 1 a n - 1
+              #     si l'entier est multiple de 3 ou de 5, l'ajouter a total
+              # renvoyer total
+      - trous: |
+          def somme_multiples(n):
+              total = 0
+              for i in range(1, ___):
+                  if i % 3 == ___ or i % 5 == ___:
+                      total = total + i
+              return total
     solution: |
       def somme_multiples(n):
           total = 0
@@ -648,20 +629,20 @@ exercices:
       def capital(depart, taux, annees):
           ...
     aides:
-      - |
-        Chaque année, la somme augmente de `taux` pour cent de sa valeur **actuelle**. Il faut une boucle qui fait autant de tours qu'il y a d'années.
-      - |
-        def capital(depart, taux, annees):
-            # creer une variable somme qui vaut depart
-            # repeter autant de fois qu'il y a d'annees :
-            #     ajouter a somme taux pour cent de sa valeur actuelle
-            # renvoyer somme
-      - |
-        def capital(depart, taux, annees):
-            somme = depart
-            for i in range(___):
-                somme = somme + somme * ___ / 100
-            return somme
+      - idee: |
+          Chaque année, la somme augmente de `taux` pour cent de sa valeur **actuelle**. Il faut une boucle qui fait autant de tours qu'il y a d'années.
+      - pseudo: |
+          def capital(depart, taux, annees):
+              # creer une variable somme qui vaut depart
+              # repeter autant de fois qu'il y a d'annees :
+              #     ajouter a somme taux pour cent de sa valeur actuelle
+              # renvoyer somme
+      - trous: |
+          def capital(depart, taux, annees):
+              somme = depart
+              for i in range(___):
+                  somme = somme + somme * ___ / 100
+              return somme
     solution: |
       def capital(depart, taux, annees):
           somme = depart
@@ -697,18 +678,18 @@ exercices:
       n = 4
 
     aides:
-      - |
-        Compter les étoiles et les espaces de chaque ligne : 1, 3, 5, 7 étoiles, et de moins en moins d'espaces. Trouver leur formule en fonction du numéro de ligne.
-      - |
-        # faire une boucle sur les lignes, numerotees de 0 a n - 1
-        #     la ligne numero i contient 2 * i + 1 etoiles
-        #     elle commence par n - 1 - i espaces
-        #     afficher les espaces suivis des etoiles
-      - |
-        for i in range(n):
-            espaces = " " * (n - 1 - ___)
-            etoiles = "*" * (2 * ___ + 1)
-            print(___)
+      - idee: |
+          Compter les étoiles et les espaces de chaque ligne : 1, 3, 5, 7 étoiles, et de moins en moins d'espaces. Trouver leur formule en fonction du numéro de ligne.
+      - pseudo: |
+          # faire une boucle sur les lignes, numerotees de 0 a n - 1
+          #     la ligne numero i contient 2 * i + 1 etoiles
+          #     elle commence par n - 1 - i espaces
+          #     afficher les espaces suivis des etoiles
+      - trous: |
+          for i in range(n):
+              espaces = " " * (n - 1 - ___)
+              etoiles = "*" * (2 * ___ + 1)
+              print(___)
     solution: |
       n = 4
       for i in range(n):
@@ -734,25 +715,25 @@ exercices:
       def acronyme(phrase):
           ...
     aides:
-      - |
-        Une lettre est la première d'un mot si le caractère juste avant est un espace. Il faut donc retenir le caractère précédent pendant le parcours.
-      - |
-        def acronyme(phrase):
-            # creer une chaine vide et retenir le caractere precedent, au depart un espace
-            # parcourir les caracteres de phrase
-            #     si le caractere n'est pas un espace et que le precedent en est un :
-            #         ajouter le caractere au resultat
-            #     retenir le caractere comme nouveau precedent
-            # renvoyer le resultat
-      - |
-        def acronyme(phrase):
-            resultat = ""
-            precedent = " "
-            for caractere in phrase:
-                if caractere != " " and precedent == ___:
-                    resultat = ___
-                precedent = ___
-            return resultat
+      - idee: |
+          Une lettre est la première d'un mot si le caractère juste avant est un espace. Il faut donc retenir le caractère précédent pendant le parcours.
+      - pseudo: |
+          def acronyme(phrase):
+              # creer une chaine vide et retenir le caractere precedent, au depart un espace
+              # parcourir les caracteres de phrase
+              #     si le caractere n'est pas un espace et que le precedent en est un :
+              #         ajouter le caractere au resultat
+              #     retenir le caractere comme nouveau precedent
+              # renvoyer le resultat
+      - trous: |
+          def acronyme(phrase):
+              resultat = ""
+              precedent = " "
+              for caractere in phrase:
+                  if caractere != " " and precedent == ___:
+                      resultat = ___
+                  precedent = ___
+              return resultat
     solution: |
       def acronyme(phrase):
           resultat = ""
@@ -786,20 +767,20 @@ exercices:
       def en_decimal(binaire):
           ...
     aides:
-      - |
-        Suivre la méthode de l'énoncé à la main sur `"1011"` : partir de 0, puis pour chaque chiffre, multiplier par 2 et ajouter le chiffre.
-      - |
-        def en_decimal(binaire):
-            # creer une variable valeur qui vaut 0
-            # parcourir les caracteres de binaire
-            #     multiplier valeur par 2 et lui ajouter le chiffre lu
-            # renvoyer valeur
-      - |
-        def en_decimal(binaire):
-            valeur = 0
-            for chiffre in binaire:
-                valeur = valeur * ___ + ___
-            return valeur
+      - idee: |
+          Suivre la méthode de l'énoncé à la main sur `"1011"` : partir de 0, puis pour chaque chiffre, multiplier par 2 et ajouter le chiffre.
+      - pseudo: |
+          def en_decimal(binaire):
+              # creer une variable valeur qui vaut 0
+              # parcourir les caracteres de binaire
+              #     multiplier valeur par 2 et lui ajouter le chiffre lu
+              # renvoyer valeur
+      - trous: |
+          def en_decimal(binaire):
+              valeur = 0
+              for chiffre in binaire:
+                  valeur = valeur * ___ + ___
+              return valeur
     solution: |
       def en_decimal(binaire):
           valeur = 0

@@ -7,8 +7,13 @@
   const CLE = "nsi-entrainement";
   const DELAI_MAX_MS = 5000;
   const DIFFICULTES = { 1: "Facile", 2: "Moyen", 3: "Corsé" };
-  // Dans l'ordre de la banque : une phrase, puis du code.
-  const NOMS_AIDES = ["Une idée pour démarrer", "Le pseudo-code", "Le code à trous"];
+  // Chaque aide de la banque a un genre : son titre, et si elle s'affiche en texte ou en code.
+  const GENRES_AIDES = {
+    idee: { nom: "Une idée pour démarrer", texte: true },
+    ou: { nom: "Où chercher", texte: true },
+    pseudo: { nom: "Le pseudo-code", texte: false },
+    trous: { nom: "Le code à trous", texte: false },
+  };
   const PYTHON_ABSENT = "Python n'a pas pu se charger. Vérifier la connexion, puis recharger la page.";
   const TAILLE_SERIE = 10;
   // Les etiquettes que l'on peut filtrer (champ tags des exercices), avec leur nom affiche.
@@ -896,13 +901,14 @@
     const boutonAide = el("button", { class: "entr-bouton", onclick: ouvrirAide });
 
     function majAides() {
-      zoneAides.replaceChildren(...exo.aides.slice(0, s.aides).map((aide, i) =>
-        el("div", { class: "entr-aide" },
-          el("p", {}, NOMS_AIDES[i]),
-          i === 0
-            ? el("p", { class: "entr-aide__idee", html: enLigne(aide.trim().replace(/ ([?!:;])/g, " $1")) })
-            : el("pre", { class: "entr-code" }, el("code", {}, aide.trimEnd())))
-      ));
+      zoneAides.replaceChildren(...exo.aides.slice(0, s.aides).map((aide) => {
+        const [genre, contenu] = Object.entries(aide)[0];
+        return el("div", { class: "entr-aide" },
+          el("p", {}, GENRES_AIDES[genre].nom),
+          GENRES_AIDES[genre].texte
+            ? el("p", { class: "entr-aide__texte", html: enLigne(contenu.trim().replace(/ ([?!:;])/g, "\u00a0$1")) })
+            : el("pre", { class: "entr-code" }, el("code", {}, contenu.trimEnd())));
+      }));
       boutonAide.textContent = "Une aide (" + s.aides + "/" + exo.aides.length + ")";
       boutonAide.disabled = s.aides >= exo.aides.length;
     }

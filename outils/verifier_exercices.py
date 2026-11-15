@@ -113,6 +113,34 @@ def controler_notions(code, notion):
     return trouves
 
 
+# Les aides attendues selon la sorte d'exercice (voir exercices/notions.yml).
+SUITES_AIDES = {
+    ("idee", "pseudo", "trous"): "écrire le code",
+    ("idee", "ou"): "trouver l'erreur",
+    ("idee", "pseudo"): "compléter un code de départ à trous",
+}
+
+
+def controler_aides(exo):
+    if not all(isinstance(aide, dict) and len(aide) == 1 for aide in exo["aides"]):
+        return ["chaque aide doit avoir un genre : idee, ou, pseudo ou trous"]
+    genres = tuple(next(iter(aide)) for aide in exo["aides"])
+    if genres not in SUITES_AIDES:
+        return ["aides " + ", ".join(genres) + " : attendu idee, pseudo, trous ou idee, ou ou idee, pseudo"]
+    contenus = {genre: next(iter(aide.values())).strip() for genre, aide in zip(genres, exo["aides"])}
+    problemes = []
+    if ("___" in exo["depart"]) != (genres == ("idee", "pseudo")):
+        problemes.append("idee, pseudo : réservé aux codes de départ à trous, et obligatoire pour eux")
+    for genre in ("idee", "ou"):
+        if genre in contenus and ("\n" in contenus[genre] or "___" in contenus[genre]):
+            problemes.append("aide " + genre + " : une ou deux phrases, sans code ni trous")
+    if "pseudo" in contenus and ("#" not in contenus["pseudo"] or "___" in contenus["pseudo"]):
+        problemes.append("aide pseudo : des commentaires, sans trous")
+    if "trous" in contenus and "___" not in contenus["trous"]:
+        problemes.append("aide trous : il manque les ___")
+    return problemes
+
+
 def verifier(exo, notions):
     problemes = []
     genre = exo.get("type")
@@ -171,16 +199,7 @@ def verifier(exo, notions):
             problemes.append("non vu par les élèves : " + trouve)
         return problemes
 
-    if len(exo["aides"]) != 3:
-        problemes.append("il faut 3 niveaux d'aide : une idée, le pseudo-code, le code à trous")
-    else:
-        idee, pseudo, trous = (aide.strip() for aide in exo["aides"])
-        if "\n" in idee or "___" in idee or "```" in idee:
-            problemes.append("aide 1 : une idée en une ou deux phrases, sans bloc de code")
-        if "#" not in pseudo or "___" in pseudo:
-            problemes.append("aide 2 : du pseudo-code en commentaires, sans trous")
-        if "___" not in trous:
-            problemes.append("aide 3 : un code à trous, avec des ___")
+    problemes.extend(controler_aides(exo))
     solutions = [exo["solution"]] + list(exo.get("autres_solutions") or [])
     for rang, solution in enumerate(solutions):
         resultat = correcteur.executer_programme(exo, solution)

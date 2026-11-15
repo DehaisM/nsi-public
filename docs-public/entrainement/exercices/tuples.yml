@@ -98,16 +98,16 @@ exercices:
       def extremites(valeurs):
           ...
     aides:
-      - |
-        Un tuple s'indexe comme une liste. L'indice -1 désigne le dernier élément, quelle que soit la longueur.
-      - |
-        def extremites(valeurs):
-            # recuperer le premier element, d'indice 0
-            # recuperer le dernier element, avec un indice negatif
-            # renvoyer les deux, separes par une virgule
-      - |
-        def extremites(valeurs):
-            return valeurs[___], valeurs[___]
+      - idee: |
+          Un tuple s'indexe comme une liste. L'indice -1 désigne le dernier élément, quelle que soit la longueur.
+      - pseudo: |
+          def extremites(valeurs):
+              # recuperer le premier element, d'indice 0
+              # recuperer le dernier element, avec un indice negatif
+              # renvoyer les deux, separes par une virgule
+      - trous: |
+          def extremites(valeurs):
+              return valeurs[___], valeurs[___]
     solution: |
       def extremites(valeurs):
           return valeurs[0], valeurs[-1]
@@ -138,16 +138,16 @@ exercices:
       def symetrique(point):
           ...
     aides:
-      - |
-        Dépaqueter le point dans deux variables, puis renvoyer un nouveau tuple avec les deux valeurs dans l'autre ordre.
-      - |
-        def symetrique(point):
-            # depaqueter point dans deux variables x et y
-            # renvoyer le tuple forme de y puis de x
-      - |
-        def symetrique(point):
-            x, y = ___
-            return ___, ___
+      - idee: |
+          Dépaqueter le point dans deux variables, puis renvoyer un nouveau tuple avec les deux valeurs dans l'autre ordre.
+      - pseudo: |
+          def symetrique(point):
+              # depaqueter point dans deux variables x et y
+              # renvoyer le tuple forme de y puis de x
+      - trous: |
+          def symetrique(point):
+              x, y = ___
+              return ___, ___
     solution: |
       def symetrique(point):
           x, y = point
@@ -180,18 +180,12 @@ exercices:
           return ___
     interdit: [min, max, sorted, sort]
     aides:
-      - |
-        Dépaqueter le couple dans deux variables, puis les comparer. Il n'y a que deux cas.
-      - |
-        # commencer par depaqueter le couple dans a et b
-        # s'ils sont deja dans l'ordre, renvoyer le couple tel quel
-        # sinon, renvoyer les deux nombres dans l'autre sens
-      - |
-        def ordonner(couple):
-            a, b = couple
-            if a <= b:
-                return ___, ___
-            return ___, ___
+      - idee: |
+          Dépaqueter le couple dans deux variables, puis les comparer. Il n'y a que deux cas.
+      - pseudo: |
+          # commencer par depaqueter le couple dans a et b
+          # s'ils sont deja dans l'ordre, renvoyer le couple tel quel
+          # sinon, renvoyer les deux nombres dans l'autre sens
     solution: |
       def ordonner(couple):
           a, b = couple
@@ -220,20 +214,20 @@ exercices:
       def resultat(score):
           ...
     aides:
-      - |
-        Dépaqueter le score dans deux variables, puis comparer les deux nombres de buts : il y a trois cas possibles.
-      - |
-        def resultat(score):
-            # depaqueter le score dans deux variables
-            # comparer les deux nombres de buts
-      - |
-        def resultat(score):
-            a, b = score
-            if a > b:
-                return ___
-            elif ___:
-                return "B"
-            return ___
+      - idee: |
+          Dépaqueter le score dans deux variables, puis comparer les deux nombres de buts : il y a trois cas possibles.
+      - pseudo: |
+          def resultat(score):
+              # depaqueter le score dans deux variables
+              # comparer les deux nombres de buts
+      - trous: |
+          def resultat(score):
+              a, b = score
+              if a > b:
+                  return ___
+              elif ___:
+                  return "B"
+              return ___
     solution: |
       def resultat(score):
           a, b = score
@@ -265,16 +259,10 @@ exercices:
           p[1] = p[1] + dy
           return p
     aides:
-      - |
-        Lire le type d'erreur : un tuple ne peut pas être modifié. Au lieu de changer `p`, il faut renvoyer un nouveau tuple.
-      - |
-        def translation(p, dx, dy):
-            # ne pas modifier p : construire un nouveau tuple
-            # sa premiere valeur est p[0] + dx, la seconde p[1] + dy
-            # renvoyer ce nouveau tuple
-      - |
-        def translation(p, dx, dy):
-            return (p[0] + ___, p[1] + ___)
+      - idee: |
+          Lire le message d'erreur : quel genre de valeur est `p`, et que dit le cours sur ce genre de valeur ?
+      - ou: |
+          L'erreur est aux lignes 2 et 3 : elles essaient de changer les valeurs du tuple `p`.
     solution: |
       def translation(p, dx, dy):
           return (p[0] + dx, p[1] + dy)
@@ -304,20 +292,20 @@ exercices:
           ...
     interdit: [sum]
     aides:
-      - |
-        Une fonction peut renvoyer deux valeurs à la fois, séparées par une virgule : c'est un tuple. Calculer d'abord la somme avec une boucle.
-      - |
-        def bilan(notes):
-            # additionner les notes avec une boucle
-            # compter les notes avec len
-            # renvoyer les deux valeurs, separees par une virgule
-      - |
-        def bilan(notes):
-            total = 0
-            for n in notes:
-                total = ___
-            nombre = len(___)
-            return nombre, ___
+      - idee: |
+          Une fonction peut renvoyer deux valeurs à la fois, séparées par une virgule : c'est un tuple. Calculer d'abord la somme avec une boucle.
+      - pseudo: |
+          def bilan(notes):
+              # additionner les notes avec une boucle
+              # compter les notes avec len
+              # renvoyer les deux valeurs, separees par une virgule
+      - trous: |
+          def bilan(notes):
+              total = 0
+              for n in notes:
+                  total = ___
+              nombre = len(___)
+              return nombre, ___
     solution: |
       def bilan(notes):
           total = 0
@@ -347,29 +335,29 @@ exercices:
       def plus_tot(d1, d2):
           ...
     aides:
-      - |
-        Comparer comme on range des mots dans un dictionnaire : d'abord les années, et seulement si elles sont égales, les mois, puis les jours.
-      - |
-        def plus_tot(d1, d2):
-            # depaqueter les deux dates
-            # si les annees sont differentes, la plus petite annee l'emporte
-            # sinon, si les mois sont differents, le plus petit mois l'emporte
-            # sinon, comparer les jours
-      - |
-        def plus_tot(d1, d2):
-            j1, m1, a1 = d1
-            j2, m2, a2 = d2
-            if a1 != a2:
-                if a1 < a2:
-                    return d1
-                return ___
-            if m1 != m2:
-                if m1 < m2:
-                    return ___
-                return ___
-            if j1 <= j2:
-                return ___
-            return ___
+      - idee: |
+          Comparer comme on range des mots dans un dictionnaire : d'abord les années, et seulement si elles sont égales, les mois, puis les jours.
+      - pseudo: |
+          def plus_tot(d1, d2):
+              # depaqueter les deux dates
+              # si les annees sont differentes, la plus petite annee l'emporte
+              # sinon, si les mois sont differents, le plus petit mois l'emporte
+              # sinon, comparer les jours
+      - trous: |
+          def plus_tot(d1, d2):
+              j1, m1, a1 = d1
+              j2, m2, a2 = d2
+              if a1 != a2:
+                  if a1 < a2:
+                      return d1
+                  return ___
+              if m1 != m2:
+                  if m1 < m2:
+                      return ___
+                  return ___
+              if j1 <= j2:
+                  return ___
+              return ___
     solution: |
       def plus_tot(d1, d2):
           j1, m1, a1 = d1
@@ -416,21 +404,21 @@ exercices:
       def dans_le_carre(points, c):
           ...
     aides:
-      - |
-        Parcourir les points en les dépaquetant directement dans la boucle, et compter ceux dont `x` et `y` sont tous les deux entre 0 et `c`.
-      - |
-        def dans_le_carre(points, c):
-            # creer un compteur qui vaut 0
-            # parcourir les points, en les depaquetant en x et y
-            #     si x et y sont tous les deux entre 0 et c, ajouter 1 au compteur
-            # renvoyer le compteur
-      - |
-        def dans_le_carre(points, c):
-            compteur = 0
-            for x, y in points:
-                if 0 <= x <= ___ and ___ <= y <= ___:
-                    compteur = compteur + 1
-            return compteur
+      - idee: |
+          Parcourir les points en les dépaquetant directement dans la boucle, et compter ceux dont `x` et `y` sont tous les deux entre 0 et `c`.
+      - pseudo: |
+          def dans_le_carre(points, c):
+              # creer un compteur qui vaut 0
+              # parcourir les points, en les depaquetant en x et y
+              #     si x et y sont tous les deux entre 0 et c, ajouter 1 au compteur
+              # renvoyer le compteur
+      - trous: |
+          def dans_le_carre(points, c):
+              compteur = 0
+              for x, y in points:
+                  if 0 <= x <= ___ and ___ <= y <= ___:
+                      compteur = compteur + 1
+              return compteur
     solution: |
       def dans_le_carre(points, c):
           compteur = 0
@@ -469,21 +457,21 @@ exercices:
       def arrivee(depart, deplacements):
           ...
     aides:
-      - |
-        Partir des coordonnées du départ, et leur ajouter chaque déplacement, l'un après l'autre.
-      - |
-        def arrivee(depart, deplacements):
-            # depaqueter le point de depart dans x et y
-            # parcourir les deplacements, en les depaquetant en dx et dy
-            #     ajouter dx a x et dy a y
-            # renvoyer le tuple (x, y)
-      - |
-        def arrivee(depart, deplacements):
-            x, y = ___
-            for dx, dy in ___:
-                x = ___
-                y = ___
-            return x, y
+      - idee: |
+          Partir des coordonnées du départ, et leur ajouter chaque déplacement, l'un après l'autre.
+      - pseudo: |
+          def arrivee(depart, deplacements):
+              # depaqueter le point de depart dans x et y
+              # parcourir les deplacements, en les depaquetant en dx et dy
+              #     ajouter dx a x et dy a y
+              # renvoyer le tuple (x, y)
+      - trous: |
+          def arrivee(depart, deplacements):
+              x, y = ___
+              for dx, dy in ___:
+                  x = ___
+                  y = ___
+              return x, y
     solution: |
       def arrivee(depart, deplacements):
           x, y = depart
@@ -514,21 +502,21 @@ exercices:
           ...
     interdit: [max, sorted, sort]
     aides:
-      - |
-        Comme pour chercher un maximum : retenir le meilleur article vu jusqu'ici, et le remplacer quand on trouve plus cher. À la fin, on ne renvoie que son nom.
-      - |
-        def le_plus_cher(articles):
-            # retenir le premier article comme meilleur
-            # parcourir les articles, en les depaquetant en nom et prix
-            #     si le prix est plus grand que celui du meilleur, retenir cet article
-            # renvoyer le nom du meilleur
-      - |
-        def le_plus_cher(articles):
-            meilleur_nom, meilleur_prix = articles[___]
-            for nom, prix in articles:
-                if prix > ___:
-                    meilleur_nom, meilleur_prix = ___, ___
-            return meilleur_nom
+      - idee: |
+          Comme pour chercher un maximum : retenir le meilleur article vu jusqu'ici, et le remplacer quand on trouve plus cher. À la fin, on ne renvoie que son nom.
+      - pseudo: |
+          def le_plus_cher(articles):
+              # retenir le premier article comme meilleur
+              # parcourir les articles, en les depaquetant en nom et prix
+              #     si le prix est plus grand que celui du meilleur, retenir cet article
+              # renvoyer le nom du meilleur
+      - trous: |
+          def le_plus_cher(articles):
+              meilleur_nom, meilleur_prix = articles[___]
+              for nom, prix in articles:
+                  if prix > ___:
+                      meilleur_nom, meilleur_prix = ___, ___
+              return meilleur_nom
     solution: |
       def le_plus_cher(articles):
           meilleur_nom, meilleur_prix = articles[0]
@@ -561,22 +549,22 @@ exercices:
           ...
     interdit: [sum]
     aides:
-      - |
-        Il faut deux totaux pendant le parcours : la somme des produits note × coefficient, et la somme des coefficients.
-      - |
-        def moyenne_ponderee(notes):
-            # creer deux totaux qui valent 0 : les points et les coefficients
-            # parcourir les notes, en les depaquetant en note et coefficient
-            #     ajouter note * coefficient aux points, et coefficient aux coefficients
-            # renvoyer les points divises par les coefficients
-      - |
-        def moyenne_ponderee(notes):
-            points = 0
-            coefficients = 0
-            for note, coef in notes:
-                points = ___
-                coefficients = ___
-            return points / coefficients
+      - idee: |
+          Il faut deux totaux pendant le parcours : la somme des produits note × coefficient, et la somme des coefficients.
+      - pseudo: |
+          def moyenne_ponderee(notes):
+              # creer deux totaux qui valent 0 : les points et les coefficients
+              # parcourir les notes, en les depaquetant en note et coefficient
+              #     ajouter note * coefficient aux points, et coefficient aux coefficients
+              # renvoyer les points divises par les coefficients
+      - trous: |
+          def moyenne_ponderee(notes):
+              points = 0
+              coefficients = 0
+              for note, coef in notes:
+                  points = ___
+                  coefficients = ___
+              return points / coefficients
     solution: |
       def moyenne_ponderee(notes):
           points = 0
@@ -609,21 +597,21 @@ exercices:
           ...
     interdit: [min, sorted, sort]
     aides:
-      - |
-        Comme pour chercher un minimum : retenir le meilleur point, et comparer le carré de la distance de chaque point à celui du meilleur.
-      - |
-        def plus_proche(points):
-            # retenir le premier point comme meilleur
-            # parcourir les points
-            #     si le carre de la distance du point est plus petit que celui du meilleur, le retenir
-            # renvoyer le meilleur point
-      - |
-        def plus_proche(points):
-            meilleur = points[0]
-            for p in points:
-                if p[0] * p[0] + p[1] * p[1] < meilleur[___] * meilleur[___] + meilleur[___] * meilleur[___]:
-                    meilleur = ___
-            return meilleur
+      - idee: |
+          Comme pour chercher un minimum : retenir le meilleur point, et comparer le carré de la distance de chaque point à celui du meilleur.
+      - pseudo: |
+          def plus_proche(points):
+              # retenir le premier point comme meilleur
+              # parcourir les points
+              #     si le carre de la distance du point est plus petit que celui du meilleur, le retenir
+              # renvoyer le meilleur point
+      - trous: |
+          def plus_proche(points):
+              meilleur = points[0]
+              for p in points:
+                  if p[0] * p[0] + p[1] * p[1] < meilleur[___] * meilleur[___] + meilleur[___] * meilleur[___]:
+                      meilleur = ___
+              return meilleur
     solution: |
       def plus_proche(points):
           meilleur = points[0]
@@ -671,29 +659,29 @@ exercices:
           ...
     interdit: [min, max, sorted, sort]
     aides:
-      - |
-        Il faut quatre valeurs : le plus petit et le plus grand `x`, le plus petit et le plus grand `y`. Les initialiser avec le premier point, puis les mettre à jour.
-      - |
-        def boite(points):
-            # partir du premier point pour les quatre valeurs xmin, xmax, ymin, ymax
-            # parcourir les points, en les depaquetant en x et y
-            #     mettre a jour xmin si x est plus petit, xmax si x est plus grand
-            #     faire de meme pour y
-            # renvoyer ((xmin, ymin), (xmax, ymax))
-      - |
-        def boite(points):
-            xmin, ymin = points[0]
-            xmax, ymax = points[0]
-            for x, y in points:
-                if x < xmin:
-                    xmin = x
-                if x > ___:
-                    xmax = ___
-                if y < ___:
-                    ymin = ___
-                if y > ___:
-                    ymax = ___
-            return ((___, ___), (___, ___))
+      - idee: |
+          Il faut quatre valeurs : le plus petit et le plus grand `x`, le plus petit et le plus grand `y`. Les initialiser avec le premier point, puis les mettre à jour.
+      - pseudo: |
+          def boite(points):
+              # partir du premier point pour les quatre valeurs xmin, xmax, ymin, ymax
+              # parcourir les points, en les depaquetant en x et y
+              #     mettre a jour xmin si x est plus petit, xmax si x est plus grand
+              #     faire de meme pour y
+              # renvoyer ((xmin, ymin), (xmax, ymax))
+      - trous: |
+          def boite(points):
+              xmin, ymin = points[0]
+              xmax, ymax = points[0]
+              for x, y in points:
+                  if x < xmin:
+                      xmin = x
+                  if x > ___:
+                      xmax = ___
+                  if y < ___:
+                      ymin = ___
+                  if y > ___:
+                      ymax = ___
+              return ((___, ___), (___, ___))
     solution: |
       def boite(points):
           xmin, ymin = points[0]
@@ -737,30 +725,30 @@ exercices:
       def somme(f1, f2):
           ...
     aides:
-      - |
-        Mettre au même dénominateur en multipliant les dénominateurs, puis simplifier en divisant par le PGCD. Écrire et tester `pgcd` en premier.
-      - |
-        def pgcd(a, b):
-            # tant que b n'est pas nul, remplacer (a, b) par (b, reste de a par b)
-            # renvoyer a
+      - idee: |
+          Mettre au même dénominateur en multipliant les dénominateurs, puis simplifier en divisant par le PGCD. Écrire et tester `pgcd` en premier.
+      - pseudo: |
+          def pgcd(a, b):
+              # tant que b n'est pas nul, remplacer (a, b) par (b, reste de a par b)
+              # renvoyer a
 
-        def somme(f1, f2):
-            # depaqueter les deux fractions
-            # calculer le numerateur et le denominateur de la somme
-            # diviser les deux par leur pgcd (division entiere) et renvoyer le tuple
-      - |
-        def pgcd(a, b):
-            while b != 0:
-                a, b = b, a % ___
-            return a
+          def somme(f1, f2):
+              # depaqueter les deux fractions
+              # calculer le numerateur et le denominateur de la somme
+              # diviser les deux par leur pgcd (division entiere) et renvoyer le tuple
+      - trous: |
+          def pgcd(a, b):
+              while b != 0:
+                  a, b = b, a % ___
+              return a
 
-        def somme(f1, f2):
-            a, b = f1
-            c, d = f2
-            num = a * d + ___
-            den = ___
-            g = pgcd(___, ___)
-            return num // g, den // g
+          def somme(f1, f2):
+              a, b = f1
+              c, d = f2
+              num = a * d + ___
+              den = ___
+              g = pgcd(___, ___)
+              return num // g, den // g
     solution: |
       def pgcd(a, b):
           while b != 0:

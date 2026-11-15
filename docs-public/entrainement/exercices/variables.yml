@@ -17,15 +17,15 @@ exercices:
       repas = 3.5
 
     aides:
-      - |
-        Deux repas coûtent deux fois le prix d'un repas : il reste à retirer ce montant du solde de départ.
-      - |
-        # calculer ce que coutent deux repas
-        # le retirer du solde et le ranger dans une variable reste
-        # afficher reste
-      - |
-        reste = solde - ___
-        print(___)
+      - idee: |
+          Deux repas coûtent deux fois le prix d'un repas : il reste à retirer ce montant du solde de départ.
+      - pseudo: |
+          # calculer ce que coutent deux repas
+          # le retirer du solde et le ranger dans une variable reste
+          # afficher reste
+      - trous: |
+          reste = solde - ___
+          print(___)
     solution: |
       solde = 20
       repas = 3.5
@@ -68,16 +68,16 @@ exercices:
       nom = "Lovelace"
 
     aides:
-      - |
-        Dans une chaîne, chaque lettre a un indice, et la première a l'indice 0. Deux chaînes se collent avec `+`.
-      - |
-        # recuperer la premiere lettre de prenom
-        # recuperer la premiere lettre de nom
-        # les coller avec + et ranger le resultat dans initiales
-        # afficher initiales
-      - |
-        initiales = prenom[___] + nom[___]
-        print(___)
+      - idee: |
+          Dans une chaîne, chaque lettre a un indice, et la première a l'indice 0. Deux chaînes se collent avec `+`.
+      - pseudo: |
+          # recuperer la premiere lettre de prenom
+          # recuperer la premiere lettre de nom
+          # les coller avec + et ranger le resultat dans initiales
+          # afficher initiales
+      - trous: |
+          initiales = prenom[___] + nom[___]
+          print(___)
     solution: |
       prenom = "Ada"
       nom = "Lovelace"
@@ -120,16 +120,10 @@ exercices:
       message = "J'ai " + age + " ans"
       print(message)
     aides:
-      - |
-        Lire le message d'erreur : Python refuse d'additionner du texte et un nombre. Il faut donc d'abord transformer le nombre en texte.
-      - |
-        age = 16
-        # coller "J'ai ", age transforme en texte, et " ans"
-        # afficher le message
-      - |
-        age = 16
-        message = "J'ai " + ___(age) + " ans"
-        print(message)
+      - idee: |
+          Lire le message d'erreur : il dit quels types de valeurs Python refuse d'additionner.
+      - ou: |
+          L'erreur est à la ligne 2 : un des morceaux que l'on colle n'est pas du texte.
     solution: |
       age = 16
       message = "J'ai " + str(age) + " ans"
@@ -173,17 +167,17 @@ exercices:
       total = 200
 
     aides:
-      - |
-        Penser à la division entière par 60 : le quotient et le reste ont chacun un rôle.
-      - |
-        # une minute dure 60 secondes
-        # le quotient de la division entiere donne les minutes
-        # le reste de la division donne les secondes
-        # afficher les deux valeurs
-      - |
-        minutes = total // ___
-        secondes = total % ___
-        print(___, ___)
+      - idee: |
+          Penser à la division entière par 60 : le quotient et le reste ont chacun un rôle.
+      - pseudo: |
+          # une minute dure 60 secondes
+          # le quotient de la division entiere donne les minutes
+          # le reste de la division donne les secondes
+          # afficher les deux valeurs
+      - trous: |
+          minutes = total // ___
+          secondes = total % ___
+          print(___, ___)
     solution: |
       total = 200
       minutes = total // 60
@@ -220,16 +214,16 @@ exercices:
       coef2 = 2
 
     aides:
-      - |
-        Une note de coefficient 3 compte comme trois notes identiques. Faire le calcul à la main sur un exemple avant de l'écrire en Python.
-      - |
-        # calculer la somme note * coefficient pour les deux notes
-        # calculer la somme des coefficients
-        # diviser la premiere somme par la seconde
-        # afficher le resultat
-      - |
-        moyenne = (note1 * ___ + note2 * ___) / (___ + ___)
-        print(moyenne)
+      - idee: |
+          Une note de coefficient 3 compte comme trois notes identiques. Faire le calcul à la main sur un exemple avant de l'écrire en Python.
+      - pseudo: |
+          # calculer la somme note * coefficient pour les deux notes
+          # calculer la somme des coefficients
+          # diviser la premiere somme par la seconde
+          # afficher le resultat
+      - trous: |
+          moyenne = (note1 * ___ + note2 * ___) / (___ + ___)
+          print(moyenne)
     solution: |
       note1 = 14
       coef1 = 3
@@ -257,15 +251,15 @@ exercices:
       tva = 20
 
     aides:
-      - |
-        Calculer d'abord le montant de la taxe, c'est-à-dire `tva` pour cent du prix hors taxes, puis l'ajouter au prix.
-      - |
-        # calculer le montant de la taxe : ht fois tva, divise par 100
-        # l'ajouter au prix hors taxes et ranger le resultat dans ttc
-        # afficher ttc
-      - |
-        ttc = ht + ht * ___ / 100
-        print(___)
+      - idee: |
+          Calculer d'abord le montant de la taxe, c'est-à-dire `tva` pour cent du prix hors taxes, puis l'ajouter au prix.
+      - pseudo: |
+          # calculer le montant de la taxe : ht fois tva, divise par 100
+          # l'ajouter au prix hors taxes et ranger le resultat dans ttc
+          # afficher ttc
+      - trous: |
+          ttc = ht + ht * ___ / 100
+          print(___)
     solution: |
       ht = 50
       tva = 20
@@ -295,15 +289,15 @@ exercices:
       mot = "ordinateur"
 
     aides:
-      - |
-        `len(mot)` donne le nombre de lettres. Comme les indices commencent à 0, la dernière lettre n'a pas l'indice `len(mot)`.
-      - |
-        # len(mot) donne le nombre de lettres
-        # quel est l'indice de la derniere lettre, sachant que le premier indice est 0 ?
-        # ranger cette lettre dans derniere, puis l'afficher
-      - |
-        derniere = mot[len(mot) - ___]
-        print(___)
+      - idee: |
+          `len(mot)` donne le nombre de lettres. Comme les indices commencent à 0, la dernière lettre n'a pas l'indice `len(mot)`.
+      - pseudo: |
+          # len(mot) donne le nombre de lettres
+          # quel est l'indice de la derniere lettre, sachant que le premier indice est 0 ?
+          # ranger cette lettre dans derniere, puis l'afficher
+      - trous: |
+          derniere = mot[len(mot) - ___]
+          print(___)
     solution: |
       mot = "ordinateur"
       derniere = mot[len(mot) - 1]
@@ -350,19 +344,10 @@ exercices:
       moyenne = a + b / 2
       print(moyenne)
     aides:
-      - |
-        Comme en maths, Python fait les divisions avant les additions. Calculer à la main ce que fait le programme pour le vérifier.
-      - |
-        a = 10
-        b = 14
-        # additionner a et b
-        # diviser cette somme par 2
-        # afficher la moyenne
-      - |
-        a = 10
-        b = 14
-        moyenne = (___) / 2
-        print(moyenne)
+      - idee: |
+          Comme en maths, Python fait les divisions avant les additions. Calculer à la main ce que fait le programme pour le vérifier.
+      - ou: |
+          L'erreur est à la ligne 3, dans le calcul : regarder l'ordre dans lequel Python fait les opérations.
     solution: |
       a = 10
       b = 14
@@ -409,19 +394,19 @@ exercices:
       c = 3
 
     aides:
-      - |
-        Dès que `a` reçoit la valeur de `b`, son ancienne valeur est perdue. Il faut donc la mettre de côté avant.
-      - |
-        # garder une copie de la valeur de a dans une nouvelle variable
-        # donner a a la valeur de b, puis a b la valeur de c
-        # donner a c la valeur gardee de cote
-        # afficher les trois variables
-      - |
-        copie = ___
-        a = b
-        b = ___
-        c = ___
-        print(a, b, c)
+      - idee: |
+          Dès que `a` reçoit la valeur de `b`, son ancienne valeur est perdue. Il faut donc la mettre de côté avant.
+      - pseudo: |
+          # garder une copie de la valeur de a dans une nouvelle variable
+          # donner a a la valeur de b, puis a b la valeur de c
+          # donner a c la valeur gardee de cote
+          # afficher les trois variables
+      - trous: |
+          copie = ___
+          a = b
+          b = ___
+          c = ___
+          print(a, b, c)
     solution: |
       a = 1
       b = 2
@@ -461,16 +446,16 @@ exercices:
       n = 2748
 
     aides:
-      - |
-        Le chiffre des unités est le reste de la division par 10. Pour les dizaines, on peut d'abord retirer le chiffre des unités.
-      - |
-        # le reste de la division par 10 donne le chiffre des unites
-        # la division entiere par 10 retire le chiffre des unites
-        # on peut donc recommencer sur le resultat pour trouver les dizaines
-      - |
-        unites = n % ___
-        dizaines = (n // ___) % ___
-        print(unites, dizaines)
+      - idee: |
+          Le chiffre des unités est le reste de la division par 10. Pour les dizaines, on peut d'abord retirer le chiffre des unités.
+      - pseudo: |
+          # le reste de la division par 10 donne le chiffre des unites
+          # la division entiere par 10 retire le chiffre des unites
+          # on peut donc recommencer sur le resultat pour trouver les dizaines
+      - trous: |
+          unites = n % ___
+          dizaines = (n // ___) % ___
+          print(unites, dizaines)
     solution: |
       n = 2748
       unites = n % 10
@@ -503,16 +488,16 @@ exercices:
       mot = "python"
 
     aides:
-      - |
-        La ligne du haut et celle du bas sont identiques : autant de `-` que `mot` a de lettres, entre deux `+`.
-      - |
-        # construire la ligne du haut : un +, autant de - que de lettres, un +
-        # afficher cette ligne, puis le mot entre deux |, puis de nouveau la ligne
-      - |
-        bord = "+" + "-" * ___ + "+"
-        print(bord)
-        print("|" + ___ + "|")
-        print(bord)
+      - idee: |
+          La ligne du haut et celle du bas sont identiques : autant de `-` que `mot` a de lettres, entre deux `+`.
+      - pseudo: |
+          # construire la ligne du haut : un +, autant de - que de lettres, un +
+          # afficher cette ligne, puis le mot entre deux |, puis de nouveau la ligne
+      - trous: |
+          bord = "+" + "-" * ___ + "+"
+          print(bord)
+          print("|" + ___ + "|")
+          print(bord)
     solution: |
       mot = "python"
       bord = "+" + "-" * len(mot) + "+"
@@ -539,18 +524,18 @@ exercices:
       total = 7384
 
     aides:
-      - |
-        Une heure dure 3600 secondes. Trouver d'abord les heures, puis répartir ce qui reste en minutes et en secondes.
-      - |
-        # une heure dure 3600 secondes
-        # le quotient par 3600 donne les heures, le reste est ce qu'il reste a repartir
-        # faire la meme chose avec ce reste et 60
-      - |
-        heures = total // ___
-        reste = total % ___
-        minutes = reste // ___
-        secondes = reste % ___
-        print(heures, minutes, secondes)
+      - idee: |
+          Une heure dure 3600 secondes. Trouver d'abord les heures, puis répartir ce qui reste en minutes et en secondes.
+      - pseudo: |
+          # une heure dure 3600 secondes
+          # le quotient par 3600 donne les heures, le reste est ce qu'il reste a repartir
+          # faire la meme chose avec ce reste et 60
+      - trous: |
+          heures = total // ___
+          reste = total % ___
+          minutes = reste // ___
+          secondes = reste % ___
+          print(heures, minutes, secondes)
     solution: |
       total = 7384
       heures = total // 3600
@@ -583,16 +568,16 @@ exercices:
       couverture = 4
 
     aides:
-      - |
-        Commencer par la surface du mur. La division entière arrondit en dessous, alors qu'ici il faut arrondir au-dessus : c'est à cela que sert le conseil de l'énoncé.
-      - |
-        # calculer la surface du mur
-        # une division entiere arrondit en dessous : 21 // 4 vaut 5, mais 5 pots ne suffisent pas
-        # ajouter couverture - 1 a la surface avant de diviser permet d'arrondir au-dessus
-      - |
-        surface = longueur * hauteur
-        pots = (surface + ___) // ___
-        print(pots)
+      - idee: |
+          Commencer par la surface du mur. La division entière arrondit en dessous, alors qu'ici il faut arrondir au-dessus : c'est à cela que sert le conseil de l'énoncé.
+      - pseudo: |
+          # calculer la surface du mur
+          # une division entiere arrondit en dessous : 21 // 4 vaut 5, mais 5 pots ne suffisent pas
+          # ajouter couverture - 1 a la surface avant de diviser permet d'arrondir au-dessus
+      - trous: |
+          surface = longueur * hauteur
+          pots = (surface + ___) // ___
+          print(pots)
     solution: |
       longueur = 7
       hauteur = 3

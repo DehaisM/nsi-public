@@ -74,9 +74,9 @@ const IMG = dossierCaptures("banque");
         const r = await lancer();
         if (!/Réussi/.test(r)) problemes.push((rang ? "autre solution " + rang : "solution") + " refusée : " + r.slice(0, 200));
       }
-      if (exo.aides.length !== 3) problemes.push("aides");
-      for (let i = 0; i < 3; i++) await page.locator("#entr-app .entr-commandes button").nth(1).dispatchEvent("click");
-      if ((await page.locator(".entr-aide").count()) !== 3) problemes.push("aides affichées : " + (await page.locator(".entr-aide").count()));
+      for (let i = 0; i < exo.aides.length; i++) await page.locator("#entr-app .entr-commandes button").nth(1).dispatchEvent("click");
+      const titres = await page.locator(".entr-aide > p:first-child").allInnerTexts();
+      if (titres.length !== exo.aides.length || titres[0] !== "Une idée pour démarrer") problemes.push("aides affichées : " + titres.join(", "));
     }
     if (problemes.length) { ko++; console.log("ECHEC " + exo.id + " : " + problemes.join(" ; ")); } else ok++;
   }
