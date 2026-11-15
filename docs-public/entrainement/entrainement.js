@@ -841,8 +841,8 @@
     return el("div", { class: "entr-automatismes" },
       el("h2", {}, "Automatismes"),
       el("p", { class: "entr-consigne" },
-        "Des questions de quelques secondes, tirées au hasard, à répéter jusqu'à ce que ça devienne un réflexe. Une compétence est acquise après " +
-        ACQUIS + " bonnes réponses d'affilée : " + nbAcquis + " sur " + banque.competences.length + " pour l'instant."),
+        "Ce qu'il est important de maîtriser par cœur. Objectif : " + ACQUIS +
+        " bonnes réponses d'affilée dans chaque compétence. Acquises : " + nbAcquis + " sur " + banque.competences.length + "."),
       el("div", { class: "entr-competences" }, banque.competences.map((c) =>
         el("a", { href: "#/auto/" + c.id, class: "entr-competence" + (acquis(c) ? " entr-competence--acquise" : ""), title: c.description },
           el("span", { class: "entr-competence__nom" }, c.nom),
