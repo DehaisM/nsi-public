@@ -1,0 +1,651 @@
+exercices:
+
+  # --- Programmes et langages -------------------------------------------------
+
+  - id: prog-instruction
+    numero: 236
+    titre: Un ordre pour l'ordinateur
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Comment appelle-t-on un ordre élémentaire donné à l'ordinateur ?
+    choix:
+      - "Une instruction"
+      - "Un programme"
+      - "Un langage"
+      - "Une variable"
+    explication: |
+      Un ordre élémentaire est une instruction. Une suite d'instructions forme un programme.
+    cours: "Chapitre 1, Programmes et langages"
+
+  - id: prog-programme
+    numero: 237
+    titre: Un programme
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Qu'est-ce qu'un programme ?
+    choix:
+      - "Une suite d'instructions"
+      - "Un ordre élémentaire donné à l'ordinateur"
+      - "Un langage précis, compris par l'ordinateur"
+      - "La mémoire de l'ordinateur"
+    explication: |
+      Un programme est une suite d'instructions : la liste des tâches que l'ordinateur doit réaliser.
+    cours: "Chapitre 1, Programmes et langages"
+
+  - id: prog-executer
+    numero: 238
+    titre: Exécuter un programme
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Que veut dire "exécuter un programme" ?
+    choix:
+      - "Demander à l'ordinateur de réaliser chaque instruction, l'une après l'autre, dans l'ordre"
+      - "Écrire les instructions du programme"
+      - "Traduire le programme en français"
+      - "Effacer le programme de l'ordinateur"
+    explication: |
+      Exécuter un programme, c'est le faire réaliser par l'ordinateur : il lit chaque instruction et la réalise, dans l'ordre.
+    cours: "Chapitre 1, Programmes et langages"
+
+  - id: prog-machine-devine
+    numero: 239
+    titre: Une instruction vague
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: On donne à un ordinateur une instruction vague, qui peut se comprendre de deux façons. Que fait-il ?
+    choix:
+      - "Il fait exactement ce qui est écrit, sans chercher à deviner ce qu'on a voulu dire"
+      - "Il devine ce qu'on a voulu dire, comme un humain"
+      - "Il pose une question pour comprendre"
+      - "Il choisit la façon la plus logique"
+    explication: |
+      Un ordinateur ne devine rien et ne pose pas de question : il fait exactement ce qu'on lui demande. C'est pour cela qu'il faut un langage précis, dont chaque mot n'a qu'un seul sens.
+    cours: "Chapitre 1, Programmes et langages"
+
+  - id: prog-haut-niveau
+    numero: 240
+    titre: Un langage de haut niveau
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Python est un langage dit "de haut niveau". Pourquoi ?
+    choix:
+      - "Parce qu'il est proche de notre langage, et loin des 0 et des 1 de la machine"
+      - "Parce qu'il est très difficile à apprendre"
+      - "Parce qu'il est réservé aux experts"
+      - "Parce qu'il ne fonctionne que sur les ordinateurs les plus puissants"
+    explication: |
+      "Haut niveau" ne veut pas dire difficile : Python est proche de notre langage, loin du binaire que comprend la machine.
+    cours: "Chapitre 1, Programmes et langages"
+
+  # --- Les variables ------------------------------------------------------------
+
+  - id: prog-variable
+    numero: 241
+    titre: Les trois éléments d'une variable
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Une variable associe trois éléments. Lesquels ?
+    choix:
+      - "Un espace mémoire, un nom et une valeur"
+      - "Un nom, un écran et une valeur"
+      - "Une instruction, un programme et un nom"
+      - "Un espace mémoire, un clavier et un nom"
+    explication: |
+      Une variable, c'est une boîte (l'espace mémoire) qui porte une étiquette (le nom) et qui contient une donnée (la valeur).
+    cours: "Chapitre 1, Les variables"
+
+  - id: prog-affectation
+    numero: 242
+    titre: Le signe =
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Que fait l'instruction `x = 5` ?
+    choix:
+      - "Elle range la valeur 5 dans la variable x"
+      - "Elle vérifie si x est égal à 5"
+      - "Elle affiche 5 à l'écran"
+      - "Elle affiche x = 5 à l'écran"
+    explication: |
+      C'est une affectation : le signe `=` veut dire "prend la valeur". La valeur 5 est rangée dans la variable `x`.
+    cours: "Chapitre 1, Les variables"
+
+  - id: prog-x-plus-un
+    numero: 243
+    titre: x = x + 1
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Que fait l'instruction `x = x + 1` ?
+    choix:
+      - "Elle augmente de 1 la valeur de x"
+      - "Elle provoque une erreur, car x ne peut pas être égal à x + 1"
+      - "Elle ne fait rien"
+      - "Elle affiche la valeur de x + 1"
+    explication: |
+      Python calcule d'abord ce qui est à droite du `=`, avec l'ancienne valeur de `x`, puis range le résultat dans `x`. La valeur de `x` augmente donc de 1.
+    cours: "Chapitre 1, Les variables"
+
+  - id: prog-reaffectation
+    numero: 244
+    titre: Deux affectations de suite
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      x = 3
+      x = 8
+      print(x)
+    choix: ["8", "3", "3 8", "11"]
+    explication: |
+      La deuxième affectation remplace la valeur de `x` : l'ancienne valeur, 3, est effacée. `x` vaut 8.
+    cours: "Chapitre 1, Les variables"
+
+  # --- Conventions de nommage ---------------------------------------------------
+
+  - id: prog-nom-correct
+    numero: 245
+    titre: Un nom correct
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Lequel de ces noms peut être utilisé comme nom de variable ?
+    choix:
+      - "`score_final`"
+      - "`2scores`"
+      - "`score final`"
+      - "`score-final`"
+    explication: |
+      Un nom ne contient que des lettres, des chiffres et `_`, et ne commence pas par un chiffre. `2scores` commence par un chiffre, `score final` contient un espace et `score-final` un tiret.
+    cours: "Chapitre 1, Conventions de nommage"
+
+  - id: prog-nom-espace
+    numero: 246
+    titre: Un nom avec un espace
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Pourquoi `prix total` ne peut-il pas être un nom de variable ?
+    choix:
+      - "Parce qu'il contient un espace"
+      - "Parce qu'il est trop long"
+      - "Parce qu'il ne commence pas par une majuscule"
+      - "Parce qu'il contient le mot prix"
+    explication: |
+      Un nom de variable ne contient pas d'espace. On écrit plutôt `prix_total`.
+    cours: "Chapitre 1, Conventions de nommage"
+
+  - id: prog-nom-incorrect
+    numero: 247
+    titre: Un nom interdit
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Lequel de ces noms ne peut PAS être utilisé comme nom de variable ?
+    choix:
+      - "`3e_place`"
+      - "`place_3`"
+      - "`_bonus`"
+      - "`pseudo`"
+    explication: |
+      Un nom commence toujours par une lettre ou par `_`, jamais par un chiffre : `3e_place` est interdit. `_bonus` est correct, car il commence par `_`.
+    cours: "Chapitre 1, Conventions de nommage"
+
+  - id: prog-snake-case
+    numero: 248
+    titre: Le style snake_case
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Quel nom respecte le style snake_case, habituel en Python ?
+    choix:
+      - "`nombre_eleves`"
+      - "`NombreEleves`"
+      - "`nombreEleves`"
+      - "`NOMBRE-ELEVES`"
+    explication: |
+      En snake_case, les mots sont en minuscules et séparés par des tirets bas `_`.
+    cours: "Chapitre 1, Conventions de nommage"
+
+  - id: prog-accents
+    numero: 249
+    titre: Les accents
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Python accepte le nom `âge`. Pourquoi évite-t-on quand même les accents ?
+    choix:
+      - "Pour que le code puisse être lu et partagé partout, par exemple avec un clavier anglais"
+      - "Parce que Python affiche une erreur"
+      - "Parce que les accents prennent plus de place en mémoire"
+      - "Parce que les accents rendent le programme plus lent"
+    explication: |
+      Python les accepte, mais un nom sans accent se tape sur tous les claviers : le code se partage plus facilement.
+    cours: "Chapitre 1, Conventions de nommage"
+
+  # --- L'affichage ----------------------------------------------------------------
+
+  - id: prog-print
+    numero: 250
+    titre: La fonction print
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: À quoi sert la fonction `print` ?
+    choix:
+      - "À afficher une valeur à l'écran"
+      - "À ranger une valeur dans une variable"
+      - "À imprimer sur une imprimante"
+      - "À donner un nom à une variable"
+    explication: |
+      `print` affiche à l'écran ce qu'on lui donne entre parenthèses.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  - id: prog-print-somme
+    numero: 251
+    titre: Afficher un calcul
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      a = 6
+      b = 9
+      print(a + b)
+    choix: ["15", "a + b", "6 + 9", "69"]
+    explication: |
+      Sans guillemets, `a + b` est un calcul : Python remplace `a` et `b` par leurs valeurs, et affiche le résultat, 15.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  - id: prog-print-guillemets
+    numero: 252
+    titre: Avec des guillemets
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      a = 6
+      b = 9
+      print("a + b")
+    choix: ["a + b", "15", "6 + 9", "\"a + b\""]
+    explication: |
+      Entre guillemets, `"a + b"` est un texte : Python l'affiche tel quel, sans calculer et sans les guillemets.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  - id: prog-print-virgule
+    numero: 253
+    titre: Plusieurs éléments
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      points = 40
+      print("Il reste", points, "points de vie")
+    choix: ["Il reste 40 points de vie", "Il reste points points de vie", "Il reste40points de vie", "\"Il reste\" 40 \"points de vie\""]
+    explication: |
+      Les éléments séparés par des virgules sont affichés à la suite, avec un espace entre eux. La variable `points` est remplacée par sa valeur.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  - id: prog-print-sans-guillemets
+    numero: 254
+    titre: Un texte sans guillemets
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ? Si Python affiche une erreur, choisir ERREUR.
+    code: |
+      print(Gandalf)
+    choix: ["ERREUR", "Gandalf", "\"Gandalf\"", "rien du tout"]
+    explication: |
+      Sans guillemets, Python croit que `Gandalf` est le nom d'une variable. Elle n'existe pas : Python s'arrête sur une erreur (NameError). Pour afficher le texte, il faut écrire `print("Gandalf")`.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  - id: prog-print-calcul
+    numero: 255
+    titre: Le total
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      prix = 3 * 4
+      print("Total :", prix)
+    choix: ["Total : 12", "Total : prix", "Total : 3 * 4", "Total :12"]
+    explication: |
+      `prix` vaut 3 × 4 = 12. `print` affiche le texte, un espace, puis la valeur de `prix`.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  # --- Le tableau d'etat --------------------------------------------------------
+
+  - id: prog-etat-case-vide
+    numero: 256
+    titre: Une case vide
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Dans un tableau d'état, que signifie une case vide ?
+    choix:
+      - "La variable n'existe pas encore"
+      - "La variable vaut 0"
+      - "La variable a été effacée"
+      - "Le programme a une erreur"
+    explication: |
+      Une case vide signifie que la variable n'a pas encore été créée à cette ligne. Quand une variable ne change pas, on recopie sa valeur.
+    cours: "Chapitre 1, Suivre un programme : le tableau d'état"
+
+  - id: prog-etat-y-garde
+    numero: 257
+    titre: Calculée une seule fois
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      x = 4
+      y = x + 2
+      x = 10
+      print(y)
+    choix: ["6", "12", "4", "10"]
+    explication: |
+      `y` est calculée une seule fois, à la ligne 2, quand `x` vaut 4 : `y` vaut 6. Changer `x` ensuite ne change pas `y`.
+    cours: "Chapitre 1, Suivre un programme : le tableau d'état"
+
+  - id: prog-etat-echange-rate
+    numero: 258
+    titre: L'échange raté
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 3
+    duree: 2
+    type: prediction
+    enonce: Ce programme essaie d'échanger les valeurs de `x` et `y`. Qu'affiche-t-il ?
+    code: |
+      x = 5
+      y = 12
+      x = y
+      y = x
+      print(x, y)
+    choix: ["12 12", "12 5", "5 12", "5 5"]
+    explication: |
+      À la ligne 3, `x` prend la valeur de `y` : 12. L'ancienne valeur de `x`, 5, est perdue. À la ligne 4, `y` prend la valeur de `x`, qui vaut maintenant 12. Pour réussir l'échange, il faut une troisième variable.
+    cours: "Chapitre 1, Suivre un programme : le tableau d'état"
+
+  - id: prog-etat-fin
+    numero: 259
+    titre: La valeur finale
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    enonce: |
+      Que vaut `a` à la fin de ce programme ?
+
+      ```
+      a = 7
+      b = a - 2
+      a = a * b
+      ```
+    indication: "Un nombre"
+    reponses: ["35"]
+    calcul: "7 * (7 - 2)"
+    explication: |
+      Ligne 1 : `a` vaut 7. Ligne 2 : `b` vaut 7 - 2 = 5. Ligne 3 : `a` vaut 7 × 5 = 35.
+    cours: "Chapitre 1, Suivre un programme : le tableau d'état"
+
+  - id: prog-etat-trois
+    numero: 260
+    titre: Trois variables
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 3
+    type: reponse
+    enonce: |
+      Que vaut `x` à la fin de ce programme ?
+
+      ```
+      x = 2
+      y = x + 5
+      z = x * y
+      x = z - y
+      ```
+    indication: "Un nombre"
+    reponses: ["7"]
+    calcul: "2 * (2 + 5) - (2 + 5)"
+    explication: |
+      Ligne 1 : `x` vaut 2. Ligne 2 : `y` vaut 2 + 5 = 7. Ligne 3 : `z` vaut 2 × 7 = 14. Ligne 4 : `x` vaut 14 - 7 = 7.
+    cours: "Chapitre 1, Suivre un programme : le tableau d'état"
+
+  - id: prog-au-hasard-etat
+    numero: 261
+    titre: "Au hasard : la valeur finale"
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: generateur
+    generateur: tableau-etat
+    cours: "Chapitre 1, Suivre un programme : le tableau d'état"
+
+  # --- Ecrire du Python -----------------------------------------------------------
+
+  - id: prog-ecrire-bonjour
+    numero: 262
+    titre: Un premier affichage
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: code
+    enonce: |
+      Écrire un programme qui affiche le texte `Bonjour tout le monde`.
+    depart: |
+
+    aides:
+      - idee: |
+          La fonction `print` affiche ce qu'on lui donne entre parenthèses. Un texte s'écrit entre guillemets.
+      - pseudo: |
+          # afficher le texte Bonjour tout le monde
+      - trous: |
+          print(___)
+    solution: |
+      print("Bonjour tout le monde")
+    tests:
+      - { sortie: "Bonjour tout le monde" }
+
+  - id: prog-ecrire-phrase
+    numero: 263
+    titre: Une phrase avec deux variables
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      Les variables `perso` et `age` sont déjà créées. Compléter le programme pour qu'il affiche `Aragorn a 87 ans`, avec un seul `print` qui utilise les deux variables.
+    depart: |
+      perso = "Aragorn"
+      age = 87
+    aides:
+      - idee: |
+          `print` peut afficher plusieurs éléments séparés par des virgules : des textes entre guillemets et des variables sans guillemets.
+      - pseudo: |
+          perso = "Aragorn"
+          age = 87
+          # afficher perso, le texte a, age, puis le texte ans
+      - trous: |
+          perso = "Aragorn"
+          age = 87
+          print(___, "a", ___, ___)
+    solution: |
+      perso = "Aragorn"
+      age = 87
+      print(perso, "a", age, "ans")
+    tests:
+      - { sortie: "Aragorn a 87 ans" }
+
+  - id: prog-ecrire-total
+    numero: 264
+    titre: Le prix des cahiers
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 3
+    type: code
+    enonce: |
+      Un cahier coûte 3 euros, et on en achète 4. Créer une variable `prix` qui vaut 3, une variable `quantite` qui vaut 4, puis une variable `total` qui contient le prix à payer, calculé à partir des deux premières. Afficher enfin `total`.
+    depart: |
+
+    aides:
+      - idee: |
+          Le prix à payer, c'est le prix d'un cahier multiplié par le nombre de cahiers. En Python, la multiplication s'écrit `*`.
+      - pseudo: |
+          # creer prix qui vaut 3
+          # creer quantite qui vaut 4
+          # creer total : prix multiplie par quantite
+          # afficher total
+      - trous: |
+          prix = ___
+          quantite = ___
+          total = ___ * ___
+          print(___)
+    solution: |
+      prix = 3
+      quantite = 4
+      total = prix * quantite
+      print(total)
+    tests:
+      - { variable: total, attendu: "12" }
+      - { sortie: "12" }
+
+  - id: prog-ecrire-naissance
+    numero: 265
+    titre: L'année de naissance
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 3
+    type: code
+    enonce: |
+      En 2026, Arwen a 16 ans. Créer une variable `annee` qui vaut 2026 et une variable `age` qui vaut 16, puis une variable `naissance` qui contient son année de naissance, calculée à partir des deux. Afficher enfin `naissance`.
+    depart: |
+
+    aides:
+      - idee: |
+          Pour retrouver l'année de naissance, on retire l'âge à l'année en cours.
+      - pseudo: |
+          # creer annee qui vaut 2026
+          # creer age qui vaut 16
+          # creer naissance : annee moins age
+          # afficher naissance
+      - trous: |
+          annee = ___
+          age = ___
+          naissance = ___
+          print(___)
+    solution: |
+      annee = 2026
+      age = 16
+      naissance = annee - age
+      print(naissance)
+    tests:
+      - { variable: naissance, attendu: "2010" }
+      - { sortie: "2010" }
+
+  - id: prog-ecrire-echange
+    numero: 266
+    titre: Échanger deux valeurs
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 3
+    duree: 4
+    type: code
+    enonce: |
+      Les variables `gauche` et `droite` valent 7 et 30. Compléter le programme pour échanger leurs valeurs : à la fin, `gauche` doit valoir 30 et `droite` 7. Ne pas écrire directement les nombres 7 et 30 après les deux premières lignes.
+    depart: |
+      gauche = 7
+      droite = 30
+    aides:
+      - idee: |
+          Pour échanger le contenu de deux verres, il faut un troisième verre : on a le droit de créer une nouvelle variable.
+      - pseudo: |
+          gauche = 7
+          droite = 30
+          # garder une copie de gauche dans une nouvelle variable
+          # donner a gauche la valeur de droite
+          # donner a droite la valeur gardee de cote
+      - trous: |
+          gauche = 7
+          droite = 30
+          copie = ___
+          gauche = ___
+          droite = ___
+    solution: |
+      gauche = 7
+      droite = 30
+      copie = gauche
+      gauche = droite
+      droite = copie
+    tests:
+      - { variable: gauche, attendu: "30" }
+      - { variable: droite, attendu: "7" }
+
+  - id: prog-bug-nom
+    numero: 267
+    titre: Le programme qui plante
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 2
+    type: code
+    enonce: |
+      Ce programme doit ranger 15 dans une variable, puis afficher cette variable. Il provoque une erreur : la lire, puis corriger le programme.
+    depart: |
+      note finale = 15
+      print(note finale)
+    aides:
+      - idee: |
+          Relire les règles de nommage : quels caractères un nom de variable peut-il contenir ?
+      - ou: |
+          L'erreur est dans le nom de la variable, aux lignes 1 et 2 : il contient un espace.
+    solution: |
+      note_finale = 15
+      print(note_finale)
+    tests:
+      - { sortie: "15" }

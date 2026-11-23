@@ -1,0 +1,582 @@
+exercices:
+
+  # --- Les types de valeurs -------------------------------------------------------
+
+  - id: prog-type-decide
+    numero: 268
+    titre: À quoi sert le type
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Que détermine le type d'une valeur ?
+    choix:
+      - "Ce que l'on peut faire avec elle"
+      - "Le nom de la variable qui la contient"
+      - "L'endroit où elle est rangée en mémoire"
+      - "La couleur dans laquelle elle s'affiche"
+    explication: |
+      Le type d'une valeur détermine ce que l'on peut faire avec elle : on additionne deux nombres, mais pas un nombre et un texte.
+    cours: "Chapitre 2, Les types de valeurs"
+
+  - id: prog-type-int
+    numero: 269
+    titre: Le type de 2027
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Quel est le type de la valeur `2027` ?
+    choix: ["int", "float", "str", "bool"]
+    explication: |
+      2027 est un nombre entier : son type est `int`.
+    cours: "Chapitre 2, Les types de valeurs"
+
+  - id: prog-type-float
+    numero: 270
+    titre: Le type de 3.0
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Quel est le type de la valeur `3.0` ?
+    choix: ["float", "int", "str", "bool"]
+    explication: |
+      Même si elle vaut 3, la valeur `3.0` est écrite avec un point : c'est un nombre décimal, de type `float`.
+    cours: "Chapitre 2, Les types de valeurs"
+
+  - id: prog-type-str
+    numero: 271
+    titre: Un nombre entre guillemets
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Quel est le type de la valeur `"27"` ?
+    choix: ["str", "int", "float", "bool"]
+    explication: |
+      Entre guillemets, `"27"` est un texte, une chaîne de caractères : son type est `str`, même s'il ne contient que des chiffres.
+    cours: "Chapitre 2, Les types de valeurs"
+
+  - id: prog-type-calcul-texte
+    numero: 272
+    titre: Un calcul entre guillemets
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: Quel est le type de la valeur `"5 * 8"` ?
+    choix: ["str", "int", "float", "bool"]
+    explication: |
+      Les guillemets en font un texte : Python ne fait pas le calcul. Son type est `str`.
+    cours: "Chapitre 2, Les types de valeurs"
+
+  - id: prog-type-bool
+    numero: 273
+    titre: Les valeurs de vérité
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Quelles sont les deux valeurs possibles du type `bool` ?
+    choix:
+      - "`True` et `False`"
+      - "`Vrai` et `Faux`"
+      - "`Oui` et `Non`"
+      - "`\"vrai\"` et `\"faux\"`"
+    explication: |
+      Le type `bool` n'a que deux valeurs, écrites avec une majuscule : `True` (vrai) et `False` (faux). On s'en servira avec les conditions, au chapitre 3.
+    cours: "Chapitre 2, Les types de valeurs"
+
+  - id: prog-virgule
+    numero: 274
+    titre: Deux et demi
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Comment écrit-on le nombre deux et demi en Python ?
+    choix: ["`2.5`", "`2,5`", "`2 1/2`", "`\"2.5\"`"]
+    explication: |
+      En Python, un nombre décimal s'écrit avec un point, pas avec une virgule : `2.5`. Avec des guillemets, ce serait un texte.
+    cours: "Chapitre 2, Les types de valeurs"
+
+  # --- Les operations -----------------------------------------------------------
+
+  - id: prog-division
+    numero: 275
+    titre: La division
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      print(9 / 2)
+    choix: ["4.5", "4", "4,5", "1"]
+    explication: |
+      `/` est la division habituelle : 9 / 2 = 4.5, écrit avec un point.
+    cours: "Chapitre 2, Les opérations"
+
+  - id: prog-division-ronde
+    numero: 276
+    titre: Une division qui tombe juste
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      print(12 / 4)
+    choix: ["3.0", "3", "0", "48"]
+    explication: |
+      La division `/` donne toujours un nombre décimal, de type `float`, même quand elle tombe juste : 12 / 4 donne `3.0`.
+    cours: "Chapitre 2, Les opérations"
+
+  - id: prog-quotient
+    numero: 277
+    titre: Le quotient
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    enonce: Que vaut `23 // 5` ?
+    indication: "Un nombre"
+    reponses: ["4"]
+    calcul: "23 // 5"
+    explication: |
+      `//` donne le quotient de la division entière : 23 = 5 × 4 + 3, donc `23 // 5` vaut 4.
+    cours: "Chapitre 2, Les opérations"
+
+  - id: prog-reste
+    numero: 278
+    titre: Le reste
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    enonce: Que vaut `23 % 5` ?
+    indication: "Un nombre"
+    reponses: ["3"]
+    calcul: "23 % 5"
+    explication: |
+      `%` donne le reste de la division entière : 23 = 5 × 4 + 3, donc `23 % 5` vaut 3.
+    cours: "Chapitre 2, Les opérations"
+
+  - id: prog-puissance
+    numero: 279
+    titre: La puissance
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    enonce: Que vaut `2 ** 5` ?
+    indication: "Un nombre"
+    reponses: ["32"]
+    calcul: "2 ** 5"
+    explication: |
+      `**` est la puissance : `2 ** 5` vaut 2 × 2 × 2 × 2 × 2 = 32.
+    cours: "Chapitre 2, Les opérations"
+
+  - id: prog-au-hasard-operation
+    numero: 280
+    titre: "Au hasard : les opérations"
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: generateur
+    generateur: operation
+    cours: "Chapitre 2, Les opérations"
+
+  - id: prog-au-hasard-etat-calculs
+    numero: 281
+    titre: "Au hasard : quotient et reste"
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: generateur
+    generateur: etat-calculs
+    cours: "Chapitre 2, Les opérations"
+
+  # --- Operations et types ------------------------------------------------------
+
+  - id: prog-coller
+    numero: 282
+    titre: Coller deux textes
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      print("abra" + "cadabra")
+    choix: ["abracadabra", "abra cadabra", "abra + cadabra", "ERREUR"]
+    explication: |
+      Sur des textes, `+` colle les deux chaînes bout à bout, sans ajouter d'espace.
+    cours: "Chapitre 2, Opérations et types"
+
+  - id: prog-repeter
+    numero: 283
+    titre: Répéter un texte
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      print("bis" * 3)
+    choix: ["bisbisbis", "bis bis bis", "bis3", "ERREUR"]
+    explication: |
+      Un texte multiplié par 3 est répété 3 fois, sans espace : `bisbisbis`.
+    cours: "Chapitre 2, Opérations et types"
+
+  - id: prog-repeter-chiffre
+    numero: 284
+    titre: Un chiffre entre guillemets
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      print("4" * 2)
+    choix: ["44", "8", "4 4", "ERREUR"]
+    explication: |
+      `"4"` est un texte : le multiplier par 2, c'est le répéter 2 fois. Python affiche `44`, pas 8.
+    cours: "Chapitre 2, Opérations et types"
+
+  - id: prog-nombre-plus-texte
+    numero: 285
+    titre: Un nombre plus un texte
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ? Si Python affiche une erreur, choisir ERREUR.
+    code: |
+      print(7 + "7")
+    choix: ["ERREUR", "14", "77", "7 + 7"]
+    explication: |
+      On ne peut pas additionner un nombre et un texte : Python ne sait pas s'il doit calculer ou coller. Il s'arrête sur une erreur (TypeError).
+    cours: "Chapitre 2, Opérations et types"
+
+  # --- input, int et str --------------------------------------------------------
+
+  - id: prog-input-texte
+    numero: 286
+    titre: Ce que renvoie input
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: L'utilisateur.ice tape un nombre en réponse à `input`. Qu'est-ce que `input` renvoie ?
+    choix:
+      - "Un texte, de type str"
+      - "Un nombre entier, de type int"
+      - "Un nombre décimal, de type float"
+      - "Rien du tout"
+    explication: |
+      `input` renvoie toujours du texte, même si on tape un nombre : `"15"` et non `15`. Pour calculer avec, il faut d'abord le transformer avec `int`.
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  - id: prog-input-double
+    numero: 287
+    titre: Le double qui n'en est pas un
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: qcm
+    enonce: L'utilisateur.ice tape `12`. Qu'affiche ce programme ?
+    code: |
+      n = input("Un nombre ? ")
+      print(n + n)
+    choix: ["`1212`", "`24`", "ERREUR", "`n + n`"]
+    explication: |
+      `input` renvoie le texte `"12"`. Sur des textes, `+` colle : `"12" + "12"` donne `1212`.
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  - id: prog-input-plus-un
+    numero: 288
+    titre: Ajouter 1 à la réponse
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: L'utilisateur.ice tape `12`. Qu'affiche ce programme ?
+    code: |
+      n = input("Un nombre ? ")
+      print(n + 1)
+    choix: ["ERREUR", "`13`", "`121`", "`12 1`"]
+    explication: |
+      `n` contient le texte `"12"`. On ne peut pas additionner un texte et le nombre 1 : Python s'arrête sur une erreur (TypeError). Il fallait écrire `int(input(...))`.
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  - id: prog-input-int
+    numero: 289
+    titre: Avec int
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: qcm
+    enonce: L'utilisateur.ice tape `12`. Qu'affiche ce programme ?
+    code: |
+      n = int(input("Un nombre ? "))
+      print(n + 1)
+    choix: ["`13`", "`121`", "ERREUR", "`12 + 1`"]
+    explication: |
+      `int` transforme le texte `"12"` en l'entier 12, avec lequel on peut calculer : 12 + 1 = 13.
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  - id: prog-str-role
+    numero: 290
+    titre: À quoi sert str
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: qcm
+    enonce: Que fait `str(15)` ?
+    choix:
+      - "Il transforme le nombre 15 en texte, \"15\""
+      - "Il transforme le texte \"15\" en nombre"
+      - "Il affiche 15 à l'écran"
+      - "Il range 15 dans une variable nommée str"
+    explication: |
+      `str` transforme un nombre en texte : `str(15)` donne `"15"`, que l'on peut ensuite coller à un autre texte avec `+`.
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  - id: prog-int-calcul
+    numero: 291
+    titre: int puis un calcul
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ? Si Python affiche une erreur, choisir ERREUR.
+    code: |
+      print(int("20") + 5)
+    choix: ["25", "205", "ERREUR", "20 + 5"]
+    explication: |
+      `int("20")` donne l'entier 20 : 20 + 5 = 25.
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  - id: prog-str-coller
+    numero: 292
+    titre: str puis un collage
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ? Si Python affiche une erreur, choisir ERREUR.
+    code: |
+      print(str(20) + "5")
+    choix: ["205", "25", "ERREUR", "20 5"]
+    explication: |
+      `str(20)` donne le texte `"20"`, et `+` colle les deux textes : `205`.
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  - id: prog-int-mot
+    numero: 293
+    titre: int d'un mot
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ? Si Python affiche une erreur, choisir ERREUR.
+    code: |
+      print(int("vingt") + 5)
+    choix: ["ERREUR", "25", "vingt5", "20"]
+    explication: |
+      Le texte `"vingt"` n'est pas écrit avec des chiffres : `int` ne peut pas le transformer, et Python s'arrête sur une erreur (ValueError).
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  - id: prog-str-phrase
+    numero: 294
+    titre: Une phrase avec un nombre
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 1
+    type: prediction
+    enonce: Qu'affiche ce programme ?
+    code: |
+      age = 15
+      print("J'ai " + str(age + 1) + " ans")
+    choix: ["J'ai 16 ans", "J'ai 15 ans", "J'ai age + 1 ans", "ERREUR"]
+    explication: |
+      Python calcule d'abord `age + 1` = 16, puis `str` le transforme en texte `"16"`, collé au reste de la phrase.
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  # --- Ecrire du Python -----------------------------------------------------------
+
+  - id: prog-ecrire-salut
+    numero: 295
+    titre: Saluer avec +
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 2
+    type: code
+    enonce: |
+      La variable `prenom` contient `"Legolas"`. Compléter le programme pour qu'il affiche `Salut Legolas, bienvenue !`, en collant des textes avec `+`.
+    depart: |
+      prenom = "Legolas"
+    aides:
+      - idee: |
+          `+` colle des textes sans ajouter d'espace : les espaces et la virgule doivent être écrits dans les textes entre guillemets.
+      - pseudo: |
+          prenom = "Legolas"
+          # afficher le texte "Salut ", puis prenom, puis le texte ", bienvenue !"
+      - trous: |
+          prenom = "Legolas"
+          print("Salut " + ___ + ___)
+    solution: |
+      prenom = "Legolas"
+      print("Salut " + prenom + ", bienvenue !")
+    tests:
+      - { sortie: "Salut Legolas, bienvenue !" }
+
+  - id: prog-ecrire-tirets
+    numero: 296
+    titre: Une ligne de tirets
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: code
+    enonce: |
+      Afficher une ligne de 40 tirets `-`, en utilisant `*` plutôt que d'écrire les 40 tirets.
+    depart: |
+
+    aides:
+      - idee: |
+          Multiplier un texte par un nombre le répète autant de fois.
+      - pseudo: |
+          # afficher le texte "-" repete 40 fois
+      - trous: |
+          print("-" * ___)
+    solution: |
+      print("-" * 40)
+    tests:
+      - { sortie: "----------------------------------------" }
+
+  - id: prog-ecrire-duree
+    numero: 297
+    titre: La durée du film
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 3
+    type: code
+    enonce: |
+      Un film dure `duree` minutes. Compléter le programme pour qu'il affiche cette durée en heures et minutes, avec un seul `print` : pour 135 minutes, il affiche `2 h 15`.
+    depart: |
+      duree = 135
+    aides:
+      - idee: |
+          Une heure dure 60 minutes. Le quotient de la division entière par 60 donne les heures, et le reste donne les minutes qui restent.
+      - pseudo: |
+          duree = 135
+          # afficher le quotient de duree par 60, le texte h, puis le reste de duree par 60
+      - trous: |
+          duree = 135
+          print(duree ___ 60, "h", duree ___ 60)
+    solution: |
+      duree = 135
+      print(duree // 60, "h", duree % 60)
+    tests:
+      - { sortie: "2 h 15" }
+
+  - id: prog-ecrire-moyenne
+    numero: 298
+    titre: La moyenne de deux notes
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 2
+    type: code
+    enonce: |
+      Les variables `note1` et `note2` sont déjà créées. Créer une variable `moyenne` qui contient la moyenne des deux notes, puis l'afficher.
+    depart: |
+      note1 = 12
+      note2 = 15
+    aides:
+      - idee: |
+          La moyenne de deux notes, c'est leur somme divisée par 2. Attention à l'ordre des calculs : Python fait la division avant l'addition.
+      - pseudo: |
+          note1 = 12
+          note2 = 15
+          # creer moyenne : la somme des deux notes, divisee par 2
+          # afficher moyenne
+      - trous: |
+          note1 = 12
+          note2 = 15
+          moyenne = (___) / ___
+          print(moyenne)
+    solution: |
+      note1 = 12
+      note2 = 15
+      moyenne = (note1 + note2) / 2
+      print(moyenne)
+    tests:
+      - { variable: moyenne, attendu: "13.5" }
+      - { sortie: "13.5" }
+
+  - id: prog-ecrire-age
+    numero: 299
+    titre: Une phrase avec str
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 2
+    type: code
+    enonce: |
+      La variable `age` contient 16. Compléter le programme pour qu'il affiche `Tu as 16 ans`, en collant des textes avec `+`.
+    depart: |
+      age = 16
+    aides:
+      - idee: |
+          On ne peut pas coller un nombre à un texte : il faut d'abord transformer le nombre en texte, avec `str`.
+      - pseudo: |
+          age = 16
+          # afficher "Tu as ", puis age transforme en texte, puis " ans"
+      - trous: |
+          age = 16
+          print("Tu as " + ___ + " ans")
+    solution: |
+      age = 16
+      print("Tu as " + str(age) + " ans")
+    tests:
+      - { sortie: "Tu as 16 ans" }
+
+  - id: prog-bug-score
+    numero: 300
+    titre: Le score qui plante
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 2
+    type: code
+    enonce: |
+      Ce programme doit afficher `Score : 12`. Il provoque une erreur : la lire, puis corriger le programme, en gardant le `+`.
+    depart: |
+      points = 12
+      print("Score : " + points)
+    aides:
+      - idee: |
+          Lire le message d'erreur : quels types Python refuse-t-il d'additionner ?
+      - ou: |
+          L'erreur est à la ligne 2 : on colle un texte et un nombre, qu'il faut d'abord transformer en texte.
+    solution: |
+      points = 12
+      print("Score : " + str(points))
+    tests:
+      - { sortie: "Score : 12" }

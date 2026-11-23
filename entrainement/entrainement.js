@@ -652,8 +652,11 @@
     return morceaux.join(", ");
   }
 
+  // Ce qui entre dans une serie : les questions courtes. En Seconde, les "Qu'affiche ce
+  // programme ?" en font partie ; en Premiere, elles restent des exercices a part.
   function estUneQuestion(exo) {
-    return exo.type === "qcm" || exo.type === "reponse" || exo.type === "generateur";
+    return exo.type === "qcm" || exo.type === "reponse" || exo.type === "generateur"
+      || (exo.type === "prediction" && niveauDe(exo.notion) === "seconde");
   }
 
   // Une question de calcul a valeurs tirees au hasard devient, a chaque affichage,
