@@ -56,10 +56,20 @@ AVANT_LA_NOTION = {
     "for": (ast.While, ast.ListComp),
     "while": (ast.ListComp,),
     "fonctions": (ast.ListComp,),
+    # Seconde, thematique Programmation : chapitre 1 (variables, print, + - *), chapitre 2 (types, / // % **, int, str).
+    "programmation-1": (ast.If, ast.For, ast.While, ast.FunctionDef, ast.List, ast.ListComp, ast.Compare,
+                        ast.Div, ast.FloorDiv, ast.Mod, ast.Pow),
+    "programmation-2": (ast.If, ast.For, ast.While, ast.FunctionDef, ast.List, ast.ListComp, ast.Compare),
+}
+# Pour une notion de cette table, seules ces fonctions sont vues (au lieu de FONCTIONS_VUES).
+FONCTIONS_DE_LA_NOTION = {
+    "programmation-1": {"print"},
+    "programmation-2": {"print", "int", "str", "input"},
 }
 NOMS_DES_FORMES = {
     ast.If: "if", ast.For: "for", ast.While: "while", ast.FunctionDef: "def",
-    ast.List: "une liste", ast.ListComp: "une liste en compréhension",
+    ast.List: "une liste", ast.ListComp: "une liste en compréhension", ast.Compare: "une comparaison",
+    ast.Div: "l'opération /", ast.FloorDiv: "l'opération //", ast.Mod: "l'opération %", ast.Pow: "l'opération **",
 }
 
 correcteur = charger_correcteur()
@@ -93,13 +103,14 @@ def controler_notions(code, notion):
     """Renvoie ce que ce code utilise sans que les eleves l'aient vu."""
     arbre = ast.parse(code)
     definis = noms_definis(arbre)
+    fonctions_vues = FONCTIONS_DE_LA_NOTION.get(notion, FONCTIONS_VUES)
     trouves = set()
     for noeud in ast.walk(arbre):
         if isinstance(noeud, AVANT_LA_NOTION.get(notion, ())):
             trouves.add(NOMS_DES_FORMES[type(noeud)] + " (pas encore vu dans cette notion)")
         if isinstance(noeud, ast.Call):
             if isinstance(noeud.func, ast.Name):
-                if noeud.func.id not in FONCTIONS_VUES and noeud.func.id not in definis:
+                if noeud.func.id not in fonctions_vues and noeud.func.id not in definis:
                     trouves.add(noeud.func.id + "()")
             elif isinstance(noeud.func, ast.Attribute) and noeud.func.attr not in METHODES_VUES:
                 trouves.add("." + noeud.func.attr + "()")
@@ -166,7 +177,8 @@ def verifier(exo, notions):
         choix = exo["choix"]
         if not 3 <= len(choix) <= 5 or not all(isinstance(c, str) and c.strip() for c in choix):
             problemes.append("il faut de 3 à 5 choix, tous écrits sous forme de texte")
-        elif len({normaliser(c) for c in choix}) != len(choix):
+        # Compares tels qu'ils s'affichent : "2.5" et "2,5" sont bien deux choix differents.
+        elif len({c.strip() for c in choix}) != len(choix):
             problemes.append("deux choix identiques")
         return problemes
 
@@ -189,9 +201,12 @@ def verifier(exo, notions):
 
     if genre == "prediction":
         sortie = io.StringIO()
-        with contextlib.redirect_stdout(sortie):
-            exec(exo["code"], {})
-        attendu = sortie.getvalue().strip()
+        try:
+            with contextlib.redirect_stdout(sortie):
+                exec(exo["code"], {})
+            attendu = sortie.getvalue().strip()
+        except Exception:
+            attendu = "ERREUR"  # le code plante : la bonne reponse est ERREUR
         if exo["choix"][0] != attendu:
             problemes.append("le code affiche " + repr(attendu) + ", pas le premier choix")
         if len(set(exo["choix"])) != len(exo["choix"]):

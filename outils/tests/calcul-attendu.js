@@ -35,6 +35,28 @@ module.exports = function attendu(generateur, enonce) {
       const reseau = entier - (entier % taille);
       return [24, 16, 8, 0].map((d) => Math.floor(reseau / 2 ** d) % 256).join(".");
     }
+    case "tableau-etat":
+    case "etat-calculs": {
+      // On rejoue le programme affiche, ligne par ligne.
+      const valeurs = {};
+      const lire = (t) => (/^\d+$/.test(t) ? Number(t) : valeurs[t]);
+      for (const [, nom, expression] of enonce.matchAll(/^(\w+) = (.+)$/gm)) {
+        const [g, op, d] = expression.trim().split(" ");
+        const a = lire(g);
+        const b = op ? lire(d) : 0;
+        valeurs[nom] = !op ? a
+          : op === "+" ? a + b : op === "-" ? a - b : op === "*" ? a * b
+            : op === "//" ? (a - (a % b)) / b : op === "%" ? a % b : Math.pow(a, b);
+      }
+      return String(valeurs[enonce.match(/Que vaut (\w+)/)[1]]);
+    }
+    case "operation": {
+      const [, a, op, b] = enonce.match(/Que vaut (\d+) (\/\/|\/|%|\*\*) (\d+)/);
+      const x = Number(a);
+      const y = Number(b);
+      if (op === "/") return Number.isInteger(x / y) ? (x / y) + ".0" : String(x / y);
+      return String(op === "//" ? (x - (x % y)) / y : op === "%" ? x % y : Math.pow(x, y));
+    }
     default:
       throw new Error("generateur inconnu : " + generateur);
   }

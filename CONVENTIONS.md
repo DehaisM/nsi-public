@@ -195,6 +195,14 @@ directement un niveau. La progression et le code de sauvegarde couvrent les deux
   milliers de tirages et refait chaque calcul en Python. La CI le lance aussi.
 - Le bouton "Série de 10 questions" tire 10 questions parmi les chapitres choisis, une seule
   réponse par question, puis affiche le score et les questions ratées avec leur explication.
+- Pour la programmation (`programmation-1`, `programmation-2`...), la Seconde a aussi des
+  questions "Qu'affiche ce programme ?" (type `prediction`, avec `ERREUR` en premier choix quand
+  le code plante ; elles entrent dans la série) et de petits exos Python (type `code`). Ce qu'un
+  chapitre a le droit d'utiliser est déclaré dans `outils/verifier_exercices.py` :
+  `AVANT_LA_NOTION` (pas de `if`, de boucle, de `/ // % **` au chapitre 1...) et
+  `FONCTIONS_DE_LA_NOTION` (`print` seul au chapitre 1). À compléter à chaque nouveau chapitre.
+  Pas de `input` dans un exo Python : la vérification ne peut pas taper de réponse ; les
+  questions sur `input` sont des QCM qui montrent le code.
 
 ## Fichiers tiers et versions
 

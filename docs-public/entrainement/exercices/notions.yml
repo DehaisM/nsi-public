@@ -39,7 +39,9 @@
 # Pour le type prediction :
 #   enonce, code, choix (liste de textes), explication
 #   La bonne reponse est toujours le PREMIER choix : la page melange ensuite les choix,
-#   et le verificateur controle que c'est bien ce que le code affiche.
+#   et le verificateur controle que c'est bien ce que le code affiche. Si le code provoque
+#   une erreur, le premier choix doit etre ERREUR.
+#   cours (facultatif) : le passage du cours a relire, comme pour les questions de Seconde
 #
 # Pour le type qcm :
 #   enonce, choix (de 3 a 5 textes), explication, cours (le passage du cours a relire)
@@ -74,3 +76,5 @@ notions:
   - { id: tuples, nom: "Tuples" }
   - { id: internet-1, nom: "Internet, chapitre 1", niveau: seconde }
   - { id: internet-2, nom: "Internet, chapitre 2", niveau: seconde }
+  - { id: programmation-1, nom: "Programmation, chapitre 1", niveau: seconde }
+  - { id: programmation-2, nom: "Programmation, chapitre 2", niveau: seconde }

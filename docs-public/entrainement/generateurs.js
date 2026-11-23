@@ -188,7 +188,142 @@ const Generateurs = (function () {
         explication: explication + " L'adresse réseau est donc " + reseau.join(".") + ".",
       };
     },
+
+    // --- Programmation (Seconde) : la valeur d'une variable a la fin d'un petit programme ---
+
+    "tableau-etat"(hasard) {
+      for (;;) {
+        const [p, q] = [["x", "y"], ["a", "b"], ["n", "m"]][entier(hasard, 0, 2)];
+        const prog = programme();
+        prog.affecter(p, entier(hasard, 2, 9));
+        const op2 = choisir(hasard, ["+", "-", "*"]);
+        prog.affecter(q, p, op2, entier(hasard, 2, op2 === "-" ? 2 : 5));
+        const formes = [[p, p, q], [p, q, "n"], [q, q, p], [q, p, "n"]];
+        const lignesEnPlus = entier(hasard, 1, 2);
+        for (let i = 0; i < lignesEnPlus; i++) {
+          const [cible, gauche, droite] = choisir(hasard, formes);
+          prog.affecter(cible, gauche, choisir(hasard, ["+", "-", "*"]), droite === "n" ? entier(hasard, 2, 6) : droite);
+        }
+        const question = choisir(hasard, [p, q]);
+        if (prog.valide()) return prog.question(question);
+      }
+    },
+
+    "etat-calculs"(hasard) {
+      for (;;) {
+        const prog = programme();
+        const k = entier(hasard, 2, 9);
+        prog.affecter("a", entier(hasard, 20, 99));
+        prog.affecter("b", "a", "//", k);
+        prog.affecter("c", "a", "%", k);
+        const suite = entier(hasard, 0, 2);
+        if (suite === 1) prog.affecter("d", "b", "*", k);
+        if (suite === 2) prog.affecter("d", "c", "**", 2);
+        const question = choisir(hasard, suite ? ["b", "c", "d"] : ["b", "c"]);
+        if (prog.valide()) return prog.question(question);
+      }
+    },
+
+    "operation"(hasard) {
+      const op = choisir(hasard, ["/", "//", "%", "**"]);
+      let a;
+      let b;
+      if (op === "/") {
+        b = choisir(hasard, [2, 4, 5, 10]);
+        a = entier(hasard, 5, 60);
+      } else if (op === "**") {
+        a = entier(hasard, 2, 6);
+        b = entier(hasard, 2, 4);
+      } else {
+        a = entier(hasard, 10, 99);
+        b = entier(hasard, 2, 9);
+      }
+      const v = OPERATIONS[op](a, b);
+      const texte = enPython(v, op === "/");
+      let explication;
+      if (op === "/") {
+        explication = "`/` est la division habituelle, et elle donne toujours un nombre décimal (float) : `" + a + " / " + b + "` vaut " + texte + ".";
+      } else if (op === "**") {
+        explication = "`**` est la puissance : `" + a + " ** " + b + "` vaut " + Array(b).fill(a).join(" × ") + " = " + texte + ".";
+      } else {
+        const q = Math.floor(a / b);
+        const r = a % b;
+        explication = a + " = " + b + " × " + q + " + " + r + ", avec " + r + " plus petit que " + b + " : `" + a + " " + op + " " + b + "` "
+          + (op === "//" ? "est le quotient, " : "est le reste, ") + texte + ".";
+      }
+      return {
+        resume: a + " " + op + " " + b,
+        donnees: { a, op, b },
+        enonce: "Que vaut `" + a + " " + op + " " + b + "` ?",
+        indication: op === "/" ? "Un nombre, avec un point s'il est décimal" : "Un nombre",
+        reponses: [texte],
+        explication,
+      };
+    },
   };
+
+  // --- Outils des questions de programmation ----------------------------------
+
+  const OPERATIONS = {
+    "+": (a, b) => a + b,
+    "-": (a, b) => a - b,
+    "*": (a, b) => a * b,
+    "/": (a, b) => a / b,
+    "//": (a, b) => Math.floor(a / b),
+    "%": (a, b) => a % b,
+    "**": (a, b) => a ** b,
+  };
+  const SIGNES = { "+": "+", "-": "-", "*": "×", "/": "/", "//": "//", "%": "%", "**": "**" };
+
+  function choisir(hasard, liste) {
+    return liste[entier(hasard, 0, liste.length - 1)];
+  }
+
+  // Comme Python : un nombre decimal garde son ".0" (12 / 4 donne 3.0).
+  function enPython(valeur, decimal) {
+    return decimal && Number.isInteger(valeur) ? valeur + ".0" : String(valeur);
+  }
+
+  // Un petit programme d'affectations, execute au fur et a mesure pour l'explication.
+  function programme() {
+    const valeurs = {};
+    const lignes = [];
+    const etapes = [];
+    let raisonnable = true;
+    const lire = (t) => (typeof t === "number" ? t : valeurs[t]);
+    return {
+      affecter(nom, gauche, op, droite) {
+        const n = lignes.length + 1;
+        if (op === undefined) {
+          valeurs[nom] = lire(gauche);
+          lignes.push(nom + " = " + gauche);
+          etapes.push("Ligne " + n + " : `" + nom + "` vaut " + valeurs[nom] + ".");
+          return;
+        }
+        const resultat = OPERATIONS[op](lire(gauche), lire(droite));
+        lignes.push(nom + " = " + gauche + " " + op + " " + droite);
+        etapes.push("Ligne " + n + " : `" + nom + " = " + gauche + " " + op + " " + droite + "`, soit "
+          + lire(gauche) + " " + SIGNES[op] + " " + lire(droite) + " = " + resultat + ".");
+        valeurs[nom] = resultat;
+        // Des valeurs raisonnables pour un calcul de tete, a chaque ligne : entieres, entre 0 et 500.
+        raisonnable = raisonnable && Number.isInteger(resultat) && resultat >= 0 && resultat <= 500;
+      },
+      valide() {
+        return raisonnable;
+      },
+      question(nom) {
+        const code = lignes.join("\n");
+        return {
+          resume: code.replace(/\n/g, " ; ") + " -> " + nom,
+          donnees: { code, variable: nom },
+          enonce: "Que vaut `" + nom + "` à la fin de ce programme ?\n\n```\n" + code + "\n```",
+          indication: "Un nombre",
+          reponses: [String(valeurs[nom])],
+          explication: etapes.join(" ") + " À la fin, `" + nom + "` vaut " + valeurs[nom] + ".",
+        };
+      },
+    };
+  }
 
   function tirer(nom, hasard) {
     if (!GENERATEURS[nom]) throw new Error("Générateur inconnu : " + nom);

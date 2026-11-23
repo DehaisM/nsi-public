@@ -12,6 +12,7 @@ La CI le lance aussi : une erreur bloque le deploiement.
 """
 import ipaddress
 import json
+import re
 import shutil
 import subprocess
 import sys
@@ -60,6 +61,18 @@ def attendu(nom, d):
         reseau = ipaddress.ip_network(d["adresse"] + "/" + str(d["masque"]), strict=False)
         machine_nulle = str(reseau.network_address) == d["adresse"]
         return str(reseau.network_address), not 8 <= d["masque"] <= 30 or machine_nulle
+    if nom in ("tableau-etat", "etat-calculs"):
+        # Python execute le programme affiche ; au chapitre 1, ni / ni // ni % ni ** (pas encore vus).
+        espace, valeurs = {}, []
+        for ligne in d["code"].split("\n"):
+            exec(ligne, espace)
+            valeurs.extend(v for k, v in espace.items() if k != "__builtins__")
+        valeur = espace[d["variable"]]
+        pas_vu = nom == "tableau-etat" and re.search(r"/|%|\*\*", d["code"])
+        hors = any(not 0 <= v <= 500 for v in valeurs)  # aucune valeur negative ou trop grande, a aucune ligne
+        return str(valeur), bool(pas_vu) or hors or d["code"].count("\n") > 4
+    if nom == "operation":
+        return str(eval(f"{d['a']} {d['op']} {d['b']}")), d["op"] not in ("/", "//", "%", "**")
     raise KeyError(nom)
 
 
