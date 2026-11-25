@@ -4,10 +4,6 @@ description: "TP Capytale de NSI en Première sur les types construits en Python
 
 # Thématique 1 : Types construits
 
-## Cours
-
-_À venir._
-
 ## Activités Capytale
 
 !!! note "Activités Capytale"
