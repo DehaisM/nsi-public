@@ -52,6 +52,7 @@ Options, par variables d'environnement :
 | `automatismes.js` | les automatismes : chaque compétence jusqu'à être acquise, la série remise à zéro après une erreur, le code de sauvegarde |
 | `banque.js` | chaque exercice : la solution est acceptée, le code de départ refusé, les mauvaises réponses refusées |
 | `en-ligne.js` | le site publié : pages, PDF, couleurs, exercices, Python et code de sauvegarde |
+| `compteur.js` | le compteur anonyme sur le site publié : les bons signaux, rien qui identifie un élève (les signaux sont interceptés, les statistiques ne bougent pas) |
 
 Les captures d'écran prises pendant les tests vont dans `captures/`, qui n'est pas suivi par
 Git : on peut les ouvrir pour vérifier l'affichage.

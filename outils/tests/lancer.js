@@ -16,6 +16,7 @@ const TESTS = {
   "automatismes.js": { titre: "Les automatismes", modes: ["tout", "rapide"] },
   "banque.js": { titre: "Chaque exercice et chaque question de la banque", modes: ["tout"] },
   "en-ligne.js": { titre: "Le site publié", modes: ["en-ligne"] },
+  "compteur.js": { titre: "Le compteur anonyme, sur le site publié", modes: ["en-ligne"] },
 };
 
 const mode = process.argv[2] || "tout";
