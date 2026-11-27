@@ -116,6 +116,36 @@
     return copie;
   }
 
+  // --- Compteur anonyme ----------------------------------------------------
+  // Compte les exercices ouverts et reussis, et les reponses des automatismes, pour savoir ce
+  // qui sert et ce qui coince. Rien qui identifie un eleve : ni nom, ni identifiant, ni cookie,
+  // seulement "tel exercice reussi". Rien n'est envoye depuis le serveur local, pendant les
+  // tests automatiques, ni quand le navigateur demande a ne pas etre suivi.
+  // COMPTEUR : le code du site sur GoatCounter (https://<code>.goatcounter.com) ; vide, rien n'est compte.
+  const COMPTEUR = "";
+
+  function envoyerCompte(chemin, titre) {
+    if (!COMPTEUR || location.hostname !== "nsi.mdehais.fr" || navigator.webdriver || navigator.doNotTrack === "1") return;
+    const url = "https://" + COMPTEUR + ".goatcounter.com/count?e=true"
+      + "&p=" + encodeURIComponent(chemin) + "&t=" + encodeURIComponent(titre)
+      + "&rnd=" + Math.random().toString(36).slice(2);
+    try {
+      new Image().src = url;
+    } catch (erreur) {
+      // Le compte est un plus : la page marche sans.
+    }
+  }
+
+  // evenement : "ouvert" ou "reussi".
+  function compter(evenement, exo) {
+    envoyerCompte("/" + evenement + "/" + niveauDe(exo.notion) + "/" + exo.id, exo.titre);
+  }
+
+  // evenement : "juste", "faux" ou "acquis".
+  function compterAuto(evenement, competence) {
+    envoyerCompte("/automatisme/" + evenement + "/" + competence.id, competence.nom);
+  }
+
   // --- Progression ---------------------------------------------------------
 
   function etatVide() {
@@ -161,6 +191,7 @@
 
   function noterReussite(id, sansAide) {
     const s = suivi(id);
+    if (!s.reussi) compter("reussi", banque.exercices.find((e) => e.id === id));
     s.reussi = true;
     if (sansAide) s.sansAide = true;
     noterJour();
@@ -551,7 +582,9 @@
     return [
       blocSauvegarde(toutReussi),
       el("p", { class: "entr-note" },
-        "La progression est gardée dans ce navigateur, sur cet appareil. Rien n'est envoyé : personne d'autre ne la voit. ",
+        COMPTEUR
+          ? "La progression est gardée dans ce navigateur, sur cet appareil : personne d'autre ne la voit. Pour améliorer les exercices, le site compte de façon anonyme les exercices ouverts et réussis, sans nom, sans identifiant ni cookie. "
+          : "La progression est gardée dans ce navigateur, sur cet appareil. Rien n'est envoyé : personne d'autre ne la voit. ",
         el("button", {
           class: "entr-lien",
           onclick() {
@@ -1013,12 +1046,14 @@
         champ.disabled = true;
         s.faites += 1;
         let titre = "Ce n'est pas la bonne réponse";
+        compterAuto(verdict.juste ? "juste" : "faux", competence);
         if (verdict.juste) {
           s.serie += 1;
           noterJour();
           titre = "Bonne réponse";
           if (s.serie >= ACQUIS && !s.acquis) {
             s.acquis = true;
+            compterAuto("acquis", competence);
             titre = "Bonne réponse. Compétence acquise.";
           }
         } else {
@@ -1081,6 +1116,7 @@
     }
     const exo = s.exos[s.index];
     const affiche = s.affiches[s.index];
+    compter("ouvert", exo);
     racine.replaceChildren(el("div", {},
       el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "Arrêter la série")),
       progressionSerie(),
@@ -1393,6 +1429,7 @@
     else if (!etat.niveau) afficherChoixNiveau();
     else if (serie) afficherSerie();
     else afficherAccueil();
+    if (exo) compter("ouvert", exo);
     if (exo || serie || competence) window.scrollTo(0, 0);
   }
 

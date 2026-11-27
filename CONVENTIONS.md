@@ -125,6 +125,13 @@ Exercices de Python à faire en autonomie, dans `docs-public/entrainement/`. Pyt
 le navigateur de l'élève : il n'y a ni compte ni serveur, et la progression reste dans son
 navigateur. Un code de sauvegarde permet de la reprendre sur un autre appareil.
 
+**Compteur anonyme.** Avec un code GoatCounter dans `COMPTEUR` (en haut de `entrainement.js`),
+la page compte les exercices ouverts et réussis (une réussite par appareil) et les réponses des
+automatismes : seulement "tel exercice réussi", jamais de nom, d'identifiant ni de cookie. Rien
+n'est envoyé depuis le serveur local, pendant les tests, ni si le navigateur demande à ne pas
+être suivi. La note en bas de l'accueil le dit aux élèves dès que `COMPTEUR` n'est pas vide.
+`COMPTEUR` vide : rien n'est compté.
+
 Comme tout s'exécute chez l'élève, les solutions sont lisibles par un élève curieux : cette
 page sert à s'entraîner, pas à noter.
 
