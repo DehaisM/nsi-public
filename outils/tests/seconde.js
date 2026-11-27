@@ -27,11 +27,11 @@ const texte = (p) => p.locator("#entr-app").innerText();
   let t = await texte(p);
   verif("accueil Seconde : un point par question", (await p.locator(".entr-reseau .entr-arret").count()) === nbSeconde);
   verif("accueil Seconde : 2 chapitres, pas de Python", /Internet, chapitre 1/.test(t) && !/Boucles for/.test(t));
-  verif("accueil Seconde : mots adaptés", /Question du jour/i.test(t) && /Questions par chapitre/.test(t) && t.includes("0 question réussie sur " + nbSeconde), t.match(/\d+ question[^.]*/)?.[0]);
+  verif("accueil Seconde : mots adaptés", /Question du jour/i.test(t) && /Choisir une question/.test(t) && t.includes("0 question réussie sur " + nbSeconde), t.match(/\d+ question[^.]*/)?.[0]);
   await p.screenshot({ path: path.join(IMG, "2-accueil.png"), fullPage: true });
   await p.reload();
   await p.waitForSelector(".entr-bilan");
-  verif("le niveau est retenu", /Questions par chapitre/.test(await texte(p)));
+  verif("le niveau est retenu", /Choisir une question/.test(await texte(p)));
 
   // Une question a choix
   await p.goto(URL_PAGE + "#/exo/role-routeur");
@@ -44,6 +44,30 @@ const texte = (p) => p.locator("#entr-app").innerText();
   t = await texte(p);
   verif("bon choix : explication et passage du cours", /Bonne réponse/.test(t) && /À relire dans le cours : Chapitre 1/.test(t));
   await p.screenshot({ path: path.join(IMG, "3-qcm.png"), fullPage: true });
+
+  // Choisie a la main : la suivante reste dans le chapitre, et n'est pas encore reussie
+  await p.locator("button", { hasText: "Question suivante du chapitre" }).click();
+  await p.waitForFunction(() => !location.hash.includes("role-routeur"));
+  const idSuivante = await p.evaluate(() => location.hash.replace("#/exo/", ""));
+  verif("suivante du chapitre : même chapitre", banque.deLaNotion("internet-1").some((e) => e.id === idSuivante), idSuivante);
+
+  // Tiree au hasard : la suivante aussi. Dans un navigateur a part, pour ne pas toucher au bilan.
+  const h = await (await b.newContext()).newPage();
+  await h.goto(URL_PAGE + "#/seconde");
+  await h.waitForSelector(".entr-hasard");
+  await h.locator(".entr-hasard button", { hasText: "Une question au hasard" }).click();
+  await h.waitForSelector(".entr-titre");
+  if (await h.locator(".entr-choix__bouton").count()) {
+    await h.locator(".entr-choix__bouton[data-bonne]").click();
+  } else {
+    for (const essai of ["faux", "faux encore"]) {
+      await h.locator(".entr-champ--reponse").fill(essai);
+      await h.keyboard.press("Enter");
+    }
+    await h.locator("button", { hasText: "Voir la réponse" }).click();
+  }
+  verif("tirée au hasard : une autre au hasard", (await h.locator("button", { hasText: "Une autre question au hasard" }).count()) === 1);
+  await h.context().close();
 
   // Une question avec image
   await p.goto(URL_PAGE + "#/exo/filius-numero-3");
@@ -152,7 +176,7 @@ const texte = (p) => p.locator("#entr-app").innerText();
   await p.goto(SITE + "SNT/");
   await p.locator(".md-content a[href*='seconde']").click();
   await p.waitForSelector(".entr-bilan");
-  verif("lien de la page Seconde GT : ouvre la Seconde", /Questions par chapitre/.test(await texte(p)));
+  verif("lien de la page Seconde GT : ouvre la Seconde", /Choisir une question/.test(await texte(p)));
 
   // Mode sombre
   await p.evaluate(() => document.body.setAttribute("data-md-color-scheme", "slate"));

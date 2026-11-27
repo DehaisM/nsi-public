@@ -28,10 +28,14 @@
       intro: "Des questions sur le cours, pour réviser les notions de base avant les contrôles.",
       jour: "Question du jour",
       hasard: "Une question au hasard",
-      lignes: "Questions par chapitre",
-      consigne: "Chaque point est une question, plein quand elle est réussie. Ouvrir un chapitre pour voir ses questions.",
+      consigneHasard: "Choisir des chapitres et une difficulté, puis tirer une question au hasard parmi celles qui correspondent, ou une série de 10. Rien de coché : toutes les questions.",
+      parties: "Chapitres",
+      lignes: "Choisir une question",
+      consigne: "Chaque point est une question, pleine quand elle est réussie. Ouvrir un chapitre pour voir ses questions. Après une question, on passe à la prochaine pas encore réussie du même chapitre.",
       une: "question", des: "questions", reussie: "réussie", premierCoup: "du premier coup",
-      suivant: "Question suivante", retour: "Toutes les questions",
+      correspond: "correspond", correspondent: "correspondent", aucune: "Aucune question ne correspond : décocher un filtre.",
+      suivantChapitre: "Question suivante du chapitre", autreHasard: "Une autre question au hasard",
+      chapitreFini: "Toutes les questions de ce chapitre sont réussies.", retour: "Toutes les questions",
       numeros: false, // pas de numero d'exercice, pas de badge "sans aide"
     },
     premiere: {
@@ -39,10 +43,14 @@
       intro: "Des exercices de Python, à faire quand on veut, en quelques minutes.",
       jour: "Exo du jour",
       hasard: "Un exo au hasard",
-      lignes: "Exercices par notion",
-      consigne: "Chaque point est un exercice, plein quand il est réussi. Ouvrir une notion pour voir leurs titres.",
+      consigneHasard: "Choisir des notions et une difficulté, puis tirer un exo au hasard parmi ceux qui correspondent. Rien de coché : tous les exos.",
+      parties: "Notions",
+      lignes: "Choisir un exo",
+      consigne: "Chaque point est un exo, plein quand il est réussi. Ouvrir une notion pour voir ses exos. Après un exo, on passe au prochain pas encore réussi de la même notion.",
       une: "exo", des: "exos", reussie: "réussi", premierCoup: "sans aide",
-      suivant: "Exo suivant", retour: "Tous les exercices",
+      correspond: "correspond", correspondent: "correspondent", aucune: "Aucun exo ne correspond : décocher un filtre.",
+      suivantChapitre: "Exo suivant de la notion", autreHasard: "Un autre exo au hasard",
+      chapitreFini: "Tous les exos de cette notion sont réussis.", retour: "Tous les exercices",
       numeros: true,
     },
   };
@@ -52,6 +60,9 @@
   let etat = chargerEtat();
   let messageAccueil = null;
   let serieRevision = null;
+  // Vrai quand l'exercice affiche vient du bouton "au hasard" : le suivant sera aussi tire au
+  // hasard. Sinon (choisi dans une ligne, exo du jour, lien direct), on reste dans son chapitre.
+  let parHasard = false;
   let sauvegardePrevue = null;
   const moteur = creerMoteur();
 
@@ -457,6 +468,7 @@
 
   function afficherAccueil() {
     serieRevision = null;
+    parHasard = false;
     const t = textes();
     const conteneur = el("div", {});
     const exos = exercicesDuNiveau();
@@ -483,30 +495,14 @@
       return;
     }
 
-    const hasard = el("button", {
-      class: "entr-bouton " + (avecSerie ? "entr-bouton--clair" : "entr-bouton--signal"),
-      onclick() {
-        const exo = tirer();
-        if (exo) allerA(exo);
-      },
-      disabled: filtres.size === 0,
-    }, t.hasard);
-    const boutonSerie = avecSerie ? el("button", {
-      class: "entr-bouton entr-bouton--signal",
-      onclick: () => { location.hash = "#/serie"; },
-      disabled: ![...filtres].some(estUneQuestion),
-    }, "Série de " + TAILLE_SERIE + " questions") : null;
-
     conteneur.append(
       el("div", { class: "entr-jour" },
         el("div", {},
           el("p", { class: "entr-jour__surtitre" }, t.jour),
           el("button", { class: "entr-jour__titre", onclick: () => allerA(jour) },
             jour.titre + (lu(jour.id).reussi ? " (réussi)" : ""))
-        ),
-        el("div", { class: "entr-jour__boutons" }, boutonSerie, hasard)
+        )
       ),
-      blocFiltres(),
       el("p", { class: "entr-bilan" },
         reussis + " " + (reussis > 1 ? t.des : t.une) + " " + t.reussie + (reussis > 1 ? "s" : "") + " sur " + exos.length,
         premierCoup > 0 ? ", dont " + premierCoup + " " + t.premierCoup : "",
@@ -519,8 +515,8 @@
       )
     );
 
+    conteneur.append(blocHasard(filtres, avecSerie), ...blocReseau());
     if (etat.niveau === "premiere" && banque.competences.length) conteneur.append(blocAutomatismes());
-    conteneur.append(...blocReseau(filtres));
 
     const toutReussi = banque.exercices.filter((e) => lu(e.id).reussi).length + banque.competences.filter(acquis).length;
     conteneur.append(blocSauvegarde(toutReussi));
@@ -548,7 +544,35 @@
     else liste.push(valeur);
   }
 
+  function blocHasard(filtres, avecSerie) {
+    const t = textes();
+    const nb = filtres.size;
+    const hasard = el("button", {
+      class: "entr-bouton" + (avecSerie ? "" : " entr-bouton--signal"),
+      onclick() {
+        const exo = tirer();
+        if (!exo) return;
+        parHasard = true;
+        allerA(exo);
+      },
+      disabled: nb === 0,
+    }, t.hasard);
+    const boutonSerie = avecSerie ? el("button", {
+      class: "entr-bouton entr-bouton--signal",
+      onclick: () => { location.hash = "#/serie"; },
+      disabled: ![...filtres].some(estUneQuestion),
+    }, "Série de " + TAILLE_SERIE + " questions") : null;
+    return el("section", { class: "entr-hasard" },
+      el("h2", {}, "Au hasard"),
+      el("p", { class: "entr-consigne" }, t.consigneHasard),
+      ...blocFiltres(),
+      el("p", { class: "entr-hasard__compte" },
+        nb === 0 ? t.aucune : nb + " " + (nb > 1 ? t.des + " " + t.correspondent : t.une + " " + t.correspond) + "."),
+      el("div", { class: "entr-actions" }, boutonSerie, hasard));
+  }
+
   function blocFiltres() {
+    const t = textes();
     const puce = (classe, nom, liste, valeur, style) => {
       const actif = liste.includes(valeur);
       return el("button", {
@@ -562,19 +586,32 @@
         },
       }, nom);
     };
-    return el("div", { class: "entr-filtres" },
-      el("p", {}, "Le hasard pioche dans :"),
+    return [
+      el("p", { class: "entr-hasard__etape" }, t.parties),
       el("div", { class: "entr-puces" }, notionsDuNiveau()
         .filter((notion) => exercicesDe(notion.id).length > 0)
         .map((notion) => puce("entr-filtre", notion.nom, etat.notions, notion.id, couleurLigne(notion.id)))),
+      el("p", { class: "entr-hasard__etape" }, "Difficulté"),
       el("div", { class: "entr-puces" },
         Object.entries(DIFFICULTES).map(([valeur, nom]) =>
           puce("entr-filtre entr-filtre--neutre", nom, etat.difficultes, Number(valeur))),
         // Une etiquette n'apparait que si le niveau a des exercices qui la portent.
         Object.entries(ETIQUETTES)
           .filter(([tag]) => exercicesDuNiveau().some((exo) => (exo.tags || []).includes(tag)))
-          .map(([tag, nom]) => puce("entr-filtre entr-filtre--neutre entr-filtre--etiquette", nom, etat.etiquettes, tag)))
-    );
+          .map(([tag, nom]) => puce("entr-filtre entr-filtre--neutre entr-filtre--etiquette", nom, etat.etiquettes, tag))),
+    ];
+  }
+
+  // Le prochain exercice pas encore reussi de la meme notion, apres celui-ci (en revenant au
+  // debut de la ligne si besoin) ; null si tous les autres sont reussis.
+  function suivantDuChapitre(exo) {
+    const liste = exercicesDe(exo.notion);
+    const ici = liste.indexOf(exo);
+    for (let k = 1; k < liste.length; k++) {
+      const candidat = liste[(ici + k) % liste.length];
+      if (!lu(candidat.id).reussi) return candidat;
+    }
+    return null;
   }
 
   function exercicesDe(idNotion) {
@@ -582,18 +619,20 @@
   }
 
   // Une rangee d'arrets : un point par exercice, plein quand il est reussi.
-  // filtres (facultatif) : les exercices retenus par les filtres, les autres sont pales.
-  function rangee(exos, ici, filtres) {
+  // Cliquer un arret, c'est choisir l'exercice a la main : on reste ensuite dans sa notion.
+  function rangee(exos, ici) {
     return el("div", { class: "entr-rangee" }, exos.map((exo) => {
       const classes = ["entr-arret"];
       if (lu(exo.id).reussi) classes.push("entr-arret--fait");
       if (exo === ici) classes.push("entr-arret--ici");
-      if (filtres && !filtres.has(exo)) classes.push("entr-arret--hors");
-      return el("a", { href: "#/exo/" + exo.id, class: classes.join(" "), title: exo.titre, "aria-label": exo.titre });
+      return el("a", {
+        href: "#/exo/" + exo.id, class: classes.join(" "), title: exo.titre, "aria-label": exo.titre,
+        onclick: () => { parHasard = false; },
+      });
     }));
   }
 
-  function blocReseau(filtres) {
+  function blocReseau() {
     const lignes = el("div", { class: "entr-reseau" });
     notionsDuNiveau().forEach((notion, i) => {
       const exos = exercicesDe(notion.id);
@@ -617,13 +656,13 @@
         ouverte
           ? el("ol", { class: "entr-stations" }, exos.map((exo) => {
             const s = lu(exo.id);
-            return el("li", { class: (s.reussi ? "entr-station--faite " : "") + (filtres.has(exo) ? "" : "entr-station--hors") },
+            return el("li", { class: s.reussi ? "entr-station--faite" : null },
               el("a", { href: "#/exo/" + exo.id },
                 el("span", { class: "entr-station__nom" }, exo.titre),
                 s.sansAide && textes().numeros ? el("span", { class: "entr-badge" }, "sans aide") : null,
                 el("span", { class: "entr-station__infos" }, infos(exo))));
           }))
-          : rangee(exos, null, filtres)
+          : rangee(exos, null)
       ));
     });
     return [
@@ -677,20 +716,35 @@
     ];
   }
 
-  // Les boutons apres une reussite ; enPlus s'intercale avant "Retour a la liste".
+  // Les boutons apres un exercice ; enPlus s'intercale avant "Retour a la liste".
+  // Venu du hasard : un autre au hasard. Choisi a la main : le prochain pas encore reussi du chapitre.
   function suite(exo, ...enPlus) {
-    return el("div", { class: "entr-actions" },
-      el("button", {
+    const t = TEXTES[niveauDe(exo.notion)];
+    let principal = null;
+    let fini = null;
+    if (parHasard) {
+      principal = el("button", {
         class: "entr-bouton entr-bouton--fort",
         onclick() {
           const prochain = tirer(exo.id);
           if (prochain) allerA(prochain);
           else location.hash = "#/";
         },
-      }, textes().suivant),
-      ...enPlus,
-      el("a", { class: "entr-bouton", href: "#/" }, "Retour à la liste")
-    );
+      }, t.autreHasard);
+    } else {
+      const prochain = suivantDuChapitre(exo);
+      if (prochain) {
+        principal = el("button", { class: "entr-bouton entr-bouton--fort", onclick: () => allerA(prochain) }, t.suivantChapitre);
+      } else {
+        fini = el("p", { class: "entr-consigne" }, t.chapitreFini);
+      }
+    }
+    return el("div", {},
+      fini,
+      el("div", { class: "entr-actions" },
+        principal,
+        ...enPlus,
+        el("a", { class: "entr-bouton", href: "#/" }, "Retour à la liste")));
   }
 
   // L'enonce d'une question, avec son image ou son code s'il y en a.

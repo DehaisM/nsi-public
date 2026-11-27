@@ -17,12 +17,12 @@ const verif = verificateur();
   });
   const premiere = banque.filter((e) => e.niveaux.includes("premiere"));
   const nbMaths = premiere.filter((e) => e.maths).length;
-  const visibles = () => p.locator(".entr-reseau .entr-arret:not(.entr-arret--hors)").evaluateAll((l) => l.map((a) => a.getAttribute("href").replace("#/exo/", "")));
+  // Le nombre d'exos retenus, affiche dans le bloc "Au hasard".
+  const retenus = async () => Number((await p.locator(".entr-hasard__compte").innerText()).match(/^\d+/)?.[0] || 0);
 
   verif("le bouton Maths est là en Première", (await p.locator(".entr-filtre", { hasText: "Maths" }).count()) === 1);
   await p.locator(".entr-filtre", { hasText: "Maths" }).click();
-  let ids = await visibles();
-  verif("filtre Maths : seuls les exercices de maths", ids.length === nbMaths && ids.every((id) => premiere.find((e) => e.id === id).maths), ids.length + " sur " + nbMaths);
+  verif("filtre Maths : le bloc hasard compte les exos de maths", (await retenus()) === nbMaths, (await retenus()) + " sur " + nbMaths);
   await p.screenshot({ path: path.join(dossierCaptures(), "filtre-maths.png"), fullPage: true });
   for (let i = 0; i < 8; i++) {
     await p.goto(URL_PAGE + "#/");
@@ -37,12 +37,11 @@ const verif = verificateur();
   await p.waitForSelector(".entr-bilan");
   verif("le filtre est retenu", (await p.locator(".entr-filtre--etiquette").getAttribute("aria-pressed")) === "true");
   await p.locator(".entr-filtre", { hasText: "Tuples" }).click();
-  ids = await visibles();
   const attendus = premiere.filter((e) => e.maths && e.notion === "tuples").length;
-  verif("Maths et Tuples ensemble", ids.length === attendus && attendus > 0, ids.length + " sur " + attendus);
+  verif("Maths et Tuples ensemble", (await retenus()) === attendus && attendus > 0, (await retenus()) + " sur " + attendus);
   await p.locator(".entr-filtre", { hasText: "Maths" }).click();
   await p.locator(".entr-filtre", { hasText: "Tuples" }).click();
-  verif("sans filtre : tout revient", (await visibles()).length === premiere.length);
+  verif("sans filtre : tout revient", (await retenus()) === premiere.length);
   await p.locator(".entr-niveaux button", { hasText: "Seconde" }).click();
   verif("pas de bouton Maths en Seconde", (await p.locator(".entr-filtre", { hasText: "Maths" }).count()) === 0);
   console.log("erreurs de page : " + (erreurs.length ? erreurs.join(" | ") : "aucune"));

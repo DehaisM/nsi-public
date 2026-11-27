@@ -51,8 +51,10 @@ async function ouvrir(page, id) {
 
   // Filtre + hasard
   await page.locator(".entr-filtre", { hasText: "Grilles" }).click();
-  const titresGrilles = await page.locator(".entr-reseau .entr-arret:not(.entr-arret--hors)").evaluateAll((l) => l.map((a) => a.title));
-  verif("filtre grilles", titresGrilles.length === nbGrilles, titresGrilles.length + " sur " + nbGrilles);
+  const titresGrilles = banque.deLaNotion("grilles").map((e) => e.titre);
+  const compte = await page.locator(".entr-hasard__compte").innerText();
+  verif("filtre grilles : le bloc hasard compte les exos retenus", compte.startsWith(nbGrilles + " exos"), compte);
+  verif("filtre grilles : la liste à choisir reste complète", (await page.locator(".entr-reseau .entr-arret").count()) === premiere.length);
   await page.locator(".entr-ligne__titre", { hasText: "Listes" }).click();
   verif("ouvrir une ligne montre ses titres", (await page.locator(".entr-stations > li").count()) === nbListes);
   await page.reload();
@@ -155,11 +157,14 @@ async function ouvrir(page, id) {
   verif("prediction juste : explication", /Bonne réponse/.test(await page.locator("#entr-app").innerText()));
   await page.screenshot({ path: path.join(IMG, "5-prediction.png"), fullPage: true });
 
-  // Encore un : ne repropose pas un exo deja reussi
-  await page.locator("button", { hasText: "Exo suivant" }).click();
+  // Choisi a la main : le suivant est le prochain exo pas encore reussi de la meme notion
+  const notionAlias = premiere.find((e) => e.id === "predire-alias").notion;
+  await page.locator("button", { hasText: "Exo suivant de la notion" }).click();
   await page.waitForFunction(() => !location.hash.includes("predire-alias"));
   const suivant = await page.evaluate(() => location.hash.replace("#/exo/", ""));
-  verif("encore un : exo pas encore reussi", !["tarif-cinema", "compte-a-rebours", "colonne-grille", "predire-alias"].includes(suivant), suivant);
+  const exoSuivant = premiere.find((e) => e.id === suivant);
+  verif("suivant de la notion : même notion, pas encore réussi",
+    exoSuivant && exoSuivant.notion === notionAlias && !["tarif-cinema", "compte-a-rebours", "colonne-grille", "predire-alias"].includes(suivant), suivant);
 
   // Bilan sur l'accueil
   await page.goto(URL_PAGE + "#/");
