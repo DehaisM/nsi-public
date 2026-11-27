@@ -54,6 +54,11 @@
 #   calcul (facultatif) : une expression Python qui refait le calcul ; le verificateur controle
 #   qu'elle donne bien une des reponses acceptees. Les modules ipaddress et math sont disponibles.
 #   La page ignore les espaces et les majuscules, et accepte la virgule comme le point.
+#   code (facultatif) : un programme montre a l'eleve, pour "Qu'affiche ce programme ?" ; le
+#   verificateur l'execute et controle que la premiere reponse est ce qu'il affiche (ou ERREUR
+#   s'il plante, y compris une erreur de syntaxe volontaire).
+#   exacte: true (facultatif) : espaces et majuscules comptent (pour un affichage a recopier,
+#   "x vaut x" ou "bonjour patate") ; seul ERREUR s'ecrit comme on veut.
 #
 # Pour le type generateur :
 #   generateur (le nom d'un generateur de entrainement/generateurs.js), cours

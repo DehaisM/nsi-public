@@ -5,58 +5,86 @@
 #   numero       meme suite que les exercices (prendre le prochain numero libre, ne jamais le
 #                changer) : une competence acquise compte comme un exercice reussi dans le
 #                code de sauvegarde
+#   theme        le groupe ou la tuile est rangee sur la page (dans l'ordre de cette liste)
 #   nom          nom court
 #   description  ce que l'on travaille, en une ligne
 #
 # Une competence est acquise apres 5 bonnes reponses d'affilee (ACQUIS dans entrainement.js).
 # Apres une modification : python outils/controler_automatismes.py
-competences:
-  - id: range
-    numero: 226
-    nom: range
-    description: Les valeurs d'un range, le nombre de tours d'une boucle, trouver le bon range
 
+# Numeros de competences retirees (tranches 229, methodes de liste 232, le 2026-11-27) :
+# a ne jamais reutiliser, des codes de sauvegarde peuvent les contenir.
+retires: [229, 232]
+
+competences:
   - id: division
     numero: 227
+    theme: Valeurs et calculs
     nom: Division entière et reste
     description: Les opérateurs // et %, pair ou impair, le chiffre des unités
 
-  - id: indices
-    numero: 228
-    nom: Indices
-    description: Un élément d'une liste ou d'un texte, les indices négatifs, l'indice qui n'existe pas
-
-  - id: tranches
-    numero: 229
-    nom: Tranches
-    description: Des morceaux de liste ou de texte, comme L[1:4] ou mot[:3]
-
-  - id: conditions
-    numero: 230
-    nom: Conditions
-    description: True ou False, avec les comparaisons, and, or et not
-
   - id: conversions
     numero: 231
+    theme: Valeurs et calculs
     nom: Conversions
     description: Passer d'un texte à un nombre et inversement, avec int et str
 
-  - id: methodes
-    numero: 232
-    nom: Méthodes de liste
-    description: La liste après append, pop et insert, et ce que renvoient pop et index
+  - id: conditions
+    numero: 230
+    theme: Conditions et boucles
+    nom: Conditions
+    description: True ou False, avec les comparaisons, and, or et not
+
+  - id: branches
+    numero: 346
+    theme: Conditions et boucles
+    nom: if, elif, else
+    description: Quelle branche s'exécute, deux if séparés ou un elif
+
+  - id: range
+    numero: 226
+    theme: Conditions et boucles
+    nom: range
+    description: Les valeurs d'un range, le nombre de tours d'une boucle, trouver le bon range
 
   - id: boucles
     numero: 233
-    nom: Petites boucles
-    description: La valeur d'une variable après une boucle de quelques lignes
+    theme: Conditions et boucles
+    nom: Petites boucles for
+    description: La valeur d'un compteur ou d'une somme après une boucle de quelques lignes
+
+  - id: while
+    numero: 347
+    theme: Conditions et boucles
+    nom: Boucles while
+    description: Combien de tours, la valeur finale, la boucle qui ne tourne jamais
+
+  - id: fonctions
+    numero: 348
+    theme: Fonctions
+    nom: Que renvoie l'appel ?
+    description: Ce que renvoie une fonction, l'ordre des paramètres, return ou print
+
+  - id: indices
+    numero: 228
+    theme: Listes et compagnie
+    nom: Indices
+    description: Un élément d'une liste ou d'un texte, les indices négatifs, l'indice qui n'existe pas
+
+  - id: listes
+    numero: 349
+    theme: Listes et compagnie
+    nom: Listes
+    description: Ajouter avec append, remplacer avec L[i] = ..., parcourir une liste
 
   - id: grilles
     numero: 234
+    theme: Listes et compagnie
     nom: Grilles
     description: Une case d'une grille, son nombre de lignes et de colonnes
 
   - id: tuples
     numero: 235
+    theme: Listes et compagnie
     nom: Tuples
     description: Indices, dépaquetage, échange de valeurs, et ce qu'on ne peut pas faire

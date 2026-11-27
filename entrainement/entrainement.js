@@ -28,10 +28,14 @@
       intro: "Des questions sur le cours, pour réviser les notions de base avant les contrôles.",
       jour: "Question du jour",
       hasard: "Une question au hasard",
-      lignes: "Questions par chapitre",
-      consigne: "Chaque point est une question, plein quand elle est réussie. Ouvrir un chapitre pour voir ses questions.",
+      consigneHasard: "Choisir des chapitres et une difficulté, puis tirer une question au hasard parmi celles qui correspondent, ou une série de 10. Rien de coché : toutes les questions.",
+      parties: "Chapitres",
+      lignes: "Choisir une question",
+      consigne: "Chaque point est une question, pleine quand elle est réussie. Ouvrir un chapitre pour voir ses questions. Après une question, on passe à la prochaine pas encore réussie du même chapitre.",
       une: "question", des: "questions", reussie: "réussie", premierCoup: "du premier coup",
-      suivant: "Question suivante", retour: "Toutes les questions",
+      correspond: "correspond", correspondent: "correspondent", aucune: "Aucune question ne correspond : décocher un filtre.",
+      suivantChapitre: "Question suivante du chapitre", autreHasard: "Une autre question au hasard",
+      chapitreFini: "Toutes les questions de ce chapitre sont réussies.", retour: "Toutes les questions",
       numeros: false, // pas de numero d'exercice, pas de badge "sans aide"
     },
     premiere: {
@@ -39,10 +43,14 @@
       intro: "Des exercices de Python, à faire quand on veut, en quelques minutes.",
       jour: "Exo du jour",
       hasard: "Un exo au hasard",
-      lignes: "Exercices par notion",
-      consigne: "Chaque point est un exercice, plein quand il est réussi. Ouvrir une notion pour voir leurs titres.",
+      consigneHasard: "Choisir des notions et une difficulté, puis tirer un exo au hasard parmi ceux qui correspondent. Rien de coché : tous les exos.",
+      parties: "Notions",
+      lignes: "Choisir un exo",
+      consigne: "Chaque point est un exo, plein quand il est réussi. Ouvrir une notion pour voir ses exos. Après un exo, on passe au prochain pas encore réussi de la même notion.",
       une: "exo", des: "exos", reussie: "réussi", premierCoup: "sans aide",
-      suivant: "Exo suivant", retour: "Tous les exercices",
+      correspond: "correspond", correspondent: "correspondent", aucune: "Aucun exo ne correspond : décocher un filtre.",
+      suivantChapitre: "Exo suivant de la notion", autreHasard: "Un autre exo au hasard",
+      chapitreFini: "Tous les exos de cette notion sont réussis.", retour: "Tous les exercices",
       numeros: true,
     },
   };
@@ -52,6 +60,9 @@
   let etat = chargerEtat();
   let messageAccueil = null;
   let serieRevision = null;
+  // Vrai quand l'exercice affiche vient du bouton "au hasard" : le suivant sera aussi tire au
+  // hasard. Sinon (choisi dans une ligne, exo du jour, lien direct), on reste dans son chapitre.
+  let parHasard = false;
   let sauvegardePrevue = null;
   const moteur = creerMoteur();
 
@@ -108,7 +119,7 @@
   // --- Progression ---------------------------------------------------------
 
   function etatVide() {
-    return { exos: {}, auto: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [], ouvertes: [], niveau: null, etiquettes: [] };
+    return { exos: {}, auto: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [], ouvertes: [], niveau: null, etiquettes: [], onglet: "exercices" };
   }
 
   function chargerEtat() {
@@ -457,6 +468,7 @@
 
   function afficherAccueil() {
     serieRevision = null;
+    parHasard = false;
     const t = textes();
     const conteneur = el("div", {});
     const exos = exercicesDuNiveau();
@@ -477,25 +489,20 @@
 
     conteneur.append(blocNiveaux(), el("p", { class: "entr-intro" }, t.intro));
 
+    // En Premiere, deux onglets : les exercices, et les automatismes sur leur propre page.
+    const avecOnglets = etat.niveau === "premiere" && banque.competences.length > 0;
+    if (avecOnglets) conteneur.append(blocOnglets());
+    if (avecOnglets && etat.onglet === "automatismes") {
+      conteneur.append(blocAutomatismes(), ...finAccueil());
+      racine.replaceChildren(conteneur);
+      return;
+    }
+
     if (exos.length === 0) {
       conteneur.append(el("p", { class: "entr-consigne" }, "Aucune question pour ce niveau pour l'instant."));
       racine.replaceChildren(conteneur);
       return;
     }
-
-    const hasard = el("button", {
-      class: "entr-bouton " + (avecSerie ? "entr-bouton--clair" : "entr-bouton--signal"),
-      onclick() {
-        const exo = tirer();
-        if (exo) allerA(exo);
-      },
-      disabled: filtres.size === 0,
-    }, t.hasard);
-    const boutonSerie = avecSerie ? el("button", {
-      class: "entr-bouton entr-bouton--signal",
-      onclick: () => { location.hash = "#/serie"; },
-      disabled: ![...filtres].some(estUneQuestion),
-    }, "Série de " + TAILLE_SERIE + " questions") : null;
 
     conteneur.append(
       el("div", { class: "entr-jour" },
@@ -503,10 +510,8 @@
           el("p", { class: "entr-jour__surtitre" }, t.jour),
           el("button", { class: "entr-jour__titre", onclick: () => allerA(jour) },
             jour.titre + (lu(jour.id).reussi ? " (réussi)" : ""))
-        ),
-        el("div", { class: "entr-jour__boutons" }, boutonSerie, hasard)
+        )
       ),
-      blocFiltres(),
       el("p", { class: "entr-bilan" },
         reussis + " " + (reussis > 1 ? t.des : t.une) + " " + t.reussie + (reussis > 1 ? "s" : "") + " sur " + exos.length,
         premierCoup > 0 ? ", dont " + premierCoup + " " + t.premierCoup : "",
@@ -519,27 +524,45 @@
       )
     );
 
-    if (etat.niveau === "premiere" && banque.competences.length) conteneur.append(blocAutomatismes());
-    conteneur.append(...blocReseau(filtres));
+    conteneur.append(blocHasard(filtres, avecSerie), ...blocReseau(), ...finAccueil());
+    racine.replaceChildren(conteneur);
+  }
 
-    const toutReussi = banque.exercices.filter((e) => lu(e.id).reussi).length + banque.competences.filter(acquis).length;
-    conteneur.append(blocSauvegarde(toutReussi));
-
-    conteneur.append(el("p", { class: "entr-note" },
-      "La progression est gardée dans ce navigateur, sur cet appareil. Rien n'est envoyé : personne d'autre ne la voit. ",
-      el("button", {
-        class: "entr-lien",
-        onclick() {
-          if (confirm("Effacer toute la progression sur cet appareil ?")) {
-            etat = etatVide();
+  function blocOnglets() {
+    return el("div", { class: "entr-onglets", role: "tablist" },
+      [["exercices", "Exercices"], ["automatismes", "Automatismes"]].map(([onglet, nom]) => {
+        const actif = etat.onglet === onglet;
+        return el("button", {
+          class: "entr-onglet" + (actif ? " entr-onglet--actif" : ""),
+          role: "tab",
+          "aria-selected": String(actif),
+          onclick() {
+            etat.onglet = onglet;
             sauver();
             afficher();
-          }
-        },
-      }, "Tout effacer")
-    ));
+          },
+        }, nom);
+      }));
+  }
 
-    racine.replaceChildren(conteneur);
+  // Le bas de l'accueil, commun aux deux onglets : changer d'appareil, et ce que garde la page.
+  function finAccueil() {
+    const toutReussi = banque.exercices.filter((e) => lu(e.id).reussi).length + banque.competences.filter(acquis).length;
+    return [
+      blocSauvegarde(toutReussi),
+      el("p", { class: "entr-note" },
+        "La progression est gardée dans ce navigateur, sur cet appareil. Rien n'est envoyé : personne d'autre ne la voit. ",
+        el("button", {
+          class: "entr-lien",
+          onclick() {
+            if (confirm("Effacer toute la progression sur cet appareil ?")) {
+              etat = etatVide();
+              sauver();
+              afficher();
+            }
+          },
+        }, "Tout effacer")),
+    ];
   }
 
   function basculer(liste, valeur) {
@@ -548,7 +571,35 @@
     else liste.push(valeur);
   }
 
+  function blocHasard(filtres, avecSerie) {
+    const t = textes();
+    const nb = filtres.size;
+    const hasard = el("button", {
+      class: "entr-bouton" + (avecSerie ? "" : " entr-bouton--signal"),
+      onclick() {
+        const exo = tirer();
+        if (!exo) return;
+        parHasard = true;
+        allerA(exo);
+      },
+      disabled: nb === 0,
+    }, t.hasard);
+    const boutonSerie = avecSerie ? el("button", {
+      class: "entr-bouton entr-bouton--signal",
+      onclick: () => { location.hash = "#/serie"; },
+      disabled: ![...filtres].some(estUneQuestion),
+    }, "Série de " + TAILLE_SERIE + " questions") : null;
+    return el("section", { class: "entr-hasard" },
+      el("h2", {}, "Au hasard"),
+      el("p", { class: "entr-consigne" }, t.consigneHasard),
+      ...blocFiltres(),
+      el("p", { class: "entr-hasard__compte" },
+        nb === 0 ? t.aucune : nb + " " + (nb > 1 ? t.des + " " + t.correspondent : t.une + " " + t.correspond) + "."),
+      el("div", { class: "entr-actions" }, boutonSerie, hasard));
+  }
+
   function blocFiltres() {
+    const t = textes();
     const puce = (classe, nom, liste, valeur, style) => {
       const actif = liste.includes(valeur);
       return el("button", {
@@ -562,19 +613,32 @@
         },
       }, nom);
     };
-    return el("div", { class: "entr-filtres" },
-      el("p", {}, "Le hasard pioche dans :"),
+    return [
+      el("p", { class: "entr-hasard__etape" }, t.parties),
       el("div", { class: "entr-puces" }, notionsDuNiveau()
         .filter((notion) => exercicesDe(notion.id).length > 0)
         .map((notion) => puce("entr-filtre", notion.nom, etat.notions, notion.id, couleurLigne(notion.id)))),
+      el("p", { class: "entr-hasard__etape" }, "Difficulté"),
       el("div", { class: "entr-puces" },
         Object.entries(DIFFICULTES).map(([valeur, nom]) =>
           puce("entr-filtre entr-filtre--neutre", nom, etat.difficultes, Number(valeur))),
         // Une etiquette n'apparait que si le niveau a des exercices qui la portent.
         Object.entries(ETIQUETTES)
           .filter(([tag]) => exercicesDuNiveau().some((exo) => (exo.tags || []).includes(tag)))
-          .map(([tag, nom]) => puce("entr-filtre entr-filtre--neutre entr-filtre--etiquette", nom, etat.etiquettes, tag)))
-    );
+          .map(([tag, nom]) => puce("entr-filtre entr-filtre--neutre entr-filtre--etiquette", nom, etat.etiquettes, tag))),
+    ];
+  }
+
+  // Le prochain exercice pas encore reussi de la meme notion, apres celui-ci (en revenant au
+  // debut de la ligne si besoin) ; null si tous les autres sont reussis.
+  function suivantDuChapitre(exo) {
+    const liste = exercicesDe(exo.notion);
+    const ici = liste.indexOf(exo);
+    for (let k = 1; k < liste.length; k++) {
+      const candidat = liste[(ici + k) % liste.length];
+      if (!lu(candidat.id).reussi) return candidat;
+    }
+    return null;
   }
 
   function exercicesDe(idNotion) {
@@ -582,18 +646,20 @@
   }
 
   // Une rangee d'arrets : un point par exercice, plein quand il est reussi.
-  // filtres (facultatif) : les exercices retenus par les filtres, les autres sont pales.
-  function rangee(exos, ici, filtres) {
+  // Cliquer un arret, c'est choisir l'exercice a la main : on reste ensuite dans sa notion.
+  function rangee(exos, ici) {
     return el("div", { class: "entr-rangee" }, exos.map((exo) => {
       const classes = ["entr-arret"];
       if (lu(exo.id).reussi) classes.push("entr-arret--fait");
       if (exo === ici) classes.push("entr-arret--ici");
-      if (filtres && !filtres.has(exo)) classes.push("entr-arret--hors");
-      return el("a", { href: "#/exo/" + exo.id, class: classes.join(" "), title: exo.titre, "aria-label": exo.titre });
+      return el("a", {
+        href: "#/exo/" + exo.id, class: classes.join(" "), title: exo.titre, "aria-label": exo.titre,
+        onclick: () => { parHasard = false; },
+      });
     }));
   }
 
-  function blocReseau(filtres) {
+  function blocReseau() {
     const lignes = el("div", { class: "entr-reseau" });
     notionsDuNiveau().forEach((notion, i) => {
       const exos = exercicesDe(notion.id);
@@ -617,13 +683,13 @@
         ouverte
           ? el("ol", { class: "entr-stations" }, exos.map((exo) => {
             const s = lu(exo.id);
-            return el("li", { class: (s.reussi ? "entr-station--faite " : "") + (filtres.has(exo) ? "" : "entr-station--hors") },
+            return el("li", { class: s.reussi ? "entr-station--faite" : null },
               el("a", { href: "#/exo/" + exo.id },
                 el("span", { class: "entr-station__nom" }, exo.titre),
                 s.sansAide && textes().numeros ? el("span", { class: "entr-badge" }, "sans aide") : null,
                 el("span", { class: "entr-station__infos" }, infos(exo))));
           }))
-          : rangee(exos, null, filtres)
+          : rangee(exos, null)
       ));
     });
     return [
@@ -677,20 +743,35 @@
     ];
   }
 
-  // Les boutons apres une reussite ; enPlus s'intercale avant "Retour a la liste".
+  // Les boutons apres un exercice ; enPlus s'intercale avant "Retour a la liste".
+  // Venu du hasard : un autre au hasard. Choisi a la main : le prochain pas encore reussi du chapitre.
   function suite(exo, ...enPlus) {
-    return el("div", { class: "entr-actions" },
-      el("button", {
+    const t = TEXTES[niveauDe(exo.notion)];
+    let principal = null;
+    let fini = null;
+    if (parHasard) {
+      principal = el("button", {
         class: "entr-bouton entr-bouton--fort",
         onclick() {
           const prochain = tirer(exo.id);
           if (prochain) allerA(prochain);
           else location.hash = "#/";
         },
-      }, textes().suivant),
-      ...enPlus,
-      el("a", { class: "entr-bouton", href: "#/" }, "Retour à la liste")
-    );
+      }, t.autreHasard);
+    } else {
+      const prochain = suivantDuChapitre(exo);
+      if (prochain) {
+        principal = el("button", { class: "entr-bouton entr-bouton--fort", onclick: () => allerA(prochain) }, t.suivantChapitre);
+      } else {
+        fini = el("p", { class: "entr-consigne" }, t.chapitreFini);
+      }
+    }
+    return el("div", {},
+      fini,
+      el("div", { class: "entr-actions" },
+        principal,
+        ...enPlus,
+        el("a", { class: "entr-bouton", href: "#/" }, "Retour à la liste")));
   }
 
   // L'enonce d'une question, avec son image ou son code s'il y en a.
@@ -766,6 +847,14 @@
     return String(texte).trim().toLowerCase().replace(/\s+/g, "").replace(/,/g, ".");
   }
 
+  // Avec exacte (un affichage a recopier), espaces et majuscules comptent : seul ERREUR
+  // s'ecrit comme on veut. Deux espaces tapes de suite comptent pour un seul.
+  function accepte(exo, attendue, saisie) {
+    if (!exo.exacte) return normaliser(attendue) === normaliser(saisie);
+    const propre = saisie.trim().replace(/\s+/g, " ");
+    return String(attendue) === propre || (attendue === "ERREUR" && propre.toUpperCase() === "ERREUR");
+  }
+
   function questionReponse(exo, unSeulEssai, quandFini) {
     let erreurs = 0;
     const retour = el("div", { "aria-live": "polite" });
@@ -791,7 +880,7 @@
     formulaire.addEventListener("submit", (evenement) => {
       evenement.preventDefault();
       if (champ.value.trim() === "") return;
-      if (exo.reponses.some((r) => normaliser(r) === normaliser(champ.value))) {
+      if (exo.reponses.some((r) => accepte(exo, r, champ.value))) {
         finir(true, "Bonne réponse");
         return;
       }
@@ -841,15 +930,19 @@
 
   function blocAutomatismes() {
     const nbAcquis = banque.competences.filter(acquis).length;
+    const themes = [...new Set(banque.competences.map((c) => c.theme))];
+    const tuile = (c) =>
+      el("a", { href: "#/auto/" + c.id, class: "entr-competence" + (acquis(c) ? " entr-competence--acquise" : ""), title: c.description },
+        el("span", { class: "entr-competence__nom" }, c.nom),
+        acquis(c) ? el("span", { class: "entr-badge" }, "acquis") : pastilles(etat.auto[c.id] ? etat.auto[c.id].serie : 0));
     return el("div", { class: "entr-automatismes" },
-      el("h2", {}, "Automatismes"),
       el("p", { class: "entr-consigne" },
-        "Ce qu'il est important de maîtriser par cœur. Objectif : " + ACQUIS +
+        "Ce qu'il est important de maîtriser par cœur, en questions de quelques secondes. Objectif : " + ACQUIS +
         " bonnes réponses d'affilée dans chaque compétence. Acquises : " + nbAcquis + " sur " + banque.competences.length + "."),
-      el("div", { class: "entr-competences" }, banque.competences.map((c) =>
-        el("a", { href: "#/auto/" + c.id, class: "entr-competence" + (acquis(c) ? " entr-competence--acquise" : ""), title: c.description },
-          el("span", { class: "entr-competence__nom" }, c.nom),
-          acquis(c) ? el("span", { class: "entr-badge" }, "acquis") : pastilles(etat.auto[c.id] ? etat.auto[c.id].serie : 0)))));
+      themes.flatMap((theme) => [
+        el("h2", { class: "entr-theme" }, theme),
+        el("div", { class: "entr-competences" }, banque.competences.filter((c) => c.theme === theme).map(tuile)),
+      ]));
   }
 
   function afficherAutomatisme(competence) {
@@ -952,7 +1045,7 @@
     }
 
     racine.replaceChildren(el("div", {},
-      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, TEXTES.premiere.retour)),
+      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "Tous les automatismes")),
       el("p", { class: "entr-surtitre" }, "Automatisme"),
       el("h1", { class: "entr-titre" }, competence.nom),
       el("p", { class: "entr-infos" }, competence.description),
@@ -1274,6 +1367,11 @@
       choisirNiveau(niveau[1]);
       history.replaceState(null, "", "#/");
     }
+    if (location.hash === "#/automatismes") {
+      etat.onglet = "automatismes";
+      choisirNiveau("premiere");
+      history.replaceState(null, "", "#/");
+    }
     const route = location.hash.match(/^#\/exo\/([\w-]+)$/);
     const exo = route && banque.exercices.find((e) => e.id === route[1]);
     // Un lien direct vers une question place la page sur son niveau.
@@ -1281,7 +1379,11 @@
     const serie = !exo && etat.niveau && location.hash === "#/serie";
     const routeAuto = location.hash.match(/^#\/auto\/([\w-]+)$/);
     const competence = routeAuto && banque.competences.find((c) => c.id === routeAuto[1]);
-    if (competence && etat.niveau !== "premiere") choisirNiveau("premiere");
+    if (competence) {
+      // Le retour d'une competence ramene a l'onglet des automatismes.
+      etat.onglet = "automatismes";
+      if (etat.niveau !== "premiere") choisirNiveau("premiere");
+    }
     // Le grand titre de la page s'efface devant celui d'une question, d'une serie ou d'un automatisme.
     const titre = document.querySelector(".md-content h1");
     if (titre) titre.hidden = Boolean(exo || serie || competence);

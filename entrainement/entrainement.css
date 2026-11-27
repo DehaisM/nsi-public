@@ -72,9 +72,11 @@
 .md-typeset .entr-bouton--signal { background: var(--nsi-signal); border-color: var(--nsi-signal); color: #12352a; font-size: .8rem; }
 .md-typeset .entr-bouton--signal:hover:not(:disabled) { background: #ffe24d; color: #12352a; }
 
-/* Les filtres du hasard */
-.entr-filtres { margin-top: .9rem; font-size: .72rem; }
-.md-typeset .entr-filtres p { margin: 0 0 .3rem; color: var(--entr-doux); }
+/* Le bloc "Au hasard" : les filtres, le nombre d'exercices retenus, les boutons */
+.entr-hasard { margin-top: 1.2rem; padding: .2rem 1.1rem 1rem; border: 1.5px solid var(--nsi-filet); border-radius: var(--nsi-rayon); }
+#entr-app .entr-hasard h2 { margin-top: .9rem; }
+.md-typeset .entr-hasard__etape { margin: .7rem 0 .3rem; font-size: .68rem; font-weight: 800; color: var(--entr-encre); }
+.md-typeset .entr-hasard__compte { margin: .8rem 0 .2rem; font-size: .74rem; color: var(--entr-doux); }
 .entr-puces { display: flex; flex-wrap: wrap; gap: .3rem; margin-bottom: .35rem; }
 .entr-filtre {
     --ligne: var(--entr-encre);
@@ -115,7 +117,6 @@
     transform: translateY(-50%); background: var(--ligne);
 }
 .md-typeset .entr-arret--fait, .md-typeset .entr-arret:hover { background: var(--ligne); }
-.md-typeset .entr-arret--hors { opacity: .3; }
 .md-typeset .entr-arret--ici { outline: .17rem solid var(--entr-encre); outline-offset: 1px; }
 
 /* Les stations d'une ligne ouverte */
@@ -130,7 +131,6 @@
 .md-typeset ol.entr-stations > li:last-child::after {
     content: ""; position: absolute; left: -.34rem; top: 1.36rem; bottom: 0; width: .36rem; background: var(--md-default-bg-color);
 }
-.md-typeset .entr-station--hors a { opacity: .35; }
 .md-typeset .entr-stations a { display: block; color: inherit; line-height: 1.25; }
 .entr-station__nom { font-size: .78rem; font-weight: 600; }
 .md-typeset .entr-stations a:hover .entr-station__nom { text-decoration: underline; text-decoration-color: var(--ligne); text-decoration-thickness: 2px; text-underline-offset: .15em; }
@@ -241,11 +241,6 @@
 .entr-niveaux .entr-filtre { color: var(--entr-encre); }
 .md-typeset .entr-bouton--grand { font-size: .9rem; padding: .7rem 1.4rem; }
 
-/* Deux boutons dans le panneau du jour */
-.entr-jour__boutons { display: flex; flex-wrap: wrap; gap: .5rem; }
-.md-typeset .entr-bouton--clair { border-color: rgba(255, 255, 255, .75); color: #fff; }
-.md-typeset .entr-bouton--clair:hover:not(:disabled) { background: rgba(255, 255, 255, .15); color: #fff; }
-
 /* Les questions de cours */
 .entr-figure { margin: .8rem 0; }
 .entr-figure img { display: block; max-width: 100%; height: auto; border: 1px solid var(--nsi-filet); border-radius: var(--nsi-rayon); }
@@ -259,6 +254,16 @@
 .md-typeset .entr-figure figcaption { margin-top: .25rem; font-size: .62rem; color: var(--entr-doux); }
 .entr-rate { margin: 1.4rem 0; padding-top: .6rem; border-top: 1px solid var(--nsi-filet); }
 .md-typeset .entr-rate h2 { margin: 0 0 .3rem; font-size: .9rem; }
+
+/* Les onglets de la Premiere : Exercices, Automatismes */
+.entr-onglets { display: flex; gap: .3rem; margin: 1rem 0 1.2rem; border-bottom: 1.5px solid var(--nsi-filet); }
+.entr-onglet {
+    margin-bottom: -1.5px; padding: .45rem .9rem; cursor: pointer; background: none; border: 0;
+    border-bottom: 3px solid transparent; font: 700 .85rem var(--nsi-titres); color: var(--entr-doux);
+}
+.entr-onglet:hover { color: var(--entr-encre); }
+.entr-onglet--actif { color: var(--entr-encre); border-bottom-color: var(--md-accent-fg-color); }
+#entr-app h2.entr-theme { margin: 1.4rem 0 .2rem; font-size: .9rem; }
 
 /* Automatismes : une tuile par competence, et les pastilles de la serie en cours */
 .entr-competences { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: .5rem; margin-top: .6rem; }
