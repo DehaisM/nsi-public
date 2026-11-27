@@ -649,3 +649,488 @@ exercices:
       print(note_finale)
     tests:
       - { sortie: "15" }
+
+  # --- Pieges : ce qui s'affiche, a taper -----------------------------------------
+
+  - id: piege-parenthese-oubliee
+    numero: 301
+    titre: La parenthèse oubliée
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print("Bonjour"
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["ERREUR"]
+    explication: |
+      La parenthèse fermante est oubliée : Python ne comprend pas la ligne et s'arrête sur une erreur de syntaxe (SyntaxError). Rien ne s'affiche.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  - id: piege-guillemet-oublie
+    numero: 302
+    titre: Le guillemet oublié
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print("Bonjour)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["ERREUR"]
+    explication: |
+      Le texte n'est jamais refermé : il manque le guillemet après `Bonjour`. Python s'arrête sur une erreur de syntaxe.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  - id: piege-print-sans-parentheses
+    numero: 303
+    titre: print sans parenthèses
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print "Bonjour"
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["ERREUR"]
+    explication: |
+      `print` est une fonction : on l'appelle avec des parenthèses, `print("Bonjour")`. Sans elles, Python s'arrête sur une erreur.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  - id: piege-variable-pas-encore
+    numero: 304
+    titre: Une variable qui n'existe pas encore
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      y = x + 2
+      x = 5
+      print(y)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["ERREUR"]
+    explication: |
+      Python exécute les lignes dans l'ordre. À la ligne 1, `x` n'existe pas encore : il ne peut pas calculer `x + 2`, et s'arrête sur une erreur (NameError). La ligne 2 arrive trop tard.
+    cours: "Chapitre 1, Les variables"
+
+  - id: piege-variable-dans-l-ordre
+    numero: 305
+    titre: Les mêmes lignes, dans l'ordre
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      x = 5
+      y = x + 2
+      print(y)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["7"]
+    explication: |
+      Cette fois, `x` est créée avant d'être utilisée : `y` vaut 5 + 2 = 7.
+    cours: "Chapitre 1, Les variables"
+
+  - id: piege-patate-sans-guillemets
+    numero: 306
+    titre: Patate sans guillemets
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      legume = Patate
+      print(legume)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["ERREUR"]
+    explication: |
+      Sans guillemets, `Patate` n'est pas un texte : Python cherche une variable qui s'appelle `Patate`. Elle n'existe pas, donc erreur (NameError). Il fallait écrire `legume = "Patate"`.
+    cours: "Chapitre 1, Les variables"
+
+  - id: piege-affectation-envers
+    numero: 307
+    titre: L'affectation à l'envers
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      5 = x
+      print(x)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["ERREUR"]
+    explication: |
+      L'affectation se lit de droite à gauche : la variable est toujours à gauche du `=`. On ne peut pas ranger une valeur dans le nombre 5 : erreur de syntaxe. Il fallait écrire `x = 5`.
+    cours: "Chapitre 1, Les variables"
+
+  - id: piege-calcul-range-nulle-part
+    numero: 308
+    titre: Un calcul rangé nulle part
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 3
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      x = 4
+      x + 1
+      print(x)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["4"]
+    explication: |
+      La ligne 2 calcule `x + 1`, mais ne range le résultat nulle part : `x` ne change pas et vaut toujours 4. Pour augmenter `x`, il faut écrire `x = x + 1`.
+    cours: "Chapitre 1, Les variables"
+
+  - id: piege-x-entre-guillemets
+    numero: 309
+    titre: x ou "x" ?
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      x = 12
+      print("x vaut", "x")
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["x vaut x"]
+    explication: |
+      Les deux éléments sont entre guillemets : ce sont deux textes, affichés tels quels avec un espace entre eux. La variable `x` n'est pas utilisée.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  - id: piege-age-entre-guillemets
+    numero: 310
+    titre: Le nom de la variable
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      age = 16
+      print("age")
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["age"]
+    explication: |
+      Entre guillemets, `"age"` est un texte : Python affiche le mot age, pas la valeur de la variable.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  - id: piege-calcul-entre-guillemets
+    numero: 311
+    titre: Un calcul entre guillemets
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print("3 * 4")
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["3 * 4"]
+    explication: |
+      Entre guillemets, le calcul est un texte : Python l'affiche tel quel, sans calculer.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  - id: piege-priorites
+    numero: 312
+    titre: Les priorités de calcul
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print(2 + 3 * 4)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["14"]
+    explication: |
+      Comme en maths, la multiplication passe avant l'addition : 3 × 4 = 12, puis 2 + 12 = 14.
+    cours: "Chapitre 1, Les variables"
+
+  - id: piege-parentheses-calcul
+    numero: 313
+    titre: Avec des parenthèses
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print((2 + 3) * 4)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["20"]
+    explication: |
+      Les parenthèses passent en premier : 2 + 3 = 5, puis 5 × 4 = 20.
+    cours: "Chapitre 1, Les variables"
+
+  - id: piege-copie-avant
+    numero: 314
+    titre: Une copie faite trop tôt
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      a = 2
+      b = a
+      a = 10
+      print(b)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["2"]
+    explication: |
+      À la ligne 2, `b` reçoit la valeur de `a`, qui vaut 2 à ce moment-là. Changer `a` ensuite ne change pas `b`.
+    cours: "Chapitre 1, Suivre un programme : le tableau d'état"
+
+  - id: piege-trois-variables
+    numero: 315
+    titre: Trois variables à suivre
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 3
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      a = 1
+      b = a + 1
+      c = b + a
+      a = c * 2
+      print(a, b, c)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["6 2 3"]
+    explication: |
+      Ligne 1 : `a` vaut 1. Ligne 2 : `b` vaut 1 + 1 = 2. Ligne 3 : `c` vaut 2 + 1 = 3. Ligne 4 : `a` vaut 3 × 2 = 6. Python affiche les trois valeurs séparées par des espaces : 6 2 3.
+    cours: "Chapitre 1, Suivre un programme : le tableau d'état"
+
+  - id: piege-echange-inverse
+    numero: 316
+    titre: L'échange dans l'autre sens
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 3
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      x = 3
+      y = 7
+      y = x
+      x = y
+      print(x, y)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["3 3"]
+    explication: |
+      À la ligne 3, `y` prend la valeur de `x` : 3. La valeur 7 est perdue. À la ligne 4, `x` prend la valeur de `y`, qui vaut 3. Les deux variables valent 3.
+    cours: "Chapitre 1, Suivre un programme : le tableau d'état"
+
+  - id: piege-affichage-egalite
+    numero: 317
+    titre: Une égalité affichée
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      a = 3
+      b = 4
+      print(a, "+", b, "=", a + b)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["3 + 4 = 7"]
+    explication: |
+      `print` affiche les cinq éléments à la suite, séparés par des espaces : la valeur de `a`, le texte +, la valeur de `b`, le texte =, puis le résultat de `a + b`.
+    cours: "Chapitre 1, Une première fonction, l'affichage"
+
+  - id: piege-n-change-deux-fois
+    numero: 318
+    titre: Deux changements de suite
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      n = 10
+      n = n - 3
+      n = n * 2
+      print(n)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["14"]
+    explication: |
+      Ligne 2 : `n` vaut 10 - 3 = 7. Ligne 3 : `n` vaut 7 × 2 = 14. Chaque ligne repart de la valeur que `n` a juste avant.
+    cours: "Chapitre 1, Suivre un programme : le tableau d'état"
+
+  - id: piege-nom-avec-tiret
+    numero: 319
+    titre: Un tiret dans le nom
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      note-finale = 15
+      print(note-finale)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["ERREUR"]
+    explication: |
+      Un nom de variable ne contient pas de tiret : Python lit `note - finale`, une soustraction, et ne peut rien y ranger. Erreur. Il fallait écrire `note_finale`.
+    cours: "Chapitre 1, Conventions de nommage"
+
+  # --- Pieges : corriger ou remettre dans l'ordre ---------------------------------
+
+  - id: piege-corriger-parenthese
+    numero: 320
+    titre: Corriger la parenthèse
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: code
+    enonce: |
+      Ce programme doit afficher `Bonjour Arwen`. Il provoque une erreur : la lire, puis corriger le programme.
+    depart: |
+      prenom = "Arwen"
+      print("Bonjour", prenom
+    aides:
+      - idee: |
+          Compter les parenthèses de la ligne 2 : y en a-t-il autant qui s'ouvrent que qui se ferment ?
+      - ou: |
+          L'erreur est à la fin de la ligne 2 : il manque quelque chose après `prenom`.
+    solution: |
+      prenom = "Arwen"
+      print("Bonjour", prenom)
+    tests:
+      - { sortie: "Bonjour Arwen" }
+
+  - id: piege-corriger-guillemets
+    numero: 321
+    titre: Corriger les guillemets
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: code
+    enonce: |
+      Ce programme doit afficher `Bonjour tout le monde`. Il provoque une erreur : la lire, puis corriger le programme.
+    depart: |
+      message = Bonjour tout le monde
+      print(message)
+    aides:
+      - idee: |
+          Comment Python sait-il qu'il s'agit d'un texte, et pas de noms de variables ?
+      - ou: |
+          L'erreur est à la ligne 1 : le texte rangé dans `message` n'est pas écrit comme un texte.
+    solution: |
+      message = "Bonjour tout le monde"
+      print(message)
+    tests:
+      - { sortie: "Bonjour tout le monde" }
+
+  - id: piege-corriger-ajout
+    numero: 322
+    titre: Le score qui ne monte pas
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 2
+    type: code
+    enonce: |
+      Ce programme doit ajouter 5 au score, puis afficher le nouveau score, 15. Il n'affiche pas d'erreur, mais il affiche 10. Le corriger.
+    depart: |
+      score = 10
+      score + 5
+      print(score)
+    aides:
+      - idee: |
+          Un calcul qui n'est rangé dans aucune variable est perdu. Que vaut `score` après la ligne 2 ?
+      - ou: |
+          L'erreur est à la ligne 2 : le calcul est fait, mais son résultat n'est rangé nulle part.
+    solution: |
+      score = 10
+      score = score + 5
+      print(score)
+    tests:
+      - { variable: score, attendu: "15" }
+      - { sortie: "15" }
+
+  - id: piege-ordre-croissants
+    numero: 323
+    titre: Les lignes dans le désordre
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 2
+    type: code
+    enonce: |
+      Ce programme doit afficher le prix de 3 croissants à 4 euros, c'est-à-dire 12. Ses lignes sont dans le désordre : les remettre dans le bon ordre, sans les modifier.
+    depart: |
+      print(total)
+      prix = 4
+      total = prix * 3
+    aides:
+      - idee: |
+          Python lit les lignes de haut en bas : une variable doit être créée avant d'être utilisée.
+      - ou: |
+          La ligne 1 affiche `total` alors que `total` n'existe pas encore, et la ligne 3 utilise `prix` : quelle ligne doit venir en premier ?
+    solution: |
+      prix = 4
+      total = prix * 3
+      print(total)
+    tests:
+      - { variable: total, attendu: "12" }
+      - { sortie: "12" }
+
+  - id: piege-ordre-somme
+    numero: 324
+    titre: Remettre dans l'ordre
+    notion: programmation-1
+    niveaux: [seconde]
+    difficulte: 3
+    duree: 3
+    type: code
+    enonce: |
+      En remettant ces quatre lignes dans le bon ordre, sans les modifier, le programme doit afficher 15.
+    depart: |
+      c = a + b
+      print(c)
+      a = 5
+      b = a * 2
+    aides:
+      - idee: |
+          Chercher la ligne qui n'utilise aucune autre variable : c'est elle qui vient en premier. Puis chercher celle qui n'utilise que des variables déjà créées, et ainsi de suite.
+      - ou: |
+          L'ordre attendu commence par `a = 5`. Il reste à placer les trois autres lignes.
+    solution: |
+      a = 5
+      b = a * 2
+      c = a + b
+      print(c)
+    tests:
+      - { variable: c, attendu: "15" }
+      - { sortie: "15" }

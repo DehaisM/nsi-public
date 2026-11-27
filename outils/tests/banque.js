@@ -60,9 +60,20 @@ const IMG = dossierCaptures("banque");
         await page.goto(URL_PAGE + "#/");
         await page.goto(URL_PAGE + "#/exo/" + exo.id);
         await page.waitForFunction(() => document.querySelector(".entr-champ--reponse")?.value === "");
-        await page.locator(".entr-champ--reponse").fill("  " + String(r).toUpperCase() + " ");
+        // Sans exacte, la casse ne compte pas ; avec exacte, seul ERREUR s'ecrit comme on veut.
+        const saisie = !exo.exacte ? String(r).toUpperCase() : r === "ERREUR" ? "erreur" : String(r);
+        await page.locator(".entr-champ--reponse").fill("  " + saisie + " ");
         await page.locator(".entr-reponse button").click();
         if (!/Bonne réponse/.test(await page.locator("#entr-app").innerText())) problemes.push("réponse acceptée refusée : " + r);
+      }
+      // Avec exacte, les espaces comptent : la reponse sans ses espaces est refusee.
+      if (exo.exacte && /\S \S/.test(exo.reponses[0])) {
+        await page.goto(URL_PAGE + "#/");
+        await page.goto(URL_PAGE + "#/exo/" + exo.id);
+        await page.waitForFunction(() => document.querySelector(".entr-champ--reponse")?.value === "");
+        await page.locator(".entr-champ--reponse").fill(exo.reponses[0].replace(/ /g, ""));
+        await page.locator(".entr-reponse button").click();
+        if (!/pas la bonne réponse/.test(await page.locator("#entr-app").innerText())) problemes.push("réponse sans espaces acceptée");
       }
     } else {
       await page.waitForSelector(".CodeMirror");

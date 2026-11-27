@@ -99,9 +99,23 @@ def noms_definis(arbre):
     return noms
 
 
+def affichage(code):
+    """Ce qu'affiche le code, sans espaces autour ; ERREUR s'il plante (y compris une erreur de syntaxe)."""
+    sortie = io.StringIO()
+    try:
+        with contextlib.redirect_stdout(sortie):
+            exec(code, {})
+    except Exception:
+        return "ERREUR"
+    return sortie.getvalue().strip()
+
+
 def controler_notions(code, notion):
     """Renvoie ce que ce code utilise sans que les eleves l'aient vu."""
-    arbre = ast.parse(code)
+    try:
+        arbre = ast.parse(code)
+    except SyntaxError:
+        return set()  # un code piege, volontairement faux : rien a controler
     definis = noms_definis(arbre)
     fonctions_vues = FONCTIONS_DE_LA_NOTION.get(notion, FONCTIONS_VUES)
     trouves = set()
@@ -197,16 +211,17 @@ def verifier(exo, notions):
             obtenu = eval(exo["calcul"], {"ipaddress": ipaddress, "math": math})
             if normaliser(obtenu) not in {normaliser(r) for r in reponses}:
                 problemes.append(f"le calcul donne {obtenu!r}, absent des réponses acceptées")
+        if "code" in exo:
+            # "Qu'affiche ce programme ?" a taper : la premiere reponse est ce que Python affiche.
+            attendu = affichage(exo["code"])
+            if str(reponses[0]) != attendu:
+                problemes.append("le code affiche " + repr(attendu) + ", pas la première réponse")
+            for trouve in sorted(controler_notions(exo["code"], exo["notion"])):
+                problemes.append("non vu par les élèves : " + trouve)
         return problemes
 
     if genre == "prediction":
-        sortie = io.StringIO()
-        try:
-            with contextlib.redirect_stdout(sortie):
-                exec(exo["code"], {})
-            attendu = sortie.getvalue().strip()
-        except Exception:
-            attendu = "ERREUR"  # le code plante : la bonne reponse est ERREUR
+        attendu = affichage(exo["code"])
         if exo["choix"][0] != attendu:
             problemes.append("le code affiche " + repr(attendu) + ", pas le premier choix")
         if len(set(exo["choix"])) != len(exo["choix"]):

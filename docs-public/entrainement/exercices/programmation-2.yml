@@ -580,3 +580,419 @@ exercices:
       print("Score : " + str(points))
     tests:
       - { sortie: "Score : 12" }
+
+  # --- Pieges : ce qui s'affiche, a taper -----------------------------------------
+
+  - id: piege-texte-fois-deux
+    numero: 325
+    titre: Un prix entre guillemets
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      prix = "12"
+      print(prix * 2)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["1212"]
+    explication: |
+      `prix` contient le texte `"12"`, pas le nombre 12. Multiplier un texte par 2 le répète : `1212`.
+    cours: "Chapitre 2, Opérations et types"
+
+  - id: piege-texte-plus-deux
+    numero: 326
+    titre: Un prix entre guillemets, plus 2
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      prix = "12"
+      print(prix + 2)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["ERREUR"]
+    explication: |
+      On ne peut pas additionner le texte `"12"` et le nombre 2 : Python s'arrête sur une erreur (TypeError).
+    cours: "Chapitre 2, Opérations et types"
+
+  - id: piege-int-parenthese
+    numero: 327
+    titre: Une parenthèse de trop peu
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print(int("5") + 3
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["ERREUR"]
+    explication: |
+      Deux parenthèses s'ouvrent, celle de `print` et celle de `int`, mais seule celle de `int` se ferme : il manque la parenthèse de `print`. Erreur de syntaxe.
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  - id: piege-int-puis-plus
+    numero: 328
+    titre: int, puis un calcul
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      a = "7"
+      b = 3
+      print(int(a) + b)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["10"]
+    explication: |
+      `int(a)` transforme le texte `"7"` en l'entier 7 : 7 + 3 = 10.
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  - id: piege-str-puis-plus
+    numero: 329
+    titre: str, puis un collage
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      a = "7"
+      b = 3
+      print(a + str(b))
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["73"]
+    explication: |
+      `str(b)` donne le texte `"3"`, et `+` colle deux textes : `"7" + "3"` donne `73`.
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  - id: piege-division-float
+    numero: 330
+    titre: Une division ronde
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      x = 10 / 2
+      print(x)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["5.0"]
+    explication: |
+      La division `/` donne toujours un nombre décimal, même quand elle tombe juste : Python affiche `5.0`, pas 5.
+    cours: "Chapitre 2, Les opérations"
+
+  - id: piege-priorite-division
+    numero: 331
+    titre: La division d'abord
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print(10 + 6 / 2)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["13.0"]
+    explication: |
+      La division passe avant l'addition : 6 / 2 = 3.0, puis 10 + 3.0 = 13.0. Le résultat reste décimal à cause de la division.
+    cours: "Chapitre 2, Les opérations"
+
+  - id: piege-moyenne-parentheses
+    numero: 332
+    titre: La moyenne avec des parenthèses
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print((10 + 6) / 2)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["8.0"]
+    explication: |
+      Les parenthèses passent en premier : 10 + 6 = 16, puis 16 / 2 = 8.0.
+    cours: "Chapitre 2, Les opérations"
+
+  - id: piege-dizaines-unites
+    numero: 333
+    titre: Dizaines et unités
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      n = 47
+      print(n // 10, n % 10)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["4 7"]
+    explication: |
+      47 = 10 × 4 + 7 : le quotient `n // 10` vaut 4 et le reste `n % 10` vaut 7. Python les affiche séparés par un espace.
+    cours: "Chapitre 2, Les opérations"
+
+  - id: piege-puissance-priorite
+    numero: 334
+    titre: La puissance d'abord
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print(2 * 3 ** 2)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["18"]
+    explication: |
+      Comme en maths, la puissance passe avant la multiplication : 3 ** 2 = 9, puis 2 × 9 = 18 (et non 6 ** 2 = 36).
+    cours: "Chapitre 2, Les opérations"
+
+  - id: piege-espace-colle
+    numero: 335
+    titre: Où sont les espaces ?
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print("bon" + "jour" + " " + "patate")
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["bonjour patate"]
+    explication: |
+      `+` colle les textes sans ajouter d'espace : `bon` et `jour` se collent. Le seul espace est celui du texte `" "`.
+    cours: "Chapitre 2, Opérations et types"
+
+  - id: piege-repeter-avec-espace
+    numero: 336
+    titre: Répéter avec un espace
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print("ha " * 3)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["ha ha ha"]
+    explication: |
+      Le texte `"ha "` contient un espace à la fin : répété 3 fois, il donne `ha ha ha ` (avec un dernier espace, invisible).
+    cours: "Chapitre 2, Opérations et types"
+
+  - id: piege-type-change
+    numero: 337
+    titre: Une variable qui change de type
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      x = "4"
+      x = int(x) * 2
+      print(x)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["8"]
+    explication: |
+      À la ligne 1, `x` contient le texte `"4"`. À la ligne 2, `int(x)` donne l'entier 4, multiplié par 2 : `x` contient maintenant l'entier 8. Une variable peut changer de type.
+    cours: "Chapitre 2, Les types de valeurs"
+
+  - id: piege-phrase-sans-str
+    numero: 338
+    titre: Une phrase sans str
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      age = 15
+      print("J'ai " + age + " ans")
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["ERREUR"]
+    explication: |
+      `age` contient un nombre : on ne peut pas le coller à un texte avec `+`. Erreur (TypeError). Il fallait `str(age)`, ou des virgules dans le `print`.
+    cours: "Chapitre 2, Opérations et types"
+
+  - id: piege-int-decimal
+    numero: 339
+    titre: int d'un nombre décimal
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print(int("3.5"))
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["ERREUR"]
+    explication: |
+      `int` transforme un texte qui contient un nombre **entier**. `"3.5"` n'est pas un entier : Python s'arrête sur une erreur (ValueError).
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  - id: piege-quotient-puis-reste
+    numero: 340
+    titre: Le reste calculé trop tard
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 3
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      a = 17
+      a = a // 5
+      b = a % 5
+      print(a, b)
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["3 3"]
+    explication: |
+      À la ligne 2, `a` devient 17 // 5 = 3 : la valeur 17 est perdue. À la ligne 3, `b` vaut donc 3 % 5 = 3, et non le reste de 17 par 5.
+    cours: "Chapitre 2, Les opérations"
+
+  - id: piege-str-d-un-calcul
+    numero: 341
+    titre: str d'un calcul
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    type: reponse
+    exacte: true
+    enonce: Qu'affiche ce programme ? Écrire ERREUR si Python s'arrête sur une erreur.
+    code: |
+      print(str(3 + 4) + "0")
+    indication: "Ce qui s'affiche, ou ERREUR"
+    reponses: ["70"]
+    explication: |
+      Python calcule d'abord 3 + 4 = 7, puis `str` le transforme en texte `"7"`, collé au texte `"0"` : `70`.
+    cours: "Chapitre 2, Demander une valeur à l'utilisateur.ice"
+
+  # --- Pieges : corriger ou remettre dans l'ordre ---------------------------------
+
+  - id: piege-corriger-int-parenthese
+    numero: 342
+    titre: Corriger la parenthèse de int
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 1
+    duree: 1
+    type: code
+    enonce: |
+      Ce programme doit afficher 16. Il provoque une erreur : la lire, puis corriger le programme.
+    depart: |
+      n = int("8"
+      print(n * 2)
+    aides:
+      - idee: |
+          Compter les parenthèses de la ligne 1 : y en a-t-il autant qui s'ouvrent que qui se ferment ?
+      - ou: |
+          L'erreur est à la fin de la ligne 1 : la parenthèse de `int` n'est pas refermée.
+    solution: |
+      n = int("8")
+      print(n * 2)
+    tests:
+      - { sortie: "16" }
+
+  - id: piege-corriger-moyenne
+    numero: 343
+    titre: La moyenne trop grande
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 2
+    duree: 2
+    type: code
+    enonce: |
+      Ce programme doit afficher la moyenne de `a` et `b`, c'est-à-dire 14.0. Il n'affiche pas d'erreur, mais il affiche 20.0. Le corriger.
+    depart: |
+      a = 12
+      b = 16
+      moyenne = a + b / 2
+      print(moyenne)
+    aides:
+      - idee: |
+          Faire le calcul à la main, dans l'ordre où Python le fait : la division passe avant l'addition.
+      - ou: |
+          L'erreur est à la ligne 3 : il faut que l'addition soit faite avant la division.
+    solution: |
+      a = 12
+      b = 16
+      moyenne = (a + b) / 2
+      print(moyenne)
+    tests:
+      - { variable: moyenne, attendu: "14.0" }
+      - { sortie: "14.0" }
+
+  - id: piege-corriger-texte-fois
+    numero: 344
+    titre: Le total qui se répète
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 3
+    duree: 2
+    type: code
+    enonce: |
+      Ce programme doit afficher le prix de 3 places à 12 euros, c'est-à-dire 36. Il n'affiche pas d'erreur, mais il affiche 121212. Le corriger, sans changer la ligne 1.
+    depart: |
+      prix = "12"
+      total = prix * 3
+      print(total)
+    aides:
+      - idee: |
+          Quel est le type de la valeur rangée dans `prix` ? Que fait `*` avec ce type-là ?
+      - ou: |
+          L'erreur est à la ligne 2 : `prix` est un texte, qu'il faut transformer en nombre avant de multiplier.
+    solution: |
+      prix = "12"
+      total = int(prix) * 3
+      print(total)
+    tests:
+      - { variable: total, attendu: "36" }
+      - { sortie: "36" }
+
+  - id: piege-ordre-total
+    numero: 345
+    titre: Le ticket dans le désordre
+    notion: programmation-2
+    niveaux: [seconde]
+    difficulte: 3
+    duree: 3
+    type: code
+    enonce: |
+      En remettant ces quatre lignes dans le bon ordre, sans les modifier, le programme doit afficher `Total : 12`.
+    depart: |
+      print("Total : " + texte)
+      total = prix * 3
+      texte = str(total)
+      prix = 4
+    aides:
+      - idee: |
+          Une variable doit être créée avant d'être utilisée. Chercher la ligne qui n'utilise aucune variable : c'est elle qui vient en premier.
+      - ou: |
+          L'ordre attendu commence par `prix = 4` et finit par le `print`. Il reste à placer les deux lignes du milieu.
+    solution: |
+      prix = 4
+      total = prix * 3
+      texte = str(total)
+      print("Total : " + texte)
+    tests:
+      - { variable: texte, attendu: "'12'" }
+      - { sortie: "Total : 12" }

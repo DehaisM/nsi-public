@@ -766,6 +766,14 @@
     return String(texte).trim().toLowerCase().replace(/\s+/g, "").replace(/,/g, ".");
   }
 
+  // Avec exacte (un affichage a recopier), espaces et majuscules comptent : seul ERREUR
+  // s'ecrit comme on veut. Deux espaces tapes de suite comptent pour un seul.
+  function accepte(exo, attendue, saisie) {
+    if (!exo.exacte) return normaliser(attendue) === normaliser(saisie);
+    const propre = saisie.trim().replace(/\s+/g, " ");
+    return String(attendue) === propre || (attendue === "ERREUR" && propre.toUpperCase() === "ERREUR");
+  }
+
   function questionReponse(exo, unSeulEssai, quandFini) {
     let erreurs = 0;
     const retour = el("div", { "aria-live": "polite" });
@@ -791,7 +799,7 @@
     formulaire.addEventListener("submit", (evenement) => {
       evenement.preventDefault();
       if (champ.value.trim() === "") return;
-      if (exo.reponses.some((r) => normaliser(r) === normaliser(champ.value))) {
+      if (exo.reponses.some((r) => accepte(exo, r, champ.value))) {
         finir(true, "Bonne réponse");
         return;
       }
