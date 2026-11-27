@@ -122,7 +122,7 @@
   // seulement "tel exercice reussi". Rien n'est envoye depuis le serveur local, pendant les
   // tests automatiques, ni quand le navigateur demande a ne pas etre suivi.
   // COMPTEUR : le code du site sur GoatCounter (https://<code>.goatcounter.com) ; vide, rien n'est compte.
-  const COMPTEUR = "";
+  const COMPTEUR = "nsi-mdehais";
 
   function envoyerCompte(chemin, titre) {
     if (!COMPTEUR || location.hostname !== "nsi.mdehais.fr" || navigator.webdriver || navigator.doNotTrack === "1") return;
