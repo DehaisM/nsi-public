@@ -31,9 +31,18 @@ def charger_banque():
     return index["notions"], exercices
 
 
+def _automatismes():
+    return yaml.safe_load((DOSSIER / "exercices" / "automatismes.yml").read_text(encoding="utf-8"))
+
+
 def charger_competences():
     """Les competences des automatismes (exercices/automatismes.yml)."""
-    return yaml.safe_load((DOSSIER / "exercices" / "automatismes.yml").read_text(encoding="utf-8"))["competences"]
+    return _automatismes()["competences"]
+
+
+def numeros_retires():
+    """Les numeros des competences retirees : jamais reutilises, des codes de sauvegarde les contiennent."""
+    return set(_automatismes().get("retires") or [])
 
 
 def _charger_module(nom):

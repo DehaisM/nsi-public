@@ -255,6 +255,16 @@
 .entr-rate { margin: 1.4rem 0; padding-top: .6rem; border-top: 1px solid var(--nsi-filet); }
 .md-typeset .entr-rate h2 { margin: 0 0 .3rem; font-size: .9rem; }
 
+/* Les onglets de la Premiere : Exercices, Automatismes */
+.entr-onglets { display: flex; gap: .3rem; margin: 1rem 0 1.2rem; border-bottom: 1.5px solid var(--nsi-filet); }
+.entr-onglet {
+    margin-bottom: -1.5px; padding: .45rem .9rem; cursor: pointer; background: none; border: 0;
+    border-bottom: 3px solid transparent; font: 700 .85rem var(--nsi-titres); color: var(--entr-doux);
+}
+.entr-onglet:hover { color: var(--entr-encre); }
+.entr-onglet--actif { color: var(--entr-encre); border-bottom-color: var(--md-accent-fg-color); }
+#entr-app h2.entr-theme { margin: 1.4rem 0 .2rem; font-size: .9rem; }
+
 /* Automatismes : une tuile par competence, et les pastilles de la serie en cours */
 .entr-competences { display: grid; grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr)); gap: .5rem; margin-top: .6rem; }
 .md-typeset .entr-competence {

@@ -171,7 +171,12 @@ compétence est acquise après 5 bonnes réponses d'affilée ; une erreur remet 
 - Après une modification, lancer `python outils/controler_automatismes.py` : il tire des milliers
   de questions par compétence et vérifie réponses, explications et notions vues. La CI le lance
   aussi.
-- Lien direct vers une compétence : `https://nsi.mdehais.fr/entrainement/#/auto/<id>`.
+- Lien direct vers une compétence : `https://nsi.mdehais.fr/entrainement/#/auto/<id>` ; vers
+  l'onglet des automatismes : `https://nsi.mdehais.fr/entrainement/#/automatismes`.
+- En Première, la page a deux onglets, Exercices et Automatismes. Les tuiles sont rangées par
+  `theme`, dans l'ordre de `exercices/automatismes.yml`.
+- Pour retirer une compétence : la supprimer de la liste et ajouter son numéro à `retires`. Le
+  numéro ne doit jamais resservir, car des codes de sauvegarde le contiennent.
 
 ### Les questions de révision de Seconde
 

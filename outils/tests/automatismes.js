@@ -33,8 +33,16 @@ const ACQUIS = 5;
   }
 
   await p.goto(URL_PAGE + "#/premiere");
+  await p.waitForSelector(".entr-onglets");
+  verif("Première : l'onglet Exercices d'abord, sans les automatismes", (await p.locator(".entr-automatismes").count()) === 0);
+  await p.locator(".entr-onglet", { hasText: "Automatismes" }).click();
   await p.waitForSelector(".entr-automatismes");
-  verif("accueil Première : une tuile par compétence", (await p.locator(".entr-competence").count()) === competences.length, String(competences.length));
+  verif("onglet Automatismes : une tuile par compétence", (await p.locator(".entr-competence").count()) === competences.length, String(competences.length));
+  const themes = [...new Set(competences.map((c) => c.theme))];
+  verif("onglet Automatismes : un titre par thème", JSON.stringify(await p.locator(".entr-theme").allInnerTexts()) === JSON.stringify(themes));
+  await p.reload();
+  await p.waitForSelector(".entr-onglets");
+  verif("l'onglet est retenu", (await p.locator(".entr-automatismes").count()) === 1);
 
   for (const c of competences) {
     await p.goto(URL_PAGE + "#/auto/" + c.id);
@@ -71,9 +79,12 @@ const ACQUIS = 5;
   const code = await p.locator(".entr-code-sauvegarde").innerText();
   const autre = await (await b.newContext({ viewport: { width: 375, height: 700 }, isMobile: true, hasTouch: true })).newPage();
   await autre.goto(URL_PAGE + "#/reprise/" + code);
+  await autre.waitForSelector(".entr-onglets");
+  await autre.goto(URL_PAGE + "#/automatismes");
   await autre.waitForSelector(".entr-automatismes");
   verif("code de sauvegarde : les compétences acquises suivent", (await autre.locator(".entr-competence--acquise").count()) === competences.length, code);
-  await autre.goto(URL_PAGE + "#/auto/tranches");
+  await autre.screenshot({ path: path.join(IMG, "telephone-onglet.png"), fullPage: true });
+  await autre.goto(URL_PAGE + "#/auto/fonctions");
   await autre.waitForSelector(".entr-auto .entr-champ--reponse", { timeout: 60000 });
   verif("téléphone : pas de débordement", (await autre.evaluate(() => document.documentElement.scrollWidth - innerWidth)) <= 0);
   await autre.screenshot({ path: path.join(IMG, "telephone.png"), fullPage: true });

@@ -240,50 +240,6 @@ def q_indices(h):
     return _question(f"Que vaut `{expression}` ?", indication, code, expression, expl)
 
 
-# --- Tranches ----------------------------------------------------------------
-
-def q_tranches(h):
-    if h.random() < 0.5:
-        mot = h.choice(MOTS)
-        code, n = f'mot = "{mot}"', len(mot)
-        sorte = h.choice(["debut", "fin", "milieu"])
-        if sorte == "debut":
-            k = h.randint(1, n - 1)
-            expression = f"mot[:{k}]"
-            expl = lambda v: f"`mot[:{k}]` prend les {k} premières lettres (indices 0 à {k - 1}) : {ecrire(v)}."
-        elif sorte == "fin":
-            k = h.randint(1, n - 1)
-            expression = f"mot[{k}:]"
-            expl = lambda v: f"`mot[{k}:]` prend tout à partir de l'indice {k}, jusqu'à la fin : {ecrire(v)}."
-        else:
-            a = h.randint(0, n - 2)
-            b = h.randint(a + 1, n)
-            expression = f"mot[{a}:{b}]"
-            expl = lambda v: f"`mot[{a}:{b}]` prend les lettres d'indice {a} à {b - 1} ({b} est exclu) : {ecrire(v)}."
-        return _question(f"Que vaut `{expression}` ?", "Un texte, avec ses guillemets", code, expression, expl)
-    valeurs = _liste_au_hasard(h, 5, 7)
-    code, n = "L = " + ecrire(valeurs), len(valeurs)
-    sorte = h.choice(["milieu", "milieu", "debut", "fin", "vide"])
-    if sorte == "milieu":
-        a = h.randint(0, n - 2)
-        b = h.randint(a + 1, n)
-        expression = f"L[{a}:{b}]"
-        expl = lambda v: f"`L[{a}:{b}]` prend les éléments d'indice {a} à {b - 1} ({b} est exclu) : `{ecrire(v)}`."
-    elif sorte == "debut":
-        k = h.randint(1, n - 1)
-        expression = f"L[:{k}]"
-        expl = lambda v: f"`L[:{k}]` prend les {k} premiers éléments : `{ecrire(v)}`."
-    elif sorte == "fin":
-        k = h.randint(1, n - 1)
-        expression = f"L[{k}:]"
-        expl = lambda v: f"`L[{k}:]` prend tout à partir de l'indice {k} : `{ecrire(v)}`."
-    else:
-        a = h.randint(1, n - 1)
-        expression = f"L[{a}:{a}]"
-        expl = lambda v: f"`L[{a}:{a}]` va de l'indice {a} à l'indice {a} exclu : il ne prend rien, c'est la liste vide `[]`."
-    return _question(f"Que vaut `{expression}` ?", "Une liste, avec ses crochets", code, expression, expl)
-
-
 # --- Conditions --------------------------------------------------------------
 
 _OPERATEURS = ["<", ">", "<=", ">=", "==", "!="]
@@ -372,57 +328,10 @@ def q_conversions(h):
     return _question(f"Que vaut `{e}` ?", indication, "", e, expl)
 
 
-# --- Methodes de liste -------------------------------------------------------
-
-def q_methodes(h):
-    depart = _liste_au_hasard(h, 3, 4, 20)
-    sorte = h.choice(["fin", "fin", "fin", "pop", "longueur", "index"])
-    if sorte == "index":
-        v = h.choice(depart)
-        code = "L = " + ecrire(depart)
-        e = f"L.index({v})"
-        return _question(f"Que vaut `{e}` ?", "Un nombre", code, e,
-                         lambda r: f"`L.index({v})` renvoie l'indice où se trouve {v} dans L ; les indices commencent à 0 : {r}.")
-    if sorte == "pop":
-        code = "L = " + ecrire(depart) + "\n" + h.choice(["x = L.pop()", "x = L.pop(0)"])
-        en_tete = "Le premier" if "pop(0)" in code else "Le dernier"
-        return _question("Que vaut `x` après ce programme ?", "Un nombre", code, "x",
-                         lambda r: f"`pop` retire un élément de la liste et le renvoie. {en_tete} élément est retiré : x vaut {r}.")
-    L = list(depart)
-    lignes = ["L = " + ecrire(depart)]
-    etapes = [f"Au départ, L vaut `{ecrire(L)}`."]
-    for _ in range(h.randint(2, 3)):
-        op = h.choice(["append", "append", "pop", "pop0", "insert"] if len(L) > 1 else ["append", "insert"])
-        if op == "append":
-            x = h.randint(1, 20)
-            L.append(x)
-            lignes.append(f"L.append({x})")
-            etapes.append(f"`L.append({x})` ajoute {x} à la fin : `{ecrire(L)}`.")
-        elif op == "pop":
-            x = L.pop()
-            lignes.append("L.pop()")
-            etapes.append(f"`L.pop()` retire le dernier élément, {x} : `{ecrire(L)}`.")
-        elif op == "pop0":
-            x = L.pop(0)
-            lignes.append("L.pop(0)")
-            etapes.append(f"`L.pop(0)` retire le premier élément, {x} : `{ecrire(L)}`.")
-        else:
-            i, x = h.randint(0, len(L)), h.randint(1, 20)
-            L.insert(i, x)
-            lignes.append(f"L.insert({i}, {x})")
-            etapes.append(f"`L.insert({i}, {x})` place {x} à l'indice {i} : `{ecrire(L)}`.")
-    code = "\n".join(lignes)
-    if sorte == "longueur":
-        return _question("Que vaut `len(L)` après ce programme ?", "Un nombre", code, "len(L)",
-                         lambda r: " ".join(etapes) + f" La liste a donc {r} éléments.")
-    return _question("Que vaut `L` après ce programme ?", "Une liste, avec ses crochets", code, "L",
-                     lambda r: " ".join(etapes))
-
-
 # --- Petites boucles ---------------------------------------------------------
 
 def q_boucles(h):
-    sorte = h.choice(["somme", "compteur", "double", "lettres", "tant_que", "envers", "maximum", "plus_grands"])
+    sorte = h.choice(["somme", "compteur", "double", "lettres", "envers", "maximum", "plus_grands"])
     if sorte == "somme":
         a = h.randint(0, 5)
         b = a + h.randint(2, 5)
@@ -447,15 +356,6 @@ def q_boucles(h):
         code = f'n = 0\nfor c in "{mot}":\n    if c == "{lettre}":\n        n = n + 1'
         return _question("Que vaut `n` après ce programme ?", "Un nombre", code, "n",
                          lambda v: f'La boucle parcourt les lettres de "{mot}" et compte celles qui valent "{lettre}" : il y en a {v}.')
-    if sorte == "tant_que":
-        a, p = h.randint(0, 5), h.randint(2, 5)
-        b = a + h.randint(5, 20)
-        code = f"x = {a}\nwhile x < {b}:\n    x = x + {p}"
-        etapes = [a]
-        while etapes[-1] < b:
-            etapes.append(etapes[-1] + p)
-        return _question("Que vaut `x` après ce programme ?", "Un nombre", code, "x",
-                         lambda v: f"x prend les valeurs {_suite(etapes)}. La boucle s'arrête dès que x atteint ou dépasse {b} : x vaut {v}.")
     if sorte == "envers":
         mot = h.choice(MOTS[:7])
         code = f't = ""\nfor c in "{mot}":\n    t = c + t'
@@ -568,15 +468,172 @@ def q_tuples(h):
                      else f"px reçoit {x} et py reçoit {y} : {x} + ({y}) = {v}.")
 
 
+# --- if / elif / else : quelle branche ? --------------------------------------
+
+def q_branches(h):
+    sorte = h.choice(["elif", "elif", "elif", "deux_if", "et_ou", "pair"])
+    if sorte == "elif":
+        nom, s1, s2 = h.choice([("age", 12, 18), ("note", 10, 16), ("temperature", 10, 25), ("vitesse", 50, 90)])
+        x = h.randint(s1 - 6, s2 + 6)
+        v = h.sample([2, 3, 4, 5, 6, 7, 8, 9], 3)
+        code = (f"{nom} = {x}\nif {nom} < {s1}:\n    r = {v[0]}\nelif {nom} < {s2}:\n    r = {v[1]}\n"
+                f"else:\n    r = {v[2]}")
+
+        def expl(r):
+            if x < s1:
+                return f"{nom} vaut {x} : le premier test, `{nom} < {s1}`, est vrai, donc r vaut {r}. Python ne regarde pas les autres branches."
+            if x < s2:
+                return f"{nom} vaut {x} : `{nom} < {s1}` est faux, puis `{nom} < {s2}` est vrai, donc r vaut {r}."
+            return f"{nom} vaut {x} : les deux tests sont faux, c'est donc le `else` qui s'exécute, et r vaut {r}."
+        return _question("Que vaut `r` après ce programme ?", "Un nombre", code, "r", expl)
+    if sorte == "deux_if":
+        x = h.randint(0, 20)
+        a, b = sorted(h.sample(range(3, 18), 2))
+        mot = h.choice(["if", "elif"])
+        code = f"x = {x}\nr = 0\nif x > {b}:\n    r = r + 1\n{mot} x > {a}:\n    r = r + 10"
+        t1, t2 = x > b, x > a
+
+        def expl(r):
+            debut = f"x vaut {x} : `x > {b}` est {'vrai' if t1 else 'faux'}, `x > {a}` est {'vrai' if t2 else 'faux'}. "
+            if mot == "if":
+                return debut + f"Ce sont deux `if` séparés : chacun est testé, et chacun ajoute sa valeur s'il est vrai. r vaut {r}."
+            return debut + ("Avec `elif`, la deuxième branche n'est testée que si la première est fausse. "
+                            + ("Ici la première est vraie : seule elle s'exécute. " if t1 else "") + f"r vaut {r}.")
+        return _question("Que vaut `r` après ce programme ?", "Un nombre", code, "r", expl)
+    if sorte == "et_ou":
+        a, b = h.randint(0, 20), h.randint(0, 20)
+        condition = h.choice(["a > 10 and b > 10", "a > 10 or b > 10", "a == b or a > 15", "a < b and b < 15"])
+        code = f"a = {a}\nb = {b}\nif {condition}:\n    r = 1\nelse:\n    r = 2"
+        valeur = eval(condition, {"a": a, "b": b})
+        return _question("Que vaut `r` après ce programme ?", "Un nombre", code, "r",
+                         lambda r: f"Avec a = {a} et b = {b}, la condition `{condition}` vaut {valeur} : "
+                         + ("c'est la branche du `if` qui s'exécute" if valeur else "c'est la branche du `else` qui s'exécute")
+                         + f", et r vaut {r}.")
+    n = h.randint(10, 99)
+    code = f'n = {n}\nif n % 2 == 0:\n    r = "pair"\nelse:\n    r = "impair"'
+    return _question("Que vaut `r` après ce programme ?", "Un texte, avec ses guillemets", code, "r",
+                     lambda r: f"`{n} % 2` vaut {n % 2} : le test `n % 2 == 0` est {'vrai' if n % 2 == 0 else 'faux'}, donc r vaut {ecrire(r)}.")
+
+
+# --- Boucles while -------------------------------------------------------------
+
+def q_while(h):
+    sorte = h.choice(["tours", "tours", "moitie", "double", "jamais"])
+    if sorte == "tours":
+        a, p = h.randint(0, 5), h.randint(2, 5)
+        b = a + h.randint(5, 20)
+        code = f"n = {a}\nc = 0\nwhile n < {b}:\n    n = n + {p}\n    c = c + 1"
+        valeurs = [a]
+        while valeurs[-1] < b:
+            valeurs.append(valeurs[-1] + p)
+        return _question("Que vaut `c` après ce programme ?", "Un nombre", code, "c",
+                         lambda v: f"n prend les valeurs {_suite(valeurs)}. La boucle s'arrête dès que n atteint ou dépasse {b}. "
+                         f"c compte les tours : {v}.")
+    if sorte == "moitie":
+        depart = h.choice([20, 37, 40, 50, 64, 80, 90, 100])
+        code = f"n = {depart}\nc = 0\nwhile n > 1:\n    n = n // 2\n    c = c + 1"
+        valeurs = [depart]
+        while valeurs[-1] > 1:
+            valeurs.append(valeurs[-1] // 2)
+        return _question("Que vaut `c` après ce programme ?", "Un nombre", code, "c",
+                         lambda v: f"n est divisé par 2 (division entière) à chaque tour : {_suite(valeurs)}. "
+                         f"La boucle s'arrête quand n ne dépasse plus 1. c compte les tours : {v}.")
+    if sorte == "double":
+        limite = h.randint(20, 200)
+        code = f"x = 1\nwhile x < {limite}:\n    x = x * 2"
+        valeurs = [1]
+        while valeurs[-1] < limite:
+            valeurs.append(valeurs[-1] * 2)
+        return _question("Que vaut `x` après ce programme ?", "Un nombre", code, "x",
+                         lambda v: f"x double à chaque tour : {_suite(valeurs)}. La boucle s'arrête dès que x atteint ou dépasse {limite} : x vaut {v}.")
+    a = h.randint(10, 20)
+    b = h.randint(2, a)
+    code = f"n = {a}\nc = 0\nwhile n < {b}:\n    n = n + 1\n    c = c + 1"
+    return _question("Que vaut `c` après ce programme ?", "Un nombre", code, "c",
+                     lambda v: f"Au départ, n vaut {a} : la condition `n < {b}` est déjà fausse, et la boucle ne tourne pas une seule fois. c vaut {v}.")
+
+
+# --- Fonctions : que renvoie l'appel ? -------------------------------------------
+
+def q_fonctions(h):
+    sorte = h.choice(["affine", "affine", "deux_parametres", "variable", "sans_return", "deux_appels", "return_tot"])
+    indication = "Un nombre, ou None"
+    if sorte == "affine":
+        a, b, x = h.randint(2, 5), h.randint(1, 9), h.randint(1, 9)
+        code = f"def f(n):\n    return {a} * n + {b}"
+        return _question(f"Que vaut `f({x})` ?", indication, code, f"f({x})",
+                         lambda v: f"Pendant l'appel `f({x})`, le paramètre n vaut {x} : la fonction renvoie {a} × {x} + {b} = {v}.")
+    if sorte == "deux_parametres":
+        p, q = h.sample(range(2, 20), 2)
+        code = "def ecart(a, b):\n    return a - b"
+        return _question(f"Que vaut `ecart({p}, {q})` ?", indication, code, f"ecart({p}, {q})",
+                         lambda v: f"Les valeurs sont données dans l'ordre des paramètres : a reçoit {p} et b reçoit {q}. La fonction renvoie {p} - {q} = {v}.")
+    if sorte == "variable":
+        k, x = h.randint(1, 5), h.randint(1, 9)
+        code = f"def g(n):\n    m = n + {k}\n    return m * 2"
+        return _question(f"Que vaut `g({x})` ?", indication, code, f"g({x})",
+                         lambda v: f"Pendant l'appel, n vaut {x}, donc m vaut {x} + {k} = {x + k}. La fonction renvoie {x + k} × 2 = {v}.")
+    if sorte == "sans_return":
+        x = h.randint(2, 9)
+        code = f"def double(n):\n    print(n * 2)\n\nr = double({x})"
+        return _question("Que vaut `r` après ce programme ?", indication, code, "r",
+                         lambda v: f"La fonction affiche {2 * x}, mais elle ne renvoie rien : il n'y a pas de `return`. r reçoit donc la valeur {ecrire(v)}.")
+    if sorte == "deux_appels":
+        a, b = h.randint(2, 6), h.randint(2, 6)
+        code = "def carre(n):\n    return n * n"
+        return _question(f"Que vaut `carre({a}) + carre({b})` ?", indication, code, f"carre({a}) + carre({b})",
+                         lambda v: f"`carre({a})` renvoie {a * a} et `carre({b})` renvoie {b * b} : {a * a} + {b * b} = {v}.")
+    x = h.randint(5, 15)
+    code = "def f(n):\n    if n > 10:\n        return 1\n    return 2"
+    return _question(f"Que vaut `f({x})` ?", indication, code, f"f({x})",
+                     lambda v: (f"{x} > 10 est vrai : `return 1` renvoie 1 et arrête la fonction tout de suite." if x > 10
+                                else f"{x} > 10 est faux : la fonction passe à la ligne suivante, `return 2`, et renvoie {v}."))
+
+
+# --- Listes : append, L[i] = ..., parcours ---------------------------------------
+
+def q_listes(h):
+    sorte = h.choice(["append", "affecter", "affecter", "longueur", "doubler", "construire", "derniere"])
+    depart = _liste_au_hasard(h, 3, 4, 20)
+    code = "L = " + ecrire(depart)
+    if sorte in ("append", "longueur", "derniere"):
+        ajouts = [h.randint(1, 30) for _ in range(h.randint(1, 2))]
+        code += "".join(f"\nL.append({x})" for x in ajouts)
+        apres = depart + ajouts
+        etapes = f"`append` ajoute à la fin : L devient `{ecrire(apres)}`."
+        if sorte == "append":
+            return _question("Que vaut `L` après ce programme ?", "Une liste, avec ses crochets", code, "L", lambda v: etapes)
+        if sorte == "longueur":
+            return _question("Que vaut `len(L)` après ce programme ?", "Un nombre", code, "len(L)",
+                             lambda v: etapes + f" Elle a donc {v} éléments.")
+        return _question("Que vaut `L[-1]` après ce programme ?", "Un nombre", code, "L[-1]",
+                         lambda v: etapes + f" Son dernier élément, `L[-1]`, vaut {v}.")
+    if sorte == "affecter":
+        i, x = h.randint(0, len(depart) - 1), h.randint(21, 40)
+        code += f"\nL[{i}] = {x}"
+        return _question("Que vaut `L` après ce programme ?", "Une liste, avec ses crochets", code, "L",
+                         lambda v: f"`L[{i}] = {x}` remplace l'élément d'indice {i} (en {_rang(i + 1)} position) par {x} : `{ecrire(v)}`.")
+    if sorte == "doubler":
+        code += "\nfor i in range(len(L)):\n    L[i] = L[i] * 2"
+        return _question("Que vaut `L` après ce programme ?", "Une liste, avec ses crochets", code, "L",
+                         lambda v: f"La boucle passe par chaque indice, et remplace chaque élément par son double : `{ecrire(v)}`.")
+    n, k = h.randint(3, 5), h.randint(1, 4)
+    code = f"L = []\nfor i in range({n}):\n    L.append(i * {k})"
+    return _question("Que vaut `L` après ce programme ?", "Une liste, avec ses crochets", code, "L",
+                     lambda v: f"On part d'une liste vide. i prend les valeurs 0 à {n - 1}, et on ajoute i × {k} à chaque tour : `{ecrire(v)}`.")
+
+
 COMPETENCES = {
-    "range": q_range,
     "division": q_division,
-    "indices": q_indices,
-    "tranches": q_tranches,
-    "conditions": q_conditions,
     "conversions": q_conversions,
-    "methodes": q_methodes,
+    "conditions": q_conditions,
+    "branches": q_branches,
+    "range": q_range,
     "boucles": q_boucles,
+    "while": q_while,
+    "fonctions": q_fonctions,
+    "indices": q_indices,
+    "listes": q_listes,
     "grilles": q_grilles,
     "tuples": q_tuples,
 }

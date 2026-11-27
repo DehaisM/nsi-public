@@ -119,7 +119,7 @@
   // --- Progression ---------------------------------------------------------
 
   function etatVide() {
-    return { exos: {}, auto: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [], ouvertes: [], niveau: null, etiquettes: [] };
+    return { exos: {}, auto: {}, serie: { dernier: null, longueur: 0 }, notions: [], difficultes: [], ouvertes: [], niveau: null, etiquettes: [], onglet: "exercices" };
   }
 
   function chargerEtat() {
@@ -489,6 +489,15 @@
 
     conteneur.append(blocNiveaux(), el("p", { class: "entr-intro" }, t.intro));
 
+    // En Premiere, deux onglets : les exercices, et les automatismes sur leur propre page.
+    const avecOnglets = etat.niveau === "premiere" && banque.competences.length > 0;
+    if (avecOnglets) conteneur.append(blocOnglets());
+    if (avecOnglets && etat.onglet === "automatismes") {
+      conteneur.append(blocAutomatismes(), ...finAccueil());
+      racine.replaceChildren(conteneur);
+      return;
+    }
+
     if (exos.length === 0) {
       conteneur.append(el("p", { class: "entr-consigne" }, "Aucune question pour ce niveau pour l'instant."));
       racine.replaceChildren(conteneur);
@@ -515,27 +524,45 @@
       )
     );
 
-    conteneur.append(blocHasard(filtres, avecSerie), ...blocReseau());
-    if (etat.niveau === "premiere" && banque.competences.length) conteneur.append(blocAutomatismes());
+    conteneur.append(blocHasard(filtres, avecSerie), ...blocReseau(), ...finAccueil());
+    racine.replaceChildren(conteneur);
+  }
 
-    const toutReussi = banque.exercices.filter((e) => lu(e.id).reussi).length + banque.competences.filter(acquis).length;
-    conteneur.append(blocSauvegarde(toutReussi));
-
-    conteneur.append(el("p", { class: "entr-note" },
-      "La progression est gardée dans ce navigateur, sur cet appareil. Rien n'est envoyé : personne d'autre ne la voit. ",
-      el("button", {
-        class: "entr-lien",
-        onclick() {
-          if (confirm("Effacer toute la progression sur cet appareil ?")) {
-            etat = etatVide();
+  function blocOnglets() {
+    return el("div", { class: "entr-onglets", role: "tablist" },
+      [["exercices", "Exercices"], ["automatismes", "Automatismes"]].map(([onglet, nom]) => {
+        const actif = etat.onglet === onglet;
+        return el("button", {
+          class: "entr-onglet" + (actif ? " entr-onglet--actif" : ""),
+          role: "tab",
+          "aria-selected": String(actif),
+          onclick() {
+            etat.onglet = onglet;
             sauver();
             afficher();
-          }
-        },
-      }, "Tout effacer")
-    ));
+          },
+        }, nom);
+      }));
+  }
 
-    racine.replaceChildren(conteneur);
+  // Le bas de l'accueil, commun aux deux onglets : changer d'appareil, et ce que garde la page.
+  function finAccueil() {
+    const toutReussi = banque.exercices.filter((e) => lu(e.id).reussi).length + banque.competences.filter(acquis).length;
+    return [
+      blocSauvegarde(toutReussi),
+      el("p", { class: "entr-note" },
+        "La progression est gardée dans ce navigateur, sur cet appareil. Rien n'est envoyé : personne d'autre ne la voit. ",
+        el("button", {
+          class: "entr-lien",
+          onclick() {
+            if (confirm("Effacer toute la progression sur cet appareil ?")) {
+              etat = etatVide();
+              sauver();
+              afficher();
+            }
+          },
+        }, "Tout effacer")),
+    ];
   }
 
   function basculer(liste, valeur) {
@@ -903,15 +930,19 @@
 
   function blocAutomatismes() {
     const nbAcquis = banque.competences.filter(acquis).length;
+    const themes = [...new Set(banque.competences.map((c) => c.theme))];
+    const tuile = (c) =>
+      el("a", { href: "#/auto/" + c.id, class: "entr-competence" + (acquis(c) ? " entr-competence--acquise" : ""), title: c.description },
+        el("span", { class: "entr-competence__nom" }, c.nom),
+        acquis(c) ? el("span", { class: "entr-badge" }, "acquis") : pastilles(etat.auto[c.id] ? etat.auto[c.id].serie : 0));
     return el("div", { class: "entr-automatismes" },
-      el("h2", {}, "Automatismes"),
       el("p", { class: "entr-consigne" },
-        "Ce qu'il est important de maîtriser par cœur. Objectif : " + ACQUIS +
+        "Ce qu'il est important de maîtriser par cœur, en questions de quelques secondes. Objectif : " + ACQUIS +
         " bonnes réponses d'affilée dans chaque compétence. Acquises : " + nbAcquis + " sur " + banque.competences.length + "."),
-      el("div", { class: "entr-competences" }, banque.competences.map((c) =>
-        el("a", { href: "#/auto/" + c.id, class: "entr-competence" + (acquis(c) ? " entr-competence--acquise" : ""), title: c.description },
-          el("span", { class: "entr-competence__nom" }, c.nom),
-          acquis(c) ? el("span", { class: "entr-badge" }, "acquis") : pastilles(etat.auto[c.id] ? etat.auto[c.id].serie : 0)))));
+      themes.flatMap((theme) => [
+        el("h2", { class: "entr-theme" }, theme),
+        el("div", { class: "entr-competences" }, banque.competences.filter((c) => c.theme === theme).map(tuile)),
+      ]));
   }
 
   function afficherAutomatisme(competence) {
@@ -1014,7 +1045,7 @@
     }
 
     racine.replaceChildren(el("div", {},
-      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, TEXTES.premiere.retour)),
+      el("p", { class: "entr-retour" }, el("a", { href: "#/" }, "Tous les automatismes")),
       el("p", { class: "entr-surtitre" }, "Automatisme"),
       el("h1", { class: "entr-titre" }, competence.nom),
       el("p", { class: "entr-infos" }, competence.description),
@@ -1336,6 +1367,11 @@
       choisirNiveau(niveau[1]);
       history.replaceState(null, "", "#/");
     }
+    if (location.hash === "#/automatismes") {
+      etat.onglet = "automatismes";
+      choisirNiveau("premiere");
+      history.replaceState(null, "", "#/");
+    }
     const route = location.hash.match(/^#\/exo\/([\w-]+)$/);
     const exo = route && banque.exercices.find((e) => e.id === route[1]);
     // Un lien direct vers une question place la page sur son niveau.
@@ -1343,7 +1379,11 @@
     const serie = !exo && etat.niveau && location.hash === "#/serie";
     const routeAuto = location.hash.match(/^#\/auto\/([\w-]+)$/);
     const competence = routeAuto && banque.competences.find((c) => c.id === routeAuto[1]);
-    if (competence && etat.niveau !== "premiere") choisirNiveau("premiere");
+    if (competence) {
+      // Le retour d'une competence ramene a l'onglet des automatismes.
+      etat.onglet = "automatismes";
+      if (etat.niveau !== "premiere") choisirNiveau("premiere");
+    }
     // Le grand titre de la page s'efface devant celui d'une question, d'une serie ou d'un automatisme.
     const titre = document.querySelector(".md-content h1");
     if (titre) titre.hidden = Boolean(exo || serie || competence);
